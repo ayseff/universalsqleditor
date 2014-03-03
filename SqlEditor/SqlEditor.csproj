@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D5BEC1FC-9E74-4EA4-84D8-49C8AC3A4B45}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SqlEditor</RootNamespace>
+    <AssemblyName>SQL Editor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationIcon>sql_editor.ico</ApplicationIcon>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\IBM\SQLLIB\BIN\netf20\IBM.Data.DB2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Documents.Core.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Documents.Excel.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Shared.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.Misc.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinDataSource.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinDock.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinEditors.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinGrid.ExcelExport.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinGrid.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinStatusBar.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinTabbedMdi.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinTabControl.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinToolbars.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Infragistics4.Win.UltraWinTree.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.TextEditor, Version=3.0.0.3437, Culture=neutral, PublicKeyToken=4d61825e8dd49f1a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>References\ICSharpCode.TextEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Infragistics4.Win.v12.2, Version=12.2.20122.1006, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="JetBrains.Annotations">
+      <HintPath>..\Lib\JetBrains.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>..\Lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>..\Lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MySql.Data.6.7.4\lib\net40\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\packages\odp.net.managed.121.1.1\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.82.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.1.0.82.0\lib\net40\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq">
+      <HintPath>..\packages\System.Data.SQLite.1.0.82.0\lib\net40\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionStatus.cs" />
+    <Compile Include="ActionStatusManager.cs" />
+    <Compile Include="CloseAction.cs" />
+    <Compile Include="DatabaseExplorer\Extensions.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\PublicSynonymsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\StoredProcedureParametersTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\StoredProceduresTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\StoredProcedureTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TablePrimaryKeyColumnsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ViewColumnsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FolderContainerTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\IndexColumnsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\PartitionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TableColumnsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TablePartitionsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TableIndexesTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ColumnsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TriggerTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TriggersTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SynonymTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SynonymsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SequenceTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SequencesTreeNode.cs" />
+    <Compile Include="Databases\ColumnParameter.cs" />
+    <Compile Include="Databases\MySql\MySqlInfoProvider.cs" />
+    <Compile Include="Databases\StoredProcedure.cs" />
+    <Compile Include="Databases\Synonym.cs" />
+    <Compile Include="Databases\ObjectScripter.cs" />
+    <Compile Include="RunMultipleFiles\FrmRunMultipleFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RunMultipleFiles\FrmRunMultipleFiles.Designer.cs">
+      <DependentUpon>FrmRunMultipleFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSqlWorksheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSqlWorksheet.Designer.cs">
+      <DependentUpon>FrmSqlWorksheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseExplorer\ConnectionsImport\AquaDataStudioConnectionImporter.cs" />
+    <Compile Include="DatabaseExplorer\ConnectionsImport\SqlEditorConnectionImporter.cs" />
+    <Compile Include="DatabaseExplorer\Connections.cs" />
+    <Compile Include="DatabaseExplorer\DropHightLightDrawFilter.cs" />
+    <Compile Include="DatabaseExplorer\EncryptionInfo.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FolderTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\IndexesTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\IndexTreeNode.cs" />
+    <Compile Include="Databases\Column.cs" />
+    <Compile Include="Databases\Database.cs" />
+    <Compile Include="Databases\DatabaseMetadata.cs" />
+    <Compile Include="Databases\DatabaseObject.cs" />
+    <Compile Include="Databases\DatabaseObjectWithColumns.cs" />
+    <Compile Include="Databases\DatabaseServer.cs" />
+    <Compile Include="Databases\DatabaseServerType.cs" />
+    <Compile Include="Databases\Db2\Db2DatabaseServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Databases\Db2\Db2InfoProvider.cs" />
+    <Compile Include="Databases\DbInfoProvider.cs" />
+    <Compile Include="Databases\Index.cs" />
+    <Compile Include="Databases\MaterializedView.cs" />
+    <Compile Include="Databases\MsAccess\MsAccess2007ConnectionStringBuilder.cs" />
+    <Compile Include="Databases\MsAccess\MsAccess2007DatabaseServer.cs" />
+    <Compile Include="Databases\MsAccess\MsAccess2003ConnectionStringBuilder.cs" />
+    <Compile Include="Databases\MsAccess\MsAccess2003DatabaseServer.cs" />
+    <Compile Include="Databases\MsAccess\MsAccessInfoProvider.cs" />
+    <Compile Include="Databases\MySql\MySqlDatabaseServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Databases\Oracle\OracleDatabaseServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Databases\Oracle\OracleInfoProvider.cs" />
+    <Compile Include="Databases\Trigger.cs" />
+    <Compile Include="Databases\Schema.cs" />
+    <Compile Include="Databases\Sequence.cs" />
+    <Compile Include="Databases\SqlCe\SqlCeDatabaseServer.cs" />
+    <Compile Include="Databases\SqlCe\SqlCeInfoProvider.cs" />
+    <Compile Include="Databases\Sqlite\SQLiteDbType.cs" />
+    <Compile Include="Databases\Sqlite\SqliteInfoProvider.cs" />
+    <Compile Include="Databases\SqlServer\SqlServerDatabaseServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Databases\Sqlite\SqliteDatabaseServer.cs" />
+    <Compile Include="Databases\SqlServer\SqlServerInfoProvider.cs" />
+    <Compile Include="Databases\DatabaseServerFactory.cs" />
+    <Compile Include="Databases\Table.cs" />
+    <Compile Include="Databases\View.cs" />
+    <Compile Include="DdlGenerator.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="FrmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAbout.Designer.cs">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConnectionDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConnectionDetails.Designer.cs">
+      <DependentUpon>FrmConnectionDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmFindReplace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmFindReplace.designer.cs">
+      <DependentUpon>FrmFindReplace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPassword.Designer.cs">
+      <DependentUpon>FrmPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSplash.Designer.cs">
+      <DependentUpon>FrmSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Intellisense\IntellisenseManager.cs" />
+    <Compile Include="Databases\Partition.cs" />
+    <Compile Include="ProgressInformation.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="QueryResults\UcQueryResults.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryResults\UcQueryResults.Designer.cs">
+      <DependentUpon>UcQueryResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryResults\QueryCompletedEventArgs.cs" />
+    <Compile Include="QueryResults\QueryStartedEventArgs.cs" />
+    <Compile Include="QueryResults\SqlType.cs" />
+    <Compile Include="RunMultipleFiles\SqlFileDetails.cs" />
+    <Compile Include="ScriptResults\FormattingHelpers.cs" />
+    <Compile Include="ScriptResults\UcScriptResults.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ScriptResults\UcScriptResults.Designer.cs">
+      <DependentUpon>UcScriptResults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SqlHelpers\SqlHelper.cs" />
+    <Compile Include="SqlHelpers\SqlTextExtractor.cs" />
+    <Compile Include="SqlHistory\ExecutedSqlStatement.cs" />
+    <Compile Include="SqlHistory\SqlHistoryImportExport.cs" />
+    <Compile Include="SqlHistory\SqlHistoryXml.cs" />
+    <Compile Include="Intellisense\CodeCompletionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmShowSql.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmShowSql.Designer.cs">
+      <DependentUpon>FrmShowSql.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmTableDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTableDetails.Designer.cs">
+      <DependentUpon>FrmTableDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Intellisense\CompleteWordCompletionProvider.cs" />
+    <Compile Include="Crypto.cs" />
+    <Compile Include="DatabaseExplorer\Column.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ColumnTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\DatabaseConnection.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ConnectionsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\DatabaseExplorerImageList.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SchemaTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ViewTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TreeNodeBase.cs" />
+    <Compile Include="DatabaseExplorer\DatabaseObject.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\DummyTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TablesTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TableTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ViewsTreeNode.cs" />
+    <Compile Include="FrmMdiParent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMdiParent.Designer.cs">
+      <DependentUpon>FrmMdiParent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Intellisense\IntelisenseData.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryResults\QueryResult.cs" />
+    <Compile Include="RichTextBoxAppender.cs" />
+    <Compile Include="RunQueryEventArgs.cs" />
+    <Compile Include="RunScriptEventArgs.cs" />
+    <Compile Include="SqlHistory\SqlHistoryList.cs" />
+    <Compile Include="SqlQueryResult.cs" />
+    <Compile Include="SqlTextEditor\SqlEditorExtensions.cs" />
+    <Compile Include="StringHelper.cs" />
+    <Compile Include="WaitActionStatus.cs" />
+    <EmbeddedResource Include="RunMultipleFiles\FrmRunMultipleFiles.resx">
+      <DependentUpon>FrmRunMultipleFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSqlWorksheet.resx">
+      <DependentUpon>FrmSqlWorksheet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAbout.resx">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConnectionDetails.resx">
+      <DependentUpon>FrmConnectionDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMdiParent.resx">
+      <DependentUpon>FrmMdiParent.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSplash.resx">
+      <DependentUpon>FrmSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="QueryResults\UcQueryResults.resx">
+      <DependentUpon>UcQueryResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScriptResults\UcScriptResults.resx">
+      <DependentUpon>UcScriptResults.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\SqlEditor.DatabaseExplorer.Column.datasource" />
+    <None Include="Properties\DataSources\SqlEditor.RunMultipleFiles.SqlFileDetails.datasource" />
+    <None Include="Properties\DataSources\SqlEditor.SqlHistory.ExecutedSqlStatement.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Resources\Office2007Blue.isl" />
+    <None Include="Resources\Aero.isl" />
+    <None Include="Resources\SQLCESQL.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SQLITESQL.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\MYSQLSQL.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\DB2SQL.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Metro.isl" />
+    <None Include="Resources\Office2007Black.isl" />
+    <None Include="Resources\Office2007Silver.isl" />
+    <None Include="Resources\Office2010Black.isl" />
+    <None Include="Resources\Office2010Blue.isl" />
+    <None Include="Resources\Office2010Silver.isl" />
+    <None Include="Resources\ORACLESQL.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SQLSERVERSQL.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\VS2010.isl" />
+    <None Include="Resources\Windows7.isl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Change Log.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Connections.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="References\IBM.Data.DB2.dll" />
+    <Content Include="References\ICSharpCode.TextEditor.dll" />
+    <EmbeddedResource Include="Resources\folder.png" />
+    <None Include="Resources\disk.png" />
+    <None Include="Resources\save_as.png" />
+    <None Include="Resources\information.png" />
+    <None Include="Resources\door_out.png" />
+    <None Include="Resources\sql_editor_24x24.png" />
+    <Content Include="sql_editor.ico" />
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="FrmFindReplace.resx">
+      <DependentUpon>FrmFindReplace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPassword.resx">
+      <DependentUpon>FrmPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmShowSql.resx">
+      <DependentUpon>FrmShowSql.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmTableDetails.resx">
+      <DependentUpon>FrmTableDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SQLReservedWords.xml" />
+    <Content Include="Resources\SyntaxModes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlHistory.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities.Infragistics\Utilities.InfragisticsUtilities.csproj">
+      <Project>{8032CEF7-29D1-4C28-830B-D055455BD350}</Project>
+      <Name>Utilities.InfragisticsUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{4404AE57-C407-4585-8F91-F51C10BAC66F}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlEditor.SqlParser\SqlEditor.SqlParser.csproj">
+      <Project>{E972B2B2-F549-418E-B830-FB5D97101168}</Project>
+      <Name>SqlEditor.SqlParser</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

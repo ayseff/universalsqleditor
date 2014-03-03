@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4404AE57-C407-4585-8F91-F51C10BAC66F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Utilities</RootNamespace>
+    <AssemblyName>Utilities</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Utilities.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>..\Lib\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>..\Lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CLI\CliHelper.cs" />
+    <Compile Include="CLI\Getopt.cs" />
+    <Compile Include="CLI\LongOpt.cs" />
+    <Compile Include="Email\EmailSender.cs" />
+    <Compile Include="EventArgs\ActionChangedEventArgs.cs" />
+    <Compile Include="EventArgs\ErrorEventArgs.cs" />
+    <Compile Include="EventArgs\ProgressChangedEventArgs.cs" />
+    <Compile Include="Forms\CueProvider.cs" />
+    <Compile Include="Forms\Dialogs\Dialog.cs" />
+    <Compile Include="Forms\FormHelpers.cs" />
+    <Compile Include="Forms\IStatusReceiver.cs" />
+    <Compile Include="Forms\RestoreFormPosition.cs" />
+    <Compile Include="Forms\StatusBusy.cs" />
+    <Compile Include="Forms\WindowPositionInfo.cs" />
+    <Compile Include="General\ArrayExtensions.cs" />
+    <Compile Include="General\GeneralExtensions.cs" />
+    <Compile Include="Graphics\GraphicsHelpers.cs" />
+    <Compile Include="Interfaces\IActionReporter.cs" />
+    <Compile Include="Interfaces\IErrorReporter.cs" />
+    <Compile Include="Interfaces\IProgressReporter.cs" />
+    <Compile Include="Interfaces\IStoppable.cs" />
+    <Compile Include="Interfaces\StoppedException.cs" />
+    <Compile Include="IO\Copying\CopyErrorEventArgs.cs" />
+    <Compile Include="IO\Copying\CopyPair.cs" />
+    <Compile Include="IO\Copying\DirectoryCompleteEventArgs.cs" />
+    <Compile Include="IO\Copying\DirectoryProgressChangedEventArgs.cs" />
+    <Compile Include="IO\Copying\DirectoryProgressInfo.cs" />
+    <Compile Include="IO\Copying\FileProgressChangedEventArgs.cs" />
+    <Compile Include="IO\Copying\FileProgressInfo.cs" />
+    <Compile Include="IO\Copying\FileSystemCopier.cs" />
+    <Compile Include="IO\Copying\FileSystemItemCompleteEventArgs.cs" />
+    <Compile Include="IO\Copying\FileSystemItemStartedEventArgs.cs" />
+    <Compile Include="IO\Copying\IFileSystemCopier.cs" />
+    <Compile Include="IO\Copying\QueueCompleteEventArgs.cs" />
+    <Compile Include="IO\Copying\QueueProgressChangedEventArgs.cs" />
+    <Compile Include="IO\Copying\QueueInfo.cs" />
+    <Compile Include="IO\Copying\QueueStartedEventArgs.cs" />
+    <Compile Include="IO\Copying\TransferRateChangedEventArgs.cs" />
+    <Compile Include="IO\Copying\TransferRateInfo.cs" />
+    <Compile Include="IO\DirectoryInfoWrapper.cs" />
+    <Compile Include="IO\DriveInfo.cs" />
+    <Compile Include="IO\FileInfoWrapper.cs" />
+    <Compile Include="IO\FileSystemInfoWrapper.cs" />
+    <Compile Include="IO\FileSystem\FindFilesRegEx.cs" />
+    <Compile Include="IO\FileSystem\FileSystemBrowser.cs" />
+    <Compile Include="IO\FileSystem\IFileSystemBrowser.cs" />
+    <Compile Include="IO\IDirectoryInfo.cs" />
+    <Compile Include="IO\IDriveInfo.cs" />
+    <Compile Include="IO\IFileInfo.cs" />
+    <Compile Include="IO\IFileSystemInfo.cs" />
+    <Compile Include="IO\JunctionPoint.cs" />
+    <Compile Include="IO\Recycler.cs" />
+    <Compile Include="IO\ShowSelectedInExplorer.cs" />
+    <Compile Include="IO\Sync\CustomSync.cs" />
+    <Compile Include="IO\Extensions.cs" />
+    <Compile Include="IO\Sync\ISyncOperationRunner.cs" />
+    <Compile Include="IO\Sync\SyncPair.cs" />
+    <Compile Include="IO\Sync\FileSystemSync.cs" />
+    <Compile Include="IO\Sync\FreeSpaceManager.cs" />
+    <Compile Include="IO\Sync\FullSync.cs" />
+    <Compile Include="IO\Sync\ISyncOptions.cs" />
+    <Compile Include="IO\Sync\ISyncResolver.cs" />
+    <Compile Include="IO\Sync\MirrorSync.cs" />
+    <Compile Include="IO\Sync\NameValuePair.cs" />
+    <Compile Include="IO\Sync\SyncDirectory.cs" />
+    <Compile Include="IO\Sync\SyncOperation.cs" />
+    <Compile Include="IO\Sync\SyncOperationRunner.cs" />
+    <Compile Include="IO\Sync\SyncResolver.cs" />
+    <Compile Include="IO\Sync\UpdateSync.cs" />
+    <Compile Include="Logging\Log4NetHelper.cs" />
+    <Compile Include="Logging\RichTextBoxAppender.cs" />
+    <Compile Include="Collections\CollectionsExtensions.cs" />
+    <Compile Include="Networking\PublicIpAddress.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Crypto.cs" />
+    <Compile Include="Text\TextExtensions.cs" />
+    <Compile Include="Threading\AbortableBackgroundWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Threading\LimitedConcurrencyLevelTaskScheduler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADODB1">
+      <Guid>{B691E011-1797-432E-907A-4D8C69339129}</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="CDO">
+      <Guid>{CD000000-8B95-11D1-82DB-00C04FB1625D}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

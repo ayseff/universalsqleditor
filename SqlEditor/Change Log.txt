@@ -1,0 +1,125 @@
+﻿Version: 0.3.0.3
+  New Features:
+  - SE-29 Provide ability to run SQL from files
+  - SE-30 Allow users to close all worksheets without saving
+  - SE-35 Add executed SQL to script output prior to displaying results
+  - SE-41 Do not clear script output on execution of commit and rollback
+  - SE-46 Provide the ability to script INSERT statements for a table
+  - SE-49 Provide the ability to script UPDATE statements for a table
+  - SE-50 Provide the ability to see public and private synonyms separate
+  - SE-51 Provide the ability to show primary key columns for a table
+  - SE-53 Provide the ability to script DELETE statements for a table
+  - SE-56 Provide the ability to show and edit stored procedures
+  Bug Fixes:
+  - SE-20 Application locks after it is minimized for a long time
+  - SE-27 Table details (Data tab) does not work with SQL Server
+  - SE-31 When inserting values using 'Run Script' showing 'INSERTeD'
+  - SE-32 When a non-query command starts with a comment, query is executed successfully but output does not show the results properly
+  - SE-33 When an operation is canceled, the query does not return right away
+  - SE-34 Query results do not show outputs from stored procedures
+  - SE-36 Running multiple DML statements as a script in non-autocommit mode causes an error
+  - SE-37 Fetch More Rows, Fetch All Rows and Refresh tools are enabled after a DML query under transaction is executed
+  - SE-38 Intellisense displays tables instead of columns in certain scenarios
+  - SE-39 Item from intellisense not inserted correctly
+  - SE-42 Autocommit option is not preserved between runs
+  - SE-43 When filtering database objects, tree nodes do not show expand indicators
+  - SE-44 SQL Server columns do not show for users with certain permissions
+  - SE-48 Error occurs when getting details (Data tab) for an object that user has no SELECT privilege on
+Version: 0.3.0.2
+  New Features:
+  - SE-5 Implement connection clone functionality
+  - SE-8 Restructure Connection Tools ribbon
+  - SE-11 Added a prompt for user to save SQL when closing app if SQL Worksheet is dirty  
+  - SE-25 Add connection name to SQL worksheet tab caption
+  Bug Fixes:
+  - SE-4 Clone option allowed on nodes other than connection nodes
+  - SE-3 When copying text from Database Explorer nodes, literal text is copied
+  - SE-6 Database Explorer does not show data types for indexed columns
+  - SE-7 When selecting column node, refresh option is available
+  - SE-9 Running non-select query shows how many rows are showing
+  - SE-12 Right clicking on the node in Database Explorer should have it selected
+  - SE-13 When running a long running query after a failed query, "Operation failed" is displayed
+  - SE-14 When query returns 0 rows, display labels shows "Showing all 0 row"
+  - SE-15 DB2 queries time out after 30 seconds
+  - SE-16 Switching between tabs (child forms) selects View tab on the ribbon
+  - SE-17 Sometimes columns in the query results grid are not sized to fit
+  - SE-19 Issues when a database object has a leading or trailing spaces
+  - SE-21 Save dirty SQL worksheet dialog does not have a worksheet name
+  - SE-22 (DB2) Index does not show in list of indexes for a table if it belongs in a different schema than a table
+  - SE-24 Upon insert, result message is mixed case
+  - SE-23 SQL editor does not handle quoted strings spanning multiple lines
+  - SE-26 Copy with headers does not work when an entire row is selected
+  - SE-28 Document not saved when selecting cancel from save dialog
+Version: 0.3.0.1
+- Fixed an issue with index columns on DB2 provider
+- Fixed a small issue with a row count label showing operation failed message when it was successful
+Version: 0.3.0.0
+- Switch to .NET Framework v4.5
+- General cleanup
+- New Ribbon interface with context Ribbons
+- New docking interface. Windows can now be dragged, docked and be hidden. This state will be saved on exit and restored on startup
+- Using latest async/await functionality instead of background workers
+- Tree expanding in connections is now fully asynchronous
+- Added ability to import Aqua Data Studio connections
+- Better handling of resource cleanup and connection closing
+- Implemented missing functionality for other databases
+- Better error handling when connection does not open
+- New About box with version info and change history
+- Added ability to change skin (default skin is Office 2010)
+- Window position, splitter sizes and locations are now remembered and restored on restart
+- New splash screen
+- New logo and branding
+- Removed password from connection string when saving. Added a new element for encrypted password
+- Upgraded to Oracle Managed Driver (better support and works without Oracle Client installed)
+- Upgraded MySQL driver
+- Added auto commit option
+- Added maximum result option to show only X number of rows
+- Properly implemented running a script
+- Brand new script results window
+- Added ability to export query results to CSV file
+- Added ability to export query results to TXT file
+- Removed DDL generation as this will need to be implemented for every database (not just ORACLE)
+- Added the ability to set logging levels for application
+Version: 0.2.0.0
+- Support for multiple databases (ORACLE, DB2, MySQL, SQLite, SQL Server, SQL Server Compact)
+- Creating new connections now allows to specify every available connection option for any supported database vendor
+- Removed the ability to automatically fetch more data when scrolled the bottom of the grid
+- Fixed problems where connections are not getting closed. Now for each query, a new connection is opened and then closed as soon as possible
+- Changed date formats in query results to yyyy-mm-dd hh:mm:ss.fff
+- Grid now shows (null) for null columns
+Version: 0.1.5
+- Fixed nullability on columns
+Version: 0.1.4.1
+- Changed date formats in query results and table details to mm/dd/yyyy hh:mm:ss
+Version: 0.1.4.0
+- Added the time when the query started executing
+- Added the ability to refresh the query results in the query results window
+- Better handling of waiting events when loading a list of tables, columns, users, etc.
+- Ability to generate table and index DDL using ORACLE DBMS_METADATA.GET_DLL procedure (proper privileges must exist to run this package). This
+  can be done via the connections context (right click) menu and via table details context menu. On table details context menu, individual indexes may be selected and 
+  DDL for only selected indexes can be generated
+Version: 0.1.3.1
+- Added a list of indexed columns to index definition
+Version: 0.1.3.0
+- Find/replace functionality
+- Allow for commenting of lines
+- Allow for searching of SQL history
+- Fixed modified file indicator
+- Hovering on results tab gives SQL that was executed
+Version: 0.1.2.1
+- Password prompt for empty passwords
+Version: 0.1.2.0
+- Improvements to Intellisense
+- About box
+- Status bar to show currently executing blocking operation
+Version: 0.1.1.0
+- Ability to group connections by folders
+- Drag-drop connections to folders  
+- Fixed bug with Ctrl-C copying
+- Fixed a bug where passwords are not loading
+Version: 0.1.0.0
+- Asynchronous loading of connections and sql history
+- Determine if the connections have changed and save on exit only when connections were changed.
+  This speeds up closing of the app dramatically.
+Version: 0.0.9.0
+- Ability to view SQL history

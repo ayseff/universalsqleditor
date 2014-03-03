@@ -1,0 +1,71 @@
+﻿using System.Data;
+using System.Data.Common;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using MySql.Data.MySqlClient;
+using log4net;
+
+namespace SqlEditor.Databases.MySql
+{
+    public class MySqlDatabaseServer : DatabaseServer
+    {
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        private static readonly string[] _numericDataTypes = new[] { "BIGINT", "MEDIUMINT", "INT", "INTEGER", "SMALLINT", "TINYINT", "DEC", "DECIMAL", "FLOAT", "DOUBLE", "BIT" };
+        private static readonly string[] _dateTimeDataTypes = new[] { "DATE", "TIME", "TIMESTAMP", "DATETIME" };
+
+        private static readonly Regex _validFullyQualifiedIdentifier = new Regex(@"[a-zA-Z_0-9\.\*\$\#]+\s*$",
+                                                                                 RegexOptions.Compiled |
+                                                                                 RegexOptions.Multiline);
+
+        private static readonly Regex _validIdentifier = new Regex(@"[a-zA-Z_0-9\$\#]+$",
+                                                                   RegexOptions.Compiled | RegexOptions.Multiline);
+
+
+        protected override string UserIdToken { get { return "Uid"; } }
+        protected override string PasswordToken { get { return "Pwd"; } }
+
+        public override string[] NumericDataTypes
+        {
+            get { return _numericDataTypes; }
+        }
+
+        public override string[] DateTimeDataTypes
+        {
+            get { return _dateTimeDataTypes; }
+        }
+
+        public override Regex ValidIdentifierRegex
+        {
+            get { return _validIdentifier; }
+        }
+
+        public override Regex ValidFullyQualifiedIdentifierRegex
+        {
+            get { return _validFullyQualifiedIdentifier; }
+        }
+
+        public override string Name
+        {
+            get { return "MySQL"; }
+            protected set { base.Name = value; }
+        }
+
+        public override DbConnectionStringBuilder GetConnectionStringBuilder(string connectionString = null)
+        {
+            var mySqlConnectionStringBuilder = new MySqlConnectionStringBuilder(connectionString);
+            mySqlConnectionStringBuilder.BrowsableConnectionString = false;
+            return mySqlConnectionStringBuilder;
+        }
+
+        public override DbInfoProvider GetInfoProvider()
+        {
+            return new MySqlInfoProvider();
+        }
+
+        public override IDbConnection CreateConnection(string connectionString)
+        {
+            return new MySqlConnection(connectionString);
+        }
+    }
+}

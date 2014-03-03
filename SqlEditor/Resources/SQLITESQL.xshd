@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<!-- syntax definition for SQLite SQL -->
+
+<SyntaxDefinition name = "SQLITESQL" extensions = ".SQL">
+	
+	<Properties>
+		<Property name="LineComment" value="--"/>
+	</Properties>
+	
+	<Digits name = "Digits" bold = "false" italic = "false" color = "DarkBlue"/>
+
+	<RuleSets>
+		<RuleSet ignorecase="true">
+			<Delimiters>&amp;&lt;&gt;~!%^*()-+=|\#/{}[]:;"' ,	.?</Delimiters>
+			
+		  	<Span name = "LineComment" rule = "CommentMarkerSet" bold = "false" italic = "false" color = "Green" stopateol = "true">
+			   	<Begin>--</Begin>
+		  	</Span>
+		  
+			<Span name = "BlockComment" rule = "CommentMarkerSet" bold = "false" italic = "false" color = "Green" stopateol = "false">
+				<Begin>/*</Begin>
+				<End>*/</End>
+			</Span>
+		  	
+			<Span name = "String" bold = "false" italic = "false" color = "Red" stopateol = "true">
+				<Begin>'</Begin>
+				<End>'</End>
+			</Span>
+			
+			<Span name = "Char" bold = "false" italic = "false" color = "Magenta" stopateol = "true">
+				<Begin>&apos;</Begin>
+				<End>&apos;</End>
+			</Span>
+
+      <Span name = "Char" bold = "false" italic = "false" color = "Black" stopateol = "true">
+        <Begin>[</Begin>
+        <End>]</End>
+      </Span>
+      
+			<MarkPrevious bold = "true" italic = "false" color = "MidnightBlue">(</MarkPrevious>
+			
+			<KeyWords name = "Punctuation" bold = "false" italic = "false" color = "DarkGreen">
+				<Key word = "?" />
+				<Key word = "," />
+				<Key word = "." />
+				<Key word = ";" />
+				<Key word = "(" />
+				<Key word = ")" />
+				<Key word = "[" />
+				<Key word = "]" />
+				<Key word = "{" />
+				<Key word = "}" />
+				<Key word = "+" />
+				<Key word = "-" />
+				<Key word = "/" />
+				<Key word = "%" />
+				<Key word = "*" />
+				<Key word = "&lt;" />
+				<Key word = "&gt;" />
+				<Key word = "^" />
+				<Key word = "=" />
+				<Key word = "~" />
+				<Key word = "!" />
+				<Key word = "|" />
+		    <Key word = "&amp;" />
+		  </KeyWords>		  
+			
+			<KeyWords name = "ReservredWords" bold="true" italic="false" color="Blue">
+        <Key word = "ABORT" />
+        <Key word = "ACTION" />
+        <Key word = "ADD" />
+        <Key word = "AFTER" />
+        <Key word = "ALL" />
+        <Key word = "ALTER" />
+        <Key word = "ANALYZE" />
+        <Key word = "AND" />
+        <Key word = "AS" />
+        <Key word = "ASC" />
+        <Key word = "ATTACH" />
+        <Key word = "AUTOINCREMENT" />
+        <Key word = "BEFORE" />
+        <Key word = "BEGIN" />
+        <Key word = "BETWEEN" />
+        <Key word = "BY" />
+        <Key word = "CASCADE" />
+        <Key word = "CASE" />
+        <Key word = "CAST" />
+        <Key word = "CHECK" />
+        <Key word = "COLLATE" />
+        <Key word = "COLUMN" />
+        <Key word = "COMMIT" />
+        <Key word = "CONFLICT" />
+        <Key word = "CONSTRAINT" />
+        <Key word = "CREATE" />
+        <Key word = "CROSS" />
+        <Key word = "CURRENT_DATE" />
+        <Key word = "CURRENT_TIME" />
+        <Key word = "CURRENT_TIMESTAMP" />
+        <Key word = "DATABASE" />
+        <Key word = "DEFAULT" />
+        <Key word = "DEFERRABLE" />
+        <Key word = "DEFERRED" />
+        <Key word = "DELETE" />
+        <Key word = "DESC" />
+        <Key word = "DETACH" />
+        <Key word = "DISTINCT" />
+        <Key word = "DROP" />
+        <Key word = "EACH" />
+        <Key word = "ELSE" />
+        <Key word = "END" />
+        <Key word = "ESCAPE" />
+        <Key word = "EXCEPT" />
+        <Key word = "EXCLUSIVE" />
+        <Key word = "EXISTS" />
+        <Key word = "EXPLAIN" />
+        <Key word = "FAIL" />
+        <Key word = "FOR" />
+        <Key word = "FOREIGN" />
+        <Key word = "FROM" />
+        <Key word = "FULL" />
+        <Key word = "GLOB" />
+        <Key word = "GROUP" />
+        <Key word = "HAVING" />
+        <Key word = "IF" />
+        <Key word = "IGNORE" />
+        <Key word = "IMMEDIATE" />
+        <Key word = "IN" />
+        <Key word = "INDEX" />
+        <Key word = "INDEXED" />
+        <Key word = "INITIALLY" />
+        <Key word = "INNER" />
+        <Key word = "INSERT" />
+        <Key word = "INSTEAD" />
+        <Key word = "INTERSECT" />
+        <Key word = "INTO" />
+        <Key word = "IS" />
+        <Key word = "ISNULL" />
+        <Key word = "JOIN" />
+        <Key word = "KEY" />
+        <Key word = "LEFT" />
+        <Key word = "LIKE" />
+        <Key word = "LIMIT" />
+        <Key word = "MATCH" />
+        <Key word = "NATURAL" />
+        <Key word = "NO" />
+        <Key word = "NOT" />
+        <Key word = "NOTNULL" />
+        <Key word = "NULL" />
+        <Key word = "OF" />
+        <Key word = "OFFSET" />
+        <Key word = "ON" />
+        <Key word = "OR" />
+        <Key word = "ORDER" />
+        <Key word = "OUTER" />
+        <Key word = "PLAN" />
+        <Key word = "PRAGMA" />
+        <Key word = "PRIMARY" />
+        <Key word = "QUERY" />
+        <Key word = "RAISE" />
+        <Key word = "REFERENCES" />
+        <Key word = "REGEXP" />
+        <Key word = "REINDEX" />
+        <Key word = "RELEASE" />
+        <Key word = "RENAME" />
+        <Key word = "REPLACE" />
+        <Key word = "RESTRICT" />
+        <Key word = "RIGHT" />
+        <Key word = "ROLLBACK" />
+        <Key word = "ROW" />
+        <Key word = "SAVEPOINT" />
+        <Key word = "SELECT" />
+        <Key word = "SET" />
+        <Key word = "TABLE" />
+        <Key word = "TEMP" />
+        <Key word = "TEMPORARY" />
+        <Key word = "THEN" />
+        <Key word = "TO" />
+        <Key word = "TRANSACTION" />
+        <Key word = "TRIGGER" />
+        <Key word = "UNION" />
+        <Key word = "UNIQUE" />
+        <Key word = "UPDATE" />
+        <Key word = "USING" />
+        <Key word = "VACUUM" />
+        <Key word = "VALUES" />
+        <Key word = "VIEW" />
+        <Key word = "VIRTUAL" />
+        <Key word = "WHEN" />
+        <Key word = "WHERE" />
+      </KeyWords>			
+		</RuleSet>		
+		<RuleSet name = "CommentMarkerSet" ignorecase = "true"></RuleSet>		
+		<RuleSet name = "DocCommentSet" ignorecase = "false"></RuleSet>		
+		<RuleSet name = "XmlDocSet" ignorecase = "false"></RuleSet>
+	</RuleSets>
+</SyntaxDefinition>

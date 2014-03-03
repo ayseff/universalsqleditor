@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SqlHistory>
+  <SqlStatement>
+    <ConnectionName>XE</ConnectionName>
+    <SqlText>SELECT * FROM DUAL</SqlText>
+    <RunDateTime>01/11/2012 12:54:34 PM </RunDateTime>
+  </SqlStatement>
+  <SqlStatement>
+    <ConnectionName>XE</ConnectionName>
+    <SqlText>SELECT 1 FROM DUAL</SqlText>
+    <RunDateTime>01/11/2012 12:54:34 PM </RunDateTime>
+  </SqlStatement>
+  <SqlStatement>
+    <ConnectionName>XE</ConnectionName>
+    <SqlText>SELECT 2 FROM DUAL</SqlText>
+    <RunDateTime>01/11/2012 12:54:34 PM </RunDateTime>
+  </SqlStatement>
+</SqlHistory>
