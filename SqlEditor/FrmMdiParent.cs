@@ -605,9 +605,11 @@ namespace SqlEditor
                 _getConnectionNodesTask.Wait(3000);
                 ConnectionsTreeNode.Instance.Load(_getConnectionNodesTask.Result.ToArray());
                 ConnectionsTreeNode.Instance.Expanded = true;
+                CloseSplashForm();
             }
             catch (AggregateException ex1)
             {
+                CloseSplashForm();
                 var ex = ex1.InnerException ?? ex1;
                 _log.Error("Error loading connections.");
                 _log.Error(ex.Message, ex);
@@ -615,11 +617,21 @@ namespace SqlEditor
             }
             catch (Exception ex)
             {
+                CloseSplashForm();
                 _log.Error("Error loading connections.");
                 _log.Error(ex.Message, ex);
                 Dialog.ShowErrorDialog("Error", "Error loading connections.", ex.Message, ex.StackTrace);
             }
+            
+            
+            BringToFront();
+            TopMost = true;
+            Application.DoEvents();
+            TopMost = false;
+        }
 
+        private static void CloseSplashForm()
+        {
             try
             {
                 FrmSplash.Instance.CloseForm();
@@ -629,11 +641,6 @@ namespace SqlEditor
                 _log.Error("Error closing splash form.");
                 _log.Error(ex.Message, ex);
             }
-            
-            BringToFront();
-            TopMost = true;
-            Application.DoEvents();
-            TopMost = false;
         }
 
         private Task<List<TreeNodeBase>> RunGetConnectionNodesTask()
@@ -652,9 +659,8 @@ namespace SqlEditor
                         }
                         else
                         {
-                            var message = string.Format("Connections file {0} could not be found.", ConnectionsXmlFileName);
-                            _log.Error(message);
-                            throw new FileNotFoundException(message);
+                            _log.WarnFormat("Connections file {0} could not be found.", ConnectionsXmlFileName);
+                            return new List<TreeNodeBase>();
                         }
                     }
                     catch (Exception ex)
