@@ -37,11 +37,11 @@
 			<Name>SqlEditor.SqlParser</Name>
 			<Project>{E972B2B2-F549-418E-B830-FB5D97101168}</Project>
 		</ProjectReference>
-		<ProjectReference Include="..\..\..\Utilities\Utilities\Utilities.csproj">
+		<ProjectReference Include="..\Utilities\Utilities.csproj">
 			<Name>Utilities</Name>
 			<Project>{4404AE57-C407-4585-8F91-F51C10BAC66F}</Project>
 		</ProjectReference>
-		<ProjectReference Include="..\..\..\Utilities\Utilities.Infragistics\Utilities.InfragisticsUtilities.csproj">
+		<ProjectReference Include="..\Utilities.Infragistics\Utilities.InfragisticsUtilities.csproj">
 			<Name>Utilities.InfragisticsUtilities</Name>
 			<Project>{8032CEF7-29D1-4C28-830B-D055455BD350}</Project>
 		</ProjectReference>

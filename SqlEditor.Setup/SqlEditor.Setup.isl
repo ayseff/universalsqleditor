@@ -341,10 +341,10 @@
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
 		<row><td>NewComponent1</td><td>{2601B1C8-7997-4D04-9B82-290038FC0375}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>SqlEditor.Primary_output2</td><td>{9CF795B0-792F-48AC-B2DF-B42A7CCDFE15}</td><td>INSTALLDIR</td><td>2</td><td/><td>sqleditor.primary_output2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>SqlEditor.SqlParser.Primary_output2</td><td>{ADC2A64A-B53B-471C-B4DE-7C6EC2B83F37}</td><td>INSTALLDIR</td><td>2</td><td/><td>sqleditor.sqlparser.primary_2</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>Utilities.InfragisticsUtilities.Primary_output</td><td>{5C6EE8D4-CC80-4DBB-BB34-EE28D07B1673}</td><td>INSTALLDIR</td><td>2</td><td/><td>utilities.infragisticsutilit</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>Utilities.Primary_output</td><td>{FDDCEC45-4A54-4DCC-95B3-7055FC120036}</td><td>INSTALLDIR</td><td>2</td><td/><td>utilities.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SqlEditor.Primary_output</td><td>{2E06F95B-57B3-4ACC-9492-375AE0EB12AF}</td><td>INSTALLDIR</td><td>2</td><td/><td>sqleditor.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SqlEditor.SqlParser.Primary_output</td><td>{F73223F9-55E4-4206-8B76-CD67E935B626}</td><td>INSTALLDIR</td><td>2</td><td/><td>sqleditor.sqlparser.primary_</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Utilities.InfragisticsUtilities.Primary_output</td><td>{75F3D5F4-031E-4FE6-B857-A1747E2AE05A}</td><td>INSTALLDIR</td><td>2</td><td/><td>utilities.infragisticsutilit</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>Utilities.Primary_output</td><td>{2DD82883-8AA4-44B4-B991-123708D99919}</td><td>INSTALLDIR</td><td>2</td><td/><td>utilities.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
 	<table name="Condition">
@@ -942,7 +942,7 @@
 		<row><td>InstallWelcome</td><td>Back</td><td>NewDialog</td><td>SplashBitmap</td><td>Display_IsBitmapDlg</td><td>0</td></row>
 		<row><td>InstallWelcome</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>InstallWelcome</td><td>Next</td><td>NewDialog</td><td>CustomerInformation</td><td>1</td><td>0</td></row>
-		<row><td>LicenseAgreement</td><td>Back</td><td>NewDialog</td><td>InstallWelcome</td><td>1</td><td>0</td></row>
+		<row><td>LicenseAgreement</td><td>Back</td><td>NewDialog</td><td>InstallWelcome</td><td>NOT Installed</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>Cancel</td><td>SpawnDialog</td><td>CancelSetup</td><td>1</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>ISPrintButton</td><td>DoAction</td><td>ISPrint</td><td>1</td><td>0</td></row>
 		<row><td>LicenseAgreement</td><td>Next</td><td>NewDialog</td><td>CustomerInformation</td><td>AgreeToLicense = "Yes"</td><td>0</td></row>
@@ -1868,8 +1868,8 @@
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
 		<row><td>AlwaysInstall</td><td>NewComponent1</td></row>
-		<row><td>AlwaysInstall</td><td>SqlEditor.Primary_output2</td></row>
-		<row><td>AlwaysInstall</td><td>SqlEditor.SqlParser.Primary_output2</td></row>
+		<row><td>AlwaysInstall</td><td>SqlEditor.Primary_output</td></row>
+		<row><td>AlwaysInstall</td><td>SqlEditor.SqlParser.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>Utilities.InfragisticsUtilities.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>Utilities.Primary_output</td></row>
 	</table>
@@ -1886,10 +1886,10 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>sqleditor.primary_output2</td><td>SqlEditor.Primary_output2</td><td>SqlEditor.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SqlEditor&gt;|Built</td><td>3</td><td/></row>
-		<row><td>sqleditor.sqlparser.primary_2</td><td>SqlEditor.SqlParser.Primary_output2</td><td>SqlEditor.SqlParser.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SqlEditor.SqlParser&gt;|Built</td><td>3</td><td/></row>
-		<row><td>utilities.infragisticsutilit</td><td>Utilities.InfragisticsUtilities.Primary_output</td><td>Utilities.InfragisticsUtilities.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Utilities.InfragisticsUtilities1&gt;|Built</td><td>3</td><td/></row>
-		<row><td>utilities.primary_output</td><td>Utilities.Primary_output</td><td>Utilities.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Utilities1&gt;|Built</td><td>3</td><td/></row>
+		<row><td>sqleditor.primary_output</td><td>SqlEditor.Primary_output</td><td>SqlEditor.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SqlEditor&gt;|Built</td><td>3</td><td/></row>
+		<row><td>sqleditor.sqlparser.primary_</td><td>SqlEditor.SqlParser.Primary_output</td><td>SqlEditor.SqlParser.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SqlEditor.SqlParser&gt;|Built</td><td>3</td><td/></row>
+		<row><td>utilities.infragisticsutilit</td><td>Utilities.InfragisticsUtilities.Primary_output</td><td>Utilities.InfragisticsUtilities.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Utilities.InfragisticsUtilities2&gt;|Built</td><td>3</td><td/></row>
+		<row><td>utilities.primary_output</td><td>Utilities.Primary_output</td><td>Utilities.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Utilities2&gt;|Built</td><td>3</td><td/></row>
 	</table>
 
 	<table name="FileSFPCatalog">
@@ -2034,10 +2034,10 @@
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
 		<row><td>NewComponent1</td><td/><td/><td>_D42489DD_1FEB_4EB0_8E8F_ABCCD9BE8ACE_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>SqlEditor.Primary_output2</td><td/><td/><td>_4F3B29DD_3CC5_43B6_9614_1B5C173F9721_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>SqlEditor.SqlParser.Primary_output2</td><td/><td/><td>_222A70CE_BEBE_4B53_B5B4_102E0CDEB45E_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>Utilities.InfragisticsUtilities.Primary_output</td><td/><td/><td>_A93117E5_F2DA_41F2_8750_5C4CA21B0D73_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>Utilities.Primary_output</td><td/><td/><td>_5B1EA01D_48EC_4F99_B872_C46CB8514B87_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SqlEditor.Primary_output</td><td/><td/><td>_5F06C6CF_B67C_4C48_AA37_1CEC069C34C3_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SqlEditor.SqlParser.Primary_output</td><td/><td/><td>_71FB603E_13C2_4583_BC1C_9101B74B8950_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Utilities.InfragisticsUtilities.Primary_output</td><td/><td/><td>_FE6616A6_99F1_42BB_9113_9182A80F8CC1_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>Utilities.Primary_output</td><td/><td/><td>_F5FFE5CD_75FA_4685_B2A1_C26D572FDCFB_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="ISCustomActionReference">
@@ -2350,7 +2350,9 @@
 		<row><td>Utilities</td><td>..\Utilities\Utilities\Utilities.csproj</td><td/><td>2</td></row>
 		<row><td>Utilities.InfragisticsUtilities</td><td>..\Utilities\Utilities.Infragistics\Utilities.InfragisticsUtilities.csproj</td><td/><td>2</td></row>
 		<row><td>Utilities.InfragisticsUtilities1</td><td>..\..\Utilities\Utilities.Infragistics\Utilities.InfragisticsUtilities.csproj</td><td/><td>2</td></row>
+		<row><td>Utilities.InfragisticsUtilities2</td><td>Utilities.Infragistics\Utilities.InfragisticsUtilities.csproj</td><td/><td>2</td></row>
 		<row><td>Utilities1</td><td>..\..\Utilities\Utilities\Utilities.csproj</td><td/><td>2</td></row>
+		<row><td>Utilities2</td><td>Utilities\Utilities.csproj</td><td/><td>2</td></row>
 		<row><td>WindowsFolder</td><td/><td/><td>1</td></row>
 	</table>
 
@@ -2660,7 +2662,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Mensur Software</td><td>0</td><td/><td>-450771697</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Mensur Software</td><td>0</td><td/><td>430064470</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-190732529</td></row>
@@ -3474,6 +3476,7 @@
 		<row><td>IDS_SETUPEXE_EXPIRE_MSG</td><td>1033</td><td>This setup works until %s. The setup will now exit.</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDS_SETUPEXE_LAUNCH_COND_E</td><td>1033</td><td>This setup was built with an evaluation version of InstallShield and can only be launched from setup.exe.</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDS_SHORTCUT_DISPLAY_NAME1</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>-190720177</td></row>
+		<row><td>IDS_SHORTCUT_DISPLAY_NAME2</td><td>1033</td><td>SQL Editor</td><td>0</td><td/><td>430074710</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO</td><td>1033</td><td>From the list of servers below, select the database server you would like to target.</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_DB</td><td>1033</td><td>From the list of catalog names below, select the database catalog you would like to target.</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDS_SQLBROWSE_INTRO_TEMPLATE</td><td>1033</td><td>[IS_SQLBROWSE_INTRO]</td><td>0</td><td/><td>-190755089</td></row>
@@ -3762,9 +3765,12 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-190755089</td></row>
-		<row><td>ID_STRING1</td><td>1033</td><td>http://www.medicfamily.com/software/sqleditor</td><td>0</td><td/><td>161650068</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>Mensur Software</td><td>0</td><td/><td>-450771697</td></row>
+		<row><td>ID_STRING1</td><td>1033</td><td>http://www.MensurSoftware.com</td><td>0</td><td/><td>430064470</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>Mensur Software</td><td>0</td><td/><td>430064470</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>161633716</td></row>
+		<row><td>ID_STRING4</td><td>1033</td><td>http://www.MensurSoftware.com</td><td>0</td><td/><td>430064470</td></row>
+		<row><td>ID_STRING5</td><td>1033</td><td>http://universalsqleditor.codeplex.com/</td><td>0</td><td/><td>430103254</td></row>
+		<row><td>ID_STRING6</td><td>1033</td><td>http://universalsqleditor.codeplex.com/</td><td>0</td><td/><td>430056182</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-190755089</td></row>
 	</table>
 
@@ -4312,10 +4318,13 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L0">Value</col>
 		<col def="S255">ISComments</col>
 		<row><td>ALLUSERS</td><td>1</td><td/></row>
+		<row><td>ARPCONTACT</td><td>##ID_STRING5##</td><td/></row>
+		<row><td>ARPHELPLINK</td><td>##ID_STRING4##</td><td/></row>
 		<row><td>ARPINSTALLLOCATION</td><td/><td/></row>
 		<row><td>ARPPRODUCTICON</td><td>ARPPRODUCTICON.exe</td><td/></row>
 		<row><td>ARPSIZE</td><td/><td/></row>
 		<row><td>ARPURLINFOABOUT</td><td>##ID_STRING1##</td><td/></row>
+		<row><td>ARPURLUPDATEINFO</td><td>##ID_STRING6##</td><td/></row>
 		<row><td>AgreeToLicense</td><td>No</td><td/></row>
 		<row><td>ApplicationUsers</td><td>AllUsers</td><td/></row>
 		<row><td>DWUSINTERVAL</td><td>30</td><td/></row>
@@ -4459,10 +4468,8 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="L255">FileName</col>
 		<col def="s72">DirProperty</col>
 		<col def="i2">InstallMode</col>
-		<row><td>FileKey1</td><td>SqlEditor.Primary_output2</td><td/><td>mensur_1_mensur_software</td><td>2</td></row>
-		<row><td>FileKey2</td><td>SqlEditor.Primary_output2</td><td/><td>sqledi_1.set_sqleditor.setup</td><td>2</td></row>
 		<row><td>UNINST_Uninstall_SQL_Editor</td><td>NewComponent1</td><td/><td>sql_editor</td><td>2</td></row>
-		<row><td>_Built</td><td>SqlEditor.Primary_output2</td><td/><td>sqledi_1.set_sqleditor.setup</td><td>2</td></row>
+		<row><td>_Built</td><td>SqlEditor.Primary_output</td><td/><td>sql_editor</td><td>2</td></row>
 	</table>
 
 	<table name="RemoveIniFile">
@@ -4549,8 +4556,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S255">ISShortcutName</col>
 		<col def="I4">ISAttributes</col>
 		<row><td>UNINST_Uninstall_SQL_Editor</td><td>sql_editor</td><td>UNINST|Uninstall SQL Editor</td><td>NewComponent1</td><td>[SystemFolder]msiexec.exe</td><td>/x {219628A1-7996-4AFD-9425-B415E1666D3A}</td><td/><td/><td>UNINST_Uninstall_S_FF2995E75CC440B6855560AEEF8410CC.exe</td><td>0</td><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>_Built</td><td>sqledi_1.set_sqleditor.setup</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>SqlEditor.Primary_output2</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
-		<row><td>_Built1</td><td>DesktopFolder</td><td>##IDS_SHORTCUT_DISPLAY_NAME1##</td><td>SqlEditor.Primary_output2</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
+		<row><td>_Built</td><td>sql_editor</td><td>##IDS_SHORTCUT_DISPLAY_NAME2##</td><td>SqlEditor.Primary_output</td><td>AlwaysInstall</td><td/><td/><td/><td/><td/><td>1</td><td/><td/><td/><td/><td/><td/><td/><td/></row>
 	</table>
 
 	<table name="Signature">
