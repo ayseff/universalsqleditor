@@ -463,7 +463,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Change Log.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Connections.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -738,6 +739,9 @@ namespace SqlEditor.QueryResults
                 column.Editor.DataFilter = _nullColumnDataFilter;
                 column.CellActivation = Activation.ActivateOnly;
             }
+            e.Layout.Override.RowAlternateAppearance.BackColor = Color.LightGray;
+            e.Layout.Override.RowAlternateAppearance.BackColor2 = Color.DarkGray;
+            e.Layout.Override.RowAlternateAppearance.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
         }
 
         private void CopyWithHeaders()
