@@ -189,7 +189,7 @@ namespace SqlEditor.QueryResults
             this._ugGrid.DisplayLayout.Override.HeaderAppearance = appearance35;
             this._ugGrid.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
             this._ugGrid.DisplayLayout.Override.HeaderStyle = Infragistics.Win.HeaderStyle.WindowsVista;
-            appearance36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            appearance36.BackColor = System.Drawing.Color.Gainsboro;
             appearance36.BackColor2 = System.Drawing.Color.Silver;
             appearance36.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
             this._ugGrid.DisplayLayout.Override.RowAlternateAppearance = appearance36;

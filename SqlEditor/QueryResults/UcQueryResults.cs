@@ -61,6 +61,7 @@ namespace SqlEditor.QueryResults
         private bool _isBusy;
         private string _sql;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private Infragistics.Win.Appearance _appearance = new Infragistics.Win.Appearance { BackColor = Color.LightYellow };
         #endregion
 
 
@@ -214,7 +215,7 @@ namespace SqlEditor.QueryResults
                     var results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
                     _log.Debug("Query complete.");
                     HasMoreRows = results.HasMoreRows;
-                    SetResults(results.Result, PerformAutoSizeType.AllRowsInBand);
+                    SetResults(results.Result, PerformAutoSizeType.AllRowsInBand, true);
                     _log.Debug("Results bound.");
                     StopTimer();
                     await CloseCurrentConnectionAsync().WithCancellation(_cancellationTokenSource.Token);
@@ -452,7 +453,7 @@ namespace SqlEditor.QueryResults
             errorsTable.Rows.Add(new object[] { errorText });
             return errorsTable;
         }
-        private void SetResults(DataTable table, PerformAutoSizeType performAutoSizeType = PerformAutoSizeType.VisibleRows)
+        private void SetResults(DataTable table, PerformAutoSizeType performAutoSizeType = PerformAutoSizeType.VisibleRows, bool showAlternateAppearance = false)
         {
             if (table == null || table.Columns.Count > 0)
             {
@@ -471,6 +472,14 @@ namespace SqlEditor.QueryResults
                 table.Columns.Add("Results", typeof(string));
                 table.Rows.Add("Command executed successfully");
                 SetResults(table, performAutoSizeType);
+            }
+
+            if (showAlternateAppearance)
+            {                
+                for (int i = 0; i < _ugGrid.Rows.Count; i+=2)
+                {
+                    _ugGrid.Rows[i].Appearance = _appearance;
+                }
             }
         }
 
@@ -739,9 +748,6 @@ namespace SqlEditor.QueryResults
                 column.Editor.DataFilter = _nullColumnDataFilter;
                 column.CellActivation = Activation.ActivateOnly;
             }
-            e.Layout.Override.RowAlternateAppearance.BackColor = Color.LightGray;
-            e.Layout.Override.RowAlternateAppearance.BackColor2 = Color.DarkGray;
-            e.Layout.Override.RowAlternateAppearance.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
         }
 
         private void CopyWithHeaders()
@@ -773,7 +779,7 @@ namespace SqlEditor.QueryResults
             Clipboard.SetText(text);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;        
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
