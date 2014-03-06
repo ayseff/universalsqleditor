@@ -18,9 +18,14 @@ namespace SqlEditor.Databases.Sqlite
         private static readonly Schema _defaultSchema = new Schema(string.Empty, DEFAULT_SCHEMA);
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public override IList<Schema> GetSchemas(IDbConnection connection)
+        public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
         {
-            return new List<Schema>(new[] {_defaultSchema});
+            throw new NotSupportedException();
+        }
+
+        public override IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance = null)
+        {
+            throw new NotSupportedException();
         }
 
         public override IList<Table> GetTables(IDbConnection connection, string schemaName)

@@ -23,7 +23,30 @@ namespace SqlEditor.Databases
         protected virtual void AfterRunQuery(IDbConnection connection, string schemaName)
         {}
 
-        public abstract IList<Schema> GetSchemas(IDbConnection connection);
+        public abstract IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection);
+        protected virtual IList<DatabaseInstance> GetDatabaseInstancesBase(IDbConnection connection, [NotNull] string sql, params object[] parameters)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (sql == null) throw new ArgumentNullException("sql");
+
+            _log.Debug("Getting databases ...");
+            var databaseInstances = new List<DatabaseInstance>();
+            using (var command = connection.CreateCommand())
+            {
+                BuildSqlCommand(command, sql, parameters);
+                using (var dr = command.ExecuteReader())
+                {
+                    while (dr != null && dr.Read())
+                    {
+                        databaseInstances.Add(new DatabaseInstance(dr.GetString(0)));
+                    }
+                }
+            }
+            _log.DebugFormat("Retrieved {0} database(s).", databaseInstances.Count);
+            return databaseInstances;
+        }
+
+        public abstract IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance = null);
         protected virtual IList<Schema> GetSchemasBase(IDbConnection connection, [NotNull] string sql, params object[] parameters)
         {
             if (connection == null) throw new ArgumentNullException("connection");

@@ -11,9 +11,14 @@ namespace SqlEditor.Databases.SqlCe
         private const string DEFAULT_SCHEMA = "MAIN";
         private static readonly Schema _defaultSchema = new Schema(string.Empty, DEFAULT_SCHEMA);
 
-        public override IList<Schema> GetSchemas(IDbConnection connection)
+        public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
         {
-            return new List<Schema>(new[] { _defaultSchema });
+            throw new NotSupportedException();
+        }
+
+        public override IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance = null)
+        {
+            throw new NotSupportedException();
         }
 
         public override IList<Table> GetTables(IDbConnection connection, string schemaName)

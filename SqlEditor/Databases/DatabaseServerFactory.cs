@@ -88,7 +88,7 @@ namespace SqlEditor.Databases
             {
                 return new SqliteDatabaseServer();
             }
-            string message = string.Format("Unrecognized server type {0}.", serverType);
+            var message = string.Format("Unrecognized server type {0}.", serverType);
             _log.Error(message);
             throw new Exception(message);
         }
@@ -193,7 +193,7 @@ namespace SqlEditor.Databases
             }
             else if (server is MySqlDatabaseServer)
             {
-                return "database.png";
+                return "database_yellow.png";
             }
             else if (server is MsAccess2003DatabaseServer)
             {
@@ -202,6 +202,11 @@ namespace SqlEditor.Databases
             var message = string.Format("Unrecognized server type {0}.", server.Name);
             _log.Error(message);
             throw new Exception(message);
+        }
+
+        public string GetDatabaseInstanceImage(DatabaseServer server)
+        {
+            return "database_yellow.png";
         }
     }
 }

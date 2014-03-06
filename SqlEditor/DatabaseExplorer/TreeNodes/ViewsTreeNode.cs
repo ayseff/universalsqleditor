@@ -14,9 +14,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public sealed class ViewsTreeNode : FolderContainerTreeNode
     {
-        public Schema Schema { get; private set; }
+        public DatabaseObject Schema { get; private set; }
 
-        public ViewsTreeNode([NotNull] Schema schema, DatabaseConnection databaseConnection)
+        public ViewsTreeNode([NotNull] DatabaseObject schema, DatabaseConnection databaseConnection)
             : base("Views", databaseConnection)
         {
             if (schema == null) throw new ArgumentNullException("schema");
@@ -27,7 +27,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         {
 
             _log.Debug("Loading views ...");
-            Schema.Views.Clear();
+            //Schema.Views.Clear();
             IList<View> views;
             using (var connection = DatabaseConnection.CreateNewConnection())
             {
@@ -35,7 +35,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
                 views = infoProvider.GetViews(connection, Schema.Name);
             }
-            Schema.Views.AddRange(views);
+            //Schema.Views.AddRange(views);
             _log.DebugFormat("Loaded {0} view(s).", views.Count);
 
             _log.Debug("Loading nodes ...");

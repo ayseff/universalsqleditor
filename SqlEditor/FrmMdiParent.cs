@@ -18,6 +18,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using SqlEditor.DatabaseExplorer;
 using SqlEditor.DatabaseExplorer.ConnectionsImport;
 using SqlEditor.DatabaseExplorer.TreeNodes;
+using SqlEditor.DatabaseExplorer.TreeNodes.Base;
 using SqlEditor.Databases;
 using SqlEditor.Properties;
 using Utilities.Forms;
@@ -1087,7 +1088,7 @@ namespace SqlEditor
                     MaxResults = connectionDetails.MaxResults,
                     Name = connectionDetails.Name + " Copy"
                 };
-            var node = new ConnectionTreeNode(dbConnection);
+            var node = TreeNodeFactory.GetConnectionTreeNode(dbConnection);
             selectedNode.Parent.Nodes.Add(node);
         }
 
@@ -1486,7 +1487,8 @@ namespace SqlEditor
             var folderNodes = nodes.Flatten(x => x.Nodes.Cast<TreeNodeBase>()).ToList();
             foreach (var dbConnection in connections)
             {
-                var connectionNode = new ConnectionTreeNode(dbConnection);
+                //var connectionNode = new ConnectionTreeNode(dbConnection);
+                var connectionNode = TreeNodeFactory.GetConnectionTreeNode(dbConnection);
                 var firstSeparatorIndex = dbConnection.Folder.IndexOf(separator, StringComparison.Ordinal);
                 if (firstSeparatorIndex >= 0)
                 {
@@ -1560,7 +1562,7 @@ namespace SqlEditor
                         dbConnection.PropertyChanged += (sender, args) => _connectionsChanged = true;
                         var parentNode = folderNodes.First(x => x.FullPath == dbConnection.Folder);
                         if (parentNode == null) throw new Exception("Parent node for connection " + dbConnection.Name + " could not be found");
-                        var connectionNode = new ConnectionTreeNode(dbConnection);
+                        var connectionNode = TreeNodeFactory.GetConnectionTreeNode(dbConnection);
                         parentNode.Nodes.Add(connectionNode);
                     }
                     _log.Debug("Adding connections finished.");
@@ -1718,7 +1720,7 @@ namespace SqlEditor
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 cn.PropertyChanged += (sender, args) => _connectionsChanged = true;
-                var connectionTreeNode = new ConnectionTreeNode(cn);
+                var connectionTreeNode = TreeNodeFactory.GetConnectionTreeNode(cn);
                 parentNode.Nodes.Add(connectionTreeNode);
                 _log.Info("Connection created.");
                 _connectionsChanged = true;

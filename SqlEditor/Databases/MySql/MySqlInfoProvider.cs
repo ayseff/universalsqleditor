@@ -4,16 +4,27 @@ using System.Data;
 using SqlEditor.Annotations;
 using SqlEditor.Database;
 using SqlEditor.Intellisense;
-using Utilities.Threading;
 
 namespace SqlEditor.Databases.MySql
 {
     public class MySqlInfoProvider : DbInfoProvider
     {
-        public override IList<Schema> GetSchemas(IDbConnection connection)
+        public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
-            return GetSchemasBase(connection, "SHOW DATABASES");
+            try
+            {
+                return GetSchemasBase(connection, "SHOW DATABASES");
+            }
+            catch
+            { }
+
+            return GetSchemasBase(connection, "SELECT schema_name FROM information_schema.schemata ORDER BY schema_name");
         }
 
         public override IList<Table> GetTables(IDbConnection connection, string schemaName)

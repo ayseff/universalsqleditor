@@ -15,7 +15,12 @@ namespace SqlEditor.Databases.Oracle
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public override IList<Schema> GetSchemas(IDbConnection connection)
+        public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             return GetSchemasBase(connection, "SELECT username FROM all_users ORDER BY username");

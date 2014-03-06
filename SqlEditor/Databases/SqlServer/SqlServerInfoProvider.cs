@@ -19,8 +19,29 @@ namespace SqlEditor.Databases.SqlServer
 
         private const string GET_OBJECT_COLUMNS_SQL =
             "SELECT c.name AS column_name, t.name AS data_type, c.max_length, c.precision, c.scale, c.is_nullable, c.column_id FROM sys.columns c INNER JOIN sys.{0} ob ON c.object_id = ob.object_id INNER JOIN sys.objects o ON ob.object_id = o.object_id INNER JOIN sys.schemas s ON s.schema_id = o.schema_id INNER JOIN sys.types t ON c.system_type_id = t.system_type_id where UPPER(s.name) = @1 AND UPPER(ob.name) = @2  AND t.name <> 'sysname' ORDER BY c.column_id";
-        
-        public override IList<Schema> GetSchemas(IDbConnection connection)
+
+        public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            try
+            {
+                return GetDatabaseInstancesBase(connection, "SELECT name FROM sys.databases WHERE LOWER(name) NOT IN ('master', 'tempdb', 'model', 'msdb') ORDER BY name");
+            }
+            catch
+            { }
+
+            try
+            {
+                return GetDatabaseInstancesBase(connection, "SELECT name FROM sysdatabases WHERE LOWER(name) NOT IN ('master', 'tempdb', 'model', 'msdb') ORDER BY name");
+            }
+            catch
+            { }
+
+
+            return GetDatabaseInstancesBase(connection, "SELECT	DISTINCT catalog_name FROM	information_schema.schemata WHERE LOWER(catalog_name) NOT IN ('master', 'tempdb', 'model', 'msdb') ORDER BY catalog_name");
+        }
+
+        public override IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             return GetSchemasBase(connection,

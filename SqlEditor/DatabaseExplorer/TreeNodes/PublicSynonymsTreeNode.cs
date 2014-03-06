@@ -8,9 +8,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public sealed class PublicSynonymsTreeNode : FolderContainerTreeNode
     {
-        public Schema Schema { get; protected set; }
+        public DatabaseObject Schema { get; protected set; }
 
-        public PublicSynonymsTreeNode(Schema schema, DatabaseConnection databaseConnection)
+        public PublicSynonymsTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
             : base("Public Synonyms", databaseConnection)
         {
             if (schema == null) throw new ArgumentNullException("schema");
@@ -20,7 +20,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             _log.Debug("Loading synonyms ...");
-            Schema.Tables.Clear();
+            //Schema.Tables.Clear();
             IList<Synonym> synonyms;
             using (var connection = DatabaseConnection.CreateNewConnection())
             {
@@ -28,7 +28,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
                 synonyms = infoProvider.GetPublicSynonyms(connection, Schema.Name);
             }
-            Schema.Synonyms.AddRange(synonyms);
+            //Schema.Synonyms.AddRange(synonyms);
             _log.DebugFormat("Loaded {0} public synonym(s).", synonyms.Count);
 
             var nodes = synonyms.Select(x => new SynonymTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
