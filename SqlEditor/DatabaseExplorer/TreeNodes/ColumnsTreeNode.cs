@@ -13,8 +13,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObjectWithColumns DatabaseObject { get; set; }
 
-        protected ColumnsTreeNode([NotNull] DatabaseObjectWithColumns databaseObject, DatabaseConnection connection, string nodeText = "Columns")
-            : base(nodeText, connection)
+        protected ColumnsTreeNode([NotNull] DatabaseObjectWithColumns databaseObject, DatabaseConnection connection, string nodeDisplayText = "Columns")
+            : base(nodeDisplayText, connection)
         {
             if (databaseObject == null) throw new ArgumentNullException("databaseObject");
             if (connection == null) throw new ArgumentNullException("connection");

@@ -221,17 +221,48 @@ namespace SqlEditor.Databases.Db2
                                   schemaName.ToUpper());
         }
 
+        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            return GetFunctionsBase(connection, schemaName,
+                                  "SELECT r.specificname, r.routinename, r.text FROM syscat.routines r WHERE UPPER(r.routineschema) = @1 AND r.routinetype = 'F' ORDER BY r.routinename",
+                                  schemaName.ToUpper());
+        }
+
         public override IList<ColumnParameter> GetStoredProcedureParameters([NotNull] IDbConnection connection,
                                                                             [NotNull] StoredProcedure storedProcedure)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (storedProcedure == null) throw new ArgumentNullException("storedProcedure");
 
-            const string sql = "SELECT parmname, typename,  length, length as precision, scale, nulls, ordinal, parm_mode FROM syscat.procparms WHERE UPPER(procschema) = @1 AND UPPER(procname) = @2 AND specificname = @3";
+            const string sql = "SELECT NVL(parmname, '') as parmname, typename,  length, length as precision, scale, nulls, ordinal, parm_mode FROM syscat.procparms WHERE UPPER(procschema) = @1 AND UPPER(procname) = @2 AND specificname = @3 ORDER BY ordinal";
             return GetStoredProcedureParametersBase(connection, storedProcedure, sql,
                                                     storedProcedure.Parent.Name.ToUpper(),
                                                     storedProcedure.Name.ToUpper(), storedProcedure.ObjectId);
 
+        }
+
+        public override IList<ColumnParameter> GetFunctionParameters(IDbConnection connection, Function function)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (function == null) throw new ArgumentNullException("function");
+
+            const string sql = "SELECT NVL(parmname, '') as parmname, typename,  length, length as precision, scale, 'Y' AS nulls, ordinal, 'IN' AS parm_mode FROM syscat.FUNCPARMS WHERE UPPER(funcschema) = @1 AND UPPER(funcname) = @2 AND specificname = @3 AND rowtype = 'P' ORDER BY ordinal";
+            return GetStoredProcedureParametersBase(connection, function, sql,
+                                                    function.Parent.Name.ToUpper(),
+                                                    function.Name.ToUpper(), function.ObjectId);
+        }
+
+        public override IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (function == null) throw new ArgumentNullException("function");
+
+            const string sql = "SELECT parmname, typename,  length, length as precision, scale, 'Y' AS nulls, ordinal, 'OUT' AS parm_mode FROM syscat.FUNCPARMS WHERE UPPER(funcschema) = @1 AND UPPER(funcname) = @2 AND specificname = @3 AND rowtype = 'R' ORDER BY ordinal";
+            return GetStoredProcedureParametersBase(connection, function, sql,
+                                                    function.Parent.Name.ToUpper(),
+                                                    function.Name.ToUpper(), function.ObjectId);
         }
 
         public override IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName)

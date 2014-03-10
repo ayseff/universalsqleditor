@@ -64,11 +64,11 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             }
         }
 
-        private static IList<TreeNodeBase> GetSchemaNodes(DatabaseConnection databaseConnection)
+        public static IList<TreeNodeBase> GetSchemaNodes(DatabaseConnection databaseConnection)
         {
             try
             {
-                var actionName = string.Format("Attempting to connect to {0} ...", databaseConnection.Name);
+                var actionName = string.Format("Getting schemas for {0} ...", databaseConnection.Name);
                 _log.Debug(actionName);
                 using (new WaitActionStatus(actionName))
                 {
@@ -76,23 +76,19 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
                     using (var connection = databaseConnection.CreateNewConnection())
                     {
                         connection.OpenIfRequired();
-                        databaseConnection.Connect();
-                        _log.Debug("Connection is successful.");
-                        _log.Debug("Loading schemas ...");
                         var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
                         var schemas = infoProvider.GetSchemas(connection);
                         _log.DebugFormat("Loaded {0} schema(s).", schemas.Count);
-                        var schemNodes = GetSchemaNodesForServer(schemas, databaseConnection);
-                        return schemNodes;
+                        var schemaNodes = GetSchemaNodesForServer(schemas, databaseConnection);
+                        return schemaNodes;
                     }
                 }
             }
             catch (Exception ex)
             {
-                databaseConnection.Disconnect();
-                _log.ErrorFormat("Error opening connection and loading data.");
-                _log.Error(ex.Message, ex);
-                throw;
+                _log.ErrorFormat("Error opening connection and loading schemas.");
+                _log.Error(ex.Message);
+                throw new Exception("Error opening connection and loading schemas.", ex);
             }
         }
 
@@ -106,6 +102,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             {
                 return schemas.Select(schema => new Db2SchemaTreeNode(schema, databaseConnection)).Cast<TreeNodeBase>().ToList();
             }
+                // TODO: Add other servers here
             else
             {
                 throw new Exception("Unrecognized database server " + databaseConnection.GetType());

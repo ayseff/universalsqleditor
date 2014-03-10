@@ -413,6 +413,8 @@
             this._iml16.Images.SetKeyName(79, "table (2) gear.png");
             this._iml16.Images.SetKeyName(80, "table (2) gear edit.png");
             this._iml16.Images.SetKeyName(81, "database_yellow.png");
+            this._iml16.Images.SetKeyName(82, "user_folder.png");
+            this._iml16.Images.SetKeyName(83, "table (2) gear_green.png");
             // 
             // _uteConnectionsSearch
             // 

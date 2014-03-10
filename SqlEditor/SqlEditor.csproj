@@ -192,12 +192,17 @@
     <Compile Include="DatabaseExplorer\TreeNodes\Base\TreeNodeFactory.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Db2\Db2SchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Db2\Db2ConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FunctionParametersTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FunctionReturnValuesTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FunctionsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FunctionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MsAccess\MsAccessConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\PublicSynonymsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SchemasTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlCe\SqliteConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Sqlite\SqliteConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerSchemaTreeNode.cs" />
@@ -223,6 +228,7 @@
     <Compile Include="DatabaseExplorer\TreeNodes\SequencesTreeNode.cs" />
     <Compile Include="Databases\ColumnParameter.cs" />
     <Compile Include="Databases\DatabaseInstance.cs" />
+    <Compile Include="Databases\Function.cs" />
     <Compile Include="Databases\MySql\MySqlInfoProvider.cs" />
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />
@@ -480,7 +486,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Connections.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
     <Content Include="References\IBM.Data.DB2.dll" />

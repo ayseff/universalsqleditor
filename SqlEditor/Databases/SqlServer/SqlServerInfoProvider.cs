@@ -243,6 +243,11 @@ namespace SqlEditor.Databases.SqlServer
             return procedures;
         }
 
+        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IList<ColumnParameter> GetStoredProcedureParameters(IDbConnection connection, StoredProcedure storedProcedure)
         {
             if (connection == null) throw new ArgumentNullException("connection");
@@ -267,6 +272,16 @@ namespace SqlEditor.Databases.SqlServer
                                                         storedProcedure.Parent.Name.ToUpper(),
                                                         storedProcedure.Name.ToUpper());
 
+        }
+
+        public override IList<ColumnParameter> GetFunctionParameters(IDbConnection connection, Function function)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function)
+        {
+            throw new NotImplementedException();
         }
 
         public override IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SqlEditor.Databases;
-using Utilities.Collections;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
@@ -10,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; protected set; }
 
-        public StoredProceduresTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, string nodeText = "Stored Procedures")
-            : base(nodeText, databaseConnection)
+        public StoredProceduresTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, string nodeDisplayText = "Procedures")
+            : base(nodeDisplayText, databaseConnection)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;

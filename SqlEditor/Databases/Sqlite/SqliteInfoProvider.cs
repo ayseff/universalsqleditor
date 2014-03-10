@@ -258,11 +258,26 @@ namespace SqlEditor.Databases.Sqlite
             return new List<StoredProcedure>();
         }
 
+        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IList<ColumnParameter> GetStoredProcedureParameters(IDbConnection connection, StoredProcedure storedProcedure)
         {
             return new List<ColumnParameter>();
         }
 
+        public override IList<ColumnParameter> GetFunctionParameters(IDbConnection connection, Function function)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public override IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function)
+        {
+            throw new NotImplementedException();
+        }
 
         public override IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName)
         {

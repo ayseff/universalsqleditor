@@ -18,8 +18,10 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Db2
             nodes.Add(viewsNode);
             var indexesNode = new IndexesTreeNode(DatabaseInstance, DatabaseConnection);
             nodes.Add(indexesNode);
-            var storedProcedures = new StoredProceduresTreeNode(DatabaseInstance, DatabaseConnection, "Procedures");
+            var storedProcedures = new StoredProceduresTreeNode(DatabaseInstance, DatabaseConnection);
             nodes.Add(storedProcedures);
+            var functions = new FunctionsTreeNode(DatabaseInstance, DatabaseConnection);
+            nodes.Add(functions);
             var sequencesNode = new SequencesTreeNode(DatabaseInstance, DatabaseConnection);
             nodes.Add(sequencesNode);
             var synonymsNode = new SynonymsTreeNode(DatabaseInstance, DatabaseConnection);
