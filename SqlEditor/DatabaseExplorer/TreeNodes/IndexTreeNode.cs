@@ -15,7 +15,10 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 
             IndexObject = index;
             Text = IndexObject.DisplayName;
-            LeftImages.Add(index.IsUnique ? DatabaseExplorerImageList.Instance.ImageList.Images["node-tree-red.png"] : DatabaseExplorerImageList.Instance.ImageList.Images["node-tree.png"]);
+            //LeftImages.Add(index.IsUnique ? DatabaseExplorerImageList.Instance.ImageList.Images["node-tree-red.png"] : DatabaseExplorerImageList.Instance.ImageList.Images["node-tree.png"]);
+            this.Override.NodeAppearance.Image = index.IsUnique
+                ? DatabaseExplorerImageList.Instance.ImageList.Images["node-tree-red.png"]
+                : DatabaseExplorerImageList.Instance.ImageList.Images["node-tree.png"];
         }
 
         

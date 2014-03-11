@@ -12,9 +12,11 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             if (databaseInstance == null) throw new ArgumentNullException("databaseInstance");
             DatabaseInstance = databaseInstance;
             Text = databaseInstance.DisplayName;
-            LeftImages.Add(
-                DatabaseExplorerImageList.Instance.ImageList.Images[
-                    DatabaseServerFactory.Instance.GetSchemaImage(DatabaseConnection.DatabaseServer)]);
+            //LeftImages.Add(
+            //    DatabaseExplorerImageList.Instance.ImageList.Images[
+            //        DatabaseServerFactory.Instance.GetSchemaImage(DatabaseConnection.DatabaseServer)]);
+            this.Override.NodeAppearance.Image = DatabaseExplorerImageList.Instance.ImageList.Images[
+                DatabaseServerFactory.Instance.GetSchemaImage(DatabaseConnection.DatabaseServer)];
         }
 
         public Schema DatabaseInstance { get; protected set; }

@@ -16,7 +16,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             Partition = partition;
             Nodes.Clear();
             Text = partition.DisplayName;
-            LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["data_table.png"]);
+            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["data_table.png"]);
+            this.Override.NodeAppearance.Image = DatabaseExplorerImageList.Instance.ImageList.Images["data_table.png"];
             IsLoaded = true;
         }
 

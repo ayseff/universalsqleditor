@@ -15,7 +15,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 
             this.Function = function;
             Text = Function.DisplayName;
-            LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["table (2) gear_green.png"]);
+            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["table (2) gear_green.png"]);
+            this.Override.NodeAppearance.Image =
+                DatabaseExplorerImageList.Instance.ImageList.Images["table (2) gear_green.png"];
         }
 
         protected override IList<TreeNodeBase> GetNodes()

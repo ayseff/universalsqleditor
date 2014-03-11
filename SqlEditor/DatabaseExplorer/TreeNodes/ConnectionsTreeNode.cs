@@ -9,7 +9,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         public ConnectionsTreeNode()
             : base("Connections", null)
         {
-            LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["database_server.png"]);
+            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["database_server.png"]);
+            this.Override.NodeAppearance.Image =
+                DatabaseExplorerImageList.Instance.ImageList.Images["database_server.png"];
         }
 
         public static ConnectionsTreeNode Instance

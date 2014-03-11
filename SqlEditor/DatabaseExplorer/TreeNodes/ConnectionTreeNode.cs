@@ -21,8 +21,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connectionImage = DatabaseServerFactory.Instance.GetConnectionClosedImage(connection.DatabaseServer);
             }
-            LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images[connectionImage]);
-            DatabaseConnection.PropertyChanged += ConnectionPropertyChanged;
+            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images[connectionImage]);
+            this.Override.NodeAppearance.Image = connectionImage;
         }
 
         public override string Text
@@ -64,7 +64,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 imageName =
                     DatabaseServerFactory.Instance.GetConnectionClosedImage(DatabaseConnection.DatabaseServer);
             }
-            LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images[imageName]);
+            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images[imageName]);
+            this.Override.NodeAppearance.Image = imageName;
         }
 
         //protected override IList<TreeNodeBase> GetNodes()
