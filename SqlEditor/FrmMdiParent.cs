@@ -65,6 +65,12 @@ namespace SqlEditor
         private readonly ToolBase _storedProcedureScriptAsDropButtonTool;
         private readonly PopupMenuTool _storedProcedureScriptPopupMenu;
 
+        // Function buttons
+        private readonly ToolBase _functionEditButtonTool;
+        private readonly ToolBase _functionScriptAsCreateButtonTool;
+        private readonly ToolBase _functionScriptAsDropButtonTool;
+        private readonly PopupMenuTool _functionScriptPopupMenu;
+
         // Table buttons
         private readonly ToolBase _tableDetailsButtonTool;
         private readonly ToolBase _tableScriptAsDropButtonTool;
@@ -86,6 +92,7 @@ namespace SqlEditor
         // Command lists
         private readonly List<ToolBase> _tableCommands = new List<ToolBase>();
         private readonly List<ToolBase> _storedProcedureCommands = new List<ToolBase>();
+        private readonly List<ToolBase> _functionCommands = new List<ToolBase>();
 
         private readonly UltraTreeDropHightLightDrawFilter _treeDrawFilter = new UltraTreeDropHightLightDrawFilter();
         private readonly SqlHistoryList _sqlHistoryList = new SqlHistoryList();
@@ -225,6 +232,22 @@ namespace SqlEditor
             _storedProcedureCommands.Add(null);
             _storedProcedureCommands.Add(_collapseAllButtonTool);
             _storedProcedureCommands.Add(_expandAllButtonTool);
+
+            // Setup function commands
+            _functionEditButtonTool = _utm.Tools["Functions - Edit"];
+            _functionScriptAsCreateButtonTool = _utm.Tools["Functions - Script As - Create"];
+            _functionScriptAsDropButtonTool = _utm.Tools["Functions - Script As - Drop"];
+            _functionScriptPopupMenu = (PopupMenuTool)_utm.Tools["Functions - Script As"];
+            _functionScriptPopupMenu.Tools.Clear();
+            _functionScriptPopupMenu.Tools.Add(_functionScriptAsDropButtonTool);
+            _functionScriptPopupMenu.Tools.Add(_functionScriptAsCreateButtonTool);
+            _functionCommands.Add(_functionEditButtonTool);
+            _functionCommands.Add(_functionScriptPopupMenu);
+            _functionCommands.Add(null);
+            _functionCommands.Add(_copyButtonTool);
+            _functionCommands.Add(null);
+            _functionCommands.Add(_collapseAllButtonTool);
+            _functionCommands.Add(_expandAllButtonTool);
 
             // Set image list for nodes
             DatabaseExplorerImageList.Instance.ImageList = _iml16;
@@ -931,6 +954,15 @@ namespace SqlEditor
                     case "Stored Procedures - Script As - Drop":
                         Connections_StoredProcedureDrop();
                         break;
+
+                    case "Functions - Edit":
+                    case "Functions - Script As - Create":
+                        Connections_FunctionEdit();
+                        break;
+
+                    case "Functions - Script As - Drop":
+                        Connections_FunctionDrop();
+                        break;
                         
                 }
             }
@@ -945,6 +977,47 @@ namespace SqlEditor
             {
                 RefreshUserInterface();
             }
+        }
+
+        private void Connections_FunctionDrop()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as FunctionTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("Function not selected.");
+            }
+
+
+            var databaseConnection = selectedNode.DatabaseConnection;
+            var worksheet = NewWorksheet(databaseConnection);
+            var insertSql = ObjectScripter.GenerateFunctionDropStatement(selectedNode.Function, databaseConnection);
+            worksheet.AppendText(insertSql);
+        }
+
+        private void Connections_FunctionEdit()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as FunctionTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("Function not selected.");
+            }
+
+
+            var databaseConnection = selectedNode.DatabaseConnection;
+            var worksheet = NewWorksheet(databaseConnection);
+            worksheet.Title = selectedNode.Function.Name;
+            var insertSql = selectedNode.Function.Definition;
+            worksheet.AppendText(insertSql);
         }
 
         private void Connections_StoredProcedureEdit()
@@ -1397,9 +1470,13 @@ namespace SqlEditor
                     {
                         AddTools(_tableCommands, _connectionsPopupMenu);
                     }
-                    else if (isStoredProcedureNodeSelected)
+                    else if (isNodeSelected && selectedNode is StoredProcedureTreeNode)
                     {
                         AddTools(_storedProcedureCommands, _connectionsPopupMenu);
+                    }
+                    else if (isNodeSelected && selectedNode is FunctionTreeNode)
+                    {
+                        AddTools(_functionCommands, _connectionsPopupMenu);
                     }
                     else
                     {

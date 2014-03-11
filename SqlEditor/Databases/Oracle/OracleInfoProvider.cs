@@ -278,7 +278,7 @@ namespace SqlEditor.Databases.Oracle
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (function == null) throw new ArgumentNullException("function");
-            const string sql = "SELECT NVL(argument_name, ' ') AS argument_name, data_type, data_length, data_precision, data_scale, 'Y' as nullable, position, in_out FROM all_arguments WHERE UPPER(owner) = :1 AND UPPER(object_name) = :2 AND OBJECT_ID = :3 AND in_out = 'OUT' ORDER BY position";
+            const string sql = "SELECT NVL(argument_name, 'OUT') AS argument_name, data_type, data_length, data_precision, data_scale, 'Y' as nullable, position, in_out FROM all_arguments WHERE UPPER(owner) = :1 AND UPPER(object_name) = :2 AND OBJECT_ID = :3 AND in_out = 'OUT' ORDER BY position";
             return GetStoredProcedureParametersBase(connection, function, sql,
                                                     function.Parent.Name.ToUpper(),
                                                     function.Name.ToUpper(), int.Parse(function.ObjectId));

@@ -164,7 +164,27 @@ namespace SqlEditor.Databases.MySql
 
         public override IList<Function> GetFunctions(IDbConnection connection, string schemaName)
         {
-            throw new NotImplementedException();
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            var functions = GetFunctionsBase(connection, schemaName,
+                                  "SELECT r.specific_name, r.routine_name, '' as routine_definition FROM information_schema.routines r WHERE UPPER(r.routine_schema) = @1 AND r.routine_type = 'FUNCTION' ORDER BY r.routine_name",
+                                  schemaName.ToUpper());
+            using (var command = connection.CreateCommand())
+            {
+                foreach (var storedProcedure in functions)
+                {
+                    command.CommandText = "SHOW CREATE FUNCTION " + storedProcedure.FullyQualifiedName;
+                    using (var dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            storedProcedure.Definition = dr.IsDBNull(2) ? null : dr.GetString(2);
+                        }
+                    }
+
+                }
+            }
+            return functions;
         }
 
         public override IList<ColumnParameter> GetStoredProcedureParameters(IDbConnection connection, StoredProcedure storedProcedure)
@@ -188,12 +208,40 @@ namespace SqlEditor.Databases.MySql
 
         public override IList<ColumnParameter> GetFunctionParameters(IDbConnection connection, Function function)
         {
-            throw new NotImplementedException();
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (function == null) throw new ArgumentNullException("function");
+
+            const string sql =
+                "SELECT parameter_name, data_type, character_maximum_length, numeric_precision, numeric_scale, 'YES' as is_nullable, ordinal_position, parameter_mode  FROM information_schema.parameters WHERE UPPER(specific_schema) = @1 AND UPPER(specific_name) = @2 AND parameter_mode = 'IN' ORDER BY ordinal_position";
+            try
+            {
+                return GetStoredProcedureParametersBase(connection, function, sql,
+                                                        function.Parent.Name.ToUpper(),
+                                                        function.ObjectId.ToUpper());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Showing function parameters requires MySQL version 5.5 or greater", ex);
+            }
         }
 
         public override IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function)
         {
-            throw new NotImplementedException();
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (function == null) throw new ArgumentNullException("function");
+
+            const string sql =
+                "SELECT COALESCE(parameter_name, 'OUT') as parameter_name, data_type, character_maximum_length, numeric_precision, numeric_scale, 'YES' as is_nullable, ordinal_position, parameter_mode  FROM information_schema.parameters WHERE UPPER(specific_schema) = @1 AND UPPER(specific_name) = @2 AND parameter_mode IS NULL ORDER BY ordinal_position";
+            try
+            {
+                return GetStoredProcedureParametersBase(connection, function, sql,
+                                                        function.Parent.Name.ToUpper(),
+                                                        function.ObjectId.ToUpper());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Showing function parameters requires MySQL version 5.5 or greater", ex);
+            }
         }
 
         public override IntelisenseData GetIntelisenseData([NotNull] IDbConnection connection,

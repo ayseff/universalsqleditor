@@ -124,6 +124,19 @@ namespace SqlEditor.Databases
             return sb.ToString();
         }
 
+        public static string GenerateFunctionDropStatement(Function function, DatabaseConnection databaseConnection)
+        {
+            if (function == null) throw new ArgumentNullException("function");
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+
+            _log.DebugFormat("Generating DROP statement for function {0} ...", function.FullyQualifiedName);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("DROP FUNCTION " + function.FullyQualifiedName);
+            _log.DebugFormat("Generating complete.");
+            return sb.ToString();
+        }
+
         private static void AppendColumns(DatabaseConnection databaseConnection, StringBuilder sb, IEnumerable<Column> columns, string columnSeparator, string firstColumnSeparator)
         {
             var separator = firstColumnSeparator;
@@ -177,5 +190,7 @@ namespace SqlEditor.Databases
             table.Columns.AddRange(columns);
             table.PrimaryKeyColumns.AddRange(primaryKeyColumns);
         }
+
+        
     }
 }

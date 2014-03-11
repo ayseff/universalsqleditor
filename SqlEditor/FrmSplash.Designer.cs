@@ -52,9 +52,9 @@
             this._uaiLoadingActivity.AnimationEnabled = true;
             this._uaiLoadingActivity.AnimationSpeed = 40;
             this._uaiLoadingActivity.CausesValidation = true;
-            this._uaiLoadingActivity.Location = new System.Drawing.Point(140, 218);
+            this._uaiLoadingActivity.Location = new System.Drawing.Point(150, 217);
             this._uaiLoadingActivity.Name = "_uaiLoadingActivity";
-            this._uaiLoadingActivity.Size = new System.Drawing.Size(310, 23);
+            this._uaiLoadingActivity.Size = new System.Drawing.Size(300, 23);
             this._uaiLoadingActivity.TabIndex = 1;
             this._uaiLoadingActivity.TabStop = true;
             this._uaiLoadingActivity.ViewStyle = Infragistics.Win.UltraActivityIndicator.ActivityIndicatorViewStyle.Aero;
