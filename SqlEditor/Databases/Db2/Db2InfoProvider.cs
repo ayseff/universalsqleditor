@@ -19,13 +19,13 @@ namespace SqlEditor.Databases.Db2
             throw new NotSupportedException();
         }
 
-        public override IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance = null)
+        public override IList<Schema> GetSchemas(IDbConnection connection, string databaseInstance = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             return GetSchemasBase(connection, "SELECT schemaname FROM syscat.schemata ORDER BY schemaname WITH ur");
         }
 
-        public override IList<Table> GetTables(IDbConnection connection, string schemaName)
+        public override IList<Table> GetTables(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -34,7 +34,7 @@ namespace SqlEditor.Databases.Db2
                                  schemaName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -45,7 +45,7 @@ namespace SqlEditor.Databases.Db2
                                        tableName.Trim().ToUpper(), schemaName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -56,7 +56,7 @@ namespace SqlEditor.Databases.Db2
                                        tableName.Trim().ToUpper(), schemaName.Trim().ToUpper());
         }
 
-        public override IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -67,7 +67,7 @@ namespace SqlEditor.Databases.Db2
                                        schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<View> GetViews(IDbConnection connection, string schemaName)
+        public override IList<View> GetViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -77,7 +77,7 @@ namespace SqlEditor.Databases.Db2
                                 schemaName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName)
+        public override IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -87,7 +87,7 @@ namespace SqlEditor.Databases.Db2
                                       viewName.Trim().ToUpper(), schemaName.Trim().ToUpper());
         }
 
-        public override IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName)
+        public override IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -97,9 +97,7 @@ namespace SqlEditor.Databases.Db2
                                             schemaName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetMaterializedViewColumns([NotNull] IDbConnection connection,
-                                                                 [NotNull] string schemaName,
-                                                                 [NotNull] string materializedViewName)
+        public override IList<Column> GetMaterializedViewColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string materializedViewName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -109,7 +107,7 @@ namespace SqlEditor.Databases.Db2
                                                   materializedViewName.Trim().ToUpper(), schemaName.Trim().ToUpper());
         }
 
-        public override IList<Index> GetIndexes(IDbConnection connection, string schemaName)
+        public override IList<Index> GetIndexes(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -118,7 +116,7 @@ namespace SqlEditor.Databases.Db2
                                   schemaName.Trim().ToUpper());
         }
 
-        public override IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -128,7 +126,7 @@ namespace SqlEditor.Databases.Db2
                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -151,7 +149,7 @@ namespace SqlEditor.Databases.Db2
                 command.Parameters.Add(param);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         columnNames = dr.GetString(0).Trim().ToUpper().Split(new[] { '+' },
                                                                                       StringSplitOptions.
@@ -177,7 +175,7 @@ namespace SqlEditor.Databases.Db2
             return GetTableColumnsBase(connection, tableSchemaName, tableName, sql, parameters.Cast<object>().ToArray());
         }
 
-        public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName)
+        public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -186,7 +184,7 @@ namespace SqlEditor.Databases.Db2
                                     schemaName.Trim().ToUpper());
         }
 
-        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName)
+        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -195,7 +193,7 @@ namespace SqlEditor.Databases.Db2
                                    schemaName.Trim().ToUpper());
         }
 
-        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName)
+        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -203,7 +201,7 @@ namespace SqlEditor.Databases.Db2
                                    "SELECT tabname FROM syscat.tables WHERE TRIM(UPPER(tabschema)) = 'SYSPUBLIC' AND type = 'A' ORDER BY tabname WITH ur");
         }
 
-        public override IList<Synonym> GetSynonyms([NotNull] IDbConnection connection, [NotNull] string schemaName)
+        public override IList<Synonym> GetSynonyms([NotNull] IDbConnection connection, [NotNull] string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -212,7 +210,7 @@ namespace SqlEditor.Databases.Db2
                                    schemaName.ToUpper());
         }
 
-        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName)
+        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -221,7 +219,7 @@ namespace SqlEditor.Databases.Db2
                                   schemaName.ToUpper());
         }
 
-        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName)
+        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");

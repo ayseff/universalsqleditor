@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using SqlEditor.Databases;
+using Utilities.Collections;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes.SqlServer
 {
-    public sealed class SqlServerConnectionTreeNode : ConnectionTreeNode
+    public class SqlServerConnectionTreeNode : ConnectionTreeNode
     {
-        protected readonly List<DatabaseInstance> DatabaseInstances = new List<DatabaseInstance>();
+        private readonly List<DatabaseInstance> _databaseInstances = new List<DatabaseInstance>();
+
+        public IList<DatabaseInstance> DatabaseInstances
+        {
+            get { return _databaseInstances; }
+        }
 
         public SqlServerConnectionTreeNode(DatabaseConnection connection)
             : base(connection)
         {
-            DatabaseInstances = new List<DatabaseInstance>();
         }
 
         protected override IList<TreeNodeBase> GetNodes()

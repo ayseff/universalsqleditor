@@ -1852,6 +1852,10 @@ namespace SqlEditor
                     var nodes = await expandedNode.GetNodesAsync();
                     expandedNode.Nodes.Clear();
                     expandedNode.Nodes.AddRange(nodes.Cast<UltraTreeNode>().ToArray());
+                    if (expandedNode.Nodes.Count == 0)
+                    {
+                        expandedNode.CollapseAll();
+                    }
                     if (openWorksheet)
                     {
                         _log.Debug("Opening new worksheet ...");
@@ -1863,7 +1867,7 @@ namespace SqlEditor
             }
             catch (OperationCanceledException)
             {
-                _log.Info("Operation cancelled.");
+                _log.Info("Operation canceled.");
                 expandedNode.Reset();
             }
             catch (Exception ex)

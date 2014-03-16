@@ -30,7 +30,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                indexes = infoProvider.GetIndexes(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                indexes = infoProvider.GetIndexes(connection, Schema.Name, databaseInstanceName);
+                foreach (var idx in indexes)
+                {
+                    idx.Parent = Schema;
+                }
             }
             //Schema.Indexes.AddRange(indexes);
             _log.DebugFormat("Loaded {0} index(es).", indexes.Count);

@@ -15,12 +15,13 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 
             Synonym = synonym;
             Text = synonym.DisplayName;
-            LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["edit-replace.png"]);
+            this.Override.NodeAppearance.Image = DatabaseExplorerImageList.Instance.ImageList.Images["edit-replace.png"];
         }
 
         protected override IList<TreeNodeBase> GetNodes()
         {
-            return new List<TreeNodeBase>();
+            var targetObjectNode = new GenericTreeNode(DatabaseConnection, Synonym.TargetObjectName);
+            return new List<TreeNodeBase> { targetObjectNode };
         }
     }
 }

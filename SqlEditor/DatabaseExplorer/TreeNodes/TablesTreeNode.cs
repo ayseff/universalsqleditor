@@ -20,13 +20,17 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             _log.Debug("Loading tables ...");
-            //Schema.Tables.Clear();
             IList<Table> tables;
             using (var connection = DatabaseConnection.CreateNewConnection())
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                tables = infoProvider.GetTables(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                tables = infoProvider.GetTables(connection, Schema.Name, databaseInstanceName);
+                foreach (var table in tables)
+                {
+                    table.Parent = Schema;
+                }
             }
             //Schema.Tables.AddRange(tables);
             _log.DebugFormat("Loaded {0} table(s).", tables.Count);

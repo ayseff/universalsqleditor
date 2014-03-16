@@ -5,30 +5,30 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.MySql
 {
     public class MySqlSchemaTreeNode : SchemaTreeNode
     {
-        public MySqlSchemaTreeNode(Schema databaseInstance, DatabaseConnection databaseConnection)
-            : base(databaseInstance, databaseConnection)
+        public MySqlSchemaTreeNode(Schema schema, DatabaseConnection databaseConnection)
+            : base(schema, databaseConnection)
         { }
 
         protected override IList<TreeNodeBase> GetNodes()
         {
             var nodes = new List<TreeNodeBase>();
-            var tablesNode = new TablesTreeNode(DatabaseInstance, DatabaseConnection);
+            var tablesNode = new TablesTreeNode(Schema, DatabaseConnection);
             nodes.Add(tablesNode);
-            var viewsNode = new ViewsTreeNode(DatabaseInstance, DatabaseConnection);
+            var viewsNode = new ViewsTreeNode(Schema, DatabaseConnection);
             nodes.Add(viewsNode);
-            var indexesNode = new IndexesTreeNode(DatabaseInstance, DatabaseConnection);
+            var indexesNode = new IndexesTreeNode(Schema, DatabaseConnection);
             nodes.Add(indexesNode);
-            var storedProcedures = new StoredProceduresTreeNode(DatabaseInstance, DatabaseConnection);
+            var storedProcedures = new StoredProceduresTreeNode(Schema, DatabaseConnection);
             nodes.Add(storedProcedures);
-            var functions = new FunctionsTreeNode(DatabaseInstance, DatabaseConnection);
+            var functions = new FunctionsTreeNode(Schema, DatabaseConnection);
             nodes.Add(functions);
-            var sequencesNode = new SequencesTreeNode(DatabaseInstance, DatabaseConnection);
+            var sequencesNode = new SequencesTreeNode(Schema, DatabaseConnection);
             nodes.Add(sequencesNode);
-            var synonymsNode = new SynonymsTreeNode(DatabaseInstance, DatabaseConnection);
+            var synonymsNode = new SynonymsTreeNode(Schema, DatabaseConnection);
             nodes.Add(synonymsNode);
-            var publicSynonymsNode = new PublicSynonymsTreeNode(DatabaseInstance, DatabaseConnection);
+            var publicSynonymsNode = new PublicSynonymsTreeNode(Schema, DatabaseConnection);
             nodes.Add(publicSynonymsNode);
-            var triggerssNode = new TriggersTreeNode(DatabaseInstance, DatabaseConnection);
+            var triggerssNode = new TriggersTreeNode(Schema, DatabaseConnection);
             nodes.Add(triggerssNode);
             return nodes;
         }

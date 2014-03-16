@@ -24,7 +24,13 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 
         protected override IList<Column> GetColumns(DbInfoProvider infoProvider, IDbConnection connection)
         {
-            return infoProvider.GetTablePrimaryKeyColumns(connection, DatabaseObject.Parent.Name, DatabaseObject.Name);
+            var databaseInstanceName = DatabaseObject.Parent.Parent == null ? null : DatabaseObject.Parent.Parent.Name;
+            var columns = infoProvider.GetTablePrimaryKeyColumns(connection, DatabaseObject.Parent.Name, DatabaseObject.Name, databaseInstanceName);
+            foreach (var column in columns)
+            {
+                column.Parent = DatabaseObject;
+            }
+            return columns;
         }
     }
 }

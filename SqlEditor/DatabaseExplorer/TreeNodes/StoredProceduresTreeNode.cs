@@ -25,7 +25,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                storedProcedures = infoProvider.GetStoredProcedures(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                storedProcedures = infoProvider.GetStoredProcedures(connection, Schema.Name, databaseInstanceName);
+                foreach (var storedProcedure in storedProcedures)
+                {
+                    storedProcedure.Parent = Schema;
+                }
             }
             //Schema.StoredProcedures.AddRange(storedProcedures);
             _log.DebugFormat("Loaded {0} stored procedure(s).", storedProcedures.Count);

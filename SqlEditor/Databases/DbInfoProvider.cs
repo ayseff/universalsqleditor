@@ -46,7 +46,7 @@ namespace SqlEditor.Databases
             return databaseInstances;
         }
 
-        public abstract IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance = null);
+        public abstract IList<Schema> GetSchemas(IDbConnection connection, string databaseInstanceName = null);
         protected virtual IList<Schema> GetSchemasBase(IDbConnection connection, [NotNull] string sql, params object[] parameters)
         {
             if (connection == null) throw new ArgumentNullException("connection");
@@ -69,7 +69,7 @@ namespace SqlEditor.Databases
             return schemas;
         }
 
-        public abstract IList<Table> GetTables(IDbConnection connection, string schemaName);
+        public abstract IList<Table> GetTables(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Table> GetTablesBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -98,14 +98,14 @@ namespace SqlEditor.Databases
             return tables;
         }
 
-        public abstract IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName);
-        public Task<IList<Column>> GetTableColumnsAsync(IDbConnection connection, string schemaName, string tableName)
+        public abstract IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
+        public Task<IList<Column>> GetTableColumnsAsync(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName)
         {
-            var task = Task.Run(() => GetTableColumns(connection, schemaName, tableName));
+            var task = Task.Run(() => GetTableColumns(connection, schemaName, tableName, databaseInstanceName));
             return task;
         }
 
-        public abstract IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName);
+        public abstract IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
         public Task<IList<Column>> GetTablePrimaryKeyColumnsAsync(IDbConnection connection, string schemaName, string tableName)
         {
             var task = Task.Run(() => GetTablePrimaryKeyColumns(connection, schemaName, tableName));
@@ -124,7 +124,7 @@ namespace SqlEditor.Databases
             return  GetObjectColumns(connection, schemaName, table, sql, parameters);
         }
 
-        public abstract IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName);
+        public abstract IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
         protected virtual IList<Partition> GetTablePartitionsBase(IDbConnection connection, string schemaName, string tableName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -154,7 +154,7 @@ namespace SqlEditor.Databases
             return partitions;
         }
 
-        public abstract IList<View> GetViews(IDbConnection connection, string schemaName);
+        public abstract IList<View> GetViews(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<View> GetViewsBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -182,7 +182,7 @@ namespace SqlEditor.Databases
             return views;
         }
 
-        public abstract IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName);
+        public abstract IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName, string databaseInstanceName = null);
         protected virtual IList<Column> GetViewColumnsBase([NotNull] IDbConnection connection, [NotNull] string schemaName,
                                                      [NotNull] string viewName, [NotNull] string sql, params object[] parameters)
         {
@@ -195,7 +195,7 @@ namespace SqlEditor.Databases
             return GetObjectColumns(connection, schemaName, view, sql, parameters);
         }
 
-        public abstract IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName);
+        public abstract IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<MaterializedView> GetMaterializedViewsBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -225,7 +225,7 @@ namespace SqlEditor.Databases
         }
 
         public abstract IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName,
-                                                                 string materializedViewName);
+                                                                 string materializedViewName, string databaseInstanceName = null);
         protected virtual IList<Column> GetMaterializedViewColumnsBase([NotNull] IDbConnection connection, [NotNull] string schemaName,
                                                      [NotNull] string mViewName, [NotNull] string sql, params object[] parameters)
         {
@@ -239,7 +239,7 @@ namespace SqlEditor.Databases
         }
 
 
-        public abstract IList<Index> GetIndexes(IDbConnection connection, string schemaName);
+        public abstract IList<Index> GetIndexes(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Index> GetIndexesBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -276,9 +276,9 @@ namespace SqlEditor.Databases
             return indices;
         }
 
-        public abstract IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName);
+        public abstract IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
 
-        public abstract IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName);
+        public abstract IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null);
         protected virtual IList<Column> GetIndexColumnsBase([NotNull] IDbConnection connection,
                                                             [NotNull] string schemaName, [NotNull] string indexName,
                                                             [NotNull] string sql,
@@ -292,7 +292,7 @@ namespace SqlEditor.Databases
             return GetObjectColumns(connection, schemaName, new Index(indexName, schema), sql, parameters);
         }
 
-        public abstract IList<Sequence> GetSequences(IDbConnection connection, string schemaName);
+        public abstract IList<Sequence> GetSequences(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Sequence> GetSequencesBase(IDbConnection connection, string schemaName,
                                                            [NotNull] string sql, params object[] parameters)
         {
@@ -329,7 +329,7 @@ namespace SqlEditor.Databases
             return sequences;
         }
 
-        public abstract IList<Trigger> GetTriggers(IDbConnection connection, string schemaName);
+        public abstract IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Trigger> GetTriggersBase(IDbConnection connection, string schemaName, [NotNull] string sql, params object[] parameters)
         {
             if (connection == null) throw new ArgumentNullException("connection");
@@ -357,8 +357,8 @@ namespace SqlEditor.Databases
             return triggers;
         }
 
-        public abstract IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName);
-        public abstract IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName);
+        public abstract IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null);
+        public abstract IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Synonym> GetSynonymsBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -387,7 +387,7 @@ namespace SqlEditor.Databases
             return synonyms;
         }
 
-        public abstract IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName);
+        public abstract IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<StoredProcedure> GetStoredProceduresBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -417,7 +417,7 @@ namespace SqlEditor.Databases
             return storedProcedures;
         }
 
-        public abstract IList<Function> GetFunctions(IDbConnection connection, string schemaName);
+        public abstract IList<Function> GetFunctions(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Function> GetFunctionsBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -473,6 +473,7 @@ namespace SqlEditor.Databases
                     while (dr.Read())
                     {
                         var parameter = GetParameter(dr, storedProcedure);
+                        parameter.Parent = storedProcedure;
                         storedProcedureParameters.Add(parameter);
                     }
                 }

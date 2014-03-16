@@ -20,13 +20,13 @@ namespace SqlEditor.Databases.Oracle
             throw new NotSupportedException();
         }
 
-        public override IList<Schema> GetSchemas(IDbConnection connection, DatabaseInstance databaseInstance = null)
+        public override IList<Schema> GetSchemas(IDbConnection connection, string databaseInstance = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             return GetSchemasBase(connection, "SELECT username FROM all_users ORDER BY username");
         }
 
-        public override IList<Table> GetTables(IDbConnection connection, string schemaName)
+        public override IList<Table> GetTables(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -35,7 +35,7 @@ namespace SqlEditor.Databases.Oracle
                                  schemaName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -45,7 +45,7 @@ namespace SqlEditor.Databases.Oracle
                                        tableName.Trim().ToUpper(), schemaName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -55,8 +55,7 @@ namespace SqlEditor.Databases.Oracle
                                        tableName.Trim().ToUpper(), schemaName.Trim().ToUpper());
         }
 
-        public override IList<Partition> GetTablePartitions([NotNull] IDbConnection connection,
-                                                            [NotNull] string schemaName, [NotNull] string tableName)
+        public override IList<Partition> GetTablePartitions([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -66,7 +65,7 @@ namespace SqlEditor.Databases.Oracle
                                           schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<View> GetViews(IDbConnection connection, string schemaName)
+        public override IList<View> GetViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return GetViewsBase(connection, schemaName,
                                 "SELECT VIEW_NAME FROM ALL_VIEWS WHERE UPPER(owner) = :1 ORDER BY VIEW_NAME",
@@ -88,8 +87,7 @@ namespace SqlEditor.Databases.Oracle
             //return views;
         }
 
-        public override IList<Column> GetViewColumns([NotNull] IDbConnection connection, [NotNull] string schemaName,
-                                                     [NotNull] string viewName)
+        public override IList<Column> GetViewColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string viewName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -133,8 +131,7 @@ namespace SqlEditor.Databases.Oracle
             //return views;
         }
 
-        public override IList<MaterializedView> GetMaterializedViews([NotNull] IDbConnection connection,
-                                                                     [NotNull] string schemaName)
+        public override IList<MaterializedView> GetMaterializedViews([NotNull] IDbConnection connection, [NotNull] string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -143,8 +140,7 @@ namespace SqlEditor.Databases.Oracle
                                             schemaName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName,
-                                                                 string materializedViewName)
+        public override IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName, string materializedViewName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -155,7 +151,7 @@ namespace SqlEditor.Databases.Oracle
                                       schemaName.Trim().ToUpper(), materializedViewName.Trim().ToUpper());
         }
 
-        public override IList<Index> GetIndexes([NotNull] IDbConnection connection, [NotNull] string schemaName)
+        public override IList<Index> GetIndexes([NotNull] IDbConnection connection, [NotNull] string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -164,8 +160,7 @@ namespace SqlEditor.Databases.Oracle
                                   schemaName.Trim().ToUpper());
         }
 
-        public override IList<Index> GetIndexesForTable([NotNull] IDbConnection connection, [NotNull] string schemaName,
-                                                        [NotNull] string tableName)
+        public override IList<Index> GetIndexesForTable([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -175,8 +170,7 @@ namespace SqlEditor.Databases.Oracle
                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, [NotNull] string schemaName,
-                                                      [NotNull] string indexName)
+        public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string indexName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -186,7 +180,7 @@ namespace SqlEditor.Databases.Oracle
                                        schemaName.Trim().ToUpper(), indexName.Trim().ToUpper());
         }
 
-        public override IList<Sequence> GetSequences([NotNull] IDbConnection connection, [NotNull] string schemaName)
+        public override IList<Sequence> GetSequences([NotNull] IDbConnection connection, [NotNull] string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -195,7 +189,7 @@ namespace SqlEditor.Databases.Oracle
                                     schemaName.Trim().ToUpper());
         }
 
-        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName)
+        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -204,7 +198,7 @@ namespace SqlEditor.Databases.Oracle
                                    schemaName.Trim().ToUpper());
         }
 
-        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName)
+        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -213,7 +207,7 @@ namespace SqlEditor.Databases.Oracle
                                    schemaName.Trim().ToUpper());
         }
 
-        public override IList<Synonym> GetSynonyms([NotNull] IDbConnection connection, [NotNull] string schemaName)
+        public override IList<Synonym> GetSynonyms([NotNull] IDbConnection connection, [NotNull] string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -221,7 +215,7 @@ namespace SqlEditor.Databases.Oracle
                                    "SELECT synonym_name, table_name FROM user_synonyms ORDER BY synonym_name");
         }
 
-        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName)
+        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -237,7 +231,7 @@ namespace SqlEditor.Databases.Oracle
                                                             }).ToList();
         }
 
-        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName)
+        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");

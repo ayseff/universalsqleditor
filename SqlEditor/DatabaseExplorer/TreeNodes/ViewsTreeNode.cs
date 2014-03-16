@@ -33,7 +33,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                views = infoProvider.GetViews(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                views = infoProvider.GetViews(connection, Schema.Name, databaseInstanceName);
+                foreach (var view in views)
+                {
+                    view.Parent = Schema;
+                }
             }
             //Schema.Views.AddRange(views);
             _log.DebugFormat("Loaded {0} view(s).", views.Count);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ICSharpCode.TextEditor.Actions;
 using SqlEditor.Annotations;
 using SqlEditor.DatabaseExplorer;
 using Utilities.Collections;
@@ -30,7 +31,8 @@ namespace SqlEditor.Databases
                 using (var connection = await databaseConnection.CreateNewConnectionAsync())
                 {
                     await connection.OpenIfRequiredAsync();
-                    columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name);
+                    var databaseInstanceName = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
+                    columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
                     _log.DebugFormat("Fetching complete.");
                 }
                 table.Columns.AddRange(columns);
@@ -178,7 +180,8 @@ namespace SqlEditor.Databases
             using (var connection = await databaseConnection.CreateNewConnectionAsync())
             {
                 await connection.OpenIfRequiredAsync();
-                columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name);
+                var databaseInstanceName = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
+                columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
                 primaryKeyColumns =
                     await infoProvider.GetTablePrimaryKeyColumnsAsync(connection, table.Parent.Name, table.Name);
                 primaryKeyColumns =

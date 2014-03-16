@@ -190,12 +190,14 @@
     <Compile Include="CloseAction.cs" />
     <Compile Include="DatabaseExplorer\Extensions.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Base\TreeNodeFactory.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\DatabaseInstanceTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Db2\Db2SchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Db2\Db2ConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\FunctionParametersTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\FunctionReturnValuesTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\FunctionsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\FunctionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\GenericTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MsAccess\MsAccessConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlSchemaTreeNode.cs" />

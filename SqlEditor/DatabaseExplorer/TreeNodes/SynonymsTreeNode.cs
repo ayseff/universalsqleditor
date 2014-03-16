@@ -26,7 +26,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                synonyms = infoProvider.GetSynonyms(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                synonyms = infoProvider.GetSynonyms(connection, Schema.Name, databaseInstanceName);
+                foreach (var synonym in synonyms)
+                {
+                    synonym.Parent = Schema;
+                }
             }
             //Schema.Synonyms.AddRange(synonyms);
             _log.DebugFormat("Loaded {0} synonym(s).", synonyms.Count);

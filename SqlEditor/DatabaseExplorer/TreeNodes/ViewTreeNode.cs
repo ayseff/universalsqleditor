@@ -29,22 +29,6 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             nodes.Add(tableColumnsNode);
 
             return nodes;
-
-            //_log.DebugFormat("Loading columns for view {0} ...", View.FullyQualifiedName);
-            //View.Clear();
-            //IList<Column> columns;
-            //using (var connection = DatabaseConnection.CreateNewConnection())
-            //{
-            //    connection.OpenIfRequired();
-            //    var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-            //    columns = infoProvider.GetViewColumns(connection, View.Parent.Name, View.Name);
-            //}
-            //_log.DebugFormat("Loaded {0} column(s).", columns.Count);
-
-
-            //var columnNodes =
-            //    columns.Select(x => new ColumnTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
-            //return columnNodes;
         }
     }
 }

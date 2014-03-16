@@ -26,7 +26,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                sequences = infoProvider.GetSequences(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                sequences = infoProvider.GetSequences(connection, Schema.Name, databaseInstanceName);
+                foreach (var sequence in sequences)
+                {
+                    sequence.Parent = Schema;
+                }
             }
             //Schema.Sequences.AddRange(sequences);
             _log.DebugFormat("Loaded {0} sequence(s).", sequences.Count);

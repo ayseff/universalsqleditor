@@ -25,7 +25,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                functions = infoProvider.GetFunctions(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                functions = infoProvider.GetFunctions(connection, Schema.Name, databaseInstanceName);
+                foreach (var function in functions)
+                {
+                    function.Parent = Schema;
+                }
             }
             //Schema.StoredProcedures.AddRange(storedProcedures);
             _log.DebugFormat("Loaded {0} function(s).", functions.Count);

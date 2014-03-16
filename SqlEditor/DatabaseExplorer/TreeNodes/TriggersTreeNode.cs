@@ -26,7 +26,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                triggers = infoProvider.GetTriggers(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                triggers = infoProvider.GetTriggers(connection, Schema.Name, databaseInstanceName);
+                foreach (var trigger in triggers)
+                {
+                    trigger.Parent = Schema;
+                }
             }
             //Schema.Triggers.AddRange(triggers);
             _log.DebugFormat("Loaded {0} trigger(s).", triggers.Count);
