@@ -11,12 +11,17 @@ namespace SqlEditor.Databases.SqlCe
         private const string DEFAULT_SCHEMA = "MAIN";
         private static readonly Schema _defaultSchema = new Schema(string.Empty, DEFAULT_SCHEMA);
 
-        public override IList<Schema> GetSchemas(IDbConnection connection)
+        public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
         {
-            return new List<Schema>(new[] { _defaultSchema });
+            throw new NotSupportedException();
         }
 
-        public override IList<Table> GetTables(IDbConnection connection, string schemaName)
+        public override IList<Schema> GetSchemas(IDbConnection connection, string databaseInstance = null)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override IList<Table> GetTables(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -24,7 +29,7 @@ namespace SqlEditor.Databases.SqlCe
                                  "SELECT table_name FROM information_schema.tables WHERE TABLE_TYPE <> N'SYSTEM TABLE' ORDER BY table_name");
         }
 
-        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -35,7 +40,7 @@ namespace SqlEditor.Databases.SqlCe
                                        tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -46,33 +51,32 @@ namespace SqlEditor.Databases.SqlCe
                                        tableName.Trim().ToUpper());
         }
 
-        public override IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             return new List<Partition>();
         }
 
-        public override IList<View> GetViews(IDbConnection connection, string schemaName)
+        public override IList<View> GetViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<View>();
         }
 
-        public override IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName)
+        public override IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName, string databaseInstanceName = null)
         {
             return new List<Column>();
         }
 
-        public override IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName)
+        public override IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<MaterializedView>();
         }
 
-        public override IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName,
-                                                                 string materializedViewName)
+        public override IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName, string materializedViewName, string databaseInstanceName = null)
         {
             return new List<Column>();
         }
 
-        public override IList<Index> GetIndexes(IDbConnection connection, string schemaName)
+        public override IList<Index> GetIndexes(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -80,7 +84,7 @@ namespace SqlEditor.Databases.SqlCe
                                   "SELECT DISTINCT '" + DEFAULT_SCHEMA + "', idx.index_name, CASE WHEN idx.[unique]= 1 THEN 1 ELSE 0 END AS is_unique  FROM information_schema.indexes as idx ORDER BY idx.index_name");
         }
 
-        public override IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -89,7 +93,7 @@ namespace SqlEditor.Databases.SqlCe
                                   "SELECT DISTINCT '" + DEFAULT_SCHEMA + "', idx.index_name, CASE WHEN idx.[unique]= 1 THEN 1 ELSE 0 END AS is_unique  FROM information_schema.indexes as idx WHERE UPPER(table_name) = @1 ORDER BY idx.index_name", tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (indexName == null) throw new ArgumentNullException("indexName");
@@ -98,34 +102,49 @@ namespace SqlEditor.Databases.SqlCe
                                        indexName.Trim().ToUpper());
         }
 
-        public override IList<Sequence> GetSequences(IDbConnection connection, string schema)
+        public override IList<Sequence> GetSequences(IDbConnection connection, string schema, string databaseInstanceName = null)
         {
             return new List<Sequence>();
         }
 
-        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName)
+        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Trigger>();
         }
 
-        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName)
+        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Synonym>();
         }
 
-        public override IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName)
+        public override IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Synonym>();
         }
 
-        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName)
+        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<StoredProcedure>();
+        }
+
+        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
         }
 
         public override IList<ColumnParameter> GetStoredProcedureParameters(IDbConnection connection, StoredProcedure storedProcedure)
         {
             return new List<ColumnParameter>();
+        }
+
+        public override IList<ColumnParameter> GetFunctionParameters(IDbConnection connection, Function function)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function)
+        {
+            throw new NotImplementedException();
         }
 
         public override IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName)

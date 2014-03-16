@@ -30,7 +30,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 {
                     connection.OpenIfRequired();
                     var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                    partitions = infoProvider.GetTablePartitions(connection, Table.Parent.Name, Table.Name);
+                    var databaseInstanceName = Table.Parent.Parent == null ? null : Table.Parent.Parent.Name;
+                    partitions = infoProvider.GetTablePartitions(connection, Table.Parent.Name, Table.Name, databaseInstanceName);
+                    foreach (var partition in partitions)
+                    {
+                        partition.Parent = Table;
+                    }
                 }
                 Table.Partitions.AddRange(partitions);
                 _log.DebugFormat("Loaded {0} partition(s).", partitions.Count);

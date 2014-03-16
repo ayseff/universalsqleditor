@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace SqlEditor
 {
@@ -14,6 +15,7 @@ namespace SqlEditor
         {
             InitializeComponent();
             _lblVersion.Text = "Version " + Application.ProductVersion;
+            _uaiLoadingActivity.Location = new Point(150, _uaiLoadingActivity.Location.Y);
         }
 
         public void CloseForm()

@@ -16,7 +16,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             Column = column;
             Nodes.Clear();
             Text = column.DisplayName;
-            LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["column_single.png"]);
+            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["column_single.png"]);
+            this.Override.NodeAppearance.Image =
+                DatabaseExplorerImageList.Instance.ImageList.Images["column_single.png"];
             IsLoaded = true;
         }
 

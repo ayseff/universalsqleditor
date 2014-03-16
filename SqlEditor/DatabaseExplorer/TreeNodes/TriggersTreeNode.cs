@@ -8,9 +8,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public sealed class TriggersTreeNode : FolderContainerTreeNode
     {
-        public Schema Schema { get; protected set; }
+        public DatabaseObject Schema { get; protected set; }
 
-        public TriggersTreeNode(Schema schema, DatabaseConnection databaseConnection)
+        public TriggersTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
             : base("Triggers", databaseConnection)
         {
             if (schema == null) throw new ArgumentNullException("schema");
@@ -20,15 +20,20 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             _log.Debug("Loading triggers ...");
-            Schema.Tables.Clear();
+            //Schema.Tables.Clear();
             IList<Trigger> triggers;
             using (var connection = DatabaseConnection.CreateNewConnection())
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                triggers = infoProvider.GetTriggers(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                triggers = infoProvider.GetTriggers(connection, Schema.Name, databaseInstanceName);
+                foreach (var trigger in triggers)
+                {
+                    trigger.Parent = Schema;
+                }
             }
-            Schema.Triggers.AddRange(triggers);
+            //Schema.Triggers.AddRange(triggers);
             _log.DebugFormat("Loaded {0} trigger(s).", triggers.Count);
 
             var nodes = triggers.Select(x => new TriggerTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();

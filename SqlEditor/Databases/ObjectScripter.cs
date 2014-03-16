@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ICSharpCode.TextEditor.Actions;
 using SqlEditor.Annotations;
 using SqlEditor.DatabaseExplorer;
 using Utilities.Collections;
@@ -30,7 +31,8 @@ namespace SqlEditor.Databases
                 using (var connection = await databaseConnection.CreateNewConnectionAsync())
                 {
                     await connection.OpenIfRequiredAsync();
-                    columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name);
+                    var databaseInstanceName = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
+                    columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
                     _log.DebugFormat("Fetching complete.");
                 }
                 table.Columns.AddRange(columns);
@@ -124,6 +126,19 @@ namespace SqlEditor.Databases
             return sb.ToString();
         }
 
+        public static string GenerateFunctionDropStatement(Function function, DatabaseConnection databaseConnection)
+        {
+            if (function == null) throw new ArgumentNullException("function");
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+
+            _log.DebugFormat("Generating DROP statement for function {0} ...", function.FullyQualifiedName);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("DROP FUNCTION " + function.FullyQualifiedName);
+            _log.DebugFormat("Generating complete.");
+            return sb.ToString();
+        }
+
         private static void AppendColumns(DatabaseConnection databaseConnection, StringBuilder sb, IEnumerable<Column> columns, string columnSeparator, string firstColumnSeparator)
         {
             var separator = firstColumnSeparator;
@@ -165,7 +180,8 @@ namespace SqlEditor.Databases
             using (var connection = await databaseConnection.CreateNewConnectionAsync())
             {
                 await connection.OpenIfRequiredAsync();
-                columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name);
+                var databaseInstanceName = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
+                columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
                 primaryKeyColumns =
                     await infoProvider.GetTablePrimaryKeyColumnsAsync(connection, table.Parent.Name, table.Name);
                 primaryKeyColumns =
@@ -177,5 +193,7 @@ namespace SqlEditor.Databases
             table.Columns.AddRange(columns);
             table.PrimaryKeyColumns.AddRange(primaryKeyColumns);
         }
+
+        
     }
 }

@@ -45,7 +45,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         #endregion
 
 
-        #region Contructors
+        #region Constructors
         protected TreeNodeBase(DatabaseConnection databaseConnection)
             : base(Guid.NewGuid().ToString())
         {

@@ -189,7 +189,27 @@
     <Compile Include="ActionStatusManager.cs" />
     <Compile Include="CloseAction.cs" />
     <Compile Include="DatabaseExplorer\Extensions.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Base\TreeNodeFactory.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\DatabaseInstanceTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Db2\Db2SchemaTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Db2\Db2ConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FunctionParametersTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FunctionReturnValuesTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FunctionsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\FunctionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\GenericTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\MsAccess\MsAccessConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlSchemaTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\PublicSynonymsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SchemasTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SqlCe\SqliteConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Sqlite\SqliteConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerSchemaTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerDatabaseInstanceTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\StoredProcedureParametersTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\StoredProceduresTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\StoredProcedureTreeNode.cs" />
@@ -209,6 +229,8 @@
     <Compile Include="DatabaseExplorer\TreeNodes\SequenceTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SequencesTreeNode.cs" />
     <Compile Include="Databases\ColumnParameter.cs" />
+    <Compile Include="Databases\DatabaseInstance.cs" />
+    <Compile Include="Databases\Function.cs" />
     <Compile Include="Databases\MySql\MySqlInfoProvider.cs" />
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />
@@ -466,7 +488,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Connections.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
     <Content Include="References\IBM.Data.DB2.dll" />
@@ -550,6 +572,7 @@
       <Name>SqlEditor.SqlParser</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -4,20 +4,19 @@ using SqlEditor.Databases;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
-    public sealed class SchemaTreeNode : TreeNodeBase
+    public class SchemaTreeNode : TreeNodeBase
     {
+        public Schema Schema { get; protected set; }
+
         public SchemaTreeNode(Schema schema, DatabaseConnection databaseConnection)
             : base(databaseConnection)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
             Text = schema.DisplayName;
-            LeftImages.Add(
-                DatabaseExplorerImageList.Instance.ImageList.Images[
-                    DatabaseServerFactory.Instance.GetSchemaImage(DatabaseConnection.DatabaseServer)]);
+            this.Override.NodeAppearance.Image = DatabaseExplorerImageList.Instance.ImageList.Images[
+                DatabaseServerFactory.Instance.GetSchemaImage(DatabaseConnection.DatabaseServer)];
         }
-
-        public Schema Schema { get; protected set; }
 
         protected override IList<TreeNodeBase> GetNodes()
         {

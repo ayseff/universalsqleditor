@@ -2,16 +2,22 @@
 {
     public abstract class FolderContainerTreeNode : TreeNodeBase
     {
-        protected FolderContainerTreeNode(DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        protected FolderContainerTreeNode(DatabaseConnection databaseConnection, string displayText = "", string imageName = "folder-horizontal.png", string expandedImageName = "folder-horizontal-open.png")
+            : base(displayText, databaseConnection)
         {
-            LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images["folder.png"]);
+            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images[imageName]);
+            this.Override.NodeAppearance.Image = DatabaseExplorerImageList.Instance.ImageList.Images[imageName];
+            if (expandedImageName != null)
+            {
+                this.Override.ExpandedNodeAppearance.Image =
+                    DatabaseExplorerImageList.Instance.ImageList.Images[expandedImageName];
+            }
         }
 
-        protected FolderContainerTreeNode(string text, DatabaseConnection databaseConnection)
+        protected FolderContainerTreeNode(string displayText, DatabaseConnection databaseConnection)
             : this(databaseConnection)
         {
-            Text = text;
+            Text = displayText;
         }
     }
 }

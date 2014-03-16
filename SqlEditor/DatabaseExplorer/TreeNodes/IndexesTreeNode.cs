@@ -13,9 +13,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public sealed class IndexesTreeNode : FolderContainerTreeNode
     {
-        public Schema Schema { get; private set; }
+        public DatabaseObject Schema { get; private set; }
 
-        public IndexesTreeNode(Schema schema, DatabaseConnection databaseConnection)
+        public IndexesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
             : base("Indexes", databaseConnection)
         {
             Schema = schema;
@@ -24,15 +24,20 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             _log.Debug("Loading indexes ...");
-            Schema.Indexes.Clear();
+            //Schema.Indexes.Clear();
             IList<Index> indexes;
             using (var connection = DatabaseConnection.CreateNewConnection())
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                indexes = infoProvider.GetIndexes(connection, Schema.Name);
+                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                indexes = infoProvider.GetIndexes(connection, Schema.Name, databaseInstanceName);
+                foreach (var idx in indexes)
+                {
+                    idx.Parent = Schema;
+                }
             }
-            Schema.Indexes.AddRange(indexes);
+            //Schema.Indexes.AddRange(indexes);
             _log.DebugFormat("Loaded {0} index(es).", indexes.Count);
 
             var indexNodes =

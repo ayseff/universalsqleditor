@@ -23,7 +23,30 @@ namespace SqlEditor.Databases
         protected virtual void AfterRunQuery(IDbConnection connection, string schemaName)
         {}
 
-        public abstract IList<Schema> GetSchemas(IDbConnection connection);
+        public abstract IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection);
+        protected virtual IList<DatabaseInstance> GetDatabaseInstancesBase(IDbConnection connection, [NotNull] string sql, params object[] parameters)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (sql == null) throw new ArgumentNullException("sql");
+
+            _log.Debug("Getting databases ...");
+            var databaseInstances = new List<DatabaseInstance>();
+            using (var command = connection.CreateCommand())
+            {
+                BuildSqlCommand(command, sql, parameters);
+                using (var dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        databaseInstances.Add(new DatabaseInstance(dr.GetString(0)));
+                    }
+                }
+            }
+            _log.DebugFormat("Retrieved {0} database(s).", databaseInstances.Count);
+            return databaseInstances;
+        }
+
+        public abstract IList<Schema> GetSchemas(IDbConnection connection, string databaseInstanceName = null);
         protected virtual IList<Schema> GetSchemasBase(IDbConnection connection, [NotNull] string sql, params object[] parameters)
         {
             if (connection == null) throw new ArgumentNullException("connection");
@@ -36,7 +59,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         schemas.Add(new Schema(dr.GetString(0)));
                     }
@@ -46,7 +69,7 @@ namespace SqlEditor.Databases
             return schemas;
         }
 
-        public abstract IList<Table> GetTables(IDbConnection connection, string schemaName);
+        public abstract IList<Table> GetTables(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Table> GetTablesBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -63,7 +86,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var table = new Table(dr.GetString(0), schema);
                         tables.Add(table);
@@ -75,14 +98,14 @@ namespace SqlEditor.Databases
             return tables;
         }
 
-        public abstract IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName);
-        public Task<IList<Column>> GetTableColumnsAsync(IDbConnection connection, string schemaName, string tableName)
+        public abstract IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
+        public Task<IList<Column>> GetTableColumnsAsync(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName)
         {
-            var task = Task.Run(() => GetTableColumns(connection, schemaName, tableName));
+            var task = Task.Run(() => GetTableColumns(connection, schemaName, tableName, databaseInstanceName));
             return task;
         }
 
-        public abstract IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName);
+        public abstract IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
         public Task<IList<Column>> GetTablePrimaryKeyColumnsAsync(IDbConnection connection, string schemaName, string tableName)
         {
             var task = Task.Run(() => GetTablePrimaryKeyColumns(connection, schemaName, tableName));
@@ -101,7 +124,7 @@ namespace SqlEditor.Databases
             return  GetObjectColumns(connection, schemaName, table, sql, parameters);
         }
 
-        public abstract IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName);
+        public abstract IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
         protected virtual IList<Partition> GetTablePartitionsBase(IDbConnection connection, string schemaName, string tableName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -119,7 +142,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var partition = new Partition(dr.GetString(0).Trim().ToUpper(), table);
                         partitions.Add(partition);
@@ -131,7 +154,7 @@ namespace SqlEditor.Databases
             return partitions;
         }
 
-        public abstract IList<View> GetViews(IDbConnection connection, string schemaName);
+        public abstract IList<View> GetViews(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<View> GetViewsBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -148,7 +171,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var view = new View(dr.GetString(0).Trim().ToUpper(), schema);
                         views.Add(view);
@@ -159,7 +182,7 @@ namespace SqlEditor.Databases
             return views;
         }
 
-        public abstract IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName);
+        public abstract IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName, string databaseInstanceName = null);
         protected virtual IList<Column> GetViewColumnsBase([NotNull] IDbConnection connection, [NotNull] string schemaName,
                                                      [NotNull] string viewName, [NotNull] string sql, params object[] parameters)
         {
@@ -172,7 +195,7 @@ namespace SqlEditor.Databases
             return GetObjectColumns(connection, schemaName, view, sql, parameters);
         }
 
-        public abstract IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName);
+        public abstract IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<MaterializedView> GetMaterializedViewsBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -189,7 +212,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var view = new MaterializedView(dr.GetString(0).Trim().ToUpper(), schema);
                         views.Add(view);
@@ -202,7 +225,7 @@ namespace SqlEditor.Databases
         }
 
         public abstract IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName,
-                                                                 string materializedViewName);
+                                                                 string materializedViewName, string databaseInstanceName = null);
         protected virtual IList<Column> GetMaterializedViewColumnsBase([NotNull] IDbConnection connection, [NotNull] string schemaName,
                                                      [NotNull] string mViewName, [NotNull] string sql, params object[] parameters)
         {
@@ -216,7 +239,7 @@ namespace SqlEditor.Databases
         }
 
 
-        public abstract IList<Index> GetIndexes(IDbConnection connection, string schemaName);
+        public abstract IList<Index> GetIndexes(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Index> GetIndexesBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -233,7 +256,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var schemaNameQuery = dr.GetString(0).Trim().ToUpper();
                         if (schema == null || schema.Name != schemaNameQuery)
@@ -253,9 +276,9 @@ namespace SqlEditor.Databases
             return indices;
         }
 
-        public abstract IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName);
+        public abstract IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
 
-        public abstract IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName);
+        public abstract IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null);
         protected virtual IList<Column> GetIndexColumnsBase([NotNull] IDbConnection connection,
                                                             [NotNull] string schemaName, [NotNull] string indexName,
                                                             [NotNull] string sql,
@@ -269,7 +292,7 @@ namespace SqlEditor.Databases
             return GetObjectColumns(connection, schemaName, new Index(indexName, schema), sql, parameters);
         }
 
-        public abstract IList<Sequence> GetSequences(IDbConnection connection, string schemaName);
+        public abstract IList<Sequence> GetSequences(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Sequence> GetSequencesBase(IDbConnection connection, string schemaName,
                                                            [NotNull] string sql, params object[] parameters)
         {
@@ -286,7 +309,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         if (dr.IsDBNull(0))
                         {
@@ -306,7 +329,7 @@ namespace SqlEditor.Databases
             return sequences;
         }
 
-        public abstract IList<Trigger> GetTriggers(IDbConnection connection, string schemaName);
+        public abstract IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Trigger> GetTriggersBase(IDbConnection connection, string schemaName, [NotNull] string sql, params object[] parameters)
         {
             if (connection == null) throw new ArgumentNullException("connection");
@@ -322,7 +345,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var trigger = new Trigger(dr.GetString(0).Trim().ToUpper(), schema);
                         triggers.Add(trigger);
@@ -334,8 +357,8 @@ namespace SqlEditor.Databases
             return triggers;
         }
 
-        public abstract IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName);
-        public abstract IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName);
+        public abstract IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null);
+        public abstract IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Synonym> GetSynonymsBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -352,7 +375,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var synonym = new Synonym(dr.GetString(0).Trim().ToUpper(), schema);
                         synonym.TargetObjectName = dr.GetString(1);
@@ -364,7 +387,7 @@ namespace SqlEditor.Databases
             return synonyms;
         }
 
-        public abstract IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName);
+        public abstract IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<StoredProcedure> GetStoredProceduresBase(IDbConnection connection, string schemaName,
                                                          [NotNull] string sql, params object[] parameters)
         {
@@ -381,7 +404,7 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var storedProcedure = new StoredProcedure(dr.GetString(1).Trim().ToUpper(), schema);
                         storedProcedure.ObjectId = dr[0].ToString();
@@ -392,6 +415,36 @@ namespace SqlEditor.Databases
             }
             _log.DebugFormat("Retrieved {0} stored procedure(s).", storedProcedures.Count.ToString("#,0"));
             return storedProcedures;
+        }
+
+        public abstract IList<Function> GetFunctions(IDbConnection connection, string schemaName, string databaseInstanceName = null);
+        protected virtual IList<Function> GetFunctionsBase(IDbConnection connection, string schemaName,
+                                                         [NotNull] string sql, params object[] parameters)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (sql == null) throw new ArgumentNullException("sql");
+
+            _log.DebugFormat("Getting functions for schema {0} ...", schemaName);
+            BeforeRunQuery(connection, schemaName);
+            var schema = new Schema(schemaName);
+            var functions = new List<Function>();
+            using (var command = connection.CreateCommand())
+            {
+                BuildSqlCommand(command, sql, parameters);
+                using (var dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var function = new Function(dr.GetString(1).Trim().ToUpper(), schema);
+                        function.ObjectId = dr[0].ToString();
+                        function.Definition = dr.IsDBNull(2) ? null : dr.GetString(2);
+                        functions.Add(function);
+                    }
+                }
+            }
+            _log.DebugFormat("Retrieved {0} function(s).", functions.Count.ToString("#,0"));
+            return functions;
         }
 
 
@@ -417,9 +470,10 @@ namespace SqlEditor.Databases
                 BuildSqlCommand(command, sql, parameters);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var parameter = GetParameter(dr, storedProcedure);
+                        parameter.Parent = storedProcedure;
                         storedProcedureParameters.Add(parameter);
                     }
                 }
@@ -427,6 +481,11 @@ namespace SqlEditor.Databases
             _log.DebugFormat("Retrieved {0} stored procedure parameter(s).", storedProcedureParameters.Count.ToString("#,0"));
             return storedProcedureParameters;
         }
+
+        public abstract IList<ColumnParameter> GetFunctionParameters([NotNull] IDbConnection connection,
+                                                                           [NotNull] Function function);
+
+        public abstract IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function);
 
 
         public abstract IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName);
@@ -446,84 +505,81 @@ namespace SqlEditor.Databases
                 command.CommandText = string.Format("SELECT * FROM {0}", databaseObjectWithColumns.FullyQualifiedName);
                 using (var dr = command.ExecuteReader(CommandBehavior.SchemaOnly))
                 {
-                    if (dr != null)
+                    var schemaTable = dr.GetSchemaTable();
+                    var enums = typeof(T).GetEnumValues();
+                    if (schemaTable != null)
                     {
-                        var schemaTable = dr.GetSchemaTable();
-                        var enums = typeof (T).GetEnumValues();
-                        if (schemaTable != null)
+                        foreach (DataRow row in schemaTable.Rows)
                         {
-                            foreach (DataRow row in schemaTable.Rows)
+                            Type dataType = null;
+                            var columnName = string.Empty;
+                            var providerType = 0;
+                            var columnOrdinal = 0;
+                            int? columnSize = null, dataPrecision = null, dataScale = null;
+                            var nullable = false;
+
+                            if (!row.IsNull("ColumnName"))
                             {
-                                Type dataType = null;
-                                var columnName = string.Empty;
-                                var providerType = 0;
-                                var columnOrdinal = 0;
-                                int? columnSize = null, dataPrecision = null, dataScale = null;
-                                var nullable = false;
-
-                                if (!row.IsNull("ColumnName"))
-                                {
-                                    columnName = (String) row["ColumnName"];
-                                }
-                                if (!row.IsNull("DataType"))
-                                {
-                                    dataType = (Type) row["DataType"];
-                                }
-                                if (!row.IsNull("ProviderType"))
-                                {
-                                    providerType = (int) row["ProviderType"];
-                                }
-                                if (!row.IsNull("ColumnOrdinal"))
-                                {
-                                    columnOrdinal = (int) row["ColumnOrdinal"];
-                                }
-                                if (!row.IsNull("ColumnSize"))
-                                {
-                                    columnSize = (int) row["ColumnSize"];
-                                }
-                                if (!row.IsNull("NumericPrecision"))
-                                {
-                                    dataPrecision = (short) row["NumericPrecision"];
-                                }
-                                if (!row.IsNull("NumericScale"))
-                                {
-                                    dataScale = (short) row["NumericScale"];
-                                }
-                                if (!row.IsNull("AllowDBNull"))
-                                {
-                                    nullable = (bool) row["AllowDBNull"];
-                                }
-
-                                var dataTypeString =
-                                    enums.Cast<object>()
-                                         .Where(val => (int) val == providerType)
-                                         .Select(val => val.ToString())
-                                         .
-                                          FirstOrDefault();
-
-                                var column = new Column(columnName.Trim().ToUpper(), databaseObjectWithColumns)
-                                                 {
-                                                     DataType = dataTypeString,
-                                                     OrdinalPosition = columnOrdinal,
-                                                     CharacterLength = columnSize,
-                                                     Nullable = nullable
-                                                 };
-                                if (dataType != null &&
-                                    (dataType == typeof (Int16) || dataType == typeof (Int32) ||
-                                     dataType == typeof (Int64) ||
-                                     dataType == typeof (Double) || dataType == typeof (Decimal) ||
-                                     dataType == typeof (float)))
-                                {
-                                    column.DataPrecision = dataPrecision;
-                                }
-                                if (dataType != null &&
-                                    (dataType == typeof (Double) || dataType == typeof (Decimal) ||
-                                     dataType == typeof (float)))
-                                {
-                                    column.DataScale = dataScale;
-                                }
-                                columns.Add(column);
+                                columnName = (String)row["ColumnName"];
                             }
+                            if (!row.IsNull("DataType"))
+                            {
+                                dataType = (Type)row["DataType"];
+                            }
+                            if (!row.IsNull("ProviderType"))
+                            {
+                                providerType = (int)row["ProviderType"];
+                            }
+                            if (!row.IsNull("ColumnOrdinal"))
+                            {
+                                columnOrdinal = (int)row["ColumnOrdinal"];
+                            }
+                            if (!row.IsNull("ColumnSize"))
+                            {
+                                columnSize = (int)row["ColumnSize"];
+                            }
+                            if (!row.IsNull("NumericPrecision"))
+                            {
+                                dataPrecision = (short)row["NumericPrecision"];
+                            }
+                            if (!row.IsNull("NumericScale"))
+                            {
+                                dataScale = (short)row["NumericScale"];
+                            }
+                            if (!row.IsNull("AllowDBNull"))
+                            {
+                                nullable = (bool)row["AllowDBNull"];
+                            }
+
+                            var dataTypeString =
+                                enums.Cast<object>()
+                                     .Where(val => (int)val == providerType)
+                                     .Select(val => val.ToString())
+                                     .
+                                      FirstOrDefault();
+
+                            var column = new Column(columnName.Trim().ToUpper(), databaseObjectWithColumns)
+                            {
+                                DataType = dataTypeString,
+                                OrdinalPosition = columnOrdinal,
+                                CharacterLength = columnSize,
+                                Nullable = nullable
+                            };
+                            if (dataType != null &&
+                                (dataType == typeof(Int16) || dataType == typeof(Int32) ||
+                                 dataType == typeof(Int64) ||
+                                 dataType == typeof(Double) || dataType == typeof(Decimal) ||
+                                 dataType == typeof(float)))
+                            {
+                                column.DataPrecision = dataPrecision;
+                            }
+                            if (dataType != null &&
+                                (dataType == typeof(Double) || dataType == typeof(Decimal) ||
+                                 dataType == typeof(float)))
+                            {
+                                column.DataScale = dataScale;
+                            }
+                            columns.Add(column);
                         }
                     }
                 }
@@ -549,7 +605,7 @@ namespace SqlEditor.Databases
                         string previousSchemaName = null, previousTableName = null;
                         Schema schema = null;
                         Table table = null;
-                        while (dr != null && dr.Read())
+                        while (dr.Read())
                         {
                             var schemaName = dr.GetString(0).Trim();
                             if (schemaName != previousSchemaName)
@@ -595,7 +651,7 @@ namespace SqlEditor.Databases
                         string previousSchemaName = null, previousViewName = null;
                         Schema schema = null;
                         View view = null;
-                        while (dr != null && dr.Read())
+                        while (dr.Read())
                         {
                             string schemaName = dr.GetString(0).Trim();
                             if (schemaName != previousSchemaName)
@@ -641,7 +697,7 @@ namespace SqlEditor.Databases
                         string previousSchemaName = null, previousViewName = null;
                         Schema schema = null;
                         MaterializedView materializedView = null;
-                        while (dr != null && dr.Read())
+                        while (dr.Read())
                         {
                             var schemaName = dr.GetString(0).Trim();
                             if (schemaName != previousSchemaName)
@@ -707,7 +763,7 @@ namespace SqlEditor.Databases
                 {
                     // column_name, data_type, data_length, data_precision, data_scale, nullable, column_id
                     // column_name, c.DATA_TYPE, c.DATA_LENGTH, C.DATA_PRECISION, C.NULLABLE, C.COLUMN_ID
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var column = GetColumn(dr, databaseObject);
                         databaseObject.Columns.Add(column);
@@ -784,5 +840,7 @@ namespace SqlEditor.Databases
                 }
             }
         }
+
+        
     }
 }

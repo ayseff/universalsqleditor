@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             Infragistics.Win.UltraWinEditors.EditorButton editorButton1 = new Infragistics.Win.UltraWinEditors.EditorButton("Clear");
-            Infragistics.Win.Appearance appearance73 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance74 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance1 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinGrid.UltraGridBand ultraGridBand1 = new Infragistics.Win.UltraWinGrid.UltraGridBand("BindingList`1", -1);
             Infragistics.Win.Appearance appearance2 = new Infragistics.Win.Appearance();
@@ -63,7 +63,17 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool66 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool20 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - ClearLog");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool21 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Save");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool97 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool96 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool92 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool95 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool90 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool91 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool89 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool86 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool82 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool88 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool84 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Create");
             Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab3 = new Infragistics.Win.UltraWinToolbars.RibbonTab("Database Explorer");
             Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup4 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Connections");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool26 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New SQL Worksheet");
@@ -238,6 +248,13 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool79 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool80 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Drop");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool81 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Create");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool83 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Edit");
+            Infragistics.Win.Appearance appearance73 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool6 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Functions - Script As");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool94 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool93 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool85 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool87 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
             Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane1 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.DockedLeft, new System.Guid("49f48064-8544-45d6-b272-86c54f1e6b53"));
             Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane1 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("7c2601ae-79f9-4d92-a6f0-4ed69e3eb55b"), new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"), -1, new System.Guid("49f48064-8544-45d6-b272-86c54f1e6b53"), -1);
             Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane2 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.Floating, new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"));
@@ -412,16 +429,24 @@
             this._iml16.Images.SetKeyName(78, "draw_clone.png");
             this._iml16.Images.SetKeyName(79, "table (2) gear.png");
             this._iml16.Images.SetKeyName(80, "table (2) gear edit.png");
+            this._iml16.Images.SetKeyName(81, "database_yellow.png");
+            this._iml16.Images.SetKeyName(82, "user_folder.png");
+            this._iml16.Images.SetKeyName(83, "table (2) gear_green.png");
+            this._iml16.Images.SetKeyName(84, "table (2) gear_green_edit.png");
+            this._iml16.Images.SetKeyName(85, "folder-horizontal.png");
+            this._iml16.Images.SetKeyName(86, "folder-horizontal-open.png");
+            this._iml16.Images.SetKeyName(87, "folder-horizontal-open-user.png");
+            this._iml16.Images.SetKeyName(88, "folder-horizontal-user.png");
             // 
             // _uteConnectionsSearch
             // 
             this._uteConnectionsSearch.AlwaysInEditMode = true;
             this._uteConnectionsSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            appearance73.Image = "034.png";
-            appearance73.ImageHAlign = Infragistics.Win.HAlign.Center;
-            appearance73.ImageVAlign = Infragistics.Win.VAlign.Middle;
-            editorButton1.Appearance = appearance73;
+            appearance74.Image = "034.png";
+            appearance74.ImageHAlign = Infragistics.Win.HAlign.Center;
+            appearance74.ImageVAlign = Infragistics.Win.VAlign.Middle;
+            editorButton1.Appearance = appearance74;
             editorButton1.Key = "Clear";
             editorButton1.Text = "";
             editorButton1.Width = 24;
@@ -574,7 +599,17 @@
             buttonTool66,
             buttonTool20,
             buttonTool21,
-            buttonTool82});
+            buttonTool97,
+            buttonTool96,
+            buttonTool92,
+            buttonTool95,
+            buttonTool90,
+            buttonTool91,
+            buttonTool89,
+            buttonTool86,
+            buttonTool82,
+            buttonTool88,
+            buttonTool84});
             ribbonTab2.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
             ribbonGroup2,
             ribbonGroup3});
@@ -947,6 +982,19 @@
             buttonTool80.SharedPropsInternal.Category = "Tables";
             buttonTool81.SharedPropsInternal.Caption = "CREATE";
             buttonTool81.SharedPropsInternal.Category = "Stored Procedures";
+            appearance73.Image = 84;
+            buttonTool83.SharedPropsInternal.AppearancesSmall.Appearance = appearance73;
+            buttonTool83.SharedPropsInternal.Caption = "Edit Function";
+            buttonTool83.SharedPropsInternal.Category = "Functions";
+            popupMenuTool6.SharedPropsInternal.Caption = "Script As";
+            popupMenuTool6.SharedPropsInternal.Category = "Functions";
+            popupMenuTool6.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool94,
+            buttonTool93});
+            buttonTool85.SharedPropsInternal.Caption = "CREATE";
+            buttonTool85.SharedPropsInternal.Category = "Functions";
+            buttonTool87.SharedPropsInternal.Caption = "DROP";
+            buttonTool87.SharedPropsInternal.Category = "Functions";
             this._utm.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool28,
             popupMenuTool12,
@@ -1005,7 +1053,11 @@
             popupMenuTool5,
             buttonTool79,
             buttonTool80,
-            buttonTool81});
+            buttonTool81,
+            buttonTool83,
+            popupMenuTool6,
+            buttonTool85,
+            buttonTool87});
             this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.Utm_ToolClick);
             // 
             // _iml32

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
-using System.Data.SQLite;
 using System.Linq;
 using System.Reflection;
 using SqlEditor.Database;
@@ -18,12 +17,17 @@ namespace SqlEditor.Databases.MsAccess
         private static readonly Schema _defaultSchema = new Schema(string.Empty, DEFAULT_SCHEMA);
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public override IList<Schema> GetSchemas(IDbConnection connection)
+        public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
         {
-            return new List<Schema>(new[] {_defaultSchema});
+            throw new NotSupportedException();
         }
 
-        public override IList<Table> GetTables(IDbConnection connection, string schemaName)
+        public override IList<Schema> GetSchemas(IDbConnection connection, string databaseInstance = null)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override IList<Table> GetTables(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -31,7 +35,7 @@ namespace SqlEditor.Databases.MsAccess
             var tblrestrictions = new[] {null, null, null, "TABLE"};
             var tables = new List<Table>();
             var olecon = (OleDbConnection) connection;
-            DataTable dataTable = olecon.GetSchema("tables", tblrestrictions);
+            var dataTable = olecon.GetSchema("tables", tblrestrictions);
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 var tableName = (string) dataRow["TABLE_NAME"];
@@ -41,7 +45,7 @@ namespace SqlEditor.Databases.MsAccess
             return tables.OrderBy(x => x.Name).ToList();
         }
 
-        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -54,17 +58,17 @@ namespace SqlEditor.Databases.MsAccess
             return columns.OrderBy(x => x.Name).ToList();
         }
 
-        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             return new List<Column>();
         }
 
-        public override IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             return new List<Partition>();
         }
 
-        public override IList<View> GetViews(IDbConnection connection, string schemaName)
+        public override IList<View> GetViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             var conn = connection as OleDbConnection;
@@ -78,7 +82,7 @@ namespace SqlEditor.Databases.MsAccess
             {
                 foreach (DataRow row in queries.Rows)
                 {
-                    string viewName = row["TABLE_NAME"].ToString();
+                    var viewName = row["TABLE_NAME"].ToString();
                     //var viewSql = row["VIEW_DEFINITION"].ToString();
                     var view = new View(viewName, _defaultSchema);
                     views.Add(view);
@@ -87,7 +91,7 @@ namespace SqlEditor.Databases.MsAccess
             return views.OrderBy(x => x.Name).ToList();
         }
 
-        public override IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName)
+        public override IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (viewName == null) throw new ArgumentNullException("viewName");
@@ -99,60 +103,74 @@ namespace SqlEditor.Databases.MsAccess
             return columns.OrderBy(x => x.Name).ToList();
         }
 
-        public override IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName)
+        public override IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<MaterializedView>();
         }
 
-        public override IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName,
-                                                                 string materializedViewName)
+        public override IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName, string materializedViewName, string databaseInstanceName = null)
         {
             return new List<Column>();
         }
 
-        public override IList<Index> GetIndexes(IDbConnection connection, string schemaName)
+        public override IList<Index> GetIndexes(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Index>();
         }
 
-        public override IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             return new List<Index>();
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null)
         {
             return new List<Column>();
         }
 
-        public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName)
+        public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Sequence>();
         }
 
-        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName)
+        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Trigger>();
         }
 
-        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName)
+        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Synonym>();
         }
 
-        public override IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName)
+        public override IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Synonym>();
         }
 
-        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName)
+        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
+        }
+
+        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            throw new NotSupportedException();
         }
 
         public override IList<ColumnParameter> GetStoredProcedureParameters(IDbConnection connection, StoredProcedure storedProcedure)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
+        }
+
+        public override IList<ColumnParameter> GetFunctionParameters(IDbConnection connection, Function function)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function)
+        {
+            throw new NotSupportedException();
         }
 
         public override IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName)
@@ -164,13 +182,13 @@ namespace SqlEditor.Databases.MsAccess
             intellisenseData.AllSchemas.Add(_defaultSchema);
 
             // Load tables
-            IList<Table> tables = GetTables(connection, currentSchemaName);
+            var tables = GetTables(connection, currentSchemaName);
             _defaultSchema.Tables.Clear();
             _defaultSchema.Tables.AddRange(tables);
             intellisenseData.AllObjects.AddRange(tables);
 
             // Load table columns
-            foreach (Table table in tables)
+            foreach (var table in tables)
             {
                 table.Columns.Clear();
                 table.Columns.AddRange(GetTableColumns(connection, currentSchemaName, table.Name));
@@ -178,13 +196,13 @@ namespace SqlEditor.Databases.MsAccess
             }
 
             // Load views
-            IList<View> views = GetViews(connection, currentSchemaName);
+            var views = GetViews(connection, currentSchemaName);
             _defaultSchema.Views.Clear();
             _defaultSchema.Views.AddRange(views);
             intellisenseData.AllObjects.AddRange(views);
 
             // Load view columns
-            foreach (View view in views)
+            foreach (var view in views)
             {
                 view.Columns.Clear();
                 view.Columns.AddRange(GetViewColumns(connection, currentSchemaName, view.Name));

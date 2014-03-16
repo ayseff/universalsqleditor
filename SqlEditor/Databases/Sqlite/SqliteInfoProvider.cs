@@ -18,12 +18,17 @@ namespace SqlEditor.Databases.Sqlite
         private static readonly Schema _defaultSchema = new Schema(string.Empty, DEFAULT_SCHEMA);
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public override IList<Schema> GetSchemas(IDbConnection connection)
+        public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
         {
-            return new List<Schema>(new[] {_defaultSchema});
+            throw new NotSupportedException();
         }
 
-        public override IList<Table> GetTables(IDbConnection connection, string schemaName)
+        public override IList<Schema> GetSchemas(IDbConnection connection, string databaseInstance = null)
+        {
+            throw new NotSupportedException();
+        }
+
+        public override IList<Table> GetTables(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -31,7 +36,7 @@ namespace SqlEditor.Databases.Sqlite
                                  "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name");
         }
 
-        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTableColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -80,7 +85,7 @@ namespace SqlEditor.Databases.Sqlite
             return column;
         }
 
-        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -106,37 +111,36 @@ namespace SqlEditor.Databases.Sqlite
             return columns.OrderBy(x => x.Name).ToList();
         }
 
-        public override IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName)
+        public override IList<Partition> GetTablePartitions(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
             return new List<Partition>();
         }
 
-        public override IList<View> GetViews(IDbConnection connection, string schemaName)
+        public override IList<View> GetViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             return GetViewsBase(connection, schemaName, "SELECT name FROM sqlite_master WHERE type='view' ORDER BY name");
         }
 
-        public override IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName)
+        public override IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (viewName == null) throw new ArgumentNullException("viewName");
             return GetTableColumns(connection, schemaName, viewName);
         }
 
-        public override IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName)
+        public override IList<MaterializedView> GetMaterializedViews(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<MaterializedView>();
         }
 
-        public override IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName,
-                                                                 string materializedViewName)
+        public override IList<Column> GetMaterializedViewColumns(IDbConnection connection, string schemaName, string materializedViewName, string databaseInstanceName = null)
         {
             return new List<Column>();
         }
 
-        public override IList<Index> GetIndexes(IDbConnection connection, string schemaName)
+        public override IList<Index> GetIndexes(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -169,8 +173,7 @@ namespace SqlEditor.Databases.Sqlite
             return indices;
         }
 
-        public override IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName,
-                                                        [NotNull] string tableName)
+        public override IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, [NotNull] string tableName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -196,8 +199,7 @@ namespace SqlEditor.Databases.Sqlite
             return indices;
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName,
-                                                      [NotNull] string indexName)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, [NotNull] string indexName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (indexName == null) throw new ArgumentNullException("indexName");
@@ -223,14 +225,14 @@ namespace SqlEditor.Databases.Sqlite
             return columns;
         }
 
-        public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName)
+        public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
 
             return GetSequencesBase(connection, schemaName, "SELECT name, 1, " + int.MaxValue + ", 1, seq FROM sqlite_sequence ORDER BY name");
         }
 
-        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName)
+        public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -238,19 +240,24 @@ namespace SqlEditor.Databases.Sqlite
                                    "SELECT name FROM sqlite_master WHERE type='trigger' ORDER BY name");
         }
 
-        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName)
+        public override IList<Synonym> GetPublicSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Synonym>();
         }
 
-        public override IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName)
+        public override IList<Synonym> GetSynonyms(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Synonym>();
         }
 
-        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName)
+        public override IList<StoredProcedure> GetStoredProcedures(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<StoredProcedure>();
+        }
+
+        public override IList<Function> GetFunctions(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
         }
 
         public override IList<ColumnParameter> GetStoredProcedureParameters(IDbConnection connection, StoredProcedure storedProcedure)
@@ -258,6 +265,16 @@ namespace SqlEditor.Databases.Sqlite
             return new List<ColumnParameter>();
         }
 
+        public override IList<ColumnParameter> GetFunctionParameters(IDbConnection connection, Function function)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public override IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function)
+        {
+            throw new NotImplementedException();
+        }
 
         public override IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName)
         {
