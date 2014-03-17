@@ -3,12 +3,15 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using log4net;
 using Utilities.Forms.Dialogs;
 
 namespace SqlEditor
 {
     public partial class FrmAbout : Form
     {
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private string AssemblyCopyright
         {
             get
@@ -28,20 +31,28 @@ namespace SqlEditor
 
         private void LnkChangeHistory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var location = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Change Log.txt");
-            if (!File.Exists(location))
+            var tmpFile = Path.Combine(Path.GetTempPath(), "SQL Editor Change History.txt");
+            using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("SqlEditor.Change Log.txt"))
             {
-                Dialog.ShowErrorDialog(Application.ProductName, "Change history log not found.", string.Empty);
-            }
-            else
-            {
+                if (stream == null)
+                {
+                    Dialog.ShowErrorDialog(Application.ProductName, "Could not find change history file.",
+                        "Please reinstall the application.", null);
+                    return;
+                }
                 try
                 {
-                    Process.Start(location);
+                    using (var file = File.Create(tmpFile))
+                    {
+                        stream.CopyTo(file);
+                    }
+                    Process.Start(tmpFile);
                 }
                 catch (Exception ex)
                 {
-                    Dialog.ShowErrorDialog(Application.ProductName, "Error opening change history log.", ex.Message);
+                    _log.Error("Error saving or opening the stream.");
+                    _log.Error(ex.Message, ex);
+                    Dialog.ShowErrorDialog(Application.ProductName, "Error opening change history log.", ex.Message, ex.StackTrace);
                 }
             }
         }

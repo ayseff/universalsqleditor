@@ -484,9 +484,7 @@
     <None Include="Resources\Windows7.isl" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Change Log.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Change Log.txt" />
     <Content Include="Connections.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
