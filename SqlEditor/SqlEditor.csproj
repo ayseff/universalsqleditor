@@ -86,6 +86,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="IBM.Data.DB2, Version=9.0.0.2, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\IBM\SQLLIB\BIN\netf20\IBM.Data.DB2.dll</HintPath>
@@ -497,6 +500,10 @@
     <None Include="Resources\information.png" />
     <None Include="Resources\door_out.png" />
     <None Include="Resources\sql_editor_24x24.png" />
+    <None Include="Resources\help-desk-icon.png" />
+    <None Include="Resources\information %282%29.png" />
+    <None Include="Resources\download_32x32.png" />
+    <None Include="Resources\app_32x32.png" />
     <Content Include="sql_editor.ico" />
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

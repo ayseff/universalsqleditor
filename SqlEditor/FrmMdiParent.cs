@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Infragistics.Win.AppStyling;
@@ -962,6 +965,10 @@ namespace SqlEditor
 
                     case "Functions - Script As - Drop":
                         Connections_FunctionDrop();
+                        break;
+
+                    case "Check for Updates":
+                        CheckForUpdatesAsync();
                         break;
                         
                 }
@@ -2349,6 +2356,98 @@ namespace SqlEditor
             {
                 _log.Error("Error setting selected ribbon tab to SQL tab");
                 _log.Error(ex.Message, ex);
+            }
+        }
+
+        private static async void CheckForUpdatesAsync()
+        {
+            try
+            {
+                const string url = "http://universalsqleditor.codeplex.com/releases";
+                HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument { OptionFixNestedTags = true };
+                using (var client = new WebClient())
+                {
+                    string html;
+                    try
+                    {
+                        html = await client.DownloadStringTaskAsync(url);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(string.Format("Error contacting {0}", url), ex);
+                    }
+
+                    try
+                    {
+                        doc.LoadHtml(html);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(string.Format("Error loading HTML document from {0}. Document may be invalid.", url), ex);
+                    }
+                    var regex = new Regex(@".*v(?<version>[0-9]\.[0-9]\.[0-9]\.[0-9])", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+
+                    var node = doc.DocumentNode.SelectNodes("//*[@id=\"ReleasesContentArea\"]/h1").FirstOrDefault();
+                    if (node == null)
+                    {
+                        throw new Exception(string.Format("Could not find latest release on {0}", url));
+                    }
+
+                    var match = regex.Match(node.InnerText);
+                    if (match.Success)
+                    {
+                        var latestVersion = match.Groups["version"].Value;
+                        if (Application.ProductVersion != latestVersion)
+                        {
+                            // Prompt to download new version
+                            var taskdlg = new TaskDialog
+                            {
+                                Icon = TaskDialogStandardIcon.Information,
+                                Caption = Application.ProductName,
+                                InstructionText = "Version v" + latestVersion + " is now available. Would you like to download it?"
+                            };
+
+                            var commandLinkDownload = new TaskDialogCommandLink("buttonYes", "Yes", "Take me to the download page.");
+                            commandLinkDownload.Click += (o, args) =>
+                            {
+                                try
+                                {
+                                    Process.Start(url);
+                                }
+                                catch (Exception ex)
+                                {
+                                    _log.ErrorFormat("Error opening URL {0}", url);
+                                    _log.Error(ex.Message, ex);
+                                    Dialog.ShowErrorDialog(Application.ProductName, "Error occurred opening the download page. ", ex.Message, ex.StackTrace);
+                                    taskdlg.Close(TaskDialogResult.Cancel);
+                                }
+                            };
+                            taskdlg.Controls.Add(commandLinkDownload);
+
+                            var commandLinkDiscard = new TaskDialogCommandLink("buttonNo", "No", "Maybe another time.");
+                            commandLinkDiscard.Click += (o, args) => taskdlg.Close(TaskDialogResult.No);
+                            taskdlg.Controls.Add(commandLinkDiscard);
+                            
+                            taskdlg.Show();
+                        }
+                        else
+                        {
+                            Dialog.ShowDialog(Application.ProductName,
+                                "You are using the latest version of " + Application.ProductName + ".", string.Empty);
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception(string.Format("Could not find latest release on {0}", url));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.Message, ex);
+                Dialog.ShowErrorDialog(Application.ProductName, "Error checking for updates.", ex.Message,
+                           ex.StackTrace);
             }
         }
     }

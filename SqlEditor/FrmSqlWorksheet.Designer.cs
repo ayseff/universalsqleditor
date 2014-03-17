@@ -167,9 +167,9 @@ namespace SqlEditor
             this.Worksheet2_Fill_Panel.ClientArea.Controls.Add(this._utcTabs);
             this.Worksheet2_Fill_Panel.Cursor = System.Windows.Forms.Cursors.Default;
             this.Worksheet2_Fill_Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Worksheet2_Fill_Panel.Location = new System.Drawing.Point(4, 171);
+            this.Worksheet2_Fill_Panel.Location = new System.Drawing.Point(4, 146);
             this.Worksheet2_Fill_Panel.Name = "Worksheet2_Fill_Panel";
-            this.Worksheet2_Fill_Panel.Size = new System.Drawing.Size(1191, 474);
+            this.Worksheet2_Fill_Panel.Size = new System.Drawing.Size(1191, 499);
             this.Worksheet2_Fill_Panel.TabIndex = 0;
             // 
             // _sqlEditor
@@ -179,14 +179,14 @@ namespace SqlEditor
             this._sqlEditor.IsReadOnly = false;
             this._sqlEditor.Location = new System.Drawing.Point(0, 0);
             this._sqlEditor.Name = "_sqlEditor";
-            this._sqlEditor.Size = new System.Drawing.Size(1191, 198);
+            this._sqlEditor.Size = new System.Drawing.Size(1191, 223);
             this._sqlEditor.TabIndex = 4;
             // 
             // ultraSplitter1
             // 
             this.ultraSplitter1.BackColor = System.Drawing.SystemColors.Control;
             this.ultraSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ultraSplitter1.Location = new System.Drawing.Point(0, 198);
+            this.ultraSplitter1.Location = new System.Drawing.Point(0, 223);
             this.ultraSplitter1.Name = "ultraSplitter1";
             this.ultraSplitter1.RestoreExtent = 154;
             this.ultraSplitter1.Size = new System.Drawing.Size(1191, 6);
@@ -197,7 +197,7 @@ namespace SqlEditor
             this._utcTabs.CloseButtonLocation = Infragistics.Win.UltraWinTabs.TabCloseButtonLocation.Tab;
             this._utcTabs.Controls.Add(this.ultraTabSharedControlsPage1);
             this._utcTabs.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this._utcTabs.Location = new System.Drawing.Point(0, 204);
+            this._utcTabs.Location = new System.Drawing.Point(0, 229);
             this._utcTabs.Name = "_utcTabs";
             this._utcTabs.SharedControlsPage = this.ultraTabSharedControlsPage1;
             this._utcTabs.Size = new System.Drawing.Size(1191, 270);
@@ -221,9 +221,9 @@ namespace SqlEditor
             this._Worksheet2_Toolbars_Dock_Area_Left.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Left;
             this._Worksheet2_Toolbars_Dock_Area_Left.ForeColor = System.Drawing.SystemColors.ControlText;
             this._Worksheet2_Toolbars_Dock_Area_Left.InitialResizeAreaExtent = 4;
-            this._Worksheet2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 171);
+            this._Worksheet2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 146);
             this._Worksheet2_Toolbars_Dock_Area_Left.Name = "_Worksheet2_Toolbars_Dock_Area_Left";
-            this._Worksheet2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(4, 474);
+            this._Worksheet2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(4, 499);
             this._Worksheet2_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
             // 
             // _utm
@@ -493,9 +493,9 @@ namespace SqlEditor
             this._Worksheet2_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
             this._Worksheet2_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
             this._Worksheet2_Toolbars_Dock_Area_Right.InitialResizeAreaExtent = 4;
-            this._Worksheet2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(1195, 171);
+            this._Worksheet2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(1195, 146);
             this._Worksheet2_Toolbars_Dock_Area_Right.Name = "_Worksheet2_Toolbars_Dock_Area_Right";
-            this._Worksheet2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(4, 474);
+            this._Worksheet2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(4, 499);
             this._Worksheet2_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
             // 
             // _Worksheet2_Toolbars_Dock_Area_Top
@@ -506,7 +506,7 @@ namespace SqlEditor
             this._Worksheet2_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
             this._Worksheet2_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
             this._Worksheet2_Toolbars_Dock_Area_Top.Name = "_Worksheet2_Toolbars_Dock_Area_Top";
-            this._Worksheet2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(1199, 171);
+            this._Worksheet2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(1199, 146);
             this._Worksheet2_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
             // 
             // _Worksheet2_Toolbars_Dock_Area_Bottom
