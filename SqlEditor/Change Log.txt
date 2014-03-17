@@ -1,4 +1,11 @@
-﻿Version: 0.3.0.3
+﻿Version: 0.3.1.0
+  New Features:
+  - Ability to browse functions in Database Explorer
+  - Ability to check for updates  
+  - When connecting to SQL Server, all databases are now shown and ability to browse each database is working
+  - When browsing database objects in Database Explorer, folder icons now reflect whether a node is expanded or not
+  Bug Fixes:
+Version: 0.3.0.3
   New Features:
   - SE-29 Provide ability to run SQL from files
   - SE-30 Allow users to close all worksheets without saving

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SQL Editor")]
-[assembly: AssemblyDescription("SQL Editor tool providing similar functionality to ORACLE SQL Developer but without performance overhead :-)")]
+[assembly: AssemblyDescription("SQL Editor tool providing connectivity to multiple database vendors")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mensur Software")]
 [assembly: AssemblyProduct("SQL Editor")]
@@ -31,5 +31,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.3.0.3")]
-[assembly: AssemblyFileVersion("0.3.0.3")]
+[assembly: AssemblyVersion("0.3.1.0")]
+[assembly: AssemblyFileVersion("0.3.1.0")]
