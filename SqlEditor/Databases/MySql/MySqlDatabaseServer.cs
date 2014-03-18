@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using MySql.Data.MySqlClient;
@@ -66,6 +68,15 @@ namespace SqlEditor.Databases.MySql
         public override IDbConnection CreateConnection(string connectionString)
         {
             return new MySqlConnection(connectionString);
+        }
+
+        public override void ValidateConnectionString(DbConnectionStringBuilder connectionBuilder)
+        {
+            var connectionStringBuilder = connectionBuilder as MySqlConnectionStringBuilder;
+            if (connectionStringBuilder == null)
+                throw new Exception("ConnectionState string builder is not of type  MySqlConnectionStringBuilder");
+            if (string.IsNullOrEmpty(connectionStringBuilder.Database))
+                throw new Exception("Database is required for this connection type");
         }
     }
 }

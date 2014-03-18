@@ -4,6 +4,7 @@
   - Ability to check for updates  
   - When connecting to SQL Server, all databases are now shown and ability to browse each database is working
   - When browsing database objects in Database Explorer, folder icons now reflect whether a node is expanded or not
+  - Enforce initial catalog/database when connecting to the database server
   Bug Fixes:
   - UPDATE AND DELETE statements are not generated correctly for table with composite primary keys
 Version: 0.3.0.3

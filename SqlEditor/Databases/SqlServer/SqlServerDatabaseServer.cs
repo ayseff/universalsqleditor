@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Reflection;
@@ -68,6 +69,15 @@ namespace SqlEditor.Databases.SqlServer
             _log.Debug("Creating connection ...");
             var connection = new SqlConnection(connectionString);
             return connection;
+        }
+
+        public override void ValidateConnectionString(DbConnectionStringBuilder connectionBuilder)
+        {
+            var connectionStringBuilder = connectionBuilder as SqlConnectionStringBuilder;
+            if (connectionStringBuilder == null)
+                throw new Exception("ConnectionState string builder is not of type  SqlConnectionStringBuilder");
+            if (string.IsNullOrEmpty(connectionStringBuilder.InitialCatalog))
+                throw new Exception("InitialCatalog is required for this connection type");
         }
     }
 }

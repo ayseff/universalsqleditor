@@ -50,6 +50,11 @@ namespace SqlEditor.Databases
             return sb.ConnectionString;
         }
 
+        public virtual void ValidateConnectionString(DbConnectionStringBuilder connectionBuilder)
+        {
+            
+        }
+
         protected string GetConnectionStringValue(string connectionString, string token)
         {
             var dbConnectionStringBuilder = GetConnectionStringBuilder(connectionString);

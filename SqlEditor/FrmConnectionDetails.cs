@@ -55,6 +55,20 @@ namespace SqlEditor
 
         private bool IsConnectionValid(out Exception e)
         {
+            _log.Debug("Validating required elements ...");
+            try
+            {
+                _databaseConnection.DatabaseServer.ValidateConnectionString(_connectionStringBuilder);
+            }
+            catch (Exception ex)
+            {
+                _log.Warn("Error validating required elements.");
+                _log.Warn(ex.Message, ex);
+                e = ex;
+                _connectionTested = false;
+                return false;
+            }
+
             _log.DebugFormat("Testing connection against {0} database for connection string {1}.", _databaseConnection.DatabaseServer.Name, _databaseConnection.ConnectionString);
             e = null;
             _databaseConnection.ConnectionString = _connectionStringBuilder.ConnectionString;
