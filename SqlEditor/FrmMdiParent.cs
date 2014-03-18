@@ -45,22 +45,34 @@ namespace SqlEditor
         private bool _connectionsChanged;
         private bool _skipToolClickEvents;
         private readonly ToolBase _addFolderButtonTool;
-        private readonly ToolBase _connectButtonTool;
+        
         private readonly ToolBase _copyButtonTool;
-        private readonly ToolBase _cloneButtonTool;
-        private readonly ToolBase _deleteConnectionButtonTool;
+        
+        
         private readonly ToolBase _deleteFolderButtonTool;
-        private readonly ToolBase _disconnectButtonTool;
-        private readonly ToolBase _editConnectionButtonTool;
+        
+        
+        
         private readonly ToolBase _editFolderButtonTool;
         private readonly ToolBase _exportConnectionButtonTool;
         private readonly ToolBase _importButtonTool;
         private readonly ToolBase _newConnectionButtonTool;
-        private readonly ToolBase _newWorksheetButtonTool;
+        
         private readonly ToolBase _refreshButtonTool;
         private readonly ToolBase _sortButtonTool;
         private readonly ToolBase _collapseAllButtonTool;
         private readonly ToolBase _expandAllButtonTool;
+
+        // Connection closed buttons
+        private readonly ToolBase _connectionConnectButtonTool;
+        private readonly ToolBase _connectionEditButtonTool;
+        private readonly ToolBase _connectionDeleteButtonTool;
+        private readonly ToolBase _connectionCloneButtonTool;
+        private readonly ToolBase _connectionPropertiesButtonTool;
+
+        // Connection open buttons
+        private readonly ToolBase _connectionNewSqlWorksheetButtonTool;
+        private readonly ToolBase _connectionDisconnectButtonTool;
 
         // Stored procedure buttons
         private readonly ToolBase _storedProcedureEditButtonTool;
@@ -96,6 +108,8 @@ namespace SqlEditor
         private readonly List<ToolBase> _tableCommands = new List<ToolBase>();
         private readonly List<ToolBase> _storedProcedureCommands = new List<ToolBase>();
         private readonly List<ToolBase> _functionCommands = new List<ToolBase>();
+        private readonly List<ToolBase> _connectionClosedCommands = new List<ToolBase>();
+        private readonly List<ToolBase> _connectionOpenCommands = new List<ToolBase>();
 
         private readonly UltraTreeDropHightLightDrawFilter _treeDrawFilter = new UltraTreeDropHightLightDrawFilter();
         private readonly SqlHistoryList _sqlHistoryList = new SqlHistoryList();
@@ -172,16 +186,17 @@ namespace SqlEditor
 
             // Assign button names
             _connectionsPopupMenu = (PopupMenuTool)_utm.Tools["Connection - Context Menu"];
-            _newWorksheetButtonTool = _utm.Tools["New SQL Worksheet"];
+            
             _newConnectionButtonTool = _utm.Tools["New Connection"];
-            _editConnectionButtonTool = _utm.Tools["Edit Connection"];
-            _deleteConnectionButtonTool = _utm.Tools["Delete Connection"];
-            _disconnectButtonTool = _utm.Tools["Disconnect"];
-            _connectButtonTool = _utm.Tools["Connect"];
-            _editConnectionButtonTool = _utm.Tools["Edit Connection"];
+            
+           
+            
+            
+            
+            _connectionEditButtonTool = _utm.Tools["Edit Connection"];
             _refreshButtonTool = _utm.Tools["Refresh"];
             _copyButtonTool = _utm.Tools["Copy Text"];
-            _cloneButtonTool = _utm.Tools["Clone Connection"];
+            
             _exportConnectionButtonTool = _utm.Tools["Export"];
             _sortButtonTool = _utm.Tools["Sort"];
             _importButtonTool = _utm.Tools["Import"];
@@ -197,6 +212,38 @@ namespace SqlEditor
             _infoLogLevelStateButtonTool = (StateButtonTool)_utm.Tools["Logging Tools - Info"];
             _warningLogLevelStateButtonTool = (StateButtonTool)_utm.Tools["Logging Tools - Warning"];
             _errorLogLevelStateButtonTool = (StateButtonTool)_utm.Tools["Logging Tools - Error"];
+
+
+            // Setup connection closed commands
+            _connectionConnectButtonTool = _utm.Tools["Connect"];
+            _connectionEditButtonTool = _utm.Tools["Edit Connection"];
+            _connectionDeleteButtonTool = _utm.Tools["Delete Connection"];
+            _connectionCloneButtonTool = _utm.Tools["Clone Connection"];
+            _connectionPropertiesButtonTool = _utm.Tools["Connection Properties"];
+            _connectionClosedCommands.Add(_connectionConnectButtonTool);
+            _connectionClosedCommands.Add(null);
+            _connectionClosedCommands.Add(_connectionEditButtonTool);
+            _connectionClosedCommands.Add(_connectionCloneButtonTool);
+            _connectionClosedCommands.Add(_connectionDeleteButtonTool);
+            _connectionClosedCommands.Add(null);
+            _connectionClosedCommands.Add(_copyButtonTool);
+            _connectionClosedCommands.Add(null);
+            _connectionClosedCommands.Add(_connectionPropertiesButtonTool);
+
+            // Setup connection closed commands
+            _connectionNewSqlWorksheetButtonTool = _utm.Tools["New SQL Worksheet"];
+            _connectionDisconnectButtonTool = _utm.Tools["Disconnect"];
+            _connectionOpenCommands.Add(_connectionDisconnectButtonTool);
+            _connectionOpenCommands.Add(null);
+            _connectionOpenCommands.Add(_connectionNewSqlWorksheetButtonTool);
+            _connectionOpenCommands.Add(_connectionCloneButtonTool);
+            _connectionOpenCommands.Add(null);
+            _connectionOpenCommands.Add(_copyButtonTool);
+            _connectionOpenCommands.Add(null);
+            _connectionOpenCommands.Add(_collapseAllButtonTool);
+            _connectionOpenCommands.Add(_expandAllButtonTool);
+            _connectionOpenCommands.Add(null);
+            _connectionOpenCommands.Add(_connectionPropertiesButtonTool);
 
             // Setup table commands
             _tableDetailsButtonTool = _utm.Tools["Tables - Details"];
@@ -837,6 +884,10 @@ namespace SqlEditor
                         Connections_Edit();
                         break;
 
+                    case "Connection Properties":
+                        Connection_Properties();
+                        break;
+
                     case "Edit Folder":
                         Connections_RenameNode();
                         break;
@@ -1438,19 +1489,20 @@ namespace SqlEditor
                 //bool isIndexNodeSelected = isNodeSelected && selectedNode is IndexTreeNode;
 
                 _newConnectionButtonTool.SharedProps.Enabled = isRootNodeSelected || isFolderNodeSelected;
-                _editConnectionButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
+                _connectionEditButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
                                                                 !(((ConnectionTreeNode) selectedNode).DatabaseConnection.
                                                                                                       IsConnected);
-                _deleteConnectionButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
+                _connectionPropertiesButtonTool.SharedProps.Enabled = isConnectionNodeSelected;
+                _connectionDeleteButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
                                                                   !(((ConnectionTreeNode) selectedNode).DatabaseConnection.
                                                                                                         IsConnected);
-                _newWorksheetButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
+                _connectionNewSqlWorksheetButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
                                                               ((ConnectionTreeNode) selectedNode).DatabaseConnection.
                                                                                                   IsConnected;
-                _disconnectButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
+                _connectionDisconnectButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
                                                             ((ConnectionTreeNode) selectedNode).DatabaseConnection.
                                                                                                 IsConnected;
-                _connectButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
+                _connectionConnectButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
                                                          !(((ConnectionTreeNode) selectedNode).DatabaseConnection.
                                                                                                IsConnected);
 
@@ -1464,7 +1516,7 @@ namespace SqlEditor
                 _deleteFolderButtonTool.SharedProps.Enabled = isFolderNodeSelected;
 
                 _copyButtonTool.SharedProps.Enabled = isNodeSelected;
-                _cloneButtonTool.SharedProps.Enabled = isConnectionNodeSelected;
+                _connectionCloneButtonTool.SharedProps.Enabled = isConnectionNodeSelected;
                 _tableDetailsButtonTool.SharedProps.Enabled = isTableNodeSelected || isViewNodeSelected ||
                                                          isMaterializedViewNodeSelected; // TODO: Addothers to this list
 
@@ -1483,6 +1535,18 @@ namespace SqlEditor
                     else if (isNodeSelected && selectedNode is FunctionTreeNode)
                     {
                         AddTools(_functionCommands, _connectionsPopupMenu);
+                    }
+                    else if (isNodeSelected && selectedNode is ConnectionTreeNode)
+                    {
+                        var dbConnection = ((ConnectionTreeNode) selectedNode).DatabaseConnection;
+                        if (dbConnection.IsConnected)
+                        {
+                            AddTools(_connectionOpenCommands, _connectionsPopupMenu);
+                        }
+                        else
+                        {
+                            AddTools(_connectionClosedCommands, _connectionsPopupMenu);
+                        }
                     }
                     else
                     {
@@ -2190,6 +2254,24 @@ namespace SqlEditor
                 _log.Info("Connection edited.");
             }
         }
+
+
+        private void Connection_Properties()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                return;
+            }
+            var connectionNode = _utConnections.SelectedNodes[0] as ConnectionTreeNode;
+            if (connectionNode == null)
+            {
+                return;
+            }
+            _log.Info("Showing connection properties ...");
+            var frm = new FrmConnectionDetails(connectionNode.DatabaseConnection, connectionNode.DatabaseConnection.IsConnected);
+            frm.ShowDialog();
+        }
+        
 
         private void Connections_NewSqlWorksheet()
         {

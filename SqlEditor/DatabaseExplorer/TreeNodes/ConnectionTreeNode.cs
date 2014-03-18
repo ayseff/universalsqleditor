@@ -1,28 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using SqlEditor.Databases;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public abstract class ConnectionTreeNode : TreeNodeBase
     {
-        //private readonly List<Schema> _schemas = new List<Schema>();
-
-        public ConnectionTreeNode(DatabaseConnection connection)
+        protected ConnectionTreeNode(DatabaseConnection connection)
             : base(connection.Name, connection)
         {
             if (connection == null) throw new ArgumentNullException("connection");
-
-            Text = connection.Name;
+            
             var connectionImage = DatabaseServerFactory.Instance.GetConnectionOpenImage(connection.DatabaseServer);
             if (!connection.IsConnected)
             {
                 connectionImage = DatabaseServerFactory.Instance.GetConnectionClosedImage(connection.DatabaseServer);
             }
-            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images[connectionImage]);
             this.Override.NodeAppearance.Image = connectionImage;
+            connection.PropertyChanged += ConnectionPropertyChanged;
         }
 
         public override string Text
@@ -34,7 +29,6 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 DatabaseConnection.Name = value;
             }
         }
-
 
         private void ConnectionPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -56,7 +50,6 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 
         private void UpdateConnectedStatus()
         {
-            LeftImages.Clear();
             var imageName =
                 DatabaseServerFactory.Instance.GetConnectionOpenImage(DatabaseConnection.DatabaseServer);
             if (!DatabaseConnection.IsConnected)
@@ -64,7 +57,6 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 imageName =
                     DatabaseServerFactory.Instance.GetConnectionClosedImage(DatabaseConnection.DatabaseServer);
             }
-            //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images[imageName]);
             this.Override.NodeAppearance.Image = imageName;
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Globalization;
 using System.Linq;
@@ -6,7 +7,6 @@ using System.Reflection;
 using System.Windows.Forms;
 using Infragistics.Win;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using SqlEditor.Database;
 using SqlEditor.DatabaseExplorer;
 using SqlEditor.Databases;
 using Utilities.Text;
@@ -22,7 +22,7 @@ namespace SqlEditor
         private DbConnectionStringBuilder _connectionStringBuilder;
         private DatabaseServer _databaseServer;
 
-        public FrmConnectionDetails(DatabaseConnection databaseConnection)
+        public FrmConnectionDetails(DatabaseConnection databaseConnection, bool readOnly = false)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
@@ -48,9 +48,21 @@ namespace SqlEditor
             _databaseServer = (DatabaseServer)_uceDatabaseType.SelectedItem.ListObject;
             _connectionStringBuilder = _databaseConnection.DatabaseServer.GetConnectionStringBuilder(_databaseConnection.ConnectionString);
             _connectionStringBuilder.BrowsableConnectionString = false;
-            _pgConnection.SelectedObject = _connectionStringBuilder;
             _uneMaxiumumResults.Text = _databaseConnection.MaxResults.ToString(CultureInfo.InvariantCulture);
             _uceAutoCommit.CheckState = _databaseConnection.AutoCommit ? CheckState.Checked : CheckState.Unchecked;
+
+            if (readOnly)
+            {
+                this.Text += " (Read Only)";
+                TypeDescriptor.AddAttributes(_connectionStringBuilder, new Attribute[] { new ReadOnlyAttribute(true) });
+                _uceAutoCommit.Enabled = false;
+                _uteConnectionName.ReadOnly = true;
+                _uceDatabaseType.ReadOnly = true;
+                _uneMaxiumumResults.ReadOnly = true;
+                _ubOk.Enabled = false;
+                _ubTestConnection.Enabled = false;
+            }
+            _pgConnection.SelectedObject = _connectionStringBuilder;
         }
 
         private bool IsConnectionValid(out Exception e)
