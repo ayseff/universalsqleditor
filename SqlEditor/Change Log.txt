@@ -5,6 +5,7 @@
   - When connecting to SQL Server, all databases are now shown and ability to browse each database is working
   - When browsing database objects in Database Explorer, folder icons now reflect whether a node is expanded or not
   Bug Fixes:
+  - UPDATE AND DELETE statements are not generated correctly for table with composite primary keys
 Version: 0.3.0.3
   New Features:
   - SE-29 Provide ability to run SQL from files

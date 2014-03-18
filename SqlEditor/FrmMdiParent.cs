@@ -1429,7 +1429,6 @@ namespace SqlEditor
                 var isFolderContainerNodeSelected = isNodeSelected && (selectedNode as FolderContainerTreeNode) != null;
                 var isFolderNodeSelected = isFolderContainerNodeSelected && selectedNode is FolderTreeNode;
                 var isTableNodeSelected = isNodeSelected && selectedNode is TableTreeNode;
-                var isStoredProcedureNodeSelected = isNodeSelected && selectedNode is StoredProcedureTreeNode;
                 var isViewNodeSelected = isNodeSelected && selectedNode is ViewTreeNode;
                 var isMaterializedViewNodeSelected = isNodeSelected && selectedNode is ViewTreeNode;
                 var isColumnNodeSelected = isNodeSelected && selectedNode is ColumnTreeNode;
@@ -2398,7 +2397,11 @@ namespace SqlEditor
                     if (match.Success)
                     {
                         var latestVersion = match.Groups["version"].Value;
-                        if (Application.ProductVersion != latestVersion)
+                        var latestVersionFormatted = string.Join(".",
+                            latestVersion.Split('.').Select(x => x.PadLeft(4, '0')));
+                        var thisVersionFormatted = string.Join(".",
+                            Application.ProductVersion.Split('.').Select(x => x.PadLeft(4, '0')));
+                        if (String.Compare(latestVersionFormatted, thisVersionFormatted, StringComparison.Ordinal) > 0)
                         {
                             // Prompt to download new version
                             var taskdlg = new TaskDialog

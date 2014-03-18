@@ -106,9 +106,9 @@ namespace SqlEditor.Databases
         }
 
         public abstract IList<Column> GetTablePrimaryKeyColumns(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
-        public Task<IList<Column>> GetTablePrimaryKeyColumnsAsync(IDbConnection connection, string schemaName, string tableName)
+        public Task<IList<Column>> GetTablePrimaryKeyColumnsAsync(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null)
         {
-            var task = Task.Run(() => GetTablePrimaryKeyColumns(connection, schemaName, tableName));
+            var task = Task.Run(() => GetTablePrimaryKeyColumns(connection, schemaName, tableName, databaseInstanceName));
             return task;
         }
 

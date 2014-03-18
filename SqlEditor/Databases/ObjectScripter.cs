@@ -79,7 +79,7 @@ namespace SqlEditor.Databases
             sb.AppendLine("SET");
             AppendColumns(databaseConnection, sb, table.Columns.Where(x => table.PrimaryKeyColumns.All(y => y != x)), ",", " ");
             sb.AppendLine(Environment.NewLine + "WHERE");
-            AppendColumns(databaseConnection, sb, table.PrimaryKeyColumns, "\t", "AND ");
+            AppendColumns(databaseConnection, sb, table.PrimaryKeyColumns, "AND ", "\t");
             _log.DebugFormat("Generating complete.");
             return sb.ToString();
         }
@@ -95,7 +95,7 @@ namespace SqlEditor.Databases
             var sb = new StringBuilder();
             sb.AppendLine("DELETE FROM " + table.FullyQualifiedName);
             sb.AppendLine("WHERE");
-            AppendColumns(databaseConnection, sb, table.PrimaryKeyColumns, "\t", "AND ");
+            AppendColumns(databaseConnection, sb, table.PrimaryKeyColumns, "AND ", "\t");
             _log.DebugFormat("Generating complete.");
             return sb.ToString();
         }
@@ -183,10 +183,10 @@ namespace SqlEditor.Databases
                 var databaseInstanceName = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
                 columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
                 primaryKeyColumns =
-                    await infoProvider.GetTablePrimaryKeyColumnsAsync(connection, table.Parent.Name, table.Name);
+                    await infoProvider.GetTablePrimaryKeyColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
                 primaryKeyColumns =
                     columns.Where(
-                        x => primaryKeyColumns.Any(y => y.Name.Trim().ToUpper() == x.Name.Trim().ToUpper()))
+                        x => primaryKeyColumns.Any(y => String.Equals(y.Name.Trim(), x.Name.Trim(), StringComparison.CurrentCultureIgnoreCase)))
                            .ToList();
                 _log.DebugFormat("Fetching complete.");
             }
