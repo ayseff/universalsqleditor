@@ -10,3 +10,4 @@ bin
 /SqlEditor.sln.DotSettings.user
 Express
 /SqlEditor.Setup/SyncfusionAssemblyReferenceErrors.log
+*.suo
