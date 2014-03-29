@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Actions;
 using ICSharpCode.TextEditor.Document;
 using ICSharpCode.TextEditor.Gui.CompletionWindow;
@@ -589,19 +590,20 @@ namespace SqlEditor
             _intellisenseData = IntellisenseManager.Instance.GetIntellisenseData(DatabaseConnection);
             if (_intellisenseData == null)
             {
+                _log.Debug("Intellisense data is still generating.");
                 return;
             }
 
             var startOffset = Math.Min(_sqlEditor.ActiveTextAreaControl.Caret.Offset, _sqlEditor.ActiveTextAreaControl.Document.TextLength - 1);
             var endOffset = _sqlEditor.ActiveTextAreaControl.Caret.Offset;
             var text = _sqlEditor.ActiveTextAreaControl.Document.GetText(startOffset, 1);
-            Debug.WriteLine(text);
+            //Debug.WriteLine(text);
             while (startOffset > 0 && !text.IsNullEmptyOrWhitespace() && DatabaseConnection.DatabaseServer.ValidIdentifierRegex.IsMatch(text))
             {
                 --startOffset;
                 text = _sqlEditor.ActiveTextAreaControl.Document.GetText(startOffset, 1);
             }
-            Debug.WriteLine("StartOffset (before code completion window): {0}.", startOffset);
+            //Debug.WriteLine("StartOffset (before code completion window): {0}.", startOffset);
             if (startOffset == _sqlEditor.ActiveTextAreaControl.Document.TextLength - 1)
             {
                 ++startOffset;

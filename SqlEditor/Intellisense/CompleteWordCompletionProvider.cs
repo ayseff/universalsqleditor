@@ -32,7 +32,7 @@ namespace SqlEditor.Intellisense
         private readonly int _mviewIconIndex;
         private readonly int _columnIconIndex;
         private readonly ImageList _imageList;
-        private readonly string[] _queryDelimiters = new[] { "/", ";", "\r\n\r\n" };
+        private readonly string[] _queryDelimiters = { "/", ";", "\r\n\r\n" };
         private readonly Regex _columnContextRegexBeginning;
         private readonly Regex _tableContextRegexBeginning;
         private readonly Regex _columnContextRegex;
@@ -313,9 +313,10 @@ namespace SqlEditor.Intellisense
             {
                 var completionList = new List<DefaultCompletionData>();
                 queryStart = GetQueryStartPosition(qcTextEditor);
+                if (IsInsideQuotedString(qcTextEditor, queryStart)) return null;
                 query = GetQueryText(qcTextEditor);
                 previousWord = GetPreviousWord(qcTextEditor, queryStart).TrimStart().ToUpper();
-                                
+                
                 IStatement statement;
                 try
                 {
@@ -344,12 +345,12 @@ namespace SqlEditor.Intellisense
                     {
                         var objectName = table.Name;
                         var schema = GetSchemaOrDefault(table.Schema);
-                        string schemaName = schema.Name;
+                        var schemaName = schema.Name;
                         var cols = _intellisenseData.AllColumns.Where(
                                 c => c.Parent != null &&
-                                c.Parent.Name.ToUpper() == objectName.ToUpper() &&
+                                String.Equals(c.Parent.Name, objectName, StringComparison.CurrentCultureIgnoreCase) &&
                                 c.Parent.Parent != null &&
-                                c.Parent.Parent.Name.ToUpper() == schemaName.ToUpper()
+                                String.Equals(c.Parent.Parent.Name, schemaName, StringComparison.CurrentCultureIgnoreCase)
                            ).Select(c => c.Name).ToList();
                         columns.AddRange(cols);
                     }
@@ -395,20 +396,35 @@ namespace SqlEditor.Intellisense
                             columns = _intellisenseData.AllColumns.Where(
                                     c => c.Name.StartsWith(columnName, StringComparison.InvariantCultureIgnoreCase) &&
                                     c.Parent != null &&
-                                    c.Parent.Name.ToUpper() == table.Name.ToUpper() &&
+                                    String.Equals(c.Parent.Name, table.Name, StringComparison.CurrentCultureIgnoreCase) &&
                                     c.Parent.Parent != null &&
-                                    c.Parent.Parent.Name.ToUpper() == table.Schema.ToUpper()).Select(c => c.Name).OrderBy(c => c).ToList();
+                                    String.Equals(c.Parent.Parent.Name, table.Schema, StringComparison.CurrentCultureIgnoreCase)).Select(c => c.Name).OrderBy(c => c).ToList();
                         }
                         else
                         {
                             // Format: Schema.ObjectName                            
                             schemaName = dotSplits[0].TrimStart().ToUpper();
-                            var schema = GetSchemaOrDefault(schemaName);
-                            var tableName = dotSplits[1].TrimEnd().ToUpper();
-                            tables = schema.Tables.Where(x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
-                            views = schema.Views.Where(x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
-                            mviews = schema.MaterializedViews.Where(x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
-                            
+                            var schema = GetSchema(schemaName);
+                            if (schema != null)
+                            {
+                                var tableName = dotSplits[1].TrimEnd().ToUpper();
+                                tables =
+                                    schema.Tables.Where(
+                                        x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase))
+                                        .Select(x => x.Name)
+                                        .ToList();
+                                views =
+                                    schema.Views.Where(
+                                        x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase))
+                                        .Select(x => x.Name)
+                                        .ToList();
+                                mviews =
+                                    schema.MaterializedViews.Where(
+                                        x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase))
+                                        .Select(x => x.Name)
+                                        .ToList();
+                            }
+
                         }
                     }
                     else
@@ -419,25 +435,50 @@ namespace SqlEditor.Intellisense
                         {
                             // Show column list from a single table
                             var table = statement.Tables[0];
-                            var schema = GetSchemaOrDefault(table.Schema);
-                            var tbl = schema.Tables.FirstOrDefault(x => x.Name.ToUpper() == table.Name.Trim().ToUpper());
-                            if (tbl != null)
+                            var schema = GetSchema(table.Schema);
+                            if (schema != null)
                             {
-                                columns = tbl.Columns.Where(c => c.Name.StartsWith(previousWord.Trim().ToUpper(), StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
-                            }
-                            else
-                            {
-                                var view = schema.Views.FirstOrDefault(x => x.Name.ToUpper() == table.Name.Trim().ToUpper());
-                                if (view != null)
+                                var tbl =
+                                    schema.Tables.FirstOrDefault(x => x.Name.ToUpper() == table.Name.Trim().ToUpper());
+                                if (tbl != null)
                                 {
-                                    columns = view.Columns.Where(c => c.Name.StartsWith(previousWord.Trim().ToUpper(), StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
+                                    columns =
+                                        tbl.Columns.Where(
+                                            c =>
+                                                c.Name.StartsWith(previousWord.Trim().ToUpper(),
+                                                    StringComparison.InvariantCultureIgnoreCase))
+                                            .Select(x => x.Name)
+                                            .ToList();
                                 }
                                 else
                                 {
-                                    var mview = schema.MaterializedViews.FirstOrDefault(x => x.Name.ToUpper() == table.Name.Trim().ToUpper());
-                                    if (mview != null)
+                                    var view =
+                                        schema.Views.FirstOrDefault(x => x.Name.ToUpper() == table.Name.Trim().ToUpper());
+                                    if (view != null)
                                     {
-                                        columns = mview.Columns.Where(c => c.Name.StartsWith(previousWord.Trim().ToUpper(), StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
+                                        columns =
+                                            view.Columns.Where(
+                                                c =>
+                                                    c.Name.StartsWith(previousWord.Trim().ToUpper(),
+                                                        StringComparison.InvariantCultureIgnoreCase))
+                                                .Select(x => x.Name)
+                                                .ToList();
+                                    }
+                                    else
+                                    {
+                                        var mview =
+                                            schema.MaterializedViews.FirstOrDefault(
+                                                x => x.Name.ToUpper() == table.Name.Trim().ToUpper());
+                                        if (mview != null)
+                                        {
+                                            columns =
+                                                mview.Columns.Where(
+                                                    c =>
+                                                        c.Name.StartsWith(previousWord.Trim().ToUpper(),
+                                                            StringComparison.InvariantCultureIgnoreCase))
+                                                    .Select(x => x.Name)
+                                                    .ToList();
+                                        }
                                     }
                                 }
                             }
@@ -446,11 +487,26 @@ namespace SqlEditor.Intellisense
                         else
                         {
                             var schemaName = _intellisenseData.CurrentSchema.Name.Trim().ToUpper();
-                            var schema = GetSchemaOrDefault(schemaName);
-                            var tableName = previousWord.Trim().ToUpper();
-                            tables = schema.Tables.Where(x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
-                            views = schema.Views.Where(x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
-                            mviews = schema.MaterializedViews.Where(x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase)).Select(x => x.Name).ToList();
+                            var schema = GetSchema(schemaName);
+                            if (schema != null)
+                            {
+                                var tableName = previousWord.Trim().ToUpper();
+                                tables =
+                                    schema.Tables.Where(
+                                        x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase))
+                                        .Select(x => x.Name)
+                                        .ToList();
+                                views =
+                                    schema.Views.Where(
+                                        x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase))
+                                        .Select(x => x.Name)
+                                        .ToList();
+                                mviews =
+                                    schema.MaterializedViews.Where(
+                                        x => x.Name.StartsWith(tableName, StringComparison.InvariantCultureIgnoreCase))
+                                        .Select(x => x.Name)
+                                        .ToList();
+                            }
                         }
                     }
                 }
@@ -473,6 +529,20 @@ namespace SqlEditor.Intellisense
             }
         }
 
+        private static bool IsInsideQuotedString(TextArea qcTextEditor, int queryStart)
+        {
+            var isQuoteOpen = false;
+            for (var i = queryStart; i < qcTextEditor.Caret.Offset; i++)
+            {
+                var character = qcTextEditor.Document.GetText(i, 1);
+                if (character == "'" || character == "\"" || character == "`")
+                {
+                    isQuoteOpen = !isQuoteOpen;
+                }
+            }
+            return isQuoteOpen;
+        }
+
         private Schema GetSchemaOrDefault(string schemaName)
         {
             var schema = _intellisenseData.CurrentSchema;
@@ -490,6 +560,11 @@ namespace SqlEditor.Intellisense
                 schema = _intellisenseData.CurrentSchema;
             }
             return schema;
+        }
+
+        private Schema GetSchema(string schemaName)
+        {
+            return _intellisenseData.AllSchemas.FirstOrDefault(x => x.Name.ToUpper() == schemaName.Trim().ToUpper());
         }
     }
 }
