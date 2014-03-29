@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using ICSharpCode.TextEditor.Actions;
 using SqlEditor.Annotations;
 using SqlEditor.DatabaseExplorer;
 using Utilities.Collections;
@@ -16,6 +15,25 @@ namespace SqlEditor.Databases
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+
+        public static async Task<string> GenerateTableSelectStatement([JetBrains.Annotations.NotNull] Table table,
+            [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
+        {
+            if (table == null) throw new ArgumentNullException("table");
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+
+            _log.DebugFormat("Generating SELECT statement for table {0} ...", table.FullyQualifiedName);
+            await LoadColumns(table, databaseConnection);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("SELECT");
+            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", table.Columns.Select(x => x.Name)));
+            sb.AppendLine("FROM");
+            sb.AppendLine("\t" + table.FullyQualifiedName);
+            _log.DebugFormat("Generating complete.");
+            return sb.ToString();
+        }
+
         public static async Task<string> GenerateTableInsertStatement([NotNull] Table table,
                                                      [NotNull] DatabaseConnection databaseConnection)
         {
@@ -23,20 +41,7 @@ namespace SqlEditor.Databases
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
             _log.DebugFormat("Generating INSERT statement for table {0} ...", table.FullyQualifiedName);
-            if (table.Columns.Count == 0)
-            {
-                _log.DebugFormat("Fetching columns for table {0} ...", table.FullyQualifiedName);
-                var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
-                IList<Column> columns;
-                using (var connection = await databaseConnection.CreateNewConnectionAsync())
-                {
-                    await connection.OpenIfRequiredAsync();
-                    var databaseInstanceName = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
-                    columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
-                    _log.DebugFormat("Fetching complete.");
-                }
-                table.Columns.AddRange(columns);
-            }
+            await LoadColumns(table, databaseConnection);
 
             var sb = new StringBuilder();
             sb.AppendLine("INSERT INTO " + table.FullyQualifiedName + " (");
@@ -193,6 +198,7 @@ namespace SqlEditor.Databases
             table.Columns.AddRange(columns);
             table.PrimaryKeyColumns.AddRange(primaryKeyColumns);
         }
+
 
         
     }

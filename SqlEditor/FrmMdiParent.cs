@@ -88,12 +88,6 @@ namespace SqlEditor
 
         // Table buttons
         private readonly ToolBase _tableDetailsButtonTool;
-        private readonly ToolBase _tableScriptAsDropButtonTool;
-        private readonly ToolBase _tableScriptAsCreateButtonTool;
-        private readonly ToolBase _tableScriptAsInsertButtonTool;
-        private readonly ToolBase _tableScriptAsUpdateButtonTool;
-        private readonly ToolBase _tableScriptAsDeleteButtonTool;
-        private readonly PopupMenuTool _tableScriptPopupMenu;
 
         private readonly StateButtonTool _showConnectionsPaneStateButtonTool;
         private readonly StateButtonTool _showSqlHistoryStateButtonTool;
@@ -247,20 +241,24 @@ namespace SqlEditor
 
             // Setup table commands
             _tableDetailsButtonTool = _utm.Tools["Tables - Details"];
-            _tableScriptAsDropButtonTool = _utm.Tools["Tables - Script as - Drop"];
-            _tableScriptAsCreateButtonTool = _utm.Tools["Tables - Script as - Create"];
-            _tableScriptAsInsertButtonTool = _utm.Tools["Tables - Script as - Insert"];
-            _tableScriptAsUpdateButtonTool = _utm.Tools["Tables - Script as - Update"];
-            _tableScriptAsDeleteButtonTool = _utm.Tools["Tables - Script as - Delete"];
-            _tableScriptPopupMenu = (PopupMenuTool)_utm.Tools["Script Table As - Context Menu"];
-            _tableScriptPopupMenu.Tools.Clear();
-            _tableScriptPopupMenu.Tools.Add(_tableScriptAsDropButtonTool);
-            _tableScriptPopupMenu.Tools.Add(_tableScriptAsCreateButtonTool);
-            _tableScriptPopupMenu.Tools.Add(_tableScriptAsInsertButtonTool);
-            _tableScriptPopupMenu.Tools.Add(_tableScriptAsUpdateButtonTool);
-            _tableScriptPopupMenu.Tools.Add(_tableScriptAsDeleteButtonTool);
+            
+            var tableScriptAsDropButtonTool = _utm.Tools["Tables - Script as - Drop"];
+            var tableScriptAsCreateButtonTool = _utm.Tools["Tables - Script as - Create"];
+            var tableScriptAsSelectButtonTool = _utm.Tools["Tables - Script as - Select"];
+            var tableScriptAsInsertButtonTool = _utm.Tools["Tables - Script as - Insert"];
+            var tableScriptAsUpdateButtonTool = _utm.Tools["Tables - Script as - Update"];
+            var tableScriptAsDeleteButtonTool = _utm.Tools["Tables - Script as - Delete"];
+            var tableScriptPopupMenu = (PopupMenuTool)_utm.Tools["Script Table As - Context Menu"];
+            tableScriptPopupMenu.Tools.Clear();
+            tableScriptPopupMenu.Tools.Add(tableScriptAsSelectButtonTool);
+            tableScriptPopupMenu.Tools.Add(tableScriptAsInsertButtonTool);
+            tableScriptPopupMenu.Tools.Add(tableScriptAsUpdateButtonTool);
+            tableScriptPopupMenu.Tools.Add(tableScriptAsDeleteButtonTool);
+            var index = tableScriptPopupMenu.Tools.Add(tableScriptAsCreateButtonTool);
+            tableScriptPopupMenu.Tools[index].InstanceProps.IsFirstInGroup = true;
+            tableScriptPopupMenu.Tools.Add(tableScriptAsDropButtonTool);
             _tableCommands.Add(_tableDetailsButtonTool);
-            _tableCommands.Add(_tableScriptPopupMenu);
+            _tableCommands.Add(tableScriptPopupMenu);
             _tableCommands.Add(null);
             _tableCommands.Add(_copyButtonTool);
             _tableCommands.Add(null);
@@ -980,6 +978,10 @@ namespace SqlEditor
                         SetLoggingLevel(Level.Error);
                         break;
 
+                    case "Tables - Script as - Select":
+                        Connections_ScriptTableAsSelect();
+                        break;
+
                     case "Tables - Script as - Insert":
                         Connections_ScriptTableAsInsert();
                         break;
@@ -1154,6 +1156,25 @@ namespace SqlEditor
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
             var insertSql = ObjectScripter.GenerateTableDropStatement(selectedNode.Table, databaseConnection);
+            worksheet.AppendText(insertSql);
+        }
+
+        private async void Connections_ScriptTableAsSelect()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as TableTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("No table selected for select");
+            }
+
+            var databaseConnection = selectedNode.DatabaseConnection;
+            var worksheet = NewWorksheet(databaseConnection);
+            var insertSql = await ObjectScripter.GenerateTableSelectStatement(selectedNode.Table, databaseConnection);
             worksheet.AppendText(insertSql);
         }
 
