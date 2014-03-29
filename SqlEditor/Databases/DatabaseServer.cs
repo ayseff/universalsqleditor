@@ -22,6 +22,8 @@ namespace SqlEditor.Databases
         
 
         public abstract DbConnectionStringBuilder GetConnectionStringBuilder(string connectionString = null);
+
+        public abstract object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder);
         public abstract DbInfoProvider GetInfoProvider();
         public abstract IDbConnection CreateConnection(string connectionString);
 

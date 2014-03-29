@@ -53,6 +53,11 @@ namespace SqlEditor.Databases.MsAccess
             return msAccess2003ConnectionStringBuilder;
         }
 
+        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder)
+        {
+            return connectionStringBuilder;
+        }
+
         public override DbInfoProvider GetInfoProvider()
         {
             return new MsAccessInfoProvider();

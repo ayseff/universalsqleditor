@@ -57,6 +57,11 @@ namespace SqlEditor.Databases.Sqlite
             return sqLiteConnectionStringBuilder;
         }
 
+        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder)
+        {
+            return new SqliteSimpleConnectionStringBuilder((SQLiteConnectionStringBuilder) connectionStringBuilder);
+        }
+
         public override DbInfoProvider GetInfoProvider()
         {
             return _sqliteInfoProvider;

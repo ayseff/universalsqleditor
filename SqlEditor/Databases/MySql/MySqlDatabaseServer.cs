@@ -60,6 +60,11 @@ namespace SqlEditor.Databases.MySql
             return mySqlConnectionStringBuilder;
         }
 
+        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder)
+        {
+            return new MySqlSimpleConnectionStringBuilder((MySqlConnectionStringBuilder) connectionStringBuilder);
+        }
+
         public override DbInfoProvider GetInfoProvider()
         {
             return new MySqlInfoProvider();

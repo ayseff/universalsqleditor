@@ -43,6 +43,8 @@
         "sonable number to avoid performance penalties.", Infragistics.Win.ToolTipImage.Default, "Maximum Results", Infragistics.Win.DefaultableBoolean.Default);
             Infragistics.Win.UltraWinToolTip.UltraToolTipInfo ultraToolTipInfo6 = new Infragistics.Win.UltraWinToolTip.UltraToolTipInfo("", Infragistics.Win.ToolTipImage.Default, "Connection Name", Infragistics.Win.DefaultableBoolean.Default);
             Infragistics.Win.UltraWinToolTip.UltraToolTipInfo ultraToolTipInfo7 = new Infragistics.Win.UltraWinToolTip.UltraToolTipInfo("Types of database whihc you are connecting to (i.e. ORACLE, DB2, etc.)", Infragistics.Win.ToolTipImage.Default, "Database Type", Infragistics.Win.DefaultableBoolean.Default);
+            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab1 = new Infragistics.Win.UltraWinTabControl.UltraTab();
+            Infragistics.Win.UltraWinTabControl.UltraTab ultraTab2 = new Infragistics.Win.UltraWinTabControl.UltraTab();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmConnectionDetails));
             this.FrmConnectionEdit_Fill_Panel = new Infragistics.Win.Misc.UltraPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -59,8 +61,13 @@
             this._uceDatabaseType = new Infragistics.Win.UltraWinEditors.UltraComboEditor();
             this.ultraLabel1 = new Infragistics.Win.Misc.UltraLabel();
             this.ultraGroupBox2 = new Infragistics.Win.Misc.UltraGroupBox();
-            this._pgConnection = new System.Windows.Forms.PropertyGrid();
+            this._pgConnectionAdvanced = new System.Windows.Forms.PropertyGrid();
             this._utt = new Infragistics.Win.UltraWinToolTip.UltraToolTipManager(this.components);
+            this._utcTabs = new Infragistics.Win.UltraWinTabControl.UltraTabControl();
+            this.ultraTabSharedControlsPage1 = new Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage();
+            this.ultraTabPageControl1 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this.ultraTabPageControl2 = new Infragistics.Win.UltraWinTabControl.UltraTabPageControl();
+            this._pgConnectionSimple = new System.Windows.Forms.PropertyGrid();
             this.FrmConnectionEdit_Fill_Panel.ClientArea.SuspendLayout();
             this.FrmConnectionEdit_Fill_Panel.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -72,6 +79,10 @@
             ((System.ComponentModel.ISupportInitialize)(this._uceDatabaseType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ultraGroupBox2)).BeginInit();
             this.ultraGroupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._utcTabs)).BeginInit();
+            this._utcTabs.SuspendLayout();
+            this.ultraTabPageControl1.SuspendLayout();
+            this.ultraTabPageControl2.SuspendLayout();
             this.SuspendLayout();
             // 
             // FrmConnectionEdit_Fill_Panel
@@ -264,7 +275,7 @@
             // ultraGroupBox2
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.ultraGroupBox2, 3);
-            this.ultraGroupBox2.Controls.Add(this._pgConnection);
+            this.ultraGroupBox2.Controls.Add(this._utcTabs);
             this.ultraGroupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ultraGroupBox2.Location = new System.Drawing.Point(3, 146);
             this.ultraGroupBox2.Name = "ultraGroupBox2";
@@ -273,19 +284,71 @@
             this.ultraGroupBox2.Text = "Connection String Details";
             this.ultraGroupBox2.ViewStyle = Infragistics.Win.Misc.GroupBoxViewStyle.Office2007;
             // 
-            // _pgConnection
+            // _pgConnectionAdvanced
             // 
-            this._pgConnection.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._pgConnection.Location = new System.Drawing.Point(3, 16);
-            this._pgConnection.Name = "_pgConnection";
-            this._pgConnection.Size = new System.Drawing.Size(424, 311);
-            this._pgConnection.TabIndex = 1;
-            this._pgConnection.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PgConnectionPropertyValueChanged);
+            this._pgConnectionAdvanced.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._pgConnectionAdvanced.Location = new System.Drawing.Point(0, 0);
+            this._pgConnectionAdvanced.Name = "_pgConnectionAdvanced";
+            this._pgConnectionAdvanced.Size = new System.Drawing.Size(422, 288);
+            this._pgConnectionAdvanced.TabIndex = 1;
+            this._pgConnectionAdvanced.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PgConnectionPropertyValueChanged);
             // 
             // _utt
             // 
             this._utt.AutoPopDelay = 4000;
             this._utt.ContainingControl = this;
+            // 
+            // _utcTabs
+            // 
+            this._utcTabs.CloseButtonLocation = Infragistics.Win.UltraWinTabs.TabCloseButtonLocation.None;
+            this._utcTabs.Controls.Add(this.ultraTabSharedControlsPage1);
+            this._utcTabs.Controls.Add(this.ultraTabPageControl1);
+            this._utcTabs.Controls.Add(this.ultraTabPageControl2);
+            this._utcTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._utcTabs.Location = new System.Drawing.Point(3, 16);
+            this._utcTabs.Name = "_utcTabs";
+            this._utcTabs.SharedControlsPage = this.ultraTabSharedControlsPage1;
+            this._utcTabs.Size = new System.Drawing.Size(424, 311);
+            this._utcTabs.TabIndex = 6;
+            ultraTab1.Key = "Simple";
+            ultraTab1.TabPage = this.ultraTabPageControl1;
+            ultraTab1.Text = "Simple";
+            ultraTab2.Key = "Advanced";
+            ultraTab2.TabPage = this.ultraTabPageControl2;
+            ultraTab2.Text = "Advanced";
+            this._utcTabs.Tabs.AddRange(new Infragistics.Win.UltraWinTabControl.UltraTab[] {
+            ultraTab1,
+            ultraTab2});
+            this._utcTabs.ViewStyle = Infragistics.Win.UltraWinTabControl.ViewStyle.Office2007;
+            // 
+            // ultraTabSharedControlsPage1
+            // 
+            this.ultraTabSharedControlsPage1.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabSharedControlsPage1.Name = "ultraTabSharedControlsPage1";
+            this.ultraTabSharedControlsPage1.Size = new System.Drawing.Size(422, 288);
+            // 
+            // ultraTabPageControl1
+            // 
+            this.ultraTabPageControl1.Controls.Add(this._pgConnectionSimple);
+            this.ultraTabPageControl1.Location = new System.Drawing.Point(1, 22);
+            this.ultraTabPageControl1.Name = "ultraTabPageControl1";
+            this.ultraTabPageControl1.Size = new System.Drawing.Size(422, 288);
+            // 
+            // ultraTabPageControl2
+            // 
+            this.ultraTabPageControl2.Controls.Add(this._pgConnectionAdvanced);
+            this.ultraTabPageControl2.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl2.Name = "ultraTabPageControl2";
+            this.ultraTabPageControl2.Size = new System.Drawing.Size(422, 288);
+            // 
+            // _pgConnectionSimple
+            // 
+            this._pgConnectionSimple.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._pgConnectionSimple.Location = new System.Drawing.Point(0, 0);
+            this._pgConnectionSimple.Name = "_pgConnectionSimple";
+            this._pgConnectionSimple.Size = new System.Drawing.Size(422, 288);
+            this._pgConnectionSimple.TabIndex = 2;
+            this._pgConnectionSimple.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PgConnectionPropertyValueChanged);
             // 
             // FrmConnectionDetails
             // 
@@ -313,6 +376,10 @@
             ((System.ComponentModel.ISupportInitialize)(this._uceDatabaseType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ultraGroupBox2)).EndInit();
             this.ultraGroupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._utcTabs)).EndInit();
+            this._utcTabs.ResumeLayout(false);
+            this.ultraTabPageControl1.ResumeLayout(false);
+            this.ultraTabPageControl2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -328,7 +395,7 @@
         private Infragistics.Win.UltraWinEditors.UltraComboEditor _uceDatabaseType;
         private Infragistics.Win.Misc.UltraLabel ultraLabel1;
         private Infragistics.Win.Misc.UltraGroupBox ultraGroupBox2;
-        private System.Windows.Forms.PropertyGrid _pgConnection;
+        private System.Windows.Forms.PropertyGrid _pgConnectionAdvanced;
         private Infragistics.Win.UltraWinEditors.UltraTextEditor _uteConnectionName;
         private Infragistics.Win.Misc.UltraLabel ultraLabel2;
         private Infragistics.Win.Misc.UltraLabel ultraLabel4;
@@ -336,5 +403,10 @@
         private Infragistics.Win.UltraWinEditors.UltraNumericEditor _uneMaxiumumResults;
         private Infragistics.Win.Misc.UltraLabel ultraLabel3;
         private Infragistics.Win.UltraWinToolTip.UltraToolTipManager _utt;
+        private Infragistics.Win.UltraWinTabControl.UltraTabControl _utcTabs;
+        private Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage ultraTabSharedControlsPage1;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl1;
+        private System.Windows.Forms.PropertyGrid _pgConnectionSimple;
+        private Infragistics.Win.UltraWinTabControl.UltraTabPageControl ultraTabPageControl2;
     }
 }

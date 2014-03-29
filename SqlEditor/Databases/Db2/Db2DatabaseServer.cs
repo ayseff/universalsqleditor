@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.ComponentModel;
+using System.Data;
 using System.Data.Common;
 using System.Text.RegularExpressions;
 using IBM.Data.DB2;
@@ -55,6 +57,30 @@ namespace SqlEditor.Databases.Db2
             db2ConnectionStringBuilder.QueryTimeout = 0;
             db2ConnectionStringBuilder.BrowsableConnectionString = false;
             return db2ConnectionStringBuilder;
+        }
+
+        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder1)
+        {
+            //var connectionStringBuilder = GetConnectionStringBuilder(connectionStringBuilder1);
+            //// prepare our property overriding type descriptor
+            //var ctd = new PropertyOverridingTypeDescriptor(TypeDescriptor.GetProvider(connectionStringBuilder).GetTypeDescriptor(connectionStringBuilder));
+
+            //// iterate through properties in the supplied object/type
+            
+            //foreach (PropertyDescriptor pd in TypeDescriptor.GetProperties(connectionStringBuilder))
+            //{
+            //    var isBrowsable = pd.Name == "Database"
+            //                       || pd.Name == "Server"
+            //                       || pd.Name == "UserID"
+            //                       || pd.Name == "Password";
+            //    var pd2 = TypeDescriptor.CreateProperty(connectionStringBuilder.GetType(), pd, new BrowsableAttribute(isBrowsable));
+            //    ctd.OverrideProperty(pd2);
+            //}
+
+            //// then we add new descriptor provider that will return our descriptor instead of default
+            //TypeDescriptor.AddProvider(new TypeDescriptorOverridingProvider(ctd), connectionStringBuilder);
+            //return connectionStringBuilder;
+            return null;
         }
 
         public override DbInfoProvider GetInfoProvider()

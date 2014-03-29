@@ -47,6 +47,7 @@ namespace SqlEditor
             }
             _databaseServer = (DatabaseServer)_uceDatabaseType.SelectedItem.ListObject;
             _connectionStringBuilder = _databaseConnection.DatabaseServer.GetConnectionStringBuilder(_databaseConnection.ConnectionString);
+            var simpleConnectionStringBuilder = _databaseConnection.DatabaseServer.GetSimpleConnectionStringBuilder(_connectionStringBuilder);
             _connectionStringBuilder.BrowsableConnectionString = false;
             _uneMaxiumumResults.Text = _databaseConnection.MaxResults.ToString(CultureInfo.InvariantCulture);
             _uceAutoCommit.CheckState = _databaseConnection.AutoCommit ? CheckState.Checked : CheckState.Unchecked;
@@ -55,6 +56,7 @@ namespace SqlEditor
             {
                 this.Text += " (Read Only)";
                 TypeDescriptor.AddAttributes(_connectionStringBuilder, new Attribute[] { new ReadOnlyAttribute(true) });
+                TypeDescriptor.AddAttributes(simpleConnectionStringBuilder, new Attribute[] { new ReadOnlyAttribute(true) });
                 _uceAutoCommit.Enabled = false;
                 _uteConnectionName.ReadOnly = true;
                 _uceDatabaseType.ReadOnly = true;
@@ -62,7 +64,8 @@ namespace SqlEditor
                 _ubOk.Enabled = false;
                 _ubTestConnection.Enabled = false;
             }
-            _pgConnection.SelectedObject = _connectionStringBuilder;
+            _pgConnectionAdvanced.SelectedObject = _connectionStringBuilder;
+            _pgConnectionSimple.SelectedObject = simpleConnectionStringBuilder;
         }
 
         private bool IsConnectionValid(out Exception e)
@@ -109,7 +112,9 @@ namespace SqlEditor
         {
             _databaseServer = (DatabaseServer) _uceDatabaseType.SelectedItem.ListObject;
             _connectionStringBuilder = _databaseServer.GetConnectionStringBuilder();
-            _pgConnection.SelectedObject = _connectionStringBuilder;
+            var simpleConnectionStringBuilder = _databaseConnection.DatabaseServer.GetSimpleConnectionStringBuilder(_connectionStringBuilder);
+            _pgConnectionAdvanced.SelectedObject = _connectionStringBuilder;
+            _pgConnectionSimple.SelectedObject = simpleConnectionStringBuilder;
             _connectionTested = false;
         }
 

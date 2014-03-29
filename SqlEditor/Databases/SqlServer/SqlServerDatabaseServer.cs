@@ -59,6 +59,11 @@ namespace SqlEditor.Databases.SqlServer
             return sqlConnectionStringBuilder;
         }
 
+        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder)
+        {
+            return new SqlServerSimpleConnectionStringBuilder((SqlConnectionStringBuilder)connectionStringBuilder);
+        }
+
         public override DbInfoProvider GetInfoProvider()
         {
             return _sqlServerInfoProvider;

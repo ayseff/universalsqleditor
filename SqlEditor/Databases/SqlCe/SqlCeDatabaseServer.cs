@@ -54,6 +54,11 @@ namespace SqlEditor.Databases.SqlCe
             return sqlCeConnectionStringBuilder;
         }
 
+        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder)
+        {
+            return new SqlCeSimpleConnectionStringBuilder((SqlCeConnectionStringBuilder) connectionStringBuilder);
+        }
+
         public override DbInfoProvider GetInfoProvider()
         {
             return _sqlCeInfoProvider;

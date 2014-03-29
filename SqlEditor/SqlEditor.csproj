@@ -233,11 +233,18 @@
     <Compile Include="DatabaseExplorer\TreeNodes\SequencesTreeNode.cs" />
     <Compile Include="Databases\ColumnParameter.cs" />
     <Compile Include="Databases\DatabaseInstance.cs" />
+    <Compile Include="Databases\Db2\Db2SimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\Function.cs" />
     <Compile Include="Databases\MySql\MySqlInfoProvider.cs" />
+    <Compile Include="Databases\MySql\MySqlSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\Oracle\OracleSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\SqlCe\SqlCeSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\Sqlite\SqliteSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\SqlServer\SqlServerSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />
     <Compile Include="Databases\ObjectScripter.cs" />
+    <Compile Include="PropertyOverridingTypeDescriptor.cs" />
     <Compile Include="RunMultipleFiles\FrmRunMultipleFiles.cs">
       <SubType>Form</SubType>
     </Compile>

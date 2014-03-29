@@ -1,5 +1,8 @@
-﻿using System.Data;
+﻿using System;
+using System.ComponentModel;
+using System.Data;
 using System.Data.Common;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Oracle.ManagedDataAccess.Client;
@@ -60,6 +63,11 @@ namespace SqlEditor.Databases.Oracle
             }
             oracleConnectionStringBuilder.BrowsableConnectionString = false;
             return oracleConnectionStringBuilder;
+        }
+
+        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder)
+        {
+            return new OracleSimpleConnectionStringBuilder((OracleConnectionStringBuilder) connectionStringBuilder);
         }
 
         public override DbInfoProvider GetInfoProvider()
