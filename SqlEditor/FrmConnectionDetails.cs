@@ -111,8 +111,12 @@ namespace SqlEditor
         private void UceDatabaseTypeSelectionChangeCommitted(object sender, EventArgs e)
         {
             _databaseServer = (DatabaseServer) _uceDatabaseType.SelectedItem.ListObject;
+            _databaseConnection.DatabaseServer = _databaseServer;
+            //_log.InfoFormat("Database server: {0}", _databaseServer.GetType());
             _connectionStringBuilder = _databaseServer.GetConnectionStringBuilder();
-            var simpleConnectionStringBuilder = _databaseConnection.DatabaseServer.GetSimpleConnectionStringBuilder(_connectionStringBuilder);
+            //_log.InfoFormat("_connectionStringBuilder: {0}", _connectionStringBuilder.GetType());
+            var simpleConnectionStringBuilder = _databaseServer.GetSimpleConnectionStringBuilder(_connectionStringBuilder);
+            //_log.InfoFormat("simpleConnectionStringBuilder: {0}", simpleConnectionStringBuilder.GetType());
             _pgConnectionAdvanced.SelectedObject = _connectionStringBuilder;
             _pgConnectionSimple.SelectedObject = simpleConnectionStringBuilder;
             _connectionTested = false;

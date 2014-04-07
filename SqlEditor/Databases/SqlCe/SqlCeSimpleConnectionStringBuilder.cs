@@ -18,7 +18,7 @@ namespace SqlEditor.Databases.SqlCe
             set { _connectionStringBuilder.DataSource = value; }
         }
 
-        [Description("Password used to connect to the database")]
+        [Description("Password used to connect to the database"), PasswordPropertyText(true)]
         public string Password
         {
             get { return _connectionStringBuilder.Password; }

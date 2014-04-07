@@ -31,7 +31,7 @@ namespace SqlEditor.Databases.Db2
             set { _connectionStringBuilder.UserID = value; }
         }
 
-        [Description("Password used to connect to the database")]
+        [Description("Password used to connect to the database"), PasswordPropertyText(true)]
         public string Password
         {
             get { return _connectionStringBuilder.Password; }

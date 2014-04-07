@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Data.SqlClient;
-using IBM.Data.DB2;
 using JetBrains.Annotations;
 
 namespace SqlEditor.Databases.SqlServer
@@ -34,7 +33,7 @@ namespace SqlEditor.Databases.SqlServer
             set { _connectionStringBuilder.UserID = value; }
         }
 
-        [Description("Password used to connect to the database")]
+        [Description("Password used to connect to the database"), PasswordPropertyText(true)]
         public string Password
         {
             get { return _connectionStringBuilder.Password; }

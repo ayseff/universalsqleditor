@@ -59,9 +59,10 @@ namespace SqlEditor.Databases.Db2
             return db2ConnectionStringBuilder;
         }
 
-        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder1)
+        public override object GetSimpleConnectionStringBuilder(DbConnectionStringBuilder connectionStringBuilder)
         {
-            //var connectionStringBuilder = GetConnectionStringBuilder(connectionStringBuilder1);
+            return new Db2SimpleConnectionStringBuilder((DB2ConnectionStringBuilder)connectionStringBuilder);
+            //var connectionStringBuilder = GetConnectionStringBuilder(connectionStringBuilder);
             //// prepare our property overriding type descriptor
             //var ctd = new PropertyOverridingTypeDescriptor(TypeDescriptor.GetProvider(connectionStringBuilder).GetTypeDescriptor(connectionStringBuilder));
 
@@ -80,7 +81,7 @@ namespace SqlEditor.Databases.Db2
             //// then we add new descriptor provider that will return our descriptor instead of default
             //TypeDescriptor.AddProvider(new TypeDescriptorOverridingProvider(ctd), connectionStringBuilder);
             //return connectionStringBuilder;
-            return null;
+            //return null;
         }
 
         public override DbInfoProvider GetInfoProvider()
