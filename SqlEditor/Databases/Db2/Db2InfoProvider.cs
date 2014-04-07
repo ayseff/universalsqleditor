@@ -52,7 +52,7 @@ namespace SqlEditor.Databases.Db2
             if (tableName == null) throw new ArgumentNullException("tableName");
 
             return GetTableColumnsBase(connection, schemaName, tableName,
-                                       "SELECT c.colname, c.typename, c.length, c.length as precision, c.scale, c.nulls, c.colno FROM SYSCAT.KEYCOLUSE A, SYSCAT.TABCONST B, SYSCAT.COLUMNS C WHERE A.CONSTNAME=B.CONSTNAME AND B.TYPE = 'P' AND UPPER(A.TABNAME) = @1 AND UPPER(A.TABSCHEMA) = @2 and C.TABNAME = A.TABNAME AND C.TABSCHEMA = A.TABSCHEMA AND C.COLNAME = A.COLNAME order by A.COLSEQ",
+                                       "SELECT DISTINCT c.colname, c.typename, c.length, c.length as precision, c.scale, c.nulls, c.colno FROM SYSCAT.KEYCOLUSE A, SYSCAT.TABCONST B, SYSCAT.COLUMNS C WHERE A.CONSTNAME=B.CONSTNAME AND B.TYPE = 'P' AND UPPER(A.TABNAME) = @1 AND UPPER(A.TABSCHEMA) = @2 and C.TABNAME = A.TABNAME AND C.TABSCHEMA = A.TABSCHEMA AND C.COLNAME = A.COLNAME order by A.COLSEQ",
                                        tableName.Trim().ToUpper(), schemaName.Trim().ToUpper());
         }
 
