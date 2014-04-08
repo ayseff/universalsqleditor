@@ -665,7 +665,7 @@ namespace SqlEditor.Databases
                                 }
                             }
 
-                            string objectName = dr.GetString(1).Trim();
+                            var objectName = dr.GetString(1).Trim();
                             if (objectName != previousViewName || schemaName != previousSchemaName)
                             {
                                 previousViewName = objectName;
@@ -680,7 +680,7 @@ namespace SqlEditor.Databases
                                 }
                             }
 
-                            string columnName = dr.GetString(2).Trim();
+                            var columnName = dr.GetString(2).Trim();
                             var column = new Column(columnName, view);
                             view.Columns.Add(column);
                             intellisenseData.AllColumns.Add(column);

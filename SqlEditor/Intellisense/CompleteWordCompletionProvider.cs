@@ -125,14 +125,14 @@ namespace SqlEditor.Intellisense
                 return false;
             }
 
-            int startOffset = Math.Max(0, textArea.Document.PositionToOffset(textArea.Caret.Position) - 1);
+            var startOffset = Math.Max(0, textArea.Document.PositionToOffset(textArea.Caret.Position) - 1);
             while (startOffset >= 0 && _validIdentifierCharacters.IsMatch(textArea.Document.GetText(startOffset, 1)))
             {
                 --startOffset;                
             }
             ++startOffset;
 
-            int endOffset = textArea.Document.PositionToOffset(textArea.Caret.Position);
+            var endOffset = textArea.Document.PositionToOffset(textArea.Caret.Position);
             while (endOffset < textArea.Document.TextLength && _validIdentifierCharacters.IsMatch(textArea.Document.GetText(endOffset, 1)))
             {    
                 ++endOffset;
@@ -435,6 +435,14 @@ namespace SqlEditor.Intellisense
                         {
                             // Show column list from a single table
                             var table = statement.Tables[0];
+
+                            if (table.Schema == null)
+                            {
+                                table.Schema = _intellisenseData.AllObjects
+                                    .Where(x => string.Equals(x.Name, table.Name, StringComparison.InvariantCultureIgnoreCase))
+                                    .Select(x => x.Parent.Name)
+                                    .FirstOrDefault();
+                            }
                             var schema = GetSchema(table.Schema);
                             if (schema != null)
                             {
