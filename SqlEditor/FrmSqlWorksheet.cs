@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -10,9 +10,12 @@ using ICSharpCode.TextEditor.Document;
 using ICSharpCode.TextEditor.Gui.CompletionWindow;
 using Infragistics.Win.UltraWinTabControl;
 using Infragistics.Win.UltraWinToolbars;
+using Infragistics.Win.UltraWinTree;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using SqlEditor.Annotations;
 using SqlEditor.DatabaseExplorer;
+using SqlEditor.DatabaseExplorer.TreeNodes;
+using SqlEditor.Databases;
 using SqlEditor.Intellisense;
 using SqlEditor.Properties;
 using SqlEditor.RunMultipleFiles;
@@ -130,6 +133,11 @@ namespace SqlEditor
 
             _skipToolClickEvents = true;
 
+            _sqlEditor.ActiveTextAreaControl.TextArea.AllowDrop = true;
+            _sqlEditor.ActiveTextAreaControl.TextArea.DragEnter += TextArea_DragEnter;
+            _sqlEditor.ActiveTextAreaControl.TextArea.DragOver += TextAreaDragOver;
+            _sqlEditor.ActiveTextAreaControl.TextArea.DragDrop += SqlEditorOnDragDrop;
+
             DatabaseConnection = connection;
             DatabaseConnection.PropertyChanged += (sender, args) => RefreshUserInterface();
             
@@ -164,9 +172,134 @@ namespace SqlEditor
             _skipToolClickEvents = false;
         }
 
+        private async void SqlEditorOnDragDrop(object sender, DragEventArgs e)
+        {
+            if (!IsDroppable(e))
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            if (e.Data.GetDataPresent(typeof (SelectedNodesCollection)))
+            {
+                var connectionNode = ((SelectedNodesCollection) e.Data.GetData(typeof (SelectedNodesCollection)))[0];
+
+                var tableTreeNode = connectionNode as TableTreeNode;
+                if (tableTreeNode != null)
+                {
+                    var table = tableTreeNode.Table;
+                    var text = await ObjectScripter.GenerateSelectStatement(table, DatabaseConnection);
+                    AppendText(text);
+                    return;
+                }
+
+                var viewTreeNode = connectionNode as ViewTreeNode;
+                if (viewTreeNode != null)
+                {
+                    var view = viewTreeNode.View;
+                    var text = await ObjectScripter.GenerateSelectStatement(view, DatabaseConnection);
+                    AppendText(text);
+                    return;
+                }
+
+                var columnTreeNode = connectionNode as ColumnTreeNode;
+                if (columnTreeNode != null)
+                {
+                    var column = columnTreeNode.Column;
+                    var text = column.Name;
+                    AppendText(text);
+                    return;
+                }
+
+                var treeNodeBase = connectionNode as TreeNodeBase;
+                if (treeNodeBase != null)
+                {
+                    var text = treeNodeBase.Text;
+                    AppendText(text);
+                }
+            }
+        }
+
+        private static bool IsDroppable(DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof (SelectedNodesCollection)) )
+            {
+                var connectionNodes = (SelectedNodesCollection)e.Data.GetData(typeof(SelectedNodesCollection));
+                if (connectionNodes.Count != 1)
+                {
+                    return false;
+                }
+
+                return connectionNodes[0] is TableTreeNode
+                   || connectionNodes[0] is ViewTreeNode
+                   || connectionNodes[0] is ColumnTreeNode
+                   || connectionNodes[0] is IndexTreeNode;
+            }
+            else if (e.Data.GetDataPresent(typeof (string)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void TextArea_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!IsDroppable(e))
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void TextAreaDragOver(object sender, DragEventArgs e)
+        {
+            if (!IsDroppable(e))
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+            e.Effect = DragDropEffects.Move;
+
+            var textArea = _sqlEditor.ActiveTextAreaControl.TextArea;
+            if (!textArea.Focused)
+            {
+                textArea.Focus();
+            }
+
+            var p = textArea.PointToClient(new Point(e.X, e.Y));
+
+            if (textArea.TextView.DrawingPosition.Contains(p.X, p.Y))
+            {
+                var realmousepos = textArea.TextView.GetLogicalPosition(p.X - textArea.TextView.DrawingPosition.X,
+                                                                                p.Y - textArea.TextView.DrawingPosition.Y);
+                var lineNr = Math.Min(textArea.Document.TotalNumberOfLines - 1, Math.Max(0, realmousepos.Y));
+
+                textArea.Caret.Position = new TextLocation(realmousepos.X, lineNr);
+                textArea.SetDesiredColumn();
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
         public void AppendText(string text)
         {
-            _sqlEditor.Document.Insert(_sqlEditor.ActiveTextAreaControl.Caret.Offset, text);
+            var textArea = _sqlEditor.ActiveTextAreaControl.TextArea;
+            textArea.BeginUpdate();
+            textArea.Document.UndoStack.StartUndoGroup();
+            try
+            {
+                textArea.Document.Insert(_sqlEditor.ActiveTextAreaControl.Caret.Offset, text);
+            }
+            finally
+            {
+                textArea.Document.UndoStack.EndUndoGroup();
+                textArea.EndUpdate();
+            }
+            
         }
 
         private void RefreshUserInterface()
@@ -488,7 +621,7 @@ namespace SqlEditor
                                                          new CommonFileDialogFilter("Text files", ".txt"),
                                                          new CommonFileDialogFilter("All files", ".*")
                                                      }, ".sql");
-            if (dialogResult != CommonFileDialogResult.OK) return;
+            if (dialogResult != CommonFileDialogResult.Ok) return;
             
             if (_sqlEditor.Document.TextLength > 0)
             {
@@ -512,7 +645,7 @@ namespace SqlEditor
                                                          new CommonFileDialogFilter("Text files", ".txt"),
                                                          new CommonFileDialogFilter("All files", "*.*")
                                                      }, ".sql");
-            if (dialogResult != CommonFileDialogResult.OK) return false;
+            if (dialogResult != CommonFileDialogResult.Ok) return false;
 
             WorksheetFile = selectedFile;
             return Save();

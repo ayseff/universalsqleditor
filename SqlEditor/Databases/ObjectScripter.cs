@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SqlEditor.Annotations;
+using SqlEditor.Database;
 using SqlEditor.DatabaseExplorer;
 using Utilities.Collections;
 using log4net;
@@ -15,21 +16,32 @@ namespace SqlEditor.Databases
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        public static async Task<string> GenerateViewSelectStatement([JetBrains.Annotations.NotNull] View view,
+            [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
+        {
+            return await GenerateSelectStatement(view, databaseConnection);
+        }
 
         public static async Task<string> GenerateTableSelectStatement([JetBrains.Annotations.NotNull] Table table,
             [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
         {
-            if (table == null) throw new ArgumentNullException("table");
+            return await GenerateSelectStatement(table, databaseConnection);
+        }
+
+        public static async Task<string> GenerateSelectStatement([JetBrains.Annotations.NotNull] DatabaseObjectWithColumns objectWithColumns,
+            [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
+        {
+            if (objectWithColumns == null) throw new ArgumentNullException("objectWithColumns");
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
-            _log.DebugFormat("Generating SELECT statement for table {0} ...", table.FullyQualifiedName);
-            await LoadColumns(table, databaseConnection);
+            _log.DebugFormat("Generating SELECT statement for view {0} ...", objectWithColumns.FullyQualifiedName);
+            await LoadColumns(objectWithColumns, databaseConnection);
 
             var sb = new StringBuilder();
             sb.AppendLine("SELECT");
-            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", table.Columns.Select(x => x.Name)));
+            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", objectWithColumns.Columns.Select(x => x.Name)));
             sb.AppendLine("FROM");
-            sb.AppendLine("\t" + table.FullyQualifiedName);
+            sb.AppendLine("\t" + objectWithColumns.FullyQualifiedName);
             _log.DebugFormat("Generating complete.");
             return sb.ToString();
         }

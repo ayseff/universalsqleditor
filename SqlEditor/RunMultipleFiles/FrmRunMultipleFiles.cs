@@ -414,7 +414,7 @@ namespace SqlEditor.RunMultipleFiles
                                                    new CommonFileDialogFilter("SQL file", "*.sql"),
                                                    new CommonFileDialogFilter("All files", "*")
                                                }) !=
-                CommonFileDialogResult.OK)
+                CommonFileDialogResult.Ok)
             {
                 return;
             }

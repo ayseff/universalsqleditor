@@ -264,7 +264,7 @@ namespace Utilities.Forms.Dialogs
                 }
 
                 var result = cfd.ShowDialog();
-                if (result == CommonFileDialogResult.OK)
+                if (result == CommonFileDialogResult.Ok)
                 {
                     var selectedShellObject = cfd.FileAsShellObject as ShellContainer;
                     if (selectedShellObject != null)
@@ -305,7 +305,7 @@ namespace Utilities.Forms.Dialogs
             selectedFile = null;
             string[] selectedFiles;
             var result = ShowOpenFilesDialog(title, out selectedFiles, filters, false, defaultExtension, path);
-            if (result == CommonFileDialogResult.OK && selectedFiles != null && selectedFiles.Length > 0)
+            if (result == CommonFileDialogResult.Ok && selectedFiles != null && selectedFiles.Length > 0)
             {
                 selectedFile = selectedFiles[0];
             }
@@ -369,7 +369,7 @@ namespace Utilities.Forms.Dialogs
                 }
 
                 var result = cfd.ShowDialog();
-                if (result == CommonFileDialogResult.OK)
+                if (result == CommonFileDialogResult.Ok)
                 {
                     selectedFiles = cfd.FileNames.ToArray();
                 }
@@ -461,7 +461,7 @@ namespace Utilities.Forms.Dialogs
                 }
 
                 var result = cfd.ShowDialog();
-                if (result == CommonFileDialogResult.OK)
+                if (result == CommonFileDialogResult.Ok)
                 {
                     var selectedShellObject = cfd.FileAsShellObject;
                     selectedFile = selectedShellObject.ParsingName;
@@ -659,9 +659,9 @@ namespace Utilities.Forms.Dialogs
             }
             else if (result == DialogResult.OK)
             {
-                return CommonFileDialogResult.OK;
+                return CommonFileDialogResult.Ok;
             }
-            return CommonFileDialogResult.OK;
+            return CommonFileDialogResult.Ok;
         }
     }
 }

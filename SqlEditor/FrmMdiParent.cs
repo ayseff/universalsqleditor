@@ -1291,7 +1291,7 @@ namespace SqlEditor
                                                                      new CommonFileDialogFilter("Log files", "*.log"),
                                                                      new CommonFileDialogFilter("All files", "*.*")
                                                                  });
-                if (dialogresult != CommonFileDialogResult.OK) return;
+                if (dialogresult != CommonFileDialogResult.Ok) return;
                 _rtbLog.SaveFile(file, RichTextBoxStreamType.PlainText);
             }
             catch (Exception ex)
@@ -2012,22 +2012,27 @@ namespace SqlEditor
 
         private void Connections_SelectionDragStart(object sender, EventArgs e)
         {
-            foreach (var node in _utConnections.SelectedNodes)
+            if (_utConnections.SelectedNodes.Count != 1)
             {
-                var connectionNode = node as ConnectionTreeNode;
-                if (connectionNode == null)
-                {
-                    _treeDrawFilter.ClearDropHighlight();
-                    return;
-                }
+                _treeDrawFilter.ClearDropHighlight();
+                return;
             }
+            //foreach (var node in _utConnections.SelectedNodes)
+            //{
+            //    var connectionNode = node as ConnectionTreeNode;
+            //    if (connectionNode == null)
+            //    {
+            //        _treeDrawFilter.ClearDropHighlight();
+            //        return;
+            //    }
+            //}
             _utConnections.DoDragDrop(_utConnections.SelectedNodes, DragDropEffects.Move);
         }
 
         private void Connections_DragDrop(object sender, DragEventArgs e)
         {
             //Set the DropNode
-            UltraTreeNode dropNode = _treeDrawFilter.DropHightLightNode;
+            var dropNode = _treeDrawFilter.DropHightLightNode;
 
             //Get the Data and put it into a SelectedNodes collection,
             //then clone it and work with the clone
@@ -2095,12 +2100,33 @@ namespace SqlEditor
 
         private void Connections_DragOver(object sender, DragEventArgs e)
         {
+            if (!e.Data.GetDataPresent(typeof (SelectedNodesCollection)))
+            {
+                e.Effect = DragDropEffects.None;
+                _treeDrawFilter.ClearDropHighlight();
+                return;
+            }
+            var connectionNodes = (SelectedNodesCollection)e.Data.GetData(typeof (SelectedNodesCollection));
+            if (connectionNodes.Count != 1)
+            {
+                e.Effect = DragDropEffects.None;
+                _treeDrawFilter.ClearDropHighlight();
+                return;
+            }
+            var connectionTreeNode = connectionNodes[0] as ConnectionTreeNode;
+            if (connectionTreeNode == null)
+            {
+                e.Effect = DragDropEffects.None;
+                _treeDrawFilter.ClearDropHighlight();
+                return;
+            }
+
             //Get the position of the mouse in the tree, as opposed
             //to form coords
-            Point pointInTree = _utConnections.PointToClient(new Point(e.X, e.Y));
+            var pointInTree = _utConnections.PointToClient(new Point(e.X, e.Y));
 
             //Get the node the mouse is over.
-            UltraTreeNode aNode = _utConnections.GetNodeFromPoint(pointInTree);
+            var aNode = _utConnections.GetNodeFromPoint(pointInTree);
 
             //Make sure the mouse is over a node
             if (aNode == null)
@@ -2115,7 +2141,7 @@ namespace SqlEditor
             }
 
 
-            //	Don't let continent droping on anything but folder nodes
+            //	Don't let connection droping on anything but folder nodes
             var folderNode = aNode as FolderTreeNode;
             var connectionNode = aNode as ConnectionTreeNode;
             if (folderNode == null && connectionNode == null && aNode != ConnectionsTreeNode.Instance)
@@ -2177,7 +2203,7 @@ namespace SqlEditor
             {
                 string selectedDirectory;
                 var dialogResult = Dialog.ShowFolderDialog("Select connections directory", out selectedDirectory);
-                if (dialogResult != CommonFileDialogResult.OK) return;
+                if (dialogResult != CommonFileDialogResult.Ok) return;
 
                 _log.DebugFormat("Importing connections from {0} ...", selectedDirectory);
                 var connections = AquaDataStudioConnectionImporter.ImportConnections(selectedDirectory);
@@ -2204,7 +2230,7 @@ namespace SqlEditor
                                                                                     new CommonFileDialogFilter(
                                                                                         "XML files", ".xml")
                                                                                 }, ".xml");
-                if (dialogResult == CommonFileDialogResult.OK)
+                if (dialogResult == CommonFileDialogResult.Ok)
                 {
                     _log.DebugFormat("Importing connections from {0} ...", selectedFile);
                     var connections = SqlEditorConnectionImporter.ImportConnections(selectedFile, EncryptionInfo.EncryptionKey);
@@ -2319,7 +2345,7 @@ namespace SqlEditor
                                                                                     new CommonFileDialogFilter(
                                                                                         "XML files", ".xml")
                                                                                 }, ".xml");
-                if (dialogResult == CommonFileDialogResult.OK)
+                if (dialogResult == CommonFileDialogResult.Ok)
                 {
                     _log.DebugFormat("Exporting connections to {0} ...", selectedFile);
                     SqlEditorConnectionImporter.ExportConnections(Connections, selectedFile, EncryptionInfo.EncryptionKey);

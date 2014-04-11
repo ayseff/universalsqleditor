@@ -569,7 +569,7 @@ namespace SqlEditor.ScriptResults
                                                          new CommonFileDialogFilter("Text files", ".txt"),
                                                          new CommonFileDialogFilter("All files", "*.*")
                                                      });
-            if (dialogResult != CommonFileDialogResult.OK) return;
+            if (dialogResult != CommonFileDialogResult.Ok) return;
             
             _teScriptResults.SaveFile(selectedFile);
         }
