@@ -790,8 +790,8 @@ namespace SqlEditor
                 InstructionText = "Do you want to save changes you made to the SQL worksheet " + Title + " ?"
             };
 
-            var commandLinkSave = new TaskDialogCommandLink("buttonSave", "Save", "Save changes made to the worksheet.");
-            commandLinkSave.Click += (o, args) =>
+            var saveButton = new TaskDialogButton("btnYes", "Save");
+            saveButton.Click += (o, args) =>
             {
                 try
                 {
@@ -812,33 +812,82 @@ namespace SqlEditor
                     taskdlg.Close(TaskDialogResult.Cancel);
                 }
             };
-            taskdlg.Controls.Add(commandLinkSave);
+            taskdlg.Controls.Add(saveButton);
 
-            var commandLinkDiscard = new TaskDialogCommandLink("buttonDiscard", "Discard", "Discard changes made to this worksheet.");
-            commandLinkDiscard.Click += (o, args) => taskdlg.Close(TaskDialogResult.No);
-            taskdlg.Controls.Add(commandLinkDiscard);
+            var discardButton = new TaskDialogButton("btnDisard", "Discard");
+            discardButton.Click += (o, args) => taskdlg.Close(TaskDialogResult.No);
+            taskdlg.Controls.Add(discardButton);
 
             if (e.CloseReason != CloseReason.UserClosing)
             {
-                var commandLinkDiscardAll = new TaskDialogCommandLink("buttonDiscardAll", "Discard All",
-                                                                      "Discard changes on all worksheets.");
-                commandLinkDiscardAll.Click += (o, args) =>
-                                                   {
-                                                       CloseAction.Instance.OnCloseSaveAction =
-                                                           OnCloseSaveAction.DiscardAll;
-                                                       taskdlg.Close(TaskDialogResult.No);
-                                                   };
-                taskdlg.Controls.Add(commandLinkDiscardAll);
+                var discardAllButton = new TaskDialogButton("btnDisardAll", "Discard All");
+                discardAllButton.Click += (o, args) => {
+                    CloseAction.Instance.OnCloseSaveAction = OnCloseSaveAction.DiscardAll;
+                    taskdlg.Close(TaskDialogResult.No);
+                };
+                taskdlg.Controls.Add(discardAllButton);
             }
-            var commandLinkCancel = new TaskDialogCommandLink("buttonCancel", "Cancel", "Cancel and return to the worksheet.");
-            commandLinkCancel.Click += (o, args) => taskdlg.Close(TaskDialogResult.Cancel);
-            taskdlg.Controls.Add(commandLinkCancel);
+
+            var cancelButton = new TaskDialogButton("btnCancel", "Cancel");
+            cancelButton.Click += (o, args) => taskdlg.Close(TaskDialogResult.Cancel);
+            taskdlg.Controls.Add(cancelButton);
 
             var dialogResult = taskdlg.Show();
             if (dialogResult == TaskDialogResult.Cancel)
             {
                 e.Cancel = true;
             }
+
+
+            //var commandLinkSave = new TaskDialogCommandLink("buttonSave", "Save", "Save changes made to the worksheet.");
+            //commandLinkSave.Click += (o, args) =>
+            //{
+            //    try
+            //    {
+            //        if (!Save())
+            //        {
+            //            taskdlg.Close(TaskDialogResult.Cancel);
+            //        }
+            //        else
+            //        {
+            //            taskdlg.Close(TaskDialogResult.Ok);
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        _log.Error("Error saving worksheet.");
+            //        _log.Error(ex.Message, ex);
+            //        Dialog.ShowErrorDialog(Application.ProductName, "Error occurred saving the document. ", ex.Message, ex.StackTrace);
+            //        taskdlg.Close(TaskDialogResult.Cancel);
+            //    }
+            //};
+            //taskdlg.Controls.Add(commandLinkSave);
+
+            //var commandLinkDiscard = new TaskDialogCommandLink("buttonDiscard", "Discard", "Discard changes made to this worksheet.");
+            //commandLinkDiscard.Click += (o, args) => taskdlg.Close(TaskDialogResult.No);
+            //taskdlg.Controls.Add(commandLinkDiscard);
+
+            //if (e.CloseReason != CloseReason.UserClosing)
+            //{
+            //    var commandLinkDiscardAll = new TaskDialogCommandLink("buttonDiscardAll", "Discard All",
+            //                                                          "Discard changes on all worksheets.");
+            //    commandLinkDiscardAll.Click += (o, args) =>
+            //                                       {
+            //                                           CloseAction.Instance.OnCloseSaveAction =
+            //                                               OnCloseSaveAction.DiscardAll;
+            //                                           taskdlg.Close(TaskDialogResult.No);
+            //                                       };
+            //    taskdlg.Controls.Add(commandLinkDiscardAll);
+            //}
+            //var commandLinkCancel = new TaskDialogCommandLink("buttonCancel", "Cancel", "Cancel and return to the worksheet.");
+            //commandLinkCancel.Click += (o, args) => taskdlg.Close(TaskDialogResult.Cancel);
+            //taskdlg.Controls.Add(commandLinkCancel);
+
+            //var dialogResult = taskdlg.Show();
+            //if (dialogResult == TaskDialogResult.Cancel)
+            //{
+            //    e.Cancel = true;
+            //}
         }
     }
 }
