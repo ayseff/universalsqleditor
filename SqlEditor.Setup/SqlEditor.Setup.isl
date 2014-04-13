@@ -3878,7 +3878,7 @@
 		<col def="V0">Data</col>
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I2">ISIconIndex</col>
-		<row><td>ARPPRODUCTICON.exe</td><td/><td>C:\Users\mmedic\Subversion\Visual Studio\Visual Studio 2010\UniversalSqlEditor .NET 4.5\trunk\SqlEditor\sql_editor.ico</td><td>0</td></row>
+		<row><td>ARPPRODUCTICON.exe</td><td/><td>&lt;VSSolutionFolder&gt;\sql_editor.ico</td><td>0</td></row>
 		<row><td>UNINST_Uninstall_S_FF2995E75CC440B6855560AEEF8410CC.exe</td><td/><td>C:\Program Files (x86)\InstallShield\2013LE\Redist\Language Independent\OS Independent\uninstall.ico</td><td>0</td></row>
 	</table>
 
