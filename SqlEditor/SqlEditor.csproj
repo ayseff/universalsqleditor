@@ -513,6 +513,9 @@
     <None Include="Resources\information2.png" />
     <None Include="Resources\download_32x32.png" />
     <None Include="Resources\app_32x32.png" />
+    <Content Include="SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="sql_editor.ico" />
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
