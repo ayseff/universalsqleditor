@@ -864,9 +864,9 @@
             stateButtonTool8.SharedPropsInternal.Category = "Styles";
             stateButtonTool9.SharedPropsInternal.Caption = "Windows7";
             stateButtonTool9.SharedPropsInternal.Category = "Styles";
-            appearance41.Image = global::SqlEditor.Properties.Resources.information__2_;
+            appearance41.Image = ((object)(resources.GetObject("appearance41.Image")));
             buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance41;
-            appearance42.Image = global::SqlEditor.Properties.Resources.information__2_;
+            appearance42.Image = ((object)(resources.GetObject("appearance42.Image")));
             buttonTool14.SharedPropsInternal.AppearancesSmall.Appearance = appearance42;
             buttonTool14.SharedPropsInternal.Caption = "About ...";
             buttonTool14.SharedPropsInternal.Category = "File Menu";
@@ -1026,7 +1026,7 @@
             buttonTool85.SharedPropsInternal.Category = "Functions";
             buttonTool87.SharedPropsInternal.Caption = "DROP";
             buttonTool87.SharedPropsInternal.Category = "Functions";
-            appearance76.Image = global::SqlEditor.Properties.Resources.help_desk_icon;
+            appearance76.Image = ((object)(resources.GetObject("appearance76.Image")));
             popupMenuTool7.SharedPropsInternal.AppearancesLarge.Appearance = appearance76;
             popupMenuTool7.SharedPropsInternal.Caption = "Help";
             popupMenuTool7.SharedPropsInternal.Category = "File Menu";

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="10.6" version="10.6" Modules="professional" RootPath="." Language="en" Id="{071F7342-27C8-4839-B25E-12C2197BF044}">
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_COLOR_DISABLED_TEXT" Value="1644825" MsiKey="AI_COLOR_DISABLED_TEXT"/>
+    <ROW Property="AI_CONTROL_VISUAL_STYLE" Value="2960685;4276545;6776679;16176031" MsiKey="AI_CONTROL_VISUAL_STYLE"/>
+    <ROW Property="AI_CONTROL_VISUAL_STYLE_FLAT" MsiKey="AI_CONTROL_VISUAL_STYLE_FLAT"/>
+    <ROW Property="AI_EXTERNALUIUNINSTALLERNAME" MultiBuildValue="DefaultBuild:aiui"/>
+    <ROW Property="AI_FINDEXE_TITLE" Value="Select the installation package for [|ProductName]" ValueLocId="AI.Property.FindExeTitle"/>
+    <ROW Property="AI_FrameBtnsColor" Value="metroblack" MsiKey="AI_FrameBtnsColor"/>
+    <ROW Property="AI_FrameColor" Value="metroblack" MsiKey="AI_FrameColor"/>
+    <ROW Property="AI_MINDOTNETVERSION" MultiBuildValue="DefaultBuild:4.5" ValueLocId="-"/>
+    <ROW Property="AI_NO_BORDER_NORMAL" MsiKey="AI_NO_BORDER_NORMAL"/>
+    <ROW Property="AI_PRODUCTNAME_ARP" Value="SQL Editor"/>
+    <ROW Property="AI_ThemeStyle" Value="default" MsiKey="AI_ThemeStyle"/>
+    <ROW Property="AI_ThemeStyleEx" Value="border" MsiKey="AI_ThemeStyleEx"/>
+    <ROW Property="AI_UNINSTALLER" Value="msiexec.exe"/>
+    <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPHELPLINK" Value="https://universalsqleditor.codeplex.com/"/>
+    <ROW Property="ARPPRODUCTICON" Value="sql_editor.exe" Type="8"/>
+    <ROW Property="ARPSYSTEMCOMPONENT" Value="1"/>
+    <ROW Property="ARPURLINFOABOUT" Value="https://universalsqleditor.codeplex.com/"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="https://universalsqleditor.codeplex.com/releases/view/119235"/>
+    <ROW Property="AppLogoIcon" Value="applogoicon" MultiBuildValue="DefaultBuild:sql_editor.png" Type="1" MsiKey="AppLogoIcon"/>
+    <ROW Property="CTRLS" Value="2"/>
+    <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:1"/>
+    <ROW Property="Manufacturer" Value="Mensur Software"/>
+    <ROW Property="ProductCode" Value="1033:{BCA1AA3D-F69D-4F44-B180-36A9B9DB25E5} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="SQL Editor"/>
+    <ROW Property="ProductVersion" Value="0.3.1.0" Type="32"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND;AI_SETUPEXEPATH;SETUPEXEDIR"/>
+    <ROW Property="UpgradeCode" Value="{85D6CA3B-E543-4451-820A-FBFBE3F6FD3C}"/>
+    <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNTDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME/NT/2000/XP/Vista/Windows 7/Windows 8 x86/Windows 8.1 x86" ValueLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="Deskto~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="Resources_Dir" Directory_Parent="APPDIR" DefaultDir="Resour~1|Resources"/>
+    <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="x64_Dir" Directory_Parent="APPDIR" DefaultDir="x64"/>
+    <ROW Directory="x86_Dir" Directory_Parent="APPDIR" DefaultDir="x86"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="AI_CustomARPName" ComponentId="{E6CF478B-FCC1-477F-9F71-12CD4DB05E1A}" Directory_="APPDIR" Attributes="4" KeyPath="DisplayName" Options="1"/>
+    <ROW Component="AI_ExePath" ComponentId="{56418234-1A58-4C00-BF0A-87305A415517}" Directory_="APPDIR" Attributes="4" KeyPath="AI_ExePath"/>
+    <ROW Component="Connections.xml" ComponentId="{C91B9A5A-FDAF-4EA4-9FA6-34E9F14B608B}" Directory_="APPDIR" Attributes="0" KeyPath="Connections.xml" Type="0"/>
+    <ROW Component="DB2SQL.xshd" ComponentId="{1DFF63D4-4B7A-486B-B233-A955E574594E}" Directory_="Resources_Dir" Attributes="0" KeyPath="DB2SQL.xshd" Type="0"/>
+    <ROW Component="HtmlAgilityPack.dll" ComponentId="{9FBA6975-E1AC-4A86-973F-9401DD1B3C92}" Directory_="APPDIR" Attributes="0" KeyPath="HtmlAgilityPack.dll"/>
+    <ROW Component="IBM.Data.DB2.dll" ComponentId="{E9413AB7-7FA2-4E59-A5EA-CA10FBC925A8}" Directory_="APPDIR" Attributes="0" KeyPath="IBM.Data.DB2.dll"/>
+    <ROW Component="ICSharpCode.TextEditor.dll" ComponentId="{981A43B1-2355-412F-986A-1C81F295B4C6}" Directory_="APPDIR" Attributes="0" KeyPath="ICSharpCode.TextEditor.dll"/>
+    <ROW Component="Infragistics4.Documents.Core.v12.2.dll" ComponentId="{33A28091-0786-4A11-AD86-2904AA042A86}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Documents.Core.v12.2.dll"/>
+    <ROW Component="Infragistics4.Documents.Excel.v12.2.dll" ComponentId="{4E27B229-B4E8-4C9C-AF0D-EFE731620D33}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Documents.Excel.v12.2.dll"/>
+    <ROW Component="Infragistics4.Shared.v12.2.dll" ComponentId="{14445BDF-606D-49FC-AE27-4EFAB25CF401}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Shared.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.Misc.v12.2.dll" ComponentId="{2E013ACB-4ADD-453A-85B5-CE22843D88D0}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.Misc.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinDataSource.v12" ComponentId="{8DA23A60-3659-4616-90F3-B0FF76165DCC}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinDataSource.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinDock.v12.2.dll" ComponentId="{0964EBCA-B030-4A50-ACD4-DF40929678E6}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinDock.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinEditors.v12.2." ComponentId="{B83CE354-B57C-447E-8B43-304AF67EE9E6}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinEditors.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinGrid.ExcelExpo" ComponentId="{7EAA1AFA-9D26-47BF-8767-1EBC1052DADC}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinGrid.ExcelExport.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinGrid.v12.2.dll" ComponentId="{F6058DB6-8BEE-4137-B854-088909DD3D5F}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinGrid.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinStatusBar.v12." ComponentId="{4D3E937B-F263-4554-AB25-37D61C997CB6}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinStatusBar.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinTabControl.v12" ComponentId="{0CEC03AB-4039-4F38-9EB9-D3E70575CD58}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinTabControl.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinTabbedMdi.v12." ComponentId="{7C56C558-41A1-4D51-93EE-0AF467B16C02}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinTabbedMdi.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinToolbars.v12.2" ComponentId="{60C31D2D-3FC1-41A9-A157-6DC23F26BB35}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinToolbars.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.UltraWinTree.v12.2.dll" ComponentId="{342D6164-2460-4B55-BCD8-F83514D23550}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.UltraWinTree.v12.2.dll"/>
+    <ROW Component="Infragistics4.Win.v12.2.dll" ComponentId="{D6A968C4-3D22-4566-A636-496A2B9772E5}" Directory_="APPDIR" Attributes="0" KeyPath="Infragistics4.Win.v12.2.dll"/>
+    <ROW Component="JetBrains.Annotations.dll" ComponentId="{CEF0431B-FD3A-4579-AB35-C858312F98EC}" Directory_="APPDIR" Attributes="0" KeyPath="JetBrains.Annotations.dll"/>
+    <ROW Component="Microsoft.WindowsAPICodePack.Shell.dll" ComponentId="{9E43BEC6-9AF9-49DA-9938-D1F2B284EFB4}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.WindowsAPICodePack.Shell.dll"/>
+    <ROW Component="Microsoft.WindowsAPICodePack.dll" ComponentId="{B1627B90-7805-4DBC-9AFD-F85EB00A7A42}" Directory_="APPDIR" Attributes="0" KeyPath="Microsoft.WindowsAPICodePack.dll"/>
+    <ROW Component="MySql.Data.dll" ComponentId="{8C804A30-43E7-4109-9202-D09196047AED}" Directory_="APPDIR" Attributes="0" KeyPath="MySql.Data.dll"/>
+    <ROW Component="Oracle.ManagedDataAccess.dll" ComponentId="{94AAFBEB-A27D-4732-B837-DBDCD0D32DB4}" Directory_="APPDIR" Attributes="0" KeyPath="Oracle.ManagedDataAccess.dll"/>
+    <ROW Component="ProductInformation" ComponentId="{D3FE2A1E-0D13-4F30-B8E5-B1CB7BA53C59}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="SHORTCUTDIR" ComponentId="{B0B7FBEC-1ED1-4467-A112-47128C3C0ACF}" Directory_="SHORTCUTDIR" Attributes="0"/>
+    <ROW Component="SQLEditor.exe" ComponentId="{24B0CB97-B160-4985-8832-1651E36B06A9}" Directory_="APPDIR" Attributes="256" KeyPath="SQLEditor.exe"/>
+    <ROW Component="SQLite.Interop.dll" ComponentId="{C12D1B38-C1B6-4485-B93D-2FC62C921670}" Directory_="x64_Dir" Attributes="256" KeyPath="SQLite.Interop.dll"/>
+    <ROW Component="SQLite.Interop.dll_2" ComponentId="{01E3372F-35CC-4AE3-898A-2720EC96105C}" Directory_="x86_Dir" Attributes="0" KeyPath="SQLite.Interop.dll_2"/>
+    <ROW Component="SqlEditor.SqlParser.dll" ComponentId="{F1A7D0DC-CA1C-4ABC-AE34-A6B609A10E24}" Directory_="APPDIR" Attributes="0" KeyPath="SqlEditor.SqlParser.dll"/>
+    <ROW Component="System.Data.SQLite.Linq.dll" ComponentId="{93EC5C4A-8756-46B8-8086-0FE770DB3A6D}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.SQLite.Linq.dll"/>
+    <ROW Component="System.Data.SQLite.dll" ComponentId="{9B56279D-4510-4F64-809F-C612BBC9A5E8}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.SQLite.dll"/>
+    <ROW Component="System.Data.SqlServerCe.dll" ComponentId="{9B4D1581-7F1C-4276-A5ED-38678CDA52AF}" Directory_="APPDIR" Attributes="0" KeyPath="System.Data.SqlServerCe.dll"/>
+    <ROW Component="Utilities.InfragisticsUtilities.dll" ComponentId="{6C04BF56-2CA7-4B17-B16F-F739CD034A76}" Directory_="APPDIR" Attributes="0" KeyPath="Utilities.InfragisticsUtilities.dll"/>
+    <ROW Component="Utilities.dll" ComponentId="{CA06B011-2107-42AB-9567-D293F827EE75}" Directory_="APPDIR" Attributes="0" KeyPath="Utilities.dll"/>
+    <ROW Component="log4net.dll" ComponentId="{6751B4A8-34D9-4568-9560-B93EBE405F01}" Directory_="APPDIR" Attributes="0" KeyPath="log4net.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AI_CustomARPName AI_ExePath Connections.xml DB2SQL.xshd HtmlAgilityPack.dll IBM.Data.DB2.dll ICSharpCode.TextEditor.dll Infragistics4.Documents.Core.v12.2.dll Infragistics4.Documents.Excel.v12.2.dll Infragistics4.Shared.v12.2.dll Infragistics4.Win.Misc.v12.2.dll Infragistics4.Win.UltraWinDataSource.v12 Infragistics4.Win.UltraWinDock.v12.2.dll Infragistics4.Win.UltraWinEditors.v12.2. Infragistics4.Win.UltraWinGrid.ExcelExpo Infragistics4.Win.UltraWinGrid.v12.2.dll Infragistics4.Win.UltraWinStatusBar.v12. Infragistics4.Win.UltraWinTabControl.v12 Infragistics4.Win.UltraWinTabbedMdi.v12. Infragistics4.Win.UltraWinToolbars.v12.2 Infragistics4.Win.UltraWinTree.v12.2.dll Infragistics4.Win.v12.2.dll JetBrains.Annotations.dll Microsoft.WindowsAPICodePack.Shell.dll Microsoft.WindowsAPICodePack.dll MySql.Data.dll Oracle.ManagedDataAccess.dll ProductInformation SHORTCUTDIR SQLEditor.exe SQLite.Interop.dll SQLite.Interop.dll_2 SqlEditor.SqlParser.dll System.Data.SQLite.Linq.dll System.Data.SQLite.dll System.Data.SqlServerCe.dll Utilities.InfragisticsUtilities.dll Utilities.dll log4net.dll"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="Connections.xml" Component_="Connections.xml" FileName="Connec~1.xml|Connections.xml" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Connections.xml" SelfReg="false" NextFile="HtmlAgilityPack.dll"/>
+    <ROW File="DB2SQL.xshd" Component_="DB2SQL.xshd" FileName="DB2SQL~1.xsh|DB2SQL.xshd" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Resources\DB2SQL.xshd" SelfReg="false" NextFile="MYSQLSQL.xshd"/>
+    <ROW File="HtmlAgilityPack.dll" Component_="HtmlAgilityPack.dll" FileName="HtmlAg~1.dll|HtmlAgilityPack.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\HtmlAgilityPack.dll" SelfReg="false" NextFile="IBM.Data.DB2.dll"/>
+    <ROW File="IBM.Data.DB2.dll" Component_="IBM.Data.DB2.dll" FileName="IBMDat~1.dll|IBM.Data.DB2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\IBM.Data.DB2.dll" SelfReg="false" NextFile="ICSharpCode.TextEditor.dll"/>
+    <ROW File="ICSharpCode.TextEditor.dll" Component_="ICSharpCode.TextEditor.dll" FileName="ICShar~1.dll|ICSharpCode.TextEditor.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\ICSharpCode.TextEditor.dll" SelfReg="false" NextFile="Infragistics4.Documents.Core.v12.2.dll"/>
+    <ROW File="Infragistics4.Documents.Core.v12.2.dll" Component_="Infragistics4.Documents.Core.v12.2.dll" FileName="Infrag~1.dll|Infragistics4.Documents.Core.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Documents.Core.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Documents.Excel.v12.2.dll"/>
+    <ROW File="Infragistics4.Documents.Excel.v12.2.dll" Component_="Infragistics4.Documents.Excel.v12.2.dll" FileName="Infrag~2.dll|Infragistics4.Documents.Excel.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Documents.Excel.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Shared.v12.2.dll"/>
+    <ROW File="Infragistics4.Shared.v12.2.dll" Component_="Infragistics4.Shared.v12.2.dll" FileName="Infrag~3.dll|Infragistics4.Shared.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Shared.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.Misc.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.Misc.v12.2.dll" Component_="Infragistics4.Win.Misc.v12.2.dll" FileName="Infrag~4.dll|Infragistics4.Win.Misc.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.Misc.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinDataSource.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinDataSource.v12.2.dll" Component_="Infragistics4.Win.UltraWinDataSource.v12" FileName="Infrag~5.dll|Infragistics4.Win.UltraWinDataSource.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinDataSource.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinDock.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinDock.v12.2.dll" Component_="Infragistics4.Win.UltraWinDock.v12.2.dll" FileName="Infrag~6.dll|Infragistics4.Win.UltraWinDock.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinDock.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinEditors.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinEditors.v12.2.dll" Component_="Infragistics4.Win.UltraWinEditors.v12.2." FileName="Infrag~7.dll|Infragistics4.Win.UltraWinEditors.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinEditors.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinGrid.ExcelExport.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinGrid.ExcelExport.v12.2.dll" Component_="Infragistics4.Win.UltraWinGrid.ExcelExpo" FileName="Infrag~8.dll|Infragistics4.Win.UltraWinGrid.ExcelExport.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinGrid.ExcelExport.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinGrid.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinGrid.v12.2.dll" Component_="Infragistics4.Win.UltraWinGrid.v12.2.dll" FileName="Infrag~9.dll|Infragistics4.Win.UltraWinGrid.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinGrid.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinStatusBar.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinStatusBar.v12.2.dll" Component_="Infragistics4.Win.UltraWinStatusBar.v12." FileName="Infra~10.dll|Infragistics4.Win.UltraWinStatusBar.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinStatusBar.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinTabbedMdi.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinTabControl.v12.2.dll" Component_="Infragistics4.Win.UltraWinTabControl.v12" FileName="Infra~12.dll|Infragistics4.Win.UltraWinTabControl.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinTabControl.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinToolbars.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinTabbedMdi.v12.2.dll" Component_="Infragistics4.Win.UltraWinTabbedMdi.v12." FileName="Infra~11.dll|Infragistics4.Win.UltraWinTabbedMdi.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinTabbedMdi.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinTabControl.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinToolbars.v12.2.dll" Component_="Infragistics4.Win.UltraWinToolbars.v12.2" FileName="Infra~13.dll|Infragistics4.Win.UltraWinToolbars.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinToolbars.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.UltraWinTree.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.UltraWinTree.v12.2.dll" Component_="Infragistics4.Win.UltraWinTree.v12.2.dll" FileName="Infra~14.dll|Infragistics4.Win.UltraWinTree.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.UltraWinTree.v12.2.dll" SelfReg="false" NextFile="Infragistics4.Win.v12.2.dll"/>
+    <ROW File="Infragistics4.Win.v12.2.dll" Component_="Infragistics4.Win.v12.2.dll" FileName="Infra~15.dll|Infragistics4.Win.v12.2.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Infragistics4.Win.v12.2.dll" SelfReg="false" NextFile="JetBrains.Annotations.dll"/>
+    <ROW File="JetBrains.Annotations.dll" Component_="JetBrains.Annotations.dll" FileName="JetBra~1.dll|JetBrains.Annotations.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\JetBrains.Annotations.dll" SelfReg="false" NextFile="log4net.dll"/>
+    <ROW File="MYSQLSQL.xshd" Component_="DB2SQL.xshd" FileName="MYSQLS~1.xsh|MYSQLSQL.xshd" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Resources\MYSQLSQL.xshd" SelfReg="false" NextFile="ORACLESQL.xshd"/>
+    <ROW File="Microsoft.WindowsAPICodePack.Shell.dll" Component_="Microsoft.WindowsAPICodePack.Shell.dll" FileName="Micros~2.dll|Microsoft.WindowsAPICodePack.Shell.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll" SelfReg="false" NextFile="MySql.Data.dll"/>
+    <ROW File="Microsoft.WindowsAPICodePack.dll" Component_="Microsoft.WindowsAPICodePack.dll" FileName="Micros~1.dll|Microsoft.WindowsAPICodePack.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Microsoft.WindowsAPICodePack.dll" SelfReg="false" NextFile="Microsoft.WindowsAPICodePack.Shell.dll"/>
+    <ROW File="MySql.Data.dll" Component_="MySql.Data.dll" FileName="MySqlD~1.dll|MySql.Data.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\MySql.Data.dll" SelfReg="false" NextFile="Oracle.ManagedDataAccess.dll"/>
+    <ROW File="ORACLESQL.xshd" Component_="DB2SQL.xshd" FileName="ORACLE~1.xsh|ORACLESQL.xshd" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Resources\ORACLESQL.xshd" SelfReg="false" NextFile="SQLCESQL.xshd"/>
+    <ROW File="Oracle.ManagedDataAccess.dll" Component_="Oracle.ManagedDataAccess.dll" FileName="Oracle~1.dll|Oracle.ManagedDataAccess.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Oracle.ManagedDataAccess.dll" SelfReg="false" NextFile="SQLEditor.exe"/>
+    <ROW File="SQLCESQL.xshd" Component_="DB2SQL.xshd" FileName="SQLCES~1.xsh|SQLCESQL.xshd" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Resources\SQLCESQL.xshd" SelfReg="false" NextFile="SQLITESQL.xshd"/>
+    <ROW File="SQLEditor.exe" Component_="SQLEditor.exe" FileName="SQLEdi~1.exe|SQL Editor.exe" Attributes="0" SourcePath="..\SqlEditor\bin\Release\SQL Editor.exe" SelfReg="false" NextFile="SQLEditor.exe.config" DigSign="true"/>
+    <ROW File="SQLEditor.exe.config" Component_="Connections.xml" FileName="SQLEdi~1.con|SQL Editor.exe.config" Attributes="0" SourcePath="..\SqlEditor\bin\Release\SQL Editor.exe.config" SelfReg="false" NextFile="SqlEditor.SqlParser.dll"/>
+    <ROW File="SQLITESQL.xshd" Component_="DB2SQL.xshd" FileName="SQLITE~1.xsh|SQLITESQL.xshd" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Resources\SQLITESQL.xshd" SelfReg="false" NextFile="SQLSERVERSQL.xshd"/>
+    <ROW File="SQLSERVERSQL.xshd" Component_="DB2SQL.xshd" FileName="SQLSER~1.xsh|SQLSERVERSQL.xshd" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Resources\SQLSERVERSQL.xshd" SelfReg="false" NextFile="SyntaxModes.xml"/>
+    <ROW File="SQLite.Interop.dll" Component_="SQLite.Interop.dll" FileName="SQLite~1.dll|SQLite.Interop.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\x64\SQLite.Interop.dll" SelfReg="false" NextFile="SQLite.Interop.dll_2"/>
+    <ROW File="SQLite.Interop.dll_2" Component_="SQLite.Interop.dll_2" FileName="SQLite~1.dll|SQLite.Interop.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\x86\SQLite.Interop.dll" SelfReg="false"/>
+    <ROW File="SqlEditor.SqlParser.dll" Component_="SqlEditor.SqlParser.dll" FileName="SqlEdi~1.dll|SqlEditor.SqlParser.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\SqlEditor.SqlParser.dll" SelfReg="false" NextFile="SqlHistory.xml"/>
+    <ROW File="SqlHistory.xml" Component_="Connections.xml" FileName="SqlHis~1.xml|SqlHistory.xml" Attributes="0" SourcePath="..\SqlEditor\bin\Release\SqlHistory.xml" SelfReg="false" NextFile="System.Data.SQLite.dll"/>
+    <ROW File="SyntaxModes.xml" Component_="DB2SQL.xshd" FileName="Syntax~1.xml|SyntaxModes.xml" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Resources\SyntaxModes.xml" SelfReg="false" NextFile="SQLite.Interop.dll"/>
+    <ROW File="System.Data.SQLite.Linq.dll" Component_="System.Data.SQLite.Linq.dll" FileName="System~2.dll|System.Data.SQLite.Linq.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\System.Data.SQLite.Linq.dll" SelfReg="false" NextFile="System.Data.SqlServerCe.dll"/>
+    <ROW File="System.Data.SQLite.dll" Component_="System.Data.SQLite.dll" FileName="System~1.dll|System.Data.SQLite.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\System.Data.SQLite.dll" SelfReg="false" NextFile="System.Data.SQLite.Linq.dll"/>
+    <ROW File="System.Data.SqlServerCe.dll" Component_="System.Data.SqlServerCe.dll" FileName="System~3.dll|System.Data.SqlServerCe.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\System.Data.SqlServerCe.dll" SelfReg="false" NextFile="Utilities.dll"/>
+    <ROW File="Utilities.InfragisticsUtilities.dll" Component_="Utilities.InfragisticsUtilities.dll" FileName="Utilit~2.dll|Utilities.InfragisticsUtilities.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Utilities.InfragisticsUtilities.dll" SelfReg="false" NextFile="DB2SQL.xshd"/>
+    <ROW File="Utilities.dll" Component_="Utilities.dll" FileName="Utilit~1.dll|Utilities.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\Utilities.dll" SelfReg="false" NextFile="Utilities.InfragisticsUtilities.dll"/>
+    <ROW File="log4net.dll" Component_="log4net.dll" FileName="log4net.dll" Attributes="0" SourcePath="..\SqlEditor\bin\Release\log4net.dll" SelfReg="false" NextFile="Microsoft.WindowsAPICodePack.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\..\..\Documents\Advanced Installer\Projects\SQL Editor\Setup Files" PackageFileName="SQL Editor Setup" Languages="en" InstallationType="4" CabsLocation="1" PackageType="1" FilesInsideExe="true" ExeIconPath="..\sql_editor.ico" ExtractionFolder="[AppDataFolder][|Manufacturer]\[|ProductName] [|ProductVersion]\install" ExtUI="true" UseLargeSchema="true" UACExecutionLevel="2"/>
+    <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="InstallDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\InstallDlg.aip"/>
+    <ROW Fragment="LicenseAgreementDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\LicenseAgreementDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;surface\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;surface\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;surface\fragments\VerifyRepairDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiActionTextComponent">
+    <ROW Action="AI_DeleteLzma" Description="Deleting files extracted from archive" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
+    <ROW Action="AI_DeleteRLzma" Description="Deleting files extracted from archive" DescriptionLocId="ActionText.Description.AI_DeleteLzma" TemplateLocId="-"/>
+    <ROW Action="AI_ExtractFiles" Description="Extracting files from archive" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
+    <ROW Action="AI_ExtractLzma" Description="Extracting files from archive" DescriptionLocId="ActionText.Description.AI_ExtractLzma" TemplateLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
+    <ROW Property="AI_DOTNET45_SEARCH" Signature_="AI_DotNet45SearchSgn" Builds="DefaultBuild"/>
+    <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_CU" Builds="DefaultBuild"/>
+    <ROW Property="AI_SETUPEXEPATH" Signature_="AI_EXE_PATH_LM" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="ExternalUICleaner.dll" SourcePath="&lt;AI_CUSTACTS&gt;ExternalUICleaner.dll"/>
+    <ROW Name="Prereq.dll" SourcePath="&lt;AI_CUSTACTS&gt;Prereq.dll"/>
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="lzmaextractor.dll" SourcePath="&lt;AI_CUSTACTS&gt;lzmaextractor.dll"/>
+    <ROW Name="sql_editor.png" SourcePath="..\sql_editor.png"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
+    <ROW Dialog_="CustomizeDlg" Control="CustomizeDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+    <ROW Dialog_="MsiRMFilesInUse" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="100" MsiKey="MsiRMFilesInUse#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control="PatchWelcomeDlgDialogInitializer" Type="DialogInitializer" X="0" Y="0" Width="0" Height="0" Attributes="0" Order="-1" TextLocId="-" HelpLocId="-" ExtDataLocId="-"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="100" MsiKey="VerifyReadyDlg#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Back" Type="PushButton" X="5" Y="381" Width="11" Height="11" Attributes="2" Text="Control.Text.VerifyReadyDlg#Back" Help="Back|" Order="200" TextLocId="Control.Text.VerifyReadyDlg#Back" HelpLocId="Air.Control.Help#Back" MsiKey="VerifyReadyDlg#Back" Options="1" ExtType="PushButton" ExtData="[ButtonText_Back]" ExtDataLocId="-"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="ReadyToInstall" Type="Text" X="17" Y="105" Width="312" Height="19" Attributes="196611" Text="Ready to Install" TextStyle="[SubTitleStyle]" Order="400" TextLocId="Control.Text.VerifyReadyDlg#Title" MsiKey="VerifyReadyDlg#ReadyToInstall"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Text_2" Type="Text" X="17" Y="139" Width="312" Height="100" Attributes="65539" Text="The [Wizard] is ready to begin the [ProductName] installation" Order="500" TextLocId="Control.Text.VerifyReadyDlg#Description" MsiKey="VerifyReadyDlg#Text_2"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="InstallButton" Type="ImageButton" X="251" Y="359" Width="78" Height="28" Attributes="3" Text="[metrobuttonimage]" TextStyle="[MetroButtonText]" Order="600" MsiKey="VerifyReadyDlg#InstallButton" ExtType="ImageButton" ExtData="INSTALL" ExtDataLocId="Metro.Control.ExtData.VerifyReadyDlg#InstallButton"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="ProductNameTitle" Type="Text" X="83" Y="21" Width="245" Height="50" Attributes="196611" Text="[ProductName]" TextStyle="[ProductNameForSplash]" Order="700" TextLocId="Metro.Control.Text.ProductName" MsiKey="VerifyReadyDlg#ProductNameTitle"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="CompanyText" Type="Text" X="83" Y="16" Width="191" Height="12" Attributes="196611" Text="[Manufacturer]" TextStyle="[ManufacturerFont]" Order="800" TextLocId="Metro.Control.Text.Manufacturer" MsiKey="VerifyReadyDlg#CompanyText"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="ProductLogo" Type="Bitmap" X="17" Y="5" Width="59" Height="63" Attributes="1" Text="[AppLogoIcon]" Order="900" MsiKey="VerifyReadyDlg#ProductLogo"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="AdvInst" Type="Text" X="5" Y="388" Width="74" Height="11" Attributes="196611" Text="Advanced Installer" TextStyle="[BrandingStyle]" Order="1000" MsiKey="VerifyReadyDlg#AdvInst"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="100" MsiKey="VerifyRemoveDlg#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Bitmap" Type="Bitmap" X="0" Y="0" Width="345" Height="400" Attributes="1" Text="[Background]" Order="100" MsiKey="VerifyRepairDlg#Bitmap"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Cancel" Type="ImageButton" X="163" Y="359" Width="78" Height="28" Attributes="2" Text="[NextCancelButtons]" TextStyle="[MetroButtonText]" Order="200" MsiKey="VerifyRepairDlg#Cancel" Options="1" ExtType="ImageButton" ExtData="[ButtonText_Cancel]" ExtDataLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="InstallDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="301"/>
+    <ROW Dialog_="InstallDlg" Control_="YouMustAgreeCtrl" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="201"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="NewDialog" Argument="InstallDlg" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="1"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="101"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="699"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="199" Options="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="699"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Modify" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="99"/>
+    <ROW Dialog_="InstallDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="302" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="303" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="304" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="InstallDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL" Ordering="101" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="InstallDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL" Ordering="102" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="InstallDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL" Ordering="103" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="InstallDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL" Ordering="104" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="YouMustAgreeCtrl" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL" Ordering="202" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="YouMustAgreeCtrl" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL" Ordering="203" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL" Ordering="0" Options="2"/>
+    <ROW Dialog_="InstallDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL" Ordering="1" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_INSTALL AND AiLicenseAgreement AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="102" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_INSTALL AND AiLicenseAgreement AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="103" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_INSTALL AND AiLicenseAgreement AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="104" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="101" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="102" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="103" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="LicenseAgreementDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="104" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="2" Options="2"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_INSTALL AND AiLicenseAgreement" Ordering="3" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Modify" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_MAINT AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="102" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Modify" Event="EnableRollback" Argument="False" Condition="AI_MAINT AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="103" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Modify" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_MAINT AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="104" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="CustomizeDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_MAINT" Ordering="0" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="CustomizeDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_MAINT" Ordering="1" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="CustomizeDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_MAINT" Ordering="2" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="CustomizeDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_MAINT" Ordering="3" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_MAINT" Ordering="2" Options="2"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_MAINT" Ordering="3" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfRbDiskDlg" Condition="AI_PATCH AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND (PROMPTROLLBACKCOST=&quot;P&quot; OR NOT PROMPTROLLBACKCOST)" Ordering="202" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="EnableRollback" Argument="False" Condition="AI_PATCH AND OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 0 AND PROMPTROLLBACKCOST=&quot;D&quot;" Ordering="203" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="SpawnDialog" Argument="OutOfDiskDlg" Condition="AI_PATCH AND ( (OutOfDiskSpace = 1 AND OutOfNoRbDiskSpace = 1) OR (OutOfDiskSpace = 1 AND PROMPTROLLBACKCOST=&quot;F&quot;) )" Ordering="204" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="PatchWelcomeDlgDialogInitializer" Event="[AI_ButtonText_Next_Orig]" Argument="[ButtonText_Next]" Condition="AI_PATCH" Ordering="0" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="PatchWelcomeDlgDialogInitializer" Event="[ButtonText_Next]" Argument="[[AI_CommitButton]]" Condition="AI_PATCH" Ordering="1" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="PatchWelcomeDlgDialogInitializer" Event="[AI_Text_Next_Orig]" Argument="[Text_Next]" Condition="AI_PATCH" Ordering="2" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="PatchWelcomeDlgDialogInitializer" Event="[Text_Next]" Argument="[Text_Install]" Condition="AI_PATCH" Ordering="3" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Back" Event="[ButtonText_Next]" Argument="[AI_ButtonText_Next_Orig]" Condition="AI_PATCH" Ordering="0" Options="2"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Back" Event="[Text_Next]" Argument="[AI_Text_Next_Orig]" Condition="AI_PATCH" Ordering="1" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="SHORTCUTDIR" Component_="SHORTCUTDIR"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_AppSearchEx" Type="1" Source="Prereq.dll" Target="DoAppSearchEx"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH_ORIGINAL" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_ChooseTextStyles" Type="1" Source="aicustact.dll" Target="ChooseTextStyles"/>
+    <ROW Action="AI_DATA_SETTER" Type="51" Source="AI_ExtractFiles" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DeleteCadLzma" Type="51" Source="AI_DeleteLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DeleteLzma" Type="1025" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_DeleteRCadLzma" Type="51" Source="AI_DeleteRLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_DeleteRLzma" Type="1281" Source="lzmaextractor.dll" Target="DeleteLZMAFiles"/>
+    <ROW Action="AI_DoRemoveExternalUIStub" Type="3585" Source="ExternalUICleaner.dll" Target="DoRemoveExternalUIStub" WithoutSeq="true"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EstimateExtractFiles" Type="1" Source="Prereq.dll" Target="EstimateExtractFiles"/>
+    <ROW Action="AI_ExtractCadLzma" Type="51" Source="AI_ExtractLzma" Target="[AI_SETUPEXEPATH]"/>
+    <ROW Action="AI_ExtractFiles" Type="1025" Source="Prereq.dll" Target="ExtractSourceFiles" AdditionalSeq="AI_DATA_SETTER"/>
+    <ROW Action="AI_ExtractLzma" Type="1025" Source="lzmaextractor.dll" Target="ExtractLZMAFiles"/>
+    <ROW Action="AI_FindExeLzma" Type="1" Source="lzmaextractor.dll" Target="FindEXE"/>
+    <ROW Action="AI_GetArpIconPath" Type="1" Source="aicustact.dll" Target="GetArpIconPath"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#SQLEditor.exe]"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Type="51" Source="AI_SETUPEXEPATH" Target="[AI_SETUPEXEPATH_ORIGINAL]"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_RemoveExternalUIStub" Type="1" Source="ExternalUICleaner.dll" Target="RemoveExternalUIStub"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Type="1" Source="aicustact.dll" Target="GetLocalizedCredentials"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="sql_editor.exe" SourcePath="..\sql_editor.ico" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1502"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="52"/>
+    <ROW Action="AI_AppSearchEx" Sequence="102"/>
+    <ROW Action="AI_GetArpIconPath" Sequence="51"/>
+    <ROW Action="AI_RemoveExternalUIStub" Condition="(REMOVE=&quot;ALL&quot;) AND ((VersionNT &gt; 500) OR((VersionNT = 500) AND (ServicePackLevel &gt;= 4)))" Sequence="1501"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99" Builds="DefaultBuild"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="199" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteRCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="198" Builds="DefaultBuild"/>
+    <ROW Action="AI_ExtractCadLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="197" Builds="DefaultBuild"/>
+    <ROW Action="AI_FindExeLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="196" Builds="DefaultBuild"/>
+    <ROW Action="AI_ExtractLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="1549" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteRLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="1548" Builds="DefaultBuild"/>
+    <ROW Action="AI_DeleteLzma" Condition="SETUPEXEDIR=&quot;&quot; AND Installed AND (REMOVE&lt;&gt;&quot;ALL&quot;) AND (AI_INSTALL_MODE&lt;&gt;&quot;Remove&quot;) AND (NOT PATCH)" Sequence="6599" Builds="DefaultBuild"/>
+    <ROW Action="AI_ExtractFiles" Sequence="3998" Builds="DefaultBuild"/>
+    <ROW Action="AI_DATA_SETTER" Sequence="3997"/>
+    <ROW Action="AI_EstimateExtractFiles" Sequence="3999" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="52"/>
+    <ROW Action="AI_DpiContentScale" Sequence="51"/>
+    <ROW Action="AI_AppSearchEx" Sequence="102"/>
+    <ROW Action="InstallDlg" Condition="AI_INSTALL" Sequence="1230" SeqType="3" MsiKey="WelcomeDlg"/>
+    <ROW Action="MaintenanceTypeDlg" Condition="AI_MAINT" Sequence="1250" SeqType="3" MsiKey="MaintenanceTypeDlg"/>
+    <ROW Action="AI_ChooseTextStyles" Sequence="74"/>
+    <ROW Action="AI_BACKUP_AI_SETUPEXEPATH" Sequence="99"/>
+    <ROW Action="AI_RESTORE_AI_SETUPEXEPATH" Condition="AI_SETUPEXEPATH_ORIGINAL" Sequence="101"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="(AI_DOTNET45_SEARCH &gt;= &quot;4.5&quot;)" Description="[ProductName] cannot be installed on systems with .NET Framework version lower than [AI_MINDOTNETVERSION]" DescriptionLocId="AI.LaunchCondition.DotNET" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT40Display]" DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]" DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AI_DotNet45SearchSgn" Root="2" Key="SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full" Name="Version" Type="2"/>
+    <ROW Signature_="AI_EXE_PATH_CU" Root="1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+    <ROW Signature_="AI_EXE_PATH_LM" Root="2" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Type="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="AI_ExePath" Root="-1" Key="Software\Caphyon\Advanced Installer\LZMA\[ProductCode]\[ProductVersion]" Name="AI_ExePath" Value="[AI_SETUPEXEPATH]" Component_="AI_ExePath"/>
+    <ROW Registry="Comments" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Comments" Value="[ARPCOMMENTS]" Component_="AI_CustomARPName"/>
+    <ROW Registry="Contact" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Contact" Value="[ARPCONTACT]" Component_="AI_CustomARPName"/>
+    <ROW Registry="DisplayIcon" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayIcon" Value="[ARP_ICON_PATH]" Component_="AI_CustomARPName"/>
+    <ROW Registry="DisplayName" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayName" Value="[AI_PRODUCTNAME_ARP]" Component_="AI_CustomARPName"/>
+    <ROW Registry="DisplayVersion" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="DisplayVersion" Value="[ProductVersion]" Component_="AI_CustomARPName"/>
+    <ROW Registry="HelpLink" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="HelpLink" Value="[ARPHELPLINK]" Component_="AI_CustomARPName"/>
+    <ROW Registry="HelpTelephone" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="HelpTelephone" Value="[ARPHELPTELEPHONE]" Component_="AI_CustomARPName"/>
+    <ROW Registry="InstallLocation" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="InstallLocation" Value="[APPDIR]" Component_="AI_CustomARPName"/>
+    <ROW Registry="ModifyPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="ModifyPath" Value="[AI_UNINSTALLER] /I [ProductCode]" Component_="AI_CustomARPName"/>
+    <ROW Registry="NoRepair" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="NoRepair" Value="#1" Component_="AI_CustomARPName"/>
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="Publisher" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="Publisher" Value="[Manufacturer]" Component_="AI_CustomARPName"/>
+    <ROW Registry="URLInfoAbout" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLInfoAbout" Value="[ARPURLINFOABOUT]" Component_="AI_CustomARPName"/>
+    <ROW Registry="URLUpdateInfo" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="URLUpdateInfo" Value="[ARPURLUPDATEINFO]" Component_="AI_CustomARPName"/>
+    <ROW Registry="UninstallPath" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallPath" Value="[AI_UNINSTALLER] /x [ProductCode]" Component_="AI_CustomARPName"/>
+    <ROW Registry="UninstallString" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="UninstallString" Value="[AI_UNINSTALLER] /x [ProductCode]" Component_="AI_CustomARPName"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+    <ROW Registry="VersionMajor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMajor" Value="#1" Component_="AI_CustomARPName"/>
+    <ROW Registry="VersionMinor" Root="-1" Key="Software\Microsoft\Windows\CurrentVersion\Uninstall\[ProductName] [ProductVersion]" Name="VersionMinor" Value="#0" Component_="AI_CustomARPName"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="SQLEditor.exe" Directory_="SHORTCUTDIR" Name="SQLEdi~1.exe|SQL Editor.exe" Component_="SQLEditor.exe" Target="[#SQLEditor.exe]" Description="SQL Editor.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="SQLEditor.exe_1" Directory_="DesktopFolder" Name="SQLEdi~1.exe|SQL Editor.exe" Component_="SQLEditor.exe" Target="[#SQLEditor.exe]" Description="SQL Editor.exe" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="surface"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMax="[|ProductVersion]" Attributes="1025" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
+    <ROW PrereqKey="E9BFB0D602DD498F96473C9BBCDDEC89" DisplayName=".NET Framework 4.5" VersionMin="4.5" SetupFileUrl="http://download.microsoft.com/download/B/A/4/BA4A7E71-2906-4B2D-A0E1-80CF16844F5F/dotNetFx45_Full_setup.exe" Location="1" ExactSize="0" Win9xVersions="Windows 9x/ME" WinNTVersions="Windows NT 4.0, Windows NT 4.0 Service Pack 1, Windows NT 4.0 Service Pack 2, Windows NT 4.0 Service Pack 3, Windows NT 4.0 Service Pack 4, Windows NT 4.0 Service Pack 5, Windows NT 4.0 Service Pack 6, Windows 2000, Windows 2000 Service Pack 1, Windows 2000 Service Pack 2, Windows 2000 Service Pack 3, Windows 2000 Service Pack 4, Windows XP x86, Windows XP x86 Service Pack 1, Windows XP x86 Service Pack 2, Windows XP x86 Service Pack 3, Windows Server 2003 x86, Windows Server 2003 x86 Service Pack 1, Windows Server 2003 x86 Service Pack 2, Windows Vista x86, Windows Vista x86 Service Pack 1, Windows Server 2008 x86" WinNT64Versions="Windows XP x64, Windows XP x64 Service Pack 1, Windows XP x64 Service Pack 2, Windows Server 2003 x64, Windows Server 2003 x64 Service Pack 1, Windows Server 2003 x64 Service Pack 2, Windows Vista x64, Windows Vista x64 Service Pack 1, Windows Server 2008 x64" Operator="1"/>
+    <ATTRIBUTE name="PrereqsOrder" value="E9BFB0D602DD498F96473C9BBCDDEC89"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqSearchComponent">
+    <ROW SearchKey="E9BFB0D602DD498F96473C9BBCDDEC89_NET_45_SEARCH" Prereq="E9BFB0D602DD498F96473C9BBCDDEC89" SearchType="2" SearchString="HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\Version" VerMin="4.5" Order="1" Property="AI_NET_45_ORIGINAL_PREREQSEARCH_PROP"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
+    <ROW Directory_="APPDIR" SourcePath="..\SqlEditor\bin\Release" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store|/*Infragistics*.xml|/log4net.xml|/HtmlAgilityPack.xml|/*.pdb|/*.vshost.*|/Utilities.xml" ExcludeFlags="6"/>
+  </COMPONENT>
+</DOCUMENT>

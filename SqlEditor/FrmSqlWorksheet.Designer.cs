@@ -143,12 +143,12 @@ namespace SqlEditor
             this._utcTabs = new Infragistics.Win.UltraWinTabControl.UltraTabControl();
             this.ultraTabSharedControlsPage1 = new Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage();
             this._Worksheet2_Toolbars_Dock_Area_Left = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
+            this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
             this._img32 = new System.Windows.Forms.ImageList(this.components);
             this._img16 = new System.Windows.Forms.ImageList(this.components);
             this._Worksheet2_Toolbars_Dock_Area_Right = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._Worksheet2_Toolbars_Dock_Area_Top = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._Worksheet2_Toolbars_Dock_Area_Bottom = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
-            this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
             this.ucQueryResults1 = new SqlEditor.QueryResults.UcQueryResults();
             this.Worksheet2_Fill_Panel.ClientArea.SuspendLayout();
             this.Worksheet2_Fill_Panel.SuspendLayout();
@@ -226,6 +226,257 @@ namespace SqlEditor
             this._Worksheet2_Toolbars_Dock_Area_Left.Name = "_Worksheet2_Toolbars_Dock_Area_Left";
             this._Worksheet2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(4, 498);
             this._Worksheet2_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
+            // 
+            // _utm
+            // 
+            this._utm.DesignerFlags = 1;
+            this._utm.DockWithinContainer = this;
+            this._utm.DockWithinContainerBaseType = typeof(System.Windows.Forms.Form);
+            this._utm.ImageListLarge = this._img32;
+            this._utm.ImageListSmall = this._img16;
+            this._utm.Office2007UICompatibility = false;
+            this._utm.Ribbon.ApplicationMenu.ToolAreaLeft.NonInheritedTools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool21,
+            buttonTool29,
+            buttonTool30});
+            ribbonTab1.Caption = "SQL";
+            ribbonGroup1.Caption = "Run";
+            buttonTool18.InstanceProps.PreferredSizeOnRibbon = Infragistics.Win.UltraWinToolbars.RibbonToolSize.Large;
+            ribbonGroup1.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool18,
+            buttonTool19,
+            buttonTool53,
+            textBoxTool2});
+            ribbonGroup2.Caption = "Connection";
+            ribbonGroup2.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            stateButtonTool2});
+            ribbonGroup3.Caption = "File";
+            ribbonGroup3.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool45,
+            buttonTool46,
+            buttonTool47});
+            ribbonGroup4.Caption = "Edit";
+            buttonTool26.InstanceProps.IsFirstInGroup = true;
+            buttonTool33.InstanceProps.IsFirstInGroup = true;
+            buttonTool22.InstanceProps.IsFirstInGroup = true;
+            buttonTool50.InstanceProps.IsFirstInGroup = true;
+            ribbonGroup4.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool26,
+            buttonTool25,
+            buttonTool27,
+            buttonTool37,
+            buttonTool38,
+            buttonTool33,
+            buttonTool35,
+            buttonTool36,
+            buttonTool22,
+            buttonTool23,
+            buttonTool50,
+            buttonTool51});
+            ribbonTab1.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
+            ribbonGroup1,
+            ribbonGroup2,
+            ribbonGroup3,
+            ribbonGroup4});
+            this._utm.Ribbon.NonInheritedRibbonTabs.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonTab[] {
+            ribbonTab1});
+            buttonTool16.InstanceProps.IsFirstInGroup = true;
+            this._utm.Ribbon.QuickAccessToolbar.NonInheritedTools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool24,
+            buttonTool20,
+            buttonTool16,
+            buttonTool17});
+            this._utm.Ribbon.Visible = true;
+            this._utm.ShowFullMenusDelay = 500;
+            this._utm.Style = Infragistics.Win.UltraWinToolbars.ToolbarStyle.Office2010;
+            appearance1.Image = 3;
+            buttonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance1;
+            appearance2.Image = 3;
+            buttonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance2;
+            buttonTool1.SharedPropsInternal.Caption = "Run";
+            buttonTool1.SharedPropsInternal.Shortcut = System.Windows.Forms.Shortcut.F9;
+            buttonTool1.SharedPropsInternal.ToolTipText = "Runs selected SQL statement.";
+            buttonTool1.SharedPropsInternal.ToolTipTitle = "Run";
+            appearance3.Image = 4;
+            buttonTool2.SharedPropsInternal.AppearancesLarge.Appearance = appearance3;
+            appearance4.Image = 4;
+            buttonTool2.SharedPropsInternal.AppearancesSmall.Appearance = appearance4;
+            buttonTool2.SharedPropsInternal.Caption = "Run as Script";
+            buttonTool2.SharedPropsInternal.ToolTipText = "Runs selected SQL statements as script.";
+            buttonTool2.SharedPropsInternal.ToolTipTitle = "Run as Script";
+            appearance5.Image = 5;
+            buttonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance5;
+            appearance6.Image = 5;
+            buttonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance6;
+            buttonTool3.SharedPropsInternal.Caption = "Clear";
+            buttonTool3.SharedPropsInternal.ToolTipText = "Clears entire SQL worksheet.";
+            buttonTool3.SharedPropsInternal.ToolTipTitle = "Clear";
+            appearance7.Image = global::SqlEditor.Properties.Resources.disk;
+            buttonTool4.SharedPropsInternal.AppearancesLarge.Appearance = appearance7;
+            appearance8.Image = 12;
+            buttonTool4.SharedPropsInternal.AppearancesSmall.Appearance = appearance8;
+            buttonTool4.SharedPropsInternal.Caption = "Save";
+            buttonTool4.SharedPropsInternal.ToolTipText = "Saves curent worksheet to a file.";
+            buttonTool4.SharedPropsInternal.ToolTipTitle = "Save";
+            appearance9.Image = global::SqlEditor.Properties.Resources.save_as;
+            buttonTool5.SharedPropsInternal.AppearancesLarge.Appearance = appearance9;
+            appearance10.Image = 11;
+            buttonTool5.SharedPropsInternal.AppearancesSmall.Appearance = appearance10;
+            buttonTool5.SharedPropsInternal.Caption = "Save As";
+            buttonTool5.SharedPropsInternal.ToolTipText = "Saves current worksheet to a different file.";
+            buttonTool5.SharedPropsInternal.ToolTipTitle = "Save As";
+            appearance11.Image = 9;
+            buttonTool6.SharedPropsInternal.AppearancesLarge.Appearance = appearance11;
+            appearance12.Image = 6;
+            buttonTool6.SharedPropsInternal.AppearancesSmall.Appearance = appearance12;
+            buttonTool6.SharedPropsInternal.Caption = "Cut";
+            buttonTool6.SharedPropsInternal.ToolTipText = "Cuts selected text from a SQL worksheet.";
+            buttonTool6.SharedPropsInternal.ToolTipTitle = "Cut";
+            appearance13.Image = 0;
+            buttonTool7.SharedPropsInternal.AppearancesLarge.Appearance = appearance13;
+            appearance14.Image = 0;
+            buttonTool7.SharedPropsInternal.AppearancesSmall.Appearance = appearance14;
+            buttonTool7.SharedPropsInternal.Caption = "Copy";
+            buttonTool7.SharedPropsInternal.ToolTipText = "Copies selected text in the SQL worksheet.";
+            buttonTool7.SharedPropsInternal.ToolTipTitle = "Copy";
+            appearance15.Image = 1;
+            buttonTool8.SharedPropsInternal.AppearancesLarge.Appearance = appearance15;
+            appearance16.Image = 1;
+            buttonTool8.SharedPropsInternal.AppearancesSmall.Appearance = appearance16;
+            buttonTool8.SharedPropsInternal.Caption = "Paste";
+            buttonTool8.SharedPropsInternal.ToolTipText = "Pastes clipboard text into the SQL worksheet.";
+            buttonTool8.SharedPropsInternal.ToolTipTitle = "Paste";
+            textBoxTool1.SharedPropsInternal.Caption = "Max Results";
+            textBoxTool1.SharedPropsInternal.ToolTipText = "Specifies the maximum number of results to return when running SQL queries.";
+            textBoxTool1.SharedPropsInternal.ToolTipTitle = "Max Results";
+            textBoxTool1.SharedPropsInternal.Width = 130;
+            appearance17.Image = global::SqlEditor.Properties.Resources.folder;
+            buttonTool9.SharedPropsInternal.AppearancesLarge.Appearance = appearance17;
+            appearance18.Image = 13;
+            buttonTool9.SharedPropsInternal.AppearancesSmall.Appearance = appearance18;
+            appearance19.Image = "folder.png";
+            buttonTool9.SharedPropsInternal.AppearancesSmall.AppearanceOnMenu = appearance19;
+            appearance20.Image = "folder.png";
+            buttonTool9.SharedPropsInternal.AppearancesSmall.AppearanceOnRibbonGroup = appearance20;
+            buttonTool9.SharedPropsInternal.Caption = "Open";
+            buttonTool9.SharedPropsInternal.ToolTipText = "Open a file into the SQL worksheet.";
+            buttonTool9.SharedPropsInternal.ToolTipTitle = "Open";
+            appearance21.Image = 8;
+            buttonTool10.SharedPropsInternal.AppearancesLarge.Appearance = appearance21;
+            appearance22.Image = 7;
+            buttonTool10.SharedPropsInternal.AppearancesSmall.Appearance = appearance22;
+            buttonTool10.SharedPropsInternal.Caption = "Upper Case";
+            buttonTool10.SharedPropsInternal.ToolTipText = "Converts selected text into upper case.";
+            buttonTool10.SharedPropsInternal.ToolTipTitle = "Upper Case";
+            appearance23.Image = 6;
+            buttonTool11.SharedPropsInternal.AppearancesLarge.Appearance = appearance23;
+            appearance24.Image = 8;
+            buttonTool11.SharedPropsInternal.AppearancesSmall.Appearance = appearance24;
+            buttonTool11.SharedPropsInternal.Caption = "Lower Case";
+            buttonTool11.SharedPropsInternal.ToolTipText = "Converts selected text into lower case.";
+            buttonTool11.SharedPropsInternal.ToolTipTitle = "Lower Case";
+            appearance25.Image = 7;
+            buttonTool12.SharedPropsInternal.AppearancesLarge.Appearance = appearance25;
+            appearance26.Image = 9;
+            buttonTool12.SharedPropsInternal.AppearancesSmall.Appearance = appearance26;
+            buttonTool12.SharedPropsInternal.Caption = "Camel Case";
+            buttonTool12.SharedPropsInternal.ToolTipText = "Converts selected text into camel case.";
+            buttonTool12.SharedPropsInternal.ToolTipTitle = "Camel Case";
+            appearance27.Image = 10;
+            buttonTool13.SharedPropsInternal.AppearancesLarge.Appearance = appearance27;
+            appearance28.Image = 10;
+            buttonTool13.SharedPropsInternal.AppearancesSmall.Appearance = appearance28;
+            buttonTool13.SharedPropsInternal.Caption = "Toggle Comment";
+            buttonTool13.SharedPropsInternal.ToolTipText = "Toggles comments on and off.";
+            buttonTool13.SharedPropsInternal.ToolTipTitle = "Toggle Comment";
+            appearance29.Image = 2;
+            buttonTool28.SharedPropsInternal.AppearancesLarge.Appearance = appearance29;
+            appearance30.Image = 2;
+            buttonTool28.SharedPropsInternal.AppearancesSmall.Appearance = appearance30;
+            buttonTool28.SharedPropsInternal.Caption = "Select All";
+            buttonTool28.SharedPropsInternal.ToolTipText = "Selects all text in a SQL workesheet.";
+            buttonTool28.SharedPropsInternal.ToolTipTitle = "Select All";
+            appearance31.Image = 14;
+            buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance31;
+            appearance32.Image = 14;
+            buttonTool14.SharedPropsInternal.AppearancesSmall.Appearance = appearance32;
+            buttonTool14.SharedPropsInternal.Caption = "Undo";
+            buttonTool14.SharedPropsInternal.ToolTipText = "Undo typing.";
+            buttonTool14.SharedPropsInternal.ToolTipTitle = "Undo";
+            appearance33.Image = 15;
+            buttonTool15.SharedPropsInternal.AppearancesLarge.Appearance = appearance33;
+            appearance34.Image = 15;
+            buttonTool15.SharedPropsInternal.AppearancesSmall.Appearance = appearance34;
+            buttonTool15.SharedPropsInternal.Caption = "Redo";
+            buttonTool15.SharedPropsInternal.ToolTipText = "Redo typing.";
+            buttonTool15.SharedPropsInternal.ToolTipTitle = "Redo";
+            popupMenuTool1.SharedPropsInternal.Caption = "Sql Editor Menu";
+            buttonTool41.InstanceProps.IsFirstInGroup = true;
+            buttonTool44.InstanceProps.IsFirstInGroup = true;
+            buttonTool42.InstanceProps.IsFirstInGroup = true;
+            popupMenuTool1.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool43,
+            buttonTool41,
+            buttonTool31,
+            buttonTool34,
+            buttonTool44,
+            buttonTool39,
+            buttonTool40,
+            buttonTool42});
+            appearance35.Image = 17;
+            buttonTool48.SharedPropsInternal.AppearancesLarge.Appearance = appearance35;
+            appearance36.Image = 16;
+            buttonTool48.SharedPropsInternal.AppearancesSmall.Appearance = appearance36;
+            buttonTool48.SharedPropsInternal.Caption = "Find";
+            buttonTool48.SharedPropsInternal.ToolTipText = "Find text in a SQL worksheet.";
+            buttonTool48.SharedPropsInternal.ToolTipTitle = "Find";
+            appearance37.Image = 16;
+            buttonTool49.SharedPropsInternal.AppearancesLarge.Appearance = appearance37;
+            appearance38.Image = 17;
+            buttonTool49.SharedPropsInternal.AppearancesSmall.Appearance = appearance38;
+            buttonTool49.SharedPropsInternal.Caption = "Replace";
+            buttonTool49.SharedPropsInternal.ToolTipText = "Replace text in a SQL worksheet.";
+            buttonTool49.SharedPropsInternal.ToolTipTitle = "Replace";
+            appearance39.Image = 18;
+            stateButtonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance39;
+            appearance40.Image = 21;
+            stateButtonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance40;
+            stateButtonTool1.SharedPropsInternal.Caption = "Auto Commit";
+            stateButtonTool1.SharedPropsInternal.ToolTipText = "Toggle auto commit on and off. When auto comit is on, DML operations are autmatic" +
+    "ally commited when complete. When auto commit if off, DML operations have to be " +
+    "explicitly committed.";
+            stateButtonTool1.SharedPropsInternal.ToolTipTitle = "Auto Commit";
+            appearance41.Image = 19;
+            buttonTool52.SharedPropsInternal.AppearancesLarge.Appearance = appearance41;
+            appearance42.Image = 22;
+            buttonTool52.SharedPropsInternal.AppearancesSmall.Appearance = appearance42;
+            buttonTool52.SharedPropsInternal.Caption = "Run from Files";
+            buttonTool52.SharedPropsInternal.ToolTipText = "Show run from files dialog.";
+            buttonTool52.SharedPropsInternal.ToolTipTitle = "Run from Files";
+            this._utm.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool1,
+            buttonTool2,
+            buttonTool3,
+            buttonTool4,
+            buttonTool5,
+            buttonTool6,
+            buttonTool7,
+            buttonTool8,
+            textBoxTool1,
+            buttonTool9,
+            buttonTool10,
+            buttonTool11,
+            buttonTool12,
+            buttonTool13,
+            buttonTool28,
+            buttonTool14,
+            buttonTool15,
+            popupMenuTool1,
+            buttonTool48,
+            buttonTool49,
+            stateButtonTool1,
+            buttonTool52});
+            this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.Utm_ToolClick);
             // 
             // _img32
             // 
@@ -314,213 +565,6 @@ namespace SqlEditor
             this._Worksheet2_Toolbars_Dock_Area_Bottom.Name = "_Worksheet2_Toolbars_Dock_Area_Bottom";
             this._Worksheet2_Toolbars_Dock_Area_Bottom.Size = new System.Drawing.Size(1199, 4);
             this._Worksheet2_Toolbars_Dock_Area_Bottom.ToolbarsManager = this._utm;
-            // 
-            // _utm
-            // 
-            this._utm.DesignerFlags = 1;
-            this._utm.DockWithinContainer = this;
-            this._utm.DockWithinContainerBaseType = typeof(System.Windows.Forms.Form);
-            this._utm.ImageListLarge = this._img32;
-            this._utm.ImageListSmall = this._img16;
-            this._utm.Office2007UICompatibility = false;
-            this._utm.Ribbon.ApplicationMenu.ToolAreaLeft.NonInheritedTools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool21,
-            buttonTool29,
-            buttonTool30});
-            ribbonTab1.Caption = "SQL";
-            ribbonGroup1.Caption = "Run";
-            buttonTool18.InstanceProps.PreferredSizeOnRibbon = Infragistics.Win.UltraWinToolbars.RibbonToolSize.Large;
-            ribbonGroup1.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool18,
-            buttonTool19,
-            buttonTool53,
-            textBoxTool2});
-            ribbonGroup2.Caption = "Connection";
-            ribbonGroup2.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            stateButtonTool2});
-            ribbonGroup3.Caption = "File";
-            ribbonGroup3.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool45,
-            buttonTool46,
-            buttonTool47});
-            ribbonGroup4.Caption = "Edit";
-            buttonTool26.InstanceProps.IsFirstInGroup = true;
-            buttonTool33.InstanceProps.IsFirstInGroup = true;
-            buttonTool22.InstanceProps.IsFirstInGroup = true;
-            buttonTool50.InstanceProps.IsFirstInGroup = true;
-            ribbonGroup4.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool26,
-            buttonTool25,
-            buttonTool27,
-            buttonTool37,
-            buttonTool38,
-            buttonTool33,
-            buttonTool35,
-            buttonTool36,
-            buttonTool22,
-            buttonTool23,
-            buttonTool50,
-            buttonTool51});
-            ribbonTab1.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
-            ribbonGroup1,
-            ribbonGroup2,
-            ribbonGroup3,
-            ribbonGroup4});
-            this._utm.Ribbon.NonInheritedRibbonTabs.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonTab[] {
-            ribbonTab1});
-            buttonTool16.InstanceProps.IsFirstInGroup = true;
-            this._utm.Ribbon.QuickAccessToolbar.NonInheritedTools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool24,
-            buttonTool20,
-            buttonTool16,
-            buttonTool17});
-            this._utm.Ribbon.Visible = true;
-            this._utm.ShowFullMenusDelay = 500;
-            this._utm.Style = Infragistics.Win.UltraWinToolbars.ToolbarStyle.Office2010;
-            appearance1.Image = 3;
-            buttonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance1;
-            appearance2.Image = 3;
-            buttonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance2;
-            buttonTool1.SharedPropsInternal.Caption = "Run";
-            buttonTool1.SharedPropsInternal.Shortcut = System.Windows.Forms.Shortcut.F9;
-            appearance3.Image = 4;
-            buttonTool2.SharedPropsInternal.AppearancesLarge.Appearance = appearance3;
-            appearance4.Image = 4;
-            buttonTool2.SharedPropsInternal.AppearancesSmall.Appearance = appearance4;
-            buttonTool2.SharedPropsInternal.Caption = "Run as Script";
-            appearance5.Image = 5;
-            buttonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance5;
-            appearance6.Image = 5;
-            buttonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance6;
-            buttonTool3.SharedPropsInternal.Caption = "Clear";
-            appearance7.Image = global::SqlEditor.Properties.Resources.disk;
-            buttonTool4.SharedPropsInternal.AppearancesLarge.Appearance = appearance7;
-            appearance8.Image = 12;
-            buttonTool4.SharedPropsInternal.AppearancesSmall.Appearance = appearance8;
-            buttonTool4.SharedPropsInternal.Caption = "Save";
-            appearance9.Image = global::SqlEditor.Properties.Resources.save_as;
-            buttonTool5.SharedPropsInternal.AppearancesLarge.Appearance = appearance9;
-            appearance10.Image = 11;
-            buttonTool5.SharedPropsInternal.AppearancesSmall.Appearance = appearance10;
-            buttonTool5.SharedPropsInternal.Caption = "Save As";
-            appearance11.Image = 9;
-            buttonTool6.SharedPropsInternal.AppearancesLarge.Appearance = appearance11;
-            appearance12.Image = 6;
-            buttonTool6.SharedPropsInternal.AppearancesSmall.Appearance = appearance12;
-            buttonTool6.SharedPropsInternal.Caption = "Cut";
-            appearance13.Image = 0;
-            buttonTool7.SharedPropsInternal.AppearancesLarge.Appearance = appearance13;
-            appearance14.Image = 0;
-            buttonTool7.SharedPropsInternal.AppearancesSmall.Appearance = appearance14;
-            buttonTool7.SharedPropsInternal.Caption = "Copy";
-            appearance15.Image = 1;
-            buttonTool8.SharedPropsInternal.AppearancesLarge.Appearance = appearance15;
-            appearance16.Image = 1;
-            buttonTool8.SharedPropsInternal.AppearancesSmall.Appearance = appearance16;
-            buttonTool8.SharedPropsInternal.Caption = "Paste";
-            textBoxTool1.SharedPropsInternal.Caption = "Max Results";
-            textBoxTool1.SharedPropsInternal.Width = 130;
-            appearance17.Image = global::SqlEditor.Properties.Resources.folder;
-            buttonTool9.SharedPropsInternal.AppearancesLarge.Appearance = appearance17;
-            appearance18.Image = 13;
-            buttonTool9.SharedPropsInternal.AppearancesSmall.Appearance = appearance18;
-            appearance19.Image = "folder.png";
-            buttonTool9.SharedPropsInternal.AppearancesSmall.AppearanceOnMenu = appearance19;
-            appearance20.Image = "folder.png";
-            buttonTool9.SharedPropsInternal.AppearancesSmall.AppearanceOnRibbonGroup = appearance20;
-            buttonTool9.SharedPropsInternal.Caption = "Open";
-            appearance21.Image = 8;
-            buttonTool10.SharedPropsInternal.AppearancesLarge.Appearance = appearance21;
-            appearance22.Image = 7;
-            buttonTool10.SharedPropsInternal.AppearancesSmall.Appearance = appearance22;
-            buttonTool10.SharedPropsInternal.Caption = "Upper Case";
-            appearance23.Image = 6;
-            buttonTool11.SharedPropsInternal.AppearancesLarge.Appearance = appearance23;
-            appearance24.Image = 8;
-            buttonTool11.SharedPropsInternal.AppearancesSmall.Appearance = appearance24;
-            buttonTool11.SharedPropsInternal.Caption = "Lower Case";
-            appearance25.Image = 7;
-            buttonTool12.SharedPropsInternal.AppearancesLarge.Appearance = appearance25;
-            appearance26.Image = 9;
-            buttonTool12.SharedPropsInternal.AppearancesSmall.Appearance = appearance26;
-            buttonTool12.SharedPropsInternal.Caption = "Camel Case";
-            appearance27.Image = 10;
-            buttonTool13.SharedPropsInternal.AppearancesLarge.Appearance = appearance27;
-            appearance28.Image = 10;
-            buttonTool13.SharedPropsInternal.AppearancesSmall.Appearance = appearance28;
-            buttonTool13.SharedPropsInternal.Caption = "Toggle Comment";
-            appearance29.Image = 2;
-            buttonTool28.SharedPropsInternal.AppearancesLarge.Appearance = appearance29;
-            appearance30.Image = 2;
-            buttonTool28.SharedPropsInternal.AppearancesSmall.Appearance = appearance30;
-            buttonTool28.SharedPropsInternal.Caption = "Select All";
-            appearance31.Image = 14;
-            buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance31;
-            appearance32.Image = 14;
-            buttonTool14.SharedPropsInternal.AppearancesSmall.Appearance = appearance32;
-            buttonTool14.SharedPropsInternal.Caption = "Undo";
-            appearance33.Image = 15;
-            buttonTool15.SharedPropsInternal.AppearancesLarge.Appearance = appearance33;
-            appearance34.Image = 15;
-            buttonTool15.SharedPropsInternal.AppearancesSmall.Appearance = appearance34;
-            buttonTool15.SharedPropsInternal.Caption = "Redo";
-            popupMenuTool1.SharedPropsInternal.Caption = "Sql Editor Menu";
-            buttonTool41.InstanceProps.IsFirstInGroup = true;
-            buttonTool44.InstanceProps.IsFirstInGroup = true;
-            buttonTool42.InstanceProps.IsFirstInGroup = true;
-            popupMenuTool1.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool43,
-            buttonTool41,
-            buttonTool31,
-            buttonTool34,
-            buttonTool44,
-            buttonTool39,
-            buttonTool40,
-            buttonTool42});
-            appearance35.Image = 17;
-            buttonTool48.SharedPropsInternal.AppearancesLarge.Appearance = appearance35;
-            appearance36.Image = 16;
-            buttonTool48.SharedPropsInternal.AppearancesSmall.Appearance = appearance36;
-            buttonTool48.SharedPropsInternal.Caption = "Find";
-            appearance37.Image = 16;
-            buttonTool49.SharedPropsInternal.AppearancesLarge.Appearance = appearance37;
-            appearance38.Image = 17;
-            buttonTool49.SharedPropsInternal.AppearancesSmall.Appearance = appearance38;
-            buttonTool49.SharedPropsInternal.Caption = "Replace";
-            appearance39.Image = 18;
-            stateButtonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance39;
-            appearance40.Image = 21;
-            stateButtonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance40;
-            stateButtonTool1.SharedPropsInternal.Caption = "Auto Commit";
-            appearance41.Image = 19;
-            buttonTool52.SharedPropsInternal.AppearancesLarge.Appearance = appearance41;
-            appearance42.Image = 22;
-            buttonTool52.SharedPropsInternal.AppearancesSmall.Appearance = appearance42;
-            buttonTool52.SharedPropsInternal.Caption = "Run from Files";
-            this._utm.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool1,
-            buttonTool2,
-            buttonTool3,
-            buttonTool4,
-            buttonTool5,
-            buttonTool6,
-            buttonTool7,
-            buttonTool8,
-            textBoxTool1,
-            buttonTool9,
-            buttonTool10,
-            buttonTool11,
-            buttonTool12,
-            buttonTool13,
-            buttonTool28,
-            buttonTool14,
-            buttonTool15,
-            popupMenuTool1,
-            buttonTool48,
-            buttonTool49,
-            stateButtonTool1,
-            buttonTool52});
-            this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.Utm_ToolClick);
             // 
             // ucQueryResults1
             // 

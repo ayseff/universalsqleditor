@@ -7,7 +7,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.MySql
 {
     public sealed class MySqlConnectionTreeNode : ConnectionTreeNode
     {
-        protected readonly List<Schema> Schemas = new List<Schema>();
+        private readonly List<Schema> Schemas = new List<Schema>();
 
         public MySqlConnectionTreeNode(DatabaseConnection connection)
             : base(connection)

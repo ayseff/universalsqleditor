@@ -93,7 +93,7 @@ namespace SqlEditor.RunMultipleFiles
             {
                 _log.Error("Error occured.");
                 _log.Error(ex.Message, ex);
-                Dialog.ShowErrorDialog(Application.ProductName, "Error occured during last action", ex.Message);
+                Dialog.ShowErrorDialog(Application.ProductName, "Error occured during last action", ex.Message, ex.StackTrace);
             }
         }
 

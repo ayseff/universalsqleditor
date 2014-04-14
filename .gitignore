@@ -11,3 +11,5 @@ bin
 Express
 /SqlEditor.Setup/SyncfusionAssemblyReferenceErrors.log
 *.suo
+/Setup/Setup-cache/part2
+/Setup/Setup-cache/cacheIndex.txt

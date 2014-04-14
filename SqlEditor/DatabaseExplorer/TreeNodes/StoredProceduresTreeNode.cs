@@ -7,7 +7,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public sealed class StoredProceduresTreeNode : FolderContainerTreeNode
     {
-        public DatabaseObject Schema { get; protected set; }
+        public DatabaseObject Schema { get; private set; }
 
         public StoredProceduresTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, string nodeDisplayText = "Procedures")
             : base(nodeDisplayText, databaseConnection)

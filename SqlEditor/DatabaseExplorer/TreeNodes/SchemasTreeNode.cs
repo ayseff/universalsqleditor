@@ -7,7 +7,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public sealed class SchemasTreeNode : FolderContainerTreeNode
     {
-        public List<DatabaseObject> Schemas { get; protected set; }
+        public List<DatabaseObject> Schemas { get; private set; }
 
         public SchemasTreeNode(DatabaseConnection databaseConnection)
             : base(databaseConnection, "Schemas", "folder-horizontal-user.png", "folder-horizontal-open-user.png")

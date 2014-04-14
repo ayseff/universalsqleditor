@@ -274,9 +274,9 @@ namespace SqlEditor.QueryResults
                 {
                     var c = _connection;
                     var t = _transaction;
-// ReSharper disable CSharpWarnings::CS4014
+                    // ReSharper disable CSharpWarnings::CS4014
                     queryTask.ContinueWith(task => CloseConnectionAsync(c, t));
-// ReSharper restore CSharpWarnings::CS4014
+                    // ReSharper restore CSharpWarnings::CS4014
                 }
             }
             catch (Exception ex)
@@ -554,7 +554,7 @@ namespace SqlEditor.QueryResults
             {
                 _log.Error("Error performing operation.");
                 _log.Error(ex.Message, ex);
-                Dialog.ShowErrorDialog(Application.ProductName, "Error performing operation.", ex.Message);
+                Dialog.ShowErrorDialog(Application.ProductName, "Error performing operation.", ex.Message, ex.StackTrace);
             }
             finally
             {
@@ -700,7 +700,7 @@ namespace SqlEditor.QueryResults
             {
                 _log.Error("Error stopping the operation.");
                 _log.Error(ex.Message);
-                Dialog.ShowErrorDialog(Application.ProductName, "Error stopping the operation.", ex.Message);
+                Dialog.ShowErrorDialog(Application.ProductName, "Error stopping the operation.", ex.Message, ex.StackTrace);
             }
         }
 

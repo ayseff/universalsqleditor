@@ -7,7 +7,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public sealed class FunctionsTreeNode : FolderContainerTreeNode
     {
-        public DatabaseObject Schema { get; protected set; }
+        public DatabaseObject Schema { get; private set; }
 
         public FunctionsTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, string nodeDisplayText = "Functions")
             : base(nodeDisplayText, databaseConnection)

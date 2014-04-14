@@ -8,7 +8,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public sealed class TriggersTreeNode : FolderContainerTreeNode
     {
-        public DatabaseObject Schema { get; protected set; }
+        public DatabaseObject Schema { get; private set; }
 
         public TriggersTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
             : base("Triggers", databaseConnection)

@@ -7,7 +7,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Db2
 {
     public sealed class Db2ConnectionTreeNode : ConnectionTreeNode
     {
-        protected readonly List<Schema> Schemas = new List<Schema>();
+        private readonly List<Schema> Schemas = new List<Schema>();
 
         public Db2ConnectionTreeNode(DatabaseConnection connection)
             : base(connection)

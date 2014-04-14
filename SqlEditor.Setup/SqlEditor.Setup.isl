@@ -340,7 +340,12 @@
 		<col def="S0">ISDotNetInstallerArgsCommit</col>
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td>{30B3ABE0-2322-4CC3-9D26-943659E9535C}</td><td>X64</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td>{2D881EAF-8B8B-4A3C-8415-4EBC8A0144A1}</td><td>X86</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>NewComponent1</td><td>{2601B1C8-7997-4D04-9B82-290038FC0375}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SQLite.Interop.dll</td><td>{F8C7D125-A7C4-40AC-8116-F5CD294C38E5}</td><td>X64</td><td>2</td><td/><td>sqlite.interop.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SQLite.Interop.dll1</td><td>{F511B993-FD63-494F-8A41-4372012D98A7}</td><td>X86</td><td>2</td><td/><td>sqlite.interop.dll1</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
+		<row><td>SqlEditor.Content_Files</td><td>{BE96315A-5CF8-4E07-BFE3-3CED1DF5D46F}</td><td>INSTALLDIR</td><td>2</td><td/><td>sqleditor.content_files</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>SqlEditor.Primary_output</td><td>{2E06F95B-57B3-4ACC-9492-375AE0EB12AF}</td><td>INSTALLDIR</td><td>2</td><td/><td>sqleditor.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>SqlEditor.SqlParser.Primary_output</td><td>{F73223F9-55E4-4206-8B76-CD67E935B626}</td><td>INSTALLDIR</td><td>2</td><td/><td>sqleditor.sqlparser.primary_</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>Utilities.InfragisticsUtilities.Primary_output</td><td>{75F3D5F4-031E-4FE6-B857-A1747E2AE05A}</td><td>INSTALLDIR</td><td>2</td><td/><td>utilities.infragisticsutilit</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
@@ -1054,6 +1059,8 @@
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
 		<row><td>INSTALLDIR</td><td>NewComponent1</td></row>
+		<row><td>X64</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>X86</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1173,6 +1180,8 @@
 		<row><td>USERPROFILE</td><td>TARGETDIR</td><td>.:USERPR~1|UserProfile</td><td/><td>0</td><td/></row>
 		<row><td>WindowsFolder</td><td>TARGETDIR</td><td>.:Windows</td><td/><td>0</td><td/></row>
 		<row><td>WindowsVolume</td><td>TARGETDIR</td><td>.:WinRoot</td><td/><td>0</td><td/></row>
+		<row><td>X64</td><td>INSTALLDIR</td><td>x64</td><td/><td>0</td><td/></row>
+		<row><td>X86</td><td>INSTALLDIR</td><td>x86</td><td/><td>0</td><td/></row>
 		<row><td>mensur_1_mensur_software</td><td>ProgramMenuFolder</td><td>MENSUR~1|Mensur Software</td><td/><td>1</td><td/></row>
 		<row><td>sql_editor</td><td>mensur_1_mensur_software</td><td>SQLEDI~1|sql editor</td><td/><td>1</td><td/></row>
 		<row><td>sqledi_1.set_sqleditor.setup</td><td>mensur_1_mensur_software</td><td>SQLEDI~1.SET|SqlEditor.Setup</td><td/><td>1</td><td/></row>
@@ -1867,7 +1876,12 @@
 	<table name="FeatureComponents">
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
+		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT1</td></row>
 		<row><td>AlwaysInstall</td><td>NewComponent1</td></row>
+		<row><td>AlwaysInstall</td><td>SQLite.Interop.dll</td></row>
+		<row><td>AlwaysInstall</td><td>SQLite.Interop.dll1</td></row>
+		<row><td>AlwaysInstall</td><td>SqlEditor.Content_Files</td></row>
 		<row><td>AlwaysInstall</td><td>SqlEditor.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>SqlEditor.SqlParser.Primary_output</td></row>
 		<row><td>AlwaysInstall</td><td>Utilities.InfragisticsUtilities.Primary_output</td></row>
@@ -1886,8 +1900,11 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
+		<row><td>sqleditor.content_files</td><td>SqlEditor.Content_Files</td><td>SqlEditor.Content Files</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SqlEditor&gt;|ContentFiles</td><td>3</td><td/></row>
 		<row><td>sqleditor.primary_output</td><td>SqlEditor.Primary_output</td><td>SqlEditor.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SqlEditor&gt;|Built</td><td>3</td><td/></row>
 		<row><td>sqleditor.sqlparser.primary_</td><td>SqlEditor.SqlParser.Primary_output</td><td>SqlEditor.SqlParser.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;SqlEditor.SqlParser&gt;|Built</td><td>3</td><td/></row>
+		<row><td>sqlite.interop.dll</td><td>SQLite.Interop.dll</td><td>SQLITE~1.DLL|SQLite.Interop.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Mensur\Git\universalsqleditor\SqlEditor\x64\SQLite.Interop.dll</td><td>1</td><td/></row>
+		<row><td>sqlite.interop.dll1</td><td>SQLite.Interop.dll1</td><td>SQLITE~1.DLL|SQLite.Interop.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\Mensur\Git\universalsqleditor\SqlEditor\x86\SQLite.Interop.dll</td><td>1</td><td/></row>
 		<row><td>utilities.infragisticsutilit</td><td>Utilities.InfragisticsUtilities.Primary_output</td><td>Utilities.InfragisticsUtilities.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Utilities.InfragisticsUtilities2&gt;|Built</td><td>3</td><td/></row>
 		<row><td>utilities.primary_output</td><td>Utilities.Primary_output</td><td>Utilities.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;Utilities2&gt;|Built</td><td>3</td><td/></row>
 	</table>
@@ -2033,7 +2050,12 @@
 		<col def="S0">FTPLocation</col>
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
+		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_6681A29D_9540_4A5A_8D1C_1DB11E23FFE0_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>ISX_DEFAULTCOMPONENT1</td><td/><td/><td>_D12F4590_4843_4583_8B36_2018A6D99B77_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>NewComponent1</td><td/><td/><td>_D42489DD_1FEB_4EB0_8E8F_ABCCD9BE8ACE_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SQLite.Interop.dll</td><td/><td/><td>_F23D336F_32A3_4AB0_ABBD_195159A804CF_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SQLite.Interop.dll1</td><td/><td/><td>_9D94EB4D_C433_44F9_BAF8_214B1E49D9CC_FILTER</td><td/><td/><td/><td/></row>
+		<row><td>SqlEditor.Content_Files</td><td/><td/><td>_166A1E1D_082F_459F_A621_CF14A07F7B4D_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>SqlEditor.Primary_output</td><td/><td/><td>_5F06C6CF_B67C_4C48_AA37_1CEC069C34C3_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>SqlEditor.SqlParser.Primary_output</td><td/><td/><td>_71FB603E_13C2_4583_BC1C_9101B74B8950_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>Utilities.InfragisticsUtilities.Primary_output</td><td/><td/><td>_FE6616A6_99F1_42BB_9113_9182A80F8CC1_FILTER</td><td/><td/><td/><td/></row>
@@ -2380,6 +2402,7 @@
 		<col key="yes" def="s72">ISProductConfiguration_</col>
 		<col key="yes" def="s72">Property</col>
 		<col def="L255">Value</col>
+		<row><td>Express</td><td>SetupFileName</td><td>SQL Editor Setup</td></row>
 	</table>
 
 	<table name="ISRelease">
@@ -2419,7 +2442,7 @@
 		<row><td>DVD-18</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>15.83</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
 		<row><td>DVD-5</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>4.38</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
 		<row><td>DVD-9</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>Default</td><td>3</td><td>1033</td><td>0</td><td>2</td><td>Intel</td><td/><td>1033</td><td>0</td><td>7.95</td><td>1</td><td>2048</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>75805</td><td/><td/><td/><td>3</td></row>
-		<row><td>SingleImage</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>1</td><td>1033</td><td>0</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>108573</td><td/><td/><td/><td>3</td></row>
+		<row><td>SingleImage</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>1</td><td>1033</td><td>0</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>108573</td><td/><td/><td/><td>2</td></row>
 		<row><td>WebDeployment</td><td>Express</td><td>&lt;ISProjectDataFolder&gt;</td><td>PackageName</td><td>4</td><td>1033</td><td>2</td><td>1</td><td>Intel</td><td/><td>1033</td><td>0</td><td>0</td><td>0</td><td>0</td><td/><td>0</td><td/><td>MediaLocation</td><td/><td>http://</td><td/><td/><td/><td/><td>124941</td><td/><td/><td/><td>3</td></row>
 	</table>
 
@@ -2662,7 +2685,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>Mensur Software</td><td>0</td><td/><td>430064470</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>Mensur Software</td><td>0</td><td/><td>1780664663</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_DOTNETVERSION45FULL</td><td>1033</td><td>Microsoft .NET Framework 4.5 Full package or greater needs to be installed for this installation to continue.</td><td>0</td><td/><td>-190732529</td></row>
@@ -3765,10 +3788,10 @@
 		<row><td>IDS__TargetReq_DESC_PROCESSOR</td><td>1033</td><td>The processor is not adequate for running [ProductName].</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>-190755089</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>-190755089</td></row>
-		<row><td>ID_STRING1</td><td>1033</td><td>http://www.MensurSoftware.com</td><td>0</td><td/><td>430064470</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>Mensur Software</td><td>0</td><td/><td>430064470</td></row>
+		<row><td>ID_STRING1</td><td>1033</td><td>http://www.MensurSoftware.com</td><td>0</td><td/><td>1780664663</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>Mensur Software</td><td>0</td><td/><td>1780664663</td></row>
 		<row><td>ID_STRING3</td><td>1033</td><td>Launch |Built</td><td>0</td><td/><td>161633716</td></row>
-		<row><td>ID_STRING4</td><td>1033</td><td>http://www.MensurSoftware.com</td><td>0</td><td/><td>430064470</td></row>
+		<row><td>ID_STRING4</td><td>1033</td><td>http://www.MensurSoftware.com</td><td>0</td><td/><td>1780664663</td></row>
 		<row><td>ID_STRING5</td><td>1033</td><td>http://universalsqleditor.codeplex.com/</td><td>0</td><td/><td>430103254</td></row>
 		<row><td>ID_STRING6</td><td>1033</td><td>http://universalsqleditor.codeplex.com/</td><td>0</td><td/><td>430056182</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>-190755089</td></row>
@@ -4012,7 +4035,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{DCA58A29-F6D8-4430-8265-E58DF91F468F}</td></row>
 		<row><td>ISUSSignature</td><td>{90164C89-5631-4B69-AA8D-8AA6B19130A8}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewISToday</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewProject,viewISToday,viewUpdateService,viewSystemSearch,viewTextMessages,viewSetupDesign,viewAppFiles,viewFeatureFiles,viewRelease</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4391,7 +4414,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{219628A1-7996-4AFD-9425-B415E1666D3A}</td><td/></row>
 		<row><td>ProductName</td><td>SQL Editor</td><td/></row>
-		<row><td>ProductVersion</td><td>0.3.0.3</td><td/></row>
+		<row><td>ProductVersion</td><td>0.3.1.0</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>

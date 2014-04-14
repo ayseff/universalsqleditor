@@ -79,7 +79,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>bin\Release\</OutputPath>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
+    <Optimize>true</Optimize>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -245,6 +246,11 @@
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />
     <Compile Include="Databases\ObjectScripter.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="PropertyOverridingTypeDescriptor.cs" />
     <Compile Include="RunMultipleFiles\FrmRunMultipleFiles.cs">
       <SubType>Form</SubType>
@@ -436,14 +442,9 @@
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="QueryResults\UcQueryResults.resx">
       <DependentUpon>UcQueryResults.cs</DependentUpon>
     </EmbeddedResource>
@@ -467,30 +468,30 @@
     </Compile>
     <EmbeddedResource Include="Resources\Office2007Blue.isl" />
     <None Include="Resources\Aero.isl" />
-    <None Include="Resources\SQLCESQL.xshd">
+    <Content Include="Resources\SQLCESQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\SQLITESQL.xshd">
+    </Content>
+    <Content Include="Resources\SQLITESQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\MYSQLSQL.xshd">
+    </Content>
+    <Content Include="Resources\MYSQLSQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\DB2SQL.xshd">
+    </Content>
+    <Content Include="Resources\DB2SQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Resources\Metro.isl" />
     <None Include="Resources\Office2007Black.isl" />
     <None Include="Resources\Office2007Silver.isl" />
     <None Include="Resources\Office2010Black.isl" />
     <None Include="Resources\Office2010Blue.isl" />
     <None Include="Resources\Office2010Silver.isl" />
-    <None Include="Resources\ORACLESQL.xshd">
+    <Content Include="Resources\ORACLESQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Resources\SQLSERVERSQL.xshd">
+    </Content>
+    <Content Include="Resources\SQLSERVERSQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="Resources\VS2010.isl" />
     <None Include="Resources\Windows7.isl" />
   </ItemGroup>
@@ -508,8 +509,8 @@
     <None Include="Resources\information.png" />
     <None Include="Resources\door_out.png" />
     <None Include="Resources\sql_editor_24x24.png" />
-    <None Include="Resources\help-desk-icon.png" />
-    <None Include="Resources\information %282%29.png" />
+    <None Include="Resources\help_desk_icon.png" />
+    <None Include="Resources\information2.png" />
     <None Include="Resources\download_32x32.png" />
     <None Include="Resources\app_32x32.png" />
     <Content Include="sql_editor.ico" />

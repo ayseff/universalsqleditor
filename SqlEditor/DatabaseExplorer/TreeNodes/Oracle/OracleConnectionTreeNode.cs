@@ -7,7 +7,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Oracle
 {
     public sealed class OracleConnectionTreeNode : ConnectionTreeNode
     {
-        protected readonly List<Schema> Schemas = new List<Schema>();
+        private readonly List<Schema> Schemas = new List<Schema>();
 
         public OracleConnectionTreeNode(DatabaseConnection connection)
             : base(connection)
