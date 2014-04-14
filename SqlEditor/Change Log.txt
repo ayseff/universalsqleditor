@@ -1,4 +1,8 @@
-﻿Version: 0.3.1.0
+﻿Version: 0.3.2.0
+  New Features:
+  Bug Fixes:
+  - Tables would not show in Database Explorer for SQL Server Compact and SQLite
+Version: 0.3.1.0
   New Features:
   - Ability to browse functions in Database Explorer
   - Ability to check for updates  
