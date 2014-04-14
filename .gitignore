@@ -13,3 +13,4 @@ Express
 *.suo
 /Setup/Setup-cache/part2
 /Setup/Setup-cache/cacheIndex.txt
+/Setup/Setup-cache/part1
