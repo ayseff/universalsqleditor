@@ -10,6 +10,7 @@
   - Enhance connection create/edit dialog to show simple and advanced views for easier connecting to databases
   - Added Oracle intellisense dictionary views
   - Added drag and drop of most database objects to the SQL Code Editor
+  - Changed project settings to prefer 32 bitness
   Bug Fixes:
   - UPDATE AND DELETE statements are not generated correctly for table with composite primary keys
   - Intellisense shows when it is not supposed to (Typing dot (.) in a literal string where a word before the dot does not match a schema or table name of alias)
