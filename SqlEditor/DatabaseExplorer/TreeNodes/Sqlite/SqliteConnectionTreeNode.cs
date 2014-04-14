@@ -27,7 +27,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Sqlite
                         _log.Debug("Connection is successful.");
 
                         var nodes = new List<TreeNodeBase>();
-                        var dummySchema = new Schema();
+                        var dummySchema = new Schema { Name = string.Empty };
                         var tablesNode = new TablesTreeNode(dummySchema, DatabaseConnection);
                         nodes.Add(tablesNode);
                         var viewsNode = new ViewsTreeNode(dummySchema, DatabaseConnection);

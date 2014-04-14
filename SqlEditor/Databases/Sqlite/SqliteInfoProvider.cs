@@ -154,7 +154,7 @@ namespace SqlEditor.Databases.Sqlite
                 command.CommandText = "SELECT name, tbl_name FROM sqlite_master WHERE type='index' ORDER BY name";
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var index = new Index(dr.GetString(0).Trim().ToUpper(), schema);
                         map.Add(index, dr.GetString(1));
@@ -165,7 +165,7 @@ namespace SqlEditor.Databases.Sqlite
                 foreach (var index in indices)
                 {
                     var tableName = map[index];
-                    var tableIndex = GetIndexesForTable(connection, schemaName, tableName).First(x => x.Name == index.Name);
+                    var tableIndex = GetIndexesForTable(connection, schemaName, tableName).First(x => String.Equals(x.Name, index.Name, StringComparison.CurrentCultureIgnoreCase));
                     index.IsUnique = tableIndex.IsUnique;
                 }
             }
