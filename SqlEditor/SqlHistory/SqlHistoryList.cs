@@ -16,15 +16,15 @@ namespace SqlEditor.SqlHistory
             HasChanged = false;
         }
         
-        public void AddFirst(string statement, string connectionName, DateTime runDateTime)
+        public void InsertAtBeginning(string statement, string connectionName, DateTime runDateTime)
         {
             if (statement == null) throw new ArgumentNullException("statement");
             if (connectionName == null) throw new ArgumentNullException("connectionName");
             var st = new ExecutedSqlStatement { SqlStatement = statement, RunDateTime = runDateTime, ConnectionName = connectionName };
-            AddFirst(st);
+            InsertAtBeginning(st);
         }
 
-        public void AddFirst(ExecutedSqlStatement executedSql)
+        public void InsertAtBeginning(ExecutedSqlStatement executedSql)
         {
             if (executedSql == null) throw new ArgumentNullException("executedSql");
             Insert(0, executedSql);

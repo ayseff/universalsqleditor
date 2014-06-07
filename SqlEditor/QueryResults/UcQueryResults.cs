@@ -51,6 +51,7 @@ namespace SqlEditor.QueryResults
         
         private readonly DatabaseConnection _databaseConnection;
         private IDbConnection _connection;
+        private IDbCommand _command;
         private IDbTransaction _transaction;
         private readonly Stopwatch _stopwatch;
         private int _maxResults;
@@ -701,6 +702,16 @@ namespace SqlEditor.QueryResults
                 _log.Error("Error stopping the operation.");
                 _log.Error(ex.Message);
                 Dialog.ShowErrorDialog(Application.ProductName, "Error stopping the operation.", ex.Message, ex.StackTrace);
+            }
+
+            try
+            {
+                CloseCurrentConnectionAsync();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error closing connection.");
+                _log.Error(ex.Message);
             }
         }
 

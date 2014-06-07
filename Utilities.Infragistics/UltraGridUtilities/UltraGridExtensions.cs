@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Infragistics.Documents.Excel;
 using Infragistics.Win.UltraWinGrid;
+using Infragistics.Win.UltraWinGrid.ExcelExport;
 using Infragistics.Win.UltraWinMaskedEdit;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using log4net;
@@ -350,13 +351,13 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
             {
                 var workbookFormat = WorkbookFormat.Excel2007;
                 var extension = Path.GetExtension(fileName);
-                if (extension != null && extension.Trim().ToLower() == ".xls")
+                if (extension.Trim().ToLower() == ".xls")
                 {
                     workbookFormat = WorkbookFormat.Excel97To2003;
                 }
                 var wkbk = new Workbook(workbookFormat);
                 var resultsSheet = wkbk.Worksheets.Add(worksheetName);
-                var excelExporrter = new Infragistics.Win.UltraWinGrid.ExcelExport.UltraGridExcelExporter();
+                var excelExporrter = new UltraGridExcelExporter();
                 excelExporrter.Export(grid, resultsSheet, 0, 0);
 
                 _log.DebugFormat("Saving Excel worksheet to file {0} ...", fileName);

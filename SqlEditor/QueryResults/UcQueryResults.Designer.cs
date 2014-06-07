@@ -43,7 +43,6 @@ namespace SqlEditor.QueryResults
             Infragistics.Win.Appearance appearance36 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance37 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance38 = new Infragistics.Win.Appearance();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcQueryResults));
             Infragistics.Win.UltraWinToolbars.UltraToolbar ultraToolbar1 = new Infragistics.Win.UltraWinToolbars.UltraToolbar("QueryToolbar");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool2 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Flag", "");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool7 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Show SQL");
@@ -113,17 +112,18 @@ namespace SqlEditor.QueryResults
             Infragistics.Win.Appearance appearance26 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool26 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export to Text");
             Infragistics.Win.Appearance appearance27 = new Infragistics.Win.Appearance();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcQueryResults));
             this.QueryResultsControl2_Fill_Panel = new Infragistics.Win.Misc.UltraPanel();
             this._ugGrid = new Infragistics.Win.UltraWinGrid.UltraGrid();
             this._uaiActivity = new Infragistics.Win.UltraActivityIndicator.UltraActivityIndicator();
             this._QueryResultsControl2_Toolbars_Dock_Area_Left = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
+            this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
             this._iml32 = new System.Windows.Forms.ImageList(this.components);
             this._iml16 = new System.Windows.Forms.ImageList(this.components);
             this._QueryResultsControl2_Toolbars_Dock_Area_Right = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._QueryResultsControl2_Toolbars_Dock_Area_Top = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._QueryResultsControl2_Toolbars_Dock_Area_Bottom = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._tmQueryTimer = new System.Windows.Forms.Timer(this.components);
-            this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
             this.QueryResultsControl2_Fill_Panel.ClientArea.SuspendLayout();
             this.QueryResultsControl2_Fill_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._ugGrid)).BeginInit();
@@ -233,84 +233,6 @@ namespace SqlEditor.QueryResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Left";
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 354);
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
-            // 
-            // _iml32
-            // 
-            this._iml32.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_iml32.ImageStream")));
-            this._iml32.TransparentColor = System.Drawing.Color.Transparent;
-            this._iml32.Images.SetKeyName(0, "flag_red.png");
-            this._iml32.Images.SetKeyName(1, "document_inspector.png");
-            this._iml32.Images.SetKeyName(2, "filter.png");
-            this._iml32.Images.SetKeyName(3, "control_stop_blue.png");
-            this._iml32.Images.SetKeyName(4, "database_go.png");
-            this._iml32.Images.SetKeyName(5, "draw_eraser.png");
-            this._iml32.Images.SetKeyName(6, "database_delete.png");
-            this._iml32.Images.SetKeyName(7, "database_save.png");
-            this._iml32.Images.SetKeyName(8, "page_copy.png");
-            this._iml32.Images.SetKeyName(9, "download.png");
-            this._iml32.Images.SetKeyName(10, "arrow_refresh.png");
-            this._iml32.Images.SetKeyName(11, "database_undo.png");
-            this._iml32.Images.SetKeyName(12, "control_stop_red.png");
-            this._iml32.Images.SetKeyName(13, "download_red.png");
-            this._iml32.Images.SetKeyName(14, "export_excel.png");
-            // 
-            // _iml16
-            // 
-            this._iml16.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_iml16.ImageStream")));
-            this._iml16.TransparentColor = System.Drawing.Color.Transparent;
-            this._iml16.Images.SetKeyName(0, "flag_red.png");
-            this._iml16.Images.SetKeyName(1, "filter.png");
-            this._iml16.Images.SetKeyName(2, "control_stop_blue.png");
-            this._iml16.Images.SetKeyName(3, "page_copy.png");
-            this._iml16.Images.SetKeyName(4, "download.png");
-            this._iml16.Images.SetKeyName(5, "arrow_refresh.png");
-            this._iml16.Images.SetKeyName(6, "control_stop_red.png");
-            this._iml16.Images.SetKeyName(7, "download_red.png");
-            this._iml16.Images.SetKeyName(8, "page_copy_database.png");
-            this._iml16.Images.SetKeyName(9, "page_copy_header.png");
-            this._iml16.Images.SetKeyName(10, "file_extension_rtf.png");
-            this._iml16.Images.SetKeyName(11, "file_extension_txt.png");
-            this._iml16.Images.SetKeyName(12, "file_extension_xls.png");
-            this._iml16.Images.SetKeyName(13, "database_check.png");
-            this._iml16.Images.SetKeyName(14, "database_left.png");
-            // 
-            // _QueryResultsControl2_Toolbars_Dock_Area_Right
-            // 
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.BackColor = System.Drawing.SystemColors.Control;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(786, 52);
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Right";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 354);
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
-            // 
-            // _QueryResultsControl2_Toolbars_Dock_Area_Top
-            // 
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.BackColor = System.Drawing.SystemColors.Control;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Top;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Top";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(786, 52);
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
-            // 
-            // _QueryResultsControl2_Toolbars_Dock_Area_Bottom
-            // 
-            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.BackColor = System.Drawing.SystemColors.Control;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Bottom;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.Location = new System.Drawing.Point(0, 406);
-            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Bottom";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.Size = new System.Drawing.Size(786, 0);
-            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.ToolbarsManager = this._utm;
-            // 
-            // _tmQueryTimer
-            // 
-            this._tmQueryTimer.Enabled = true;
-            this._tmQueryTimer.Tick += new System.EventHandler(this.TmQueryTimerTick);
             // 
             // _utm
             // 
@@ -488,6 +410,84 @@ namespace SqlEditor.QueryResults
             buttonTool25,
             buttonTool26});
             this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.UtmToolClick);
+            // 
+            // _iml32
+            // 
+            this._iml32.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_iml32.ImageStream")));
+            this._iml32.TransparentColor = System.Drawing.Color.Transparent;
+            this._iml32.Images.SetKeyName(0, "flag_red.png");
+            this._iml32.Images.SetKeyName(1, "document_inspector.png");
+            this._iml32.Images.SetKeyName(2, "filter.png");
+            this._iml32.Images.SetKeyName(3, "control_stop_blue.png");
+            this._iml32.Images.SetKeyName(4, "database_go.png");
+            this._iml32.Images.SetKeyName(5, "draw_eraser.png");
+            this._iml32.Images.SetKeyName(6, "database_delete.png");
+            this._iml32.Images.SetKeyName(7, "database_save.png");
+            this._iml32.Images.SetKeyName(8, "page_copy.png");
+            this._iml32.Images.SetKeyName(9, "download.png");
+            this._iml32.Images.SetKeyName(10, "arrow_refresh.png");
+            this._iml32.Images.SetKeyName(11, "database_undo.png");
+            this._iml32.Images.SetKeyName(12, "control_stop_red.png");
+            this._iml32.Images.SetKeyName(13, "download_red.png");
+            this._iml32.Images.SetKeyName(14, "export_excel.png");
+            // 
+            // _iml16
+            // 
+            this._iml16.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_iml16.ImageStream")));
+            this._iml16.TransparentColor = System.Drawing.Color.Transparent;
+            this._iml16.Images.SetKeyName(0, "flag_red.png");
+            this._iml16.Images.SetKeyName(1, "filter.png");
+            this._iml16.Images.SetKeyName(2, "control_stop_blue.png");
+            this._iml16.Images.SetKeyName(3, "page_copy.png");
+            this._iml16.Images.SetKeyName(4, "download.png");
+            this._iml16.Images.SetKeyName(5, "arrow_refresh.png");
+            this._iml16.Images.SetKeyName(6, "control_stop_red.png");
+            this._iml16.Images.SetKeyName(7, "download_red.png");
+            this._iml16.Images.SetKeyName(8, "page_copy_database.png");
+            this._iml16.Images.SetKeyName(9, "page_copy_header.png");
+            this._iml16.Images.SetKeyName(10, "file_extension_rtf.png");
+            this._iml16.Images.SetKeyName(11, "file_extension_txt.png");
+            this._iml16.Images.SetKeyName(12, "file_extension_xls.png");
+            this._iml16.Images.SetKeyName(13, "database_check.png");
+            this._iml16.Images.SetKeyName(14, "database_left.png");
+            // 
+            // _QueryResultsControl2_Toolbars_Dock_Area_Right
+            // 
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.BackColor = System.Drawing.SystemColors.Control;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(786, 52);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Right";
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 354);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
+            // 
+            // _QueryResultsControl2_Toolbars_Dock_Area_Top
+            // 
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.BackColor = System.Drawing.SystemColors.Control;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Top;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Top";
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(786, 52);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
+            // 
+            // _QueryResultsControl2_Toolbars_Dock_Area_Bottom
+            // 
+            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.BackColor = System.Drawing.SystemColors.Control;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Bottom;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.Location = new System.Drawing.Point(0, 406);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Bottom";
+            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.Size = new System.Drawing.Size(786, 0);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Bottom.ToolbarsManager = this._utm;
+            // 
+            // _tmQueryTimer
+            // 
+            this._tmQueryTimer.Enabled = true;
+            this._tmQueryTimer.Tick += new System.EventHandler(this.TmQueryTimerTick);
             // 
             // UcQueryResults
             // 

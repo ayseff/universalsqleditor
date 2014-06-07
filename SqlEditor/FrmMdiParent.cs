@@ -649,9 +649,10 @@ namespace SqlEditor
                 }
                 else
                 {
-                    _sqlHistoryList.AddFirst(statement, e.DatabaseConnection.Name, DateTime.Now);
+                    _sqlHistoryList.InsertAtBeginning(statement, e.DatabaseConnection.Name, DateTime.Now);
                 }
             }
+            Task.Run(() => SaveSqlHistory());
         }
 
         private void WorksheetRunQuery(object sender, RunQueryEventArgs e)
@@ -663,8 +664,9 @@ namespace SqlEditor
             }
             else
             {
-                _sqlHistoryList.AddFirst(e.Sql, e.ConnectionName, DateTime.Now);
+                _sqlHistoryList.InsertAtBeginning(e.Sql, e.ConnectionName, DateTime.Now);
             }
+            Task.Run(() => SaveSqlHistory());
         }
 
         
@@ -789,13 +791,18 @@ namespace SqlEditor
                 _log.Error(ex.Message, ex);
             }
 
+            SaveSqlHistory();
+        }
+
+        private void SaveSqlHistory()
+        {
             try
             {
                 if (_sqlHistoryList.HasChanged)
                 {
                     _log.Debug("SQL history has changed. Saving  changes ...");
                     var executedSqlStatements =
-                        _sqlHistoryList.OrderByDescending(s => s.RunDateTime).Take(50).ToList();
+                        _sqlHistoryList.OrderByDescending(s => s.RunDateTime).Take(1000).ToList();
                     SqlHistoryImportExport.SaveExecutedSqlStatements(executedSqlStatements, SqlHistoryXmlFileName);
                 }
             }
