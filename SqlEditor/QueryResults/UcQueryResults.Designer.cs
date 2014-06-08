@@ -210,7 +210,6 @@ namespace SqlEditor.QueryResults
             this._ugGrid.Size = new System.Drawing.Size(786, 354);
             this._ugGrid.TabIndex = 3;
             this._ugGrid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.UgGrid_InitializeLayout);
-            this._ugGrid.MouseUp += new System.Windows.Forms.MouseEventHandler(this.UgGrid_MouseUp);
             // 
             // _uaiActivity
             // 

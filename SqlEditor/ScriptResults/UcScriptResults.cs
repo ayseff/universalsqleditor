@@ -43,6 +43,7 @@ namespace SqlEditor.ScriptResults
         private readonly DatabaseConnection _databaseConnection;
         private IDbConnection _connection;
         private IDbTransaction _transaction;
+        private IDbCommand _command;
         private readonly Stopwatch _stopwatch;
         private int _maxResults;
         private bool _isPinned;
@@ -173,7 +174,6 @@ namespace SqlEditor.ScriptResults
             }
             
             var needsTransaction = true;
-            Task<SqlQueryResult> queryTask = null;
             try
             {
                 InitalizeOperationStart();
@@ -182,6 +182,7 @@ namespace SqlEditor.ScriptResults
 
                 // Create a new connection
                 _connection = await GetConnectionAsync().WithCancellation(_cancellationTokenSource.Token);
+                await _connection.OpenIfRequiredAsync();
 
                 // If any SQL not a SELECT query, open transaction
                 needsTransaction = !_databaseConnection.AutoCommit && sqlStatements.Any(x => SqlHelper.GetSqlType(Sql,
@@ -203,16 +204,21 @@ namespace SqlEditor.ScriptResults
 
                 foreach (var sqlStatement in sqlStatements)
                 {
+                    // Create new command
+                    _command = _connection.CreateCommand();
+
                     try
                     {
                         var sqlFirstKeyword = SqlHelper.GetFirstKeyword(sqlStatement, _databaseConnection.DatabaseServer.BlockCommentRegex,
                                                                         _databaseConnection.DatabaseServer.LineCommentRegex);
                         var sqlType = SqlHelper.GetSqlType(Sql, sqlFirstKeyword);
+                        Task<SqlQueryResult> queryTask;
                         if (sqlType == SqlType.Query)
                         {
                             // Execute SELECT query
                             _log.Debug("Running query ...");
-                            queryTask = _connection.ExecuteQueryKeepAliveAsync(sqlStatement, maxResults, _cancellationTokenSource.Token);
+                            //queryTask = _connection.ExecuteQueryKeepAliveAsync(sqlStatement, maxResults, _cancellationTokenSource.Token);
+                            queryTask = _command.ExecuteQueryKeepAliveAsync(sqlStatement, maxResults, _cancellationTokenSource.Token);
                             var results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
                             _log.Debug("Query complete.");
                             SetResults(results.Result, sqlStatement);
@@ -222,7 +228,8 @@ namespace SqlEditor.ScriptResults
                         {
                             // Execute DML or DDL query
                             _log.Debug("Running non-query - it will use a transaction ...");
-                            queryTask = _connection.ExecuteNonQueryTransactionAsync(_transaction, sqlStatement, _cancellationTokenSource.Token);
+                            //queryTask = _connection.ExecuteNonQueryTransactionAsync(_transaction, sqlStatement, _cancellationTokenSource.Token);
+                            queryTask = _command.ExecuteNonQueryTransactionAsync(_transaction, sqlStatement, _cancellationTokenSource.Token);
                             var results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
                             _log.Debug("Non-query complete.");
                             var resultsTable = new DataTable();
@@ -265,22 +272,22 @@ namespace SqlEditor.ScriptResults
             }
             catch (OperationCanceledException)
             {
-                _log.Info("Operation cancelled.");
-                CleanupAfterQueryAbort("Operation cancelled", queryTask);
+                _log.Info("Operation canceled.");
+                CleanupAfterQueryAbort("Operation canceled");
 
-                // If a forcibly cancelled task is still running, create a continuation task to close the database connection after the query is done
-                if (queryTask != null && !queryTask.IsCompleted)
-                {
-                    var c = _connection;
-                    var t = _transaction;
-                    // ReSharper disable CSharpWarnings::CS4014
-                    queryTask.ContinueWith(task => CloseConnectionAsync(c, t));
-                    // ReSharper restore CSharpWarnings::CS4014
-                }
+                //// If a forcibly canceled task is still running, create a continuation task to close the database connection after the query is done
+                //if (queryTask != null && !queryTask.IsCompleted)
+                //{
+                //    var connection = _connection;
+                //    var transaction = _transaction;
+                //    // ReSharper disable CSharpWarnings::CS4014
+                //    queryTask.ContinueWith(task => CloseConnectionAsync(connection, transaction));
+                //    // ReSharper restore CSharpWarnings::CS4014
+                //}
             }
             catch (Exception ex)
             {
-                CleanupAfterQueryAbort("Operation failed", queryTask);
+                CleanupAfterQueryAbort("Operation failed");
                 SetResults(GetErrorMessageTable(ex), string.Empty, true);
 
                 _log.ErrorFormat("Error executing query {0}.", Sql);
@@ -330,26 +337,26 @@ namespace SqlEditor.ScriptResults
             }
         }
 
-        private void CleanupAfterQueryAbort(string message, Task queryTask)
+        private void CleanupAfterQueryAbort(string message)
         {
             StopTimer();
             SetQueryElpasedTime();
-            CloseConnection(_connection, _transaction);
+            CloseCurrentConnectionAsync();
             _teScriptResults.AppendText(message);
             
-            // If a forcibly cancelled task is still running, create a continuation task to close the database connection after the query is done
-            if (queryTask != null && !queryTask.IsCompleted)
-            {
-                var c = _connection;
-                _connection = null;
-                var t = _transaction;
-                _transaction = null;
-                queryTask.ContinueWith(task => CloseConnectionAsync(c, t));
-            }
-            else
-            {
-                CloseCurrentConnectionAsync();
-            }
+            //// If a forcibly canceled task is still running, create a continuation task to close the database connection after the query is done
+            //if (queryTask != null && !queryTask.IsCompleted)
+            //{
+            //    var c = _connection;
+            //    _connection = null;
+            //    var t = _transaction;
+            //    _transaction = null;
+            //    queryTask.ContinueWith(task => CloseConnectionAsync(c, t));
+            //}
+            //else
+            //{
+            //    CloseCurrentConnectionAsync();
+            //}
         }
 
         private void SetQueryElpasedTime()
@@ -378,18 +385,21 @@ namespace SqlEditor.ScriptResults
             _transaction = null;
             var dbConnectionClosure = _connection;
             _connection = null;
-            return CloseConnectionAsync(dbConnectionClosure, dbTransactionClosure);
+            var dbCommandClosure = _command;
+            _command = null;
+            return CloseConnectionAsync(dbConnectionClosure, dbTransactionClosure, dbCommandClosure);
         }
 
-        private Task CloseConnectionAsync(IDbConnection dbConnection, IDbTransaction dbTransaction)
+        private Task CloseConnectionAsync(IDbConnection dbConnection, IDbTransaction dbTransaction, IDbCommand dbCommand)
         {
             var dbConnectionClosure = dbConnection;
             var dbTransactionClosure = dbTransaction;
-            var task = Task.Run(() => CloseConnection(dbConnectionClosure, dbTransactionClosure));
+            var dbCommandClosure = dbCommand;
+            var task = Task.Run(() => CloseConnection(dbConnectionClosure, dbTransactionClosure, dbCommandClosure));
             return task;
         }
 
-        private void CloseConnection(IDbConnection dbConnection, IDbTransaction dbTransaction)
+        private void CloseConnection(IDbConnection dbConnection, IDbTransaction dbTransaction, IDbCommand dbCommand)
         {
             try
             {
@@ -403,6 +413,21 @@ namespace SqlEditor.ScriptResults
             catch (Exception ex)
             {
                 _log.ErrorFormat("Error rolling back transaction for connection {0}.", _databaseConnection.Name);
+                _log.Error(ex.Message, ex);
+            }
+
+            try
+            {
+                if (dbCommand != null)
+                {
+                    _log.Debug("Canceling command ...");
+                    dbCommand.Cancel();
+                    _log.Debug("Cancel complete.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.ErrorFormat("Error canceling command for connection {0}.", _databaseConnection.Name);
                 _log.Error(ex.Message, ex);
             }
 
@@ -423,6 +448,7 @@ namespace SqlEditor.ScriptResults
 
             _connection = null;
             _transaction = null;
+            _command = null;
         }
 
         private void RefreshUserInterface()
@@ -591,11 +617,10 @@ namespace SqlEditor.ScriptResults
                 throw new InvalidOperationException("Transaction is not currently active");
             }
 
-            Task rollbackTask = null;
             try
             {
                 InitalizeOperationStart(false);
-                rollbackTask = Task.Run(() => _transaction.Rollback()).WithCancellation(_cancellationTokenSource.Token);
+                var rollbackTask = Task.Run(() => _transaction.Rollback()).WithCancellation(_cancellationTokenSource.Token);
                 await rollbackTask;
                 _log.Debug("Rollback done.");
                 StopTimer();
@@ -605,12 +630,12 @@ namespace SqlEditor.ScriptResults
             }
             catch (OperationCanceledException)
             {
-                CleanupAfterQueryAbort("Operation cancelled", rollbackTask);
+                CleanupAfterQueryAbort("Operation canceled");
                 _log.Debug("Rollback aborted.");
             }
             catch (Exception ex)
             {
-                CleanupAfterQueryAbort("Operation failed", rollbackTask);
+                CleanupAfterQueryAbort("Operation failed");
                 SetResults(GetErrorMessageTable(ex), string.Empty, true);
 
                 _log.Error("Error rolling back transaction.");
@@ -635,26 +660,25 @@ namespace SqlEditor.ScriptResults
                 throw new InvalidOperationException("Transaction is not currently active");
             }
 
-            Task commitTask = null;
             try
             {
                 InitalizeOperationStart(false);
-                commitTask = Task.Run(() => _transaction.Commit()).WithCancellation(_cancellationTokenSource.Token);
+                var commitTask = Task.Run(() => _transaction.Commit()).WithCancellation(_cancellationTokenSource.Token);
                 await commitTask;
                 _log.Debug("Commit done.");
                 StopTimer();
                 _transaction = null;
-                SetResults(GetNonQueryResultsTable("Commit complete."), string.Empty, false);
+                SetResults(GetNonQueryResultsTable("Commit complete."), string.Empty);
                 await CloseCurrentConnectionAsync();
             }
             catch (OperationCanceledException)
             {
-                CleanupAfterQueryAbort("Operation cancelled", commitTask);
+                CleanupAfterQueryAbort("Operation canceled");
                 _log.Debug("Commit aborted.");
             }
             catch (Exception ex)
             {
-                CleanupAfterQueryAbort("Operation failed", commitTask);
+                CleanupAfterQueryAbort("Operation failed");
                 SetResults(GetErrorMessageTable(ex), string.Empty, true);
 
                 _log.Error("Error committing transaction.");
@@ -742,7 +766,7 @@ namespace SqlEditor.ScriptResults
 
         public void FreeResources()
         {
-            CloseConnection(_connection, _transaction);
+            CloseConnection(_connection, _transaction, _command);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

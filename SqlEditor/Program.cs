@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Net;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
-using HtmlAgilityPack;
 using log4net;
 using log4net.Config;
-using Utilities.Forms.Dialogs;
-using HtmlDocument = System.Windows.Forms.HtmlDocument;
 
 namespace SqlEditor
 {
@@ -27,7 +20,7 @@ namespace SqlEditor
             {
                 XmlConfigurator.Configure();
                 Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);         
+                Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(FrmMdiParent.Instance);
             }
             catch (Exception ex)

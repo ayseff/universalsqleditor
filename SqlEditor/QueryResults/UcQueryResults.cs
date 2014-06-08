@@ -19,7 +19,6 @@ using Utilities.Forms.Dialogs;
 using Utilities.InfragisticsUtilities.UltraGridUtilities;
 using Utilities.Text;
 using log4net;
-using ColumnHeader = Infragistics.Win.UltraWinGrid.ColumnHeader;
 using PropertyChangedEventArgs = System.ComponentModel.PropertyChangedEventArgs;
 using PropertyChangedEventHandler = System.ComponentModel.PropertyChangedEventHandler;
 
@@ -198,7 +197,6 @@ namespace SqlEditor.QueryResults
                 if (dialogResult != TaskDialogResult.Yes) return;
             }
 
-            Task<SqlQueryResult> queryTask = null;
             try
             {
                 InitalizeOperationStart();
@@ -208,11 +206,19 @@ namespace SqlEditor.QueryResults
                 // Create a new connection
                 _connection = await GetConnectionAsync().WithCancellation(_cancellationTokenSource.Token);
 
+                // Create a new connection
+                await _connection.OpenIfRequiredAsync().WithCancellation(_cancellationTokenSource.Token);
+
+                // Create command
+                _command = _connection.CreateCommand();
+
                 // Run task
+                Task<SqlQueryResult> queryTask;
                 if (_sqlType == SqlType.Query)
                 {
                     // Execute SELECT or DDL query
-                    queryTask = _connection.ExecuteQueryAsync(Sql, maxResults, _cancellationTokenSource.Token).WithCancellation(_cancellationTokenSource.Token);
+                    //queryTask = _connection.ExecuteQueryAsync(Sql, maxResults, _cancellationTokenSource.Token).WithCancellation(_cancellationTokenSource.Token);
+                    queryTask = _command.ExecuteQueryAsync(Sql, maxResults, _cancellationTokenSource.Token);
                     var results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
                     _log.Debug("Query complete.");
                     HasMoreRows = results.HasMoreRows;
@@ -233,13 +239,15 @@ namespace SqlEditor.QueryResults
                     if (_sqlType == SqlType.Dml && !_databaseConnection.AutoCommit)
                     {
                         _log.Debug("Non-query will use a transaction.");
-                        queryTask = _connection.ExecuteNonQueryTransactionAsync(Sql, _cancellationTokenSource.Token);
+                        //queryTask = _connection.ExecuteNonQueryTransactionAsync(Sql, _cancellationTokenSource.Token);
+                        queryTask = _command.ExecuteNonQueryTransactionAsync(Sql, _cancellationTokenSource.Token);
                         results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
                         _transaction = results.Transaction;
                     }
                     else
                     {
-                        queryTask = _connection.ExecuteNonQueryAsync(Sql, _cancellationTokenSource.Token);
+                        //queryTask = _connection.ExecuteNonQueryAsync(Sql, _cancellationTokenSource.Token);
+                        queryTask = _command.ExecuteNonQueryAsync(Sql, _cancellationTokenSource.Token);
                         results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
                         await CloseCurrentConnectionAsync().WithCancellation(_cancellationTokenSource.Token);
                     }
@@ -267,23 +275,25 @@ namespace SqlEditor.QueryResults
             }
             catch (OperationCanceledException)
             {
-                _log.Info("Operation cancelled.");
-                CleanupAfterQueryAbort("Operation cancelled", queryTask);
+                _log.Info("Operation canceled.");
+                CleanupAfterQueryAbort("Operation canceled");
                 
-                // If a forcibly cancelled task is still running, create a continuation task to close the database connection after the query is done
-                if (queryTask != null && !queryTask.IsCompleted)
-                {
-                    var c = _connection;
-                    var t = _transaction;
-                    // ReSharper disable CSharpWarnings::CS4014
-                    queryTask.ContinueWith(task => CloseConnectionAsync(c, t));
-                    // ReSharper restore CSharpWarnings::CS4014
-                }
+                //// If a forcibly canceled task is still running, create a continuation task to close the database connection after the query is done
+                //if (queryTask != null && !queryTask.IsCompleted)
+                //{
+                //    var connection = _connection;
+                //    var transaction = _transaction;
+                //    var command = _command;
+                //    CloseConnectionAsync(connection, transaction, command);
+                //    // ReSharper disable CSharpWarnings::CS4014
+                //    queryTask.ContinueWith(task => CloseConnectionAsync(connection, transaction, command));
+                //    // ReSharper restore CSharpWarnings::CS4014
+                //}
             }
             catch (Exception ex)
             {
                 _log.Info("Operation failed.");
-                CleanupAfterQueryAbort("Operation failed", queryTask);
+                CleanupAfterQueryAbort("Operation failed");
                 SetResults(GetErrorMessageTable(ex), PerformAutoSizeType.AllRowsInBand);
                 _ugGrid.DisplayLayout.PerformAutoResizeColumns(false, PerformAutoSizeType.AllRowsInBand);
 
@@ -308,27 +318,38 @@ namespace SqlEditor.QueryResults
             _rowCountLabelTool.SharedProps.Visible = false;
         }
 
-        private void CleanupAfterQueryAbort(string message, Task queryTask)
+        private void CleanupAfterQueryAbort(string message)
         {
             StopTimer();
             SetQueryElpasedTime();
             HasMoreRows = false;
             _rowCountLabelTool.SharedProps.Visible = true;
             _rowCountLabelTool.SharedProps.Caption = message;
+
+            var connection = _connection;
+            _connection = null;
+            var transaction = _transaction;
+            _transaction = null;
+            var command = _command;
+            _command = null;
+            CloseConnectionAsync(connection, transaction, command);
             
-            // If a forcibly cancelled task is still running, create a continuation task to close the database connection after the query is done
-            if (queryTask != null && !queryTask.IsCompleted)
-            {
-                var c = _connection;
-                _connection = null;
-                var t = _transaction;
-                _transaction = null;
-                queryTask.ContinueWith(task => CloseConnectionAsync(c, t));
-            }
-            else
-            {
-                CloseCurrentConnectionAsync();
-            }
+            //// If a forcibly canceled task is still running, create a continuation task to close the database connection after the query is done
+            //if (queryTask != null && !queryTask.IsCompleted)
+            //{
+            //    var connection = _connection;
+            //    _connection = null;
+            //    var transaction = _transaction;
+            //    _transaction = null;
+            //    var command = _command;
+            //    _command = null;
+            //    CloseConnectionAsync(connection, transaction, command);
+            //    //queryTask.ContinueWith(task => CloseConnectionAsync(connection, transaction, command));
+            //}
+            //else
+            //{
+            //    CloseCurrentConnectionAsync();
+            //}
         }
 
         private void SetQueryElpasedTime()
@@ -366,18 +387,62 @@ namespace SqlEditor.QueryResults
             _transaction = null;
             var dbConnectionClosure = _connection;
             _connection = null;
-            return CloseConnectionAsync(dbConnectionClosure, dbTransactionClosure);
+            var dbCommand = _command;
+            _command = null;
+            return CloseConnectionAsync(dbConnectionClosure, dbTransactionClosure, dbCommand);
         }
 
-        private Task CloseConnectionAsync(IDbConnection dbConnection, IDbTransaction dbTransaction)
+        //private Task CloseConnectionAsync(IDbConnection dbConnection, IDbTransaction dbTransaction)
+        //{
+        //    var dbConnectionClosure = dbConnection;
+        //    var dbTransactionClosure = dbTransaction;
+        //    var task = Task.Run(() => CloseConnection(dbConnectionClosure, dbTransactionClosure));
+        //    return task;
+        //}
+
+        private Task CloseConnectionAsync(IDbConnection dbConnection, IDbTransaction dbTransaction, IDbCommand dbCommand)
         {
             var dbConnectionClosure = dbConnection;
             var dbTransactionClosure = dbTransaction;
-            var task = Task.Run(() => CloseConnection(dbConnectionClosure, dbTransactionClosure));
+            var dbCommandClosure = dbCommand;
+            var task = Task.Run(() => CloseConnection(dbConnectionClosure, dbTransactionClosure, dbCommandClosure));
             return task;
         }
 
-        private void CloseConnection(IDbConnection dbConnection, IDbTransaction dbTransaction)
+        //private void CloseConnection(IDbConnection dbConnection, IDbTransaction dbTransaction)
+        //{
+        //    try
+        //    {
+        //        if (dbTransaction != null)
+        //        {
+        //            _log.Debug("Rolling back existing transaction ...");
+        //            dbTransaction.Rollback();
+        //            _log.Debug("Rollback complete.");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _log.ErrorFormat("Error rolling back transaction for connection {0}.", _databaseConnection.Name);
+        //        _log.Error(ex.Message, ex);
+        //    }
+
+        //    try
+        //    {
+        //        if (dbConnection != null)
+        //        {
+        //            _log.DebugFormat("[{0}] Closing connection ...", _databaseConnection.Name);
+        //            dbConnection.Close();
+        //            _log.DebugFormat("[{0}] Connection closed.", _databaseConnection.Name);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _log.ErrorFormat("Error closing connection {0}.", _databaseConnection.Name);
+        //        _log.Error(ex.Message, ex);
+        //    }
+        //}
+
+        private void CloseConnection(IDbConnection dbConnection, IDbTransaction dbTransaction, IDbCommand dbCommand)
         {
             try
             {
@@ -391,6 +456,20 @@ namespace SqlEditor.QueryResults
             catch (Exception ex)
             {
                 _log.ErrorFormat("Error rolling back transaction for connection {0}.", _databaseConnection.Name);
+                _log.Error(ex.Message, ex);
+            }
+
+            try
+            {
+                if (dbCommand != null)
+                {
+                    _log.Debug("Canceling existing command ...");
+                    dbCommand.Cancel();
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.ErrorFormat("Error canceling existing command for connection {0}.", _databaseConnection.Name);
                 _log.Error(ex.Message, ex);
             }
 
@@ -590,11 +669,10 @@ namespace SqlEditor.QueryResults
                 throw new InvalidOperationException("Transaction is not currently active");
             }
 
-            Task rollbackTask = null;
             try
             {
                 InitalizeOperationStart();
-                rollbackTask = Task.Run(() => _transaction.Rollback()).WithCancellation(_cancellationTokenSource.Token);
+                var rollbackTask = Task.Run(() => _transaction.Rollback()).WithCancellation(_cancellationTokenSource.Token);
                 await rollbackTask;
                 _log.Debug("Rollback done.");
                 StopTimer();
@@ -604,12 +682,12 @@ namespace SqlEditor.QueryResults
             }
             catch (OperationCanceledException)
             {
-                CleanupAfterQueryAbort("Operation cancelled", rollbackTask);
+                CleanupAfterQueryAbort("Operation canceled");
                 _log.Debug("Rollback aborted.");
             }
             catch (Exception ex)
             {
-                CleanupAfterQueryAbort("Operation failed", rollbackTask);
+                CleanupAfterQueryAbort("Operation failed");
                 SetResults(GetErrorMessageTable(ex), PerformAutoSizeType.AllRowsInBand);
 
                 _log.Error("Error rolling back transaction.");
@@ -634,11 +712,10 @@ namespace SqlEditor.QueryResults
                 throw new InvalidOperationException("Transaction is not currently active");
             }
 
-            Task commitTask = null;
             try
             {
                 InitalizeOperationStart();
-                commitTask = Task.Run(() => _transaction.Commit()).WithCancellation(_cancellationTokenSource.Token);
+                var commitTask = Task.Run(() => _transaction.Commit()).WithCancellation(_cancellationTokenSource.Token);
                 await commitTask;
                 _log.Debug("Commit done.");
                 StopTimer();
@@ -648,12 +725,12 @@ namespace SqlEditor.QueryResults
             }
             catch (OperationCanceledException)
             {
-                CleanupAfterQueryAbort("Operation cancelled", commitTask);
+                CleanupAfterQueryAbort("Operation canceled");
                 _log.Debug("Commit aborted.");
             }
             catch (Exception ex)
             {
-                CleanupAfterQueryAbort("Operation failed", commitTask);
+                CleanupAfterQueryAbort("Operation failed");
                 SetResults(GetErrorMessageTable(ex), PerformAutoSizeType.AllRowsInBand);
 
                 _log.Error("Error committing transaction.");
@@ -749,7 +826,7 @@ namespace SqlEditor.QueryResults
 
         public void FreeResources()
         {
-            CloseConnection(_connection, _transaction);
+            CloseConnection(_connection, _transaction, _command);
         }
 
         private void UgGrid_InitializeLayout(object sender, InitializeLayoutEventArgs e)
@@ -796,30 +873,6 @@ namespace SqlEditor.QueryResults
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void UgGrid_MouseUp(object sender, MouseEventArgs e)
-        {
-            var grid = (UltraGrid)sender;
-
-            if (e.Button == MouseButtons.Right)
-            {
-                var element = grid.DisplayLayout.UIElement.LastElementEntered;
-
-                var ugCell = element.GetContext(typeof(UltraGridCell)) as UltraGridCell;
-                if (ugCell == null) return;
-                var ugRow = element.GetContext(typeof(UltraGridRow)) as UltraGridRow;
-                if (ugRow == null) return;
-                var columnHeader = element.GetContext(typeof(ColumnHeader)) as ColumnHeader;
-                if (columnHeader == null) return;
-
-                
-
-                if (columnHeader != null)
-                {
-                    MessageBox.Show(columnHeader.Caption);
-                }
-            }
         }
     }
 }

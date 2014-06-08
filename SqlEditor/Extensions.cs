@@ -65,6 +65,32 @@ namespace SqlEditor
             return dataResults;
         }
 
+        public static async Task<SqlQueryResult> ExecuteQueryAsync([NotNull] this IDbCommand command,
+                                                                   [NotNull] string sql, int maxResults, CancellationToken cancellationToken = default(CancellationToken), IProgress<ProgressInformation> progress = null)
+        {
+            if (command == null) throw new ArgumentNullException("command");
+            if (sql == null) throw new ArgumentNullException("sql");
+
+            var dataResults = await Task.Run(() =>
+            {
+                SqlQueryResult queryResults;
+                using (command)
+                {
+                    ReportProgress(progress, 0, "Running query ...");
+                    using (command)
+                    {
+                        command.CommandText = sql;
+                        using (var dr = command.ExecuteReader())
+                        {
+                            queryResults = FetchDataTable(dr, maxResults, cancellationToken, progress);
+                        }
+                    }
+                }
+                return queryResults;
+            });
+            return dataResults;
+        }
+
         public static async Task<SqlQueryResult> ExecuteQueryKeepAliveAsync([NotNull] this IDbConnection dbConnection,
                                                                    [NotNull] string sql, int maxResults, CancellationToken cancellationToken = default(CancellationToken), IProgress<ProgressInformation> progress = null)
         {
@@ -77,6 +103,29 @@ namespace SqlEditor
                 dbConnection.OpenIfRequired();
                 ReportProgress(progress, 0, "Running query ...");
                 using (var dbCommand = dbConnection.CreateCommand())
+                {
+                    dbCommand.CommandText = sql;
+                    using (var dr = dbCommand.ExecuteReader())
+                    {
+                        queryResults = FetchDataTable(dr, maxResults, cancellationToken, progress);
+                    }
+                }
+                return queryResults;
+            });
+            return dataResults;
+        }
+
+        public static async Task<SqlQueryResult> ExecuteQueryKeepAliveAsync([NotNull] this IDbCommand dbCommand,
+                                                                   [NotNull] string sql, int maxResults, CancellationToken cancellationToken = default(CancellationToken), IProgress<ProgressInformation> progress = null)
+        {
+            if (dbCommand == null) throw new ArgumentNullException("dbCommand");
+            if (sql == null) throw new ArgumentNullException("sql");
+
+            var dataResults = await Task.Run(() =>
+            {
+                SqlQueryResult queryResults;
+                ReportProgress(progress, 0, "Running query ...");
+                using (dbCommand)
                 {
                     dbCommand.CommandText = sql;
                     using (var dr = dbCommand.ExecuteReader())
@@ -135,6 +184,23 @@ namespace SqlEditor
             return dataResults;
         }
 
+        public static async Task<SqlQueryResult> ExecuteNonQueryAsync([NotNull] this IDbCommand dbCommand, string sql, CancellationToken cancellationToken = default(CancellationToken), IProgress<ProgressInformation> progress = null)
+        {
+            if (dbCommand == null) throw new ArgumentNullException("dbCommand");
+            var dataResults = await Task.Run(() =>
+            {
+                SqlQueryResult queryResults;
+                ReportProgress(progress, 0, "Running query ...");
+                using (dbCommand)
+                {
+                    dbCommand.CommandText = sql;
+                    queryResults = new SqlQueryResult(dbCommand.ExecuteNonQuery());
+                }
+                return queryResults;
+            });
+            return dataResults;
+        }
+
         public static async Task<SqlQueryResult> ExecuteNonQueryKeepAliveAsync([NotNull] this IDbConnection dbConnection, string sql, CancellationToken cancellationToken = default(CancellationToken), IProgress<ProgressInformation> progress = null)
         {
             if (dbConnection == null) throw new ArgumentNullException("dbConnection");
@@ -176,6 +242,28 @@ namespace SqlEditor
             return dataResults;
         }
 
+        public static async Task<SqlQueryResult> ExecuteNonQueryTransactionAsync([NotNull] this IDbCommand dbCommand, string sql, CancellationToken cancellationToken = default(CancellationToken), IProgress<ProgressInformation> progress = null)
+        {
+            if (dbCommand == null) throw new ArgumentNullException("dbCommand");
+            var dataResults = await Task.Run(() =>
+            {
+                SqlQueryResult queryResults;
+                ReportProgress(progress, 0, "Creating transaction ...");
+                var transaction = dbCommand.Connection.BeginTransaction();
+                ReportProgress(progress, 0, "Running query ...");
+                using (dbCommand)
+                {
+                    dbCommand.Transaction = transaction;
+                    dbCommand.CommandText = sql;
+                    queryResults = new SqlQueryResult(dbCommand.ExecuteNonQuery());
+                    queryResults.Transaction = transaction;
+                }
+                ReportProgress(progress, 100, "Done.");
+                return queryResults;
+            });
+            return dataResults;
+        }
+
         public static async Task<SqlQueryResult> ExecuteNonQueryTransactionAsync([NotNull] this IDbConnection dbConnection, IDbTransaction transaction, string sql, CancellationToken cancellationToken = default(CancellationToken), IProgress<ProgressInformation> progress = null)
         {
             if (dbConnection == null) throw new ArgumentNullException("dbConnection");
@@ -185,6 +273,26 @@ namespace SqlEditor
                 dbConnection.OpenIfRequired();
                 ReportProgress(progress, 0, "Running query ...");
                 using (var dbCommand = dbConnection.CreateCommand())
+                {
+                    dbCommand.Transaction = transaction;
+                    dbCommand.CommandText = sql;
+                    queryResults = new SqlQueryResult(dbCommand.ExecuteNonQuery());
+                    queryResults.Transaction = transaction;
+                }
+                ReportProgress(progress, 100, "Done.");
+                return queryResults;
+            });
+            return dataResults;
+        }
+
+        public static async Task<SqlQueryResult> ExecuteNonQueryTransactionAsync([NotNull] this IDbCommand dbCommand, IDbTransaction transaction, string sql, CancellationToken cancellationToken = default(CancellationToken), IProgress<ProgressInformation> progress = null)
+        {
+            if (dbCommand == null) throw new ArgumentNullException("dbCommand");
+            var dataResults = await Task.Run(() =>
+            {
+                SqlQueryResult queryResults;
+                ReportProgress(progress, 0, "Running query ...");
+                using (dbCommand)
                 {
                     dbCommand.Transaction = transaction;
                     dbCommand.CommandText = sql;
