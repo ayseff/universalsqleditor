@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Infragistics.Documents.Excel;
 using Infragistics.Win.UltraWinGrid;
@@ -11,6 +13,7 @@ using Infragistics.Win.UltraWinGrid.ExcelExport;
 using Infragistics.Win.UltraWinMaskedEdit;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using log4net;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace Utilities.InfragisticsUtilities.UltraGridUtilities
 {
@@ -290,6 +293,39 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
                 _log.Error(ex.Message, ex);
                 throw;
             }
+        }
+        /// <summary>
+        /// Exports contents of <see cref="Infragistics.Win.UltraWinGrid"/> to Excel file.
+        /// </summary>
+        /// <param name="grid"><see cref="Infragistics.Win.UltraWinGrid"/> whose contents are to be exported.</param>
+        /// <exception cref="ArgumentNullException">When <see cref="Infragistics.Win.UltraWinGrid"/> is null.</exception>
+        public static Task ExportToExcelAsync(this UltraGrid grid)
+        {
+            if (grid == null) throw new ArgumentNullException("grid");
+            var selectedFile = Path.GetTempFileName();
+            var fileName = Path.GetFileNameWithoutExtension(selectedFile);
+            var path = Path.GetDirectoryName(selectedFile);
+            var excelFile = Path.Combine(path ?? string.Empty, fileName) + ".xlsx";
+            File.Move(selectedFile, excelFile);
+            //var dialogResult = Forms.Dialogs.Dialog.ShowSaveFileDialog("Excel Export", out selectedFile,
+            //                                                                 new[] {
+            //                                                                         new CommonFileDialogFilter(
+            //                                                                     "Excel 2007 files", ".xlsx"),
+            //                                                                     new CommonFileDialogFilter(
+            //                                                                     "Excel 2003 files", ".xls"),
+            //                                                                     new CommonFileDialogFilter(
+            //                                                                     "All files", "*.*")
+            //                                                                     }, ".xlsx");
+            //if (dialogResult != CommonFileDialogResult.OK)
+            //{
+            //    return Task.FromResult(0);
+            //}
+
+            return Task.Run(() =>
+                            {
+                                ExportToExcel(grid, excelFile);
+                                Process.Start(excelFile);
+                            });
         }
 
         /// <summary>
