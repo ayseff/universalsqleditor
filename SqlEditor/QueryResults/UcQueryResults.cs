@@ -183,11 +183,11 @@ namespace SqlEditor.QueryResults
                 throw new ArgumentException("Max results cannot be less or equal to 0", "maxResults");
             }
 
-            if (_log.IsDebugEnabled)
-            {
-                _log.DebugFormat("Starting to run SQL:");
-                _log.Debug(Sql);
-            }
+            //if (_log.IsDebugEnabled)
+            //{
+            //    _log.DebugFormat("Starting to run SQL:");
+            //    _log.Debug(Sql);
+            //}
 
             if (_transaction != null)
             {
@@ -220,10 +220,10 @@ namespace SqlEditor.QueryResults
                     //queryTask = _connection.ExecuteQueryAsync(Sql, maxResults, _cancellationTokenSource.Token).WithCancellation(_cancellationTokenSource.Token);
                     queryTask = _command.ExecuteQueryAsync(Sql, maxResults, _cancellationTokenSource.Token);
                     var results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
-                    _log.Debug("Query complete.");
+                    //_log.Debug("Query complete.");
                     HasMoreRows = results.HasMoreRows;
                     SetResults(results.Result, PerformAutoSizeType.AllRowsInBand, true);
-                    _log.Debug("Results bound.");
+                    //_log.Debug("Results bound.");
                     StopTimer();
                     await CloseCurrentConnectionAsync().WithCancellation(_cancellationTokenSource.Token);
 
@@ -238,7 +238,7 @@ namespace SqlEditor.QueryResults
                     SqlQueryResult results;
                     if (_sqlType == SqlType.Dml && !_databaseConnection.AutoCommit)
                     {
-                        _log.Debug("Non-query will use a transaction.");
+                        //_log.Debug("Non-query will use a transaction.");
                         //queryTask = _connection.ExecuteNonQueryTransactionAsync(Sql, _cancellationTokenSource.Token);
                         queryTask = _command.ExecuteNonQueryTransactionAsync(Sql, _cancellationTokenSource.Token);
                         results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
@@ -251,7 +251,7 @@ namespace SqlEditor.QueryResults
                         results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
                         await CloseCurrentConnectionAsync().WithCancellation(_cancellationTokenSource.Token);
                     }
-                    _log.Debug("Non-query complete.");
+                    //_log.Debug("Non-query complete.");
                     HasMoreRows = false;
                     var resultsTable = new DataTable();
                     resultsTable.Columns.Add("Results", typeof(string));
@@ -265,7 +265,7 @@ namespace SqlEditor.QueryResults
                         resultsTable.Rows.Add(string.Format("{0} successful", _sqlFirstKeyword.Trim().ToUpper()));
                     }
                     SetResults(resultsTable, PerformAutoSizeType.AllRowsInBand);
-                    _log.Debug("Results bound.");
+                    //_log.Debug("Results bound.");
                     StopTimer();
 
                     // Update row counts label
@@ -275,7 +275,7 @@ namespace SqlEditor.QueryResults
             }
             catch (OperationCanceledException)
             {
-                _log.Info("Operation canceled.");
+                //_log.Info("Operation canceled.");
                 CleanupAfterQueryAbort("Operation canceled");
                 
                 //// If a forcibly canceled task is still running, create a continuation task to close the database connection after the query is done
@@ -292,13 +292,13 @@ namespace SqlEditor.QueryResults
             }
             catch (Exception ex)
             {
-                _log.Info("Operation failed.");
+                //_log.Info("Operation failed.");
                 CleanupAfterQueryAbort("Operation failed");
                 SetResults(GetErrorMessageTable(ex), PerformAutoSizeType.AllRowsInBand);
                 _ugGrid.DisplayLayout.PerformAutoResizeColumns(false, PerformAutoSizeType.AllRowsInBand);
 
-                _log.ErrorFormat("Error executing query {0}.", Sql);
-                _log.Error(ex.Message, ex);
+                //_log.ErrorFormat("Error executing query {0}.", Sql);
+                //_log.Error(ex.Message, ex);
             }
             finally
             {
@@ -563,7 +563,7 @@ namespace SqlEditor.QueryResults
             }
         }
 
-        private void UtmToolClick(object sender, ToolClickEventArgs e)
+        private async void UtmToolClick(object sender, ToolClickEventArgs e)
         {
             try
             {
@@ -606,7 +606,7 @@ namespace SqlEditor.QueryResults
                         break;
 
                     case "Export to Excel":
-                        _ugGrid.ExportToExcel();
+                        await _ugGrid.ExportToExcelAsync();
                         break;
                     
                     case "Fetch All Rows":
