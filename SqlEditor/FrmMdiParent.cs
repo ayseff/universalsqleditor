@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ICSharpCode.TextEditor;
 using Infragistics.Win.AppStyling;
 using Infragistics.Win.UltraWinDock;
 using Infragistics.Win.UltraWinEditors;
@@ -636,7 +637,7 @@ namespace SqlEditor
                 worksheet.RunScript += WorksheetRunScript;
                 worksheet.Show();
             }
-            SelectSqlTab();
+            SelectSqlTabOnRibbon();
             return worksheet;
         }
 
@@ -2479,10 +2480,17 @@ namespace SqlEditor
 
         private void Utmdi_TabActivated(object sender, Infragistics.Win.UltraWinTabbedMdi.MdiTabEventArgs e)
         {
-            SelectSqlTab();
+            SelectSqlTabOnRibbon();
+            var sqlEditor = e.Tab.Form.Controls.Cast<Control>()
+                .Flatten(x => x.Controls.Cast<Control>())
+                .FirstOrDefault(x => x is TextEditorControl);
+            if (sqlEditor != null)
+            {
+                sqlEditor.Focus();
+            }
         }
 
-        private void SelectSqlTab()
+        private void SelectSqlTabOnRibbon()
         {
             try
             {

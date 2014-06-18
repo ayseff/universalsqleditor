@@ -889,5 +889,15 @@ namespace SqlEditor
                 e.Cancel = true;
             }
         }
+
+        private void UtcTabs_TabClosing(object sender, TabClosingEventArgs e)
+        {
+            if (_utcTabs.Tabs.Count == 1)
+            {
+                e.Cancel = true;
+                Dialog.ShowDialog(Application.ProductName,
+                    "Invalid action. You cannot close the last query results tab.", string.Empty);
+            }
+        }
     }
 }
