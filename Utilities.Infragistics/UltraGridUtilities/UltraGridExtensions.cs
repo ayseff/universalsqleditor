@@ -13,7 +13,6 @@ using Infragistics.Win.UltraWinGrid.ExcelExport;
 using Infragistics.Win.UltraWinMaskedEdit;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using log4net;
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace Utilities.InfragisticsUtilities.UltraGridUtilities
 {
@@ -294,6 +293,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
                 throw;
             }
         }
+        
         /// <summary>
         /// Exports contents of <see cref="Infragistics.Win.UltraWinGrid"/> to Excel file.
         /// </summary>
@@ -416,7 +416,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
         /// </summary>
         /// <param name="grid"><see cref="Infragistics.Win.UltraWinGrid"/> whose contents are to be exported.</param>
         /// <exception cref="ArgumentNullException">When <see cref="Infragistics.Win.UltraWinGrid"/> is null.</exception>
-        public static void ExportToCsv(this UltraGrid grid)
+        public static void ExportToCsvWithPrompt(this UltraGrid grid)
         {
             if (grid == null) throw new ArgumentNullException("grid");
             string selectedFile;
@@ -441,7 +441,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
         /// <param name="grid"><see cref="Infragistics.Win.UltraWinGrid"/> whose contents are to be exported.</param>
         /// <param name="delimiter">File delimiter.</param>
         /// <exception cref="ArgumentNullException">When <see cref="Infragistics.Win.UltraWinGrid"/> is null.</exception>
-        public static void ExportToDelimitedFile(this UltraGrid grid, string delimiter)
+        public static void ExportToDelimitedFileWithPrompt(this UltraGrid grid, string delimiter)
         {
             if (grid == null) throw new ArgumentNullException("grid");
             if (delimiter == null) throw new ArgumentNullException("delimiter");
@@ -493,21 +493,44 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
             {
                 var header = string.Join(delimiter,
                                          grid.DisplayLayout.Bands[0].Columns.Cast<UltraGridColumn>()
-                                                                    .Select(x => x.Header.Caption));
+                                         .Where(x => !x.Hidden)
+                                         .Select(x => x.Header.Caption));
                 sw.WriteLine(header);
                 foreach (var row in grid.Rows)
                 {
-                    foreach (var column in grid.DisplayLayout.Bands[0].Columns)
-                    {
-                        if (column.Hidden) continue;
-                        var line = string.Join(delimiter,
+                    var line = string.Join(delimiter,
                                                row.Cells.Cast<UltraGridCell>()
+                                               .Where(x => !x.Column.Hidden)
                                                .Select(x => x.Value == null || Convert.IsDBNull(x.Value) ? string.Empty : x.GetText(MaskMode.IncludeBoth)));
-                        sw.WriteLine(line);
-                    }
+                    sw.WriteLine(line);
                 }
                 sw.Close();
             }
+        }
+
+        /// <summary>
+        /// Exports contents of <see cref="Infragistics.Win.UltraWinGrid"/> to a delimited file.
+        /// </summary>
+        /// <param name="grid"><see cref="Infragistics.Win.UltraWinGrid"/> whose contents are to be exported.</param>
+        /// <param name="delimiter">Column delimiter</param>
+        /// <param name="fileExtension">File extension (default is .txt)</param>
+        /// <exception cref="ArgumentNullException">When <see cref="Infragistics.Win.UltraWinGrid"/> is null.</exception>
+        public static Task ExportToDelimitedFileAsync(this UltraGrid grid, string delimiter, string fileExtension = ".txt")
+        {
+            if (grid == null) throw new ArgumentNullException("grid");
+            if (delimiter == null) throw new ArgumentNullException("delimiter");
+            if (fileExtension == null) throw new ArgumentNullException("fileExtension");
+            var tempFileFullPath = Path.GetTempFileName();
+            var tempFileName = Path.GetFileNameWithoutExtension(tempFileFullPath);
+            var tempFilePath = Path.GetDirectoryName(tempFileFullPath);
+            var exportFile = Path.Combine(tempFilePath ?? string.Empty, tempFileName) + fileExtension;
+            File.Move(tempFileFullPath, exportFile);
+
+            return Task.Run(() =>
+            {
+                ExportToDelimitedFile(grid, exportFile, delimiter);
+                Process.Start(exportFile);
+            });
         }
     }
 }
