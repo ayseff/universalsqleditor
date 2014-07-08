@@ -622,7 +622,6 @@ namespace SqlEditor.QueryResults
                         break;
 
                     case "Export to CSV":
-                        _ugGrid.ex
                         await _ugGrid.ExportToDelimitedFileAsync(",", ".csv");
                         break;
 
