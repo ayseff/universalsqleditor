@@ -556,7 +556,7 @@ namespace SqlEditor.QueryResults
 
             if (showAlternateAppearance)
             {                
-                for (int i = 0; i < _ugGrid.Rows.Count; i+=2)
+                for (var i = 0; i < _ugGrid.Rows.Count; i+=2)
                 {
                     _ugGrid.Rows[i].Appearance = _appearance;
                 }
@@ -622,11 +622,12 @@ namespace SqlEditor.QueryResults
                         break;
 
                     case "Export to CSV":
-                        _ugGrid.ExportToCsv();
+                        _ugGrid.ex
+                        await _ugGrid.ExportToDelimitedFileAsync(",", ".csv");
                         break;
 
                     case "Export to Text":
-                        _ugGrid.ExportToDelimitedFile("\t");
+                        await _ugGrid.ExportToDelimitedFileAsync("\t", ".txt");
                         break;
                 }
             }
