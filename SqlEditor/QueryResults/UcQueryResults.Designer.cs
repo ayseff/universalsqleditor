@@ -72,15 +72,16 @@ namespace SqlEditor.QueryResults
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool1 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Flag", "");
             Infragistics.Win.Appearance appearance6 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance7 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool3 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Show Filter", "");
             Infragistics.Win.Appearance appearance8 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool3 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Show Filter", "");
             Infragistics.Win.Appearance appearance9 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool1 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Commit");
             Infragistics.Win.Appearance appearance10 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool1 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Commit");
             Infragistics.Win.Appearance appearance11 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool3 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Rollback");
             Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool3 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Rollback");
             Infragistics.Win.Appearance appearance13 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance14 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool1 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("GridPopupMenu");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool12 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool24 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy w/ Headers");
@@ -90,24 +91,23 @@ namespace SqlEditor.QueryResults
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool30 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export to Text");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool22 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Refresh");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool11 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy");
-            Infragistics.Win.Appearance appearance14 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance15 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool14 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Fetch All Rows");
             Infragistics.Win.Appearance appearance16 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool14 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Fetch All Rows");
             Infragistics.Win.Appearance appearance17 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.LabelTool labelTool3 = new Infragistics.Win.UltraWinToolbars.LabelTool("Row Counts");
             Infragistics.Win.Appearance appearance18 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.LabelTool labelTool3 = new Infragistics.Win.UltraWinToolbars.LabelTool("Row Counts");
             Infragistics.Win.Appearance appearance19 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool16 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Refresh");
             Infragistics.Win.Appearance appearance20 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool16 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Refresh");
             Infragistics.Win.Appearance appearance21 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool18 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Fetch More Rows");
             Infragistics.Win.Appearance appearance22 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool18 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Fetch More Rows");
             Infragistics.Win.Appearance appearance23 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool23 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy w/ Headers");
             Infragistics.Win.Appearance appearance24 = new Infragistics.Win.Appearance();
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool20 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy for SQL IN Clause");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool23 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy w/ Headers");
             Infragistics.Win.Appearance appearance25 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool20 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy for SQL IN Clause");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool25 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export to CSV");
             Infragistics.Win.Appearance appearance26 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool26 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export to Text");
@@ -139,9 +139,9 @@ namespace SqlEditor.QueryResults
             this.QueryResultsControl2_Fill_Panel.ClientArea.Controls.Add(this._uaiActivity);
             this.QueryResultsControl2_Fill_Panel.Cursor = System.Windows.Forms.Cursors.Default;
             this.QueryResultsControl2_Fill_Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.QueryResultsControl2_Fill_Panel.Location = new System.Drawing.Point(0, 27);
+            this.QueryResultsControl2_Fill_Panel.Location = new System.Drawing.Point(0, 52);
             this.QueryResultsControl2_Fill_Panel.Name = "QueryResultsControl2_Fill_Panel";
-            this.QueryResultsControl2_Fill_Panel.Size = new System.Drawing.Size(786, 379);
+            this.QueryResultsControl2_Fill_Panel.Size = new System.Drawing.Size(786, 354);
             this.QueryResultsControl2_Fill_Panel.TabIndex = 0;
             // 
             // _ugGrid
@@ -207,7 +207,7 @@ namespace SqlEditor.QueryResults
             this._ugGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this._ugGrid.Location = new System.Drawing.Point(0, 0);
             this._ugGrid.Name = "_ugGrid";
-            this._ugGrid.Size = new System.Drawing.Size(786, 379);
+            this._ugGrid.Size = new System.Drawing.Size(786, 354);
             this._ugGrid.TabIndex = 3;
             this._ugGrid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.UgGrid_InitializeLayout);
             // 
@@ -228,9 +228,9 @@ namespace SqlEditor.QueryResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.BackColor = System.Drawing.SystemColors.Control;
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Left;
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 27);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 52);
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Left";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 379);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 354);
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
             // 
             // _utm
@@ -293,31 +293,33 @@ namespace SqlEditor.QueryResults
             buttonTool5.SharedPropsInternal.Caption = "Stop";
             buttonTool5.SharedPropsInternal.ToolTipText = "Stop currently running query.";
             buttonTool5.SharedPropsInternal.ToolTipTitle = "Stop";
-            appearance6.Image = 0;
+            appearance6.Image = 16;
             stateButtonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance6;
-            appearance7.Image = 0;
+            appearance7.Image = 16;
             stateButtonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance7;
+            appearance8.Image = "MapMarker_PushPin2__Pink.png";
+            stateButtonTool1.SharedPropsInternal.AppearancesSmall.PressedAppearance = appearance8;
             stateButtonTool1.SharedPropsInternal.Caption = "Pin";
             stateButtonTool1.SharedPropsInternal.ToolTipText = "Pin the results so the widnow is not reused.";
             stateButtonTool1.SharedPropsInternal.ToolTipTitle = "Pin";
-            appearance8.Image = 2;
-            stateButtonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance8;
-            appearance9.Image = 1;
-            stateButtonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance9;
+            appearance9.Image = 2;
+            stateButtonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance9;
+            appearance10.Image = 1;
+            stateButtonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance10;
             stateButtonTool3.SharedPropsInternal.Caption = "Show Filter";
             stateButtonTool3.SharedPropsInternal.ToolTipText = "Show/hide filter row so results can be filtered.";
             stateButtonTool3.SharedPropsInternal.ToolTipTitle = "Show/Hide Filter Row";
-            appearance10.Image = 7;
-            buttonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance10;
-            appearance11.Image = 13;
-            buttonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance11;
+            appearance11.Image = 7;
+            buttonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance11;
+            appearance12.Image = 13;
+            buttonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance12;
             buttonTool1.SharedPropsInternal.Caption = "Commit";
             buttonTool1.SharedPropsInternal.ToolTipText = "Commit executed statement to the database.";
             buttonTool1.SharedPropsInternal.ToolTipTitle = "Commit";
-            appearance12.Image = 11;
-            buttonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance12;
-            appearance13.Image = 14;
-            buttonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance13;
+            appearance13.Image = 11;
+            buttonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance13;
+            appearance14.Image = 14;
+            buttonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance14;
             buttonTool3.SharedPropsInternal.Caption = "Rollback";
             buttonTool3.SharedPropsInternal.ToolTipText = "Rollback executed statement to the database.";
             buttonTool3.SharedPropsInternal.ToolTipTitle = "Rollback";
@@ -332,49 +334,47 @@ namespace SqlEditor.QueryResults
             buttonTool29,
             buttonTool30,
             buttonTool22});
-            appearance14.Image = 8;
-            buttonTool11.SharedPropsInternal.AppearancesLarge.Appearance = appearance14;
-            appearance15.Image = 3;
-            buttonTool11.SharedPropsInternal.AppearancesSmall.Appearance = appearance15;
+            appearance15.Image = 8;
+            buttonTool11.SharedPropsInternal.AppearancesLarge.Appearance = appearance15;
+            appearance16.Image = 3;
+            buttonTool11.SharedPropsInternal.AppearancesSmall.Appearance = appearance16;
             buttonTool11.SharedPropsInternal.Caption = "Copy";
             buttonTool11.SharedPropsInternal.ToolTipText = "Copy selected cells to clipboard";
             buttonTool11.SharedPropsInternal.ToolTipTitle = "Copy";
-            appearance16.Image = 13;
-            buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance16;
-            appearance17.Image = 7;
-            buttonTool14.SharedPropsInternal.AppearancesSmall.Appearance = appearance17;
+            appearance17.Image = 13;
+            buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance17;
+            appearance18.Image = 7;
+            buttonTool14.SharedPropsInternal.AppearancesSmall.Appearance = appearance18;
             buttonTool14.SharedPropsInternal.Caption = "Fetch All Rows";
             buttonTool14.SharedPropsInternal.ToolTipText = "Fetch all remaining rows from the database.";
             buttonTool14.SharedPropsInternal.ToolTipTitle = "Fetch All Rows";
-            appearance18.TextHAlignAsString = "Left";
-            appearance18.TextVAlignAsString = "Middle";
-            labelTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance18;
             appearance19.TextHAlignAsString = "Left";
             appearance19.TextVAlignAsString = "Middle";
-            labelTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance19;
+            labelTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance19;
+            appearance20.TextHAlignAsString = "Left";
+            appearance20.TextVAlignAsString = "Middle";
+            labelTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance20;
             labelTool3.SharedPropsInternal.Caption = "Row Counts";
             labelTool3.SharedPropsInternal.Visible = false;
-            appearance20.Image = 10;
-            buttonTool16.SharedPropsInternal.AppearancesLarge.Appearance = appearance20;
-            appearance21.Image = 5;
-            buttonTool16.SharedPropsInternal.AppearancesSmall.Appearance = appearance21;
+            appearance21.Image = 10;
+            buttonTool16.SharedPropsInternal.AppearancesLarge.Appearance = appearance21;
+            appearance22.Image = 5;
+            buttonTool16.SharedPropsInternal.AppearancesSmall.Appearance = appearance22;
             buttonTool16.SharedPropsInternal.Caption = "Refresh";
             buttonTool16.SharedPropsInternal.ToolTipText = "Refresh the data by re-running the query.";
             buttonTool16.SharedPropsInternal.ToolTipTitle = "Refresh Results";
-            appearance22.Image = 9;
-            buttonTool18.SharedPropsInternal.AppearancesLarge.Appearance = appearance22;
-            appearance23.Image = 4;
-            buttonTool18.SharedPropsInternal.AppearancesSmall.Appearance = appearance23;
+            appearance23.Image = 9;
+            buttonTool18.SharedPropsInternal.AppearancesLarge.Appearance = appearance23;
+            appearance24.Image = 4;
+            buttonTool18.SharedPropsInternal.AppearancesSmall.Appearance = appearance24;
             buttonTool18.SharedPropsInternal.Caption = "Fetch More Rows";
             buttonTool18.SharedPropsInternal.ToolTipText = "Fetches more rows from the database.";
             buttonTool18.SharedPropsInternal.ToolTipTitle = "Fetch More Rows";
-            appearance24.Image = 9;
-            buttonTool23.SharedPropsInternal.AppearancesSmall.Appearance = appearance24;
+            appearance25.Image = 9;
+            buttonTool23.SharedPropsInternal.AppearancesSmall.Appearance = appearance25;
             buttonTool23.SharedPropsInternal.Caption = "Copy w/ Headers";
             buttonTool23.SharedPropsInternal.ToolTipText = "Copy selected cells to clipboad with headers.";
             buttonTool23.SharedPropsInternal.ToolTipTitle = "Copy with Headers";
-            appearance25.Image = 15;
-            buttonTool20.SharedPropsInternal.AppearancesSmall.Appearance = appearance25;
             buttonTool20.SharedPropsInternal.Caption = "Copy for SQL IN Clause";
             buttonTool20.SharedPropsInternal.ToolTipText = "Copy selected cells to clipboad for use in SQL IN clause.";
             buttonTool20.SharedPropsInternal.ToolTipTitle = "Copy for SQL IN Clause";
@@ -429,6 +429,8 @@ namespace SqlEditor.QueryResults
             this._iml32.Images.SetKeyName(12, "control_stop_red.png");
             this._iml32.Images.SetKeyName(13, "download_red.png");
             this._iml32.Images.SetKeyName(14, "export_excel.png");
+            this._iml32.Images.SetKeyName(15, "MapMarker_PushPin2__Pink.png");
+            this._iml32.Images.SetKeyName(16, "MapMarker_PushPin2_Left_Chartreuse.png");
             // 
             // _iml16
             // 
@@ -449,6 +451,8 @@ namespace SqlEditor.QueryResults
             this._iml16.Images.SetKeyName(12, "file_extension_xls.png");
             this._iml16.Images.SetKeyName(13, "database_check.png");
             this._iml16.Images.SetKeyName(14, "database_left.png");
+            this._iml16.Images.SetKeyName(15, "MapMarker_PushPin2__Pink.png");
+            this._iml16.Images.SetKeyName(16, "MapMarker_PushPin2_Left_Chartreuse.png");
             // 
             // _QueryResultsControl2_Toolbars_Dock_Area_Right
             // 
@@ -456,9 +460,9 @@ namespace SqlEditor.QueryResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.BackColor = System.Drawing.SystemColors.Control;
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(786, 27);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(786, 52);
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Right";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 379);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 354);
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
             // 
             // _QueryResultsControl2_Toolbars_Dock_Area_Top
@@ -469,7 +473,7 @@ namespace SqlEditor.QueryResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Top";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(786, 27);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(786, 52);
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
             // 
             // _QueryResultsControl2_Toolbars_Dock_Area_Bottom
