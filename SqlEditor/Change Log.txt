@@ -1,4 +1,11 @@
-﻿Version: 0.3.1.0
+﻿Version: 0.3.2.0
+  New Features:
+  - Open query results files after export is complete
+  - Updated pin icon on query results to better icon
+  - Save query history immediately after query execution
+  Bug Fixes:
+  - Query results export to CSV or TXT file creates duplicates
+Version: 0.3.1.0
   New Features:
   - Ability to browse functions in Database Explorer
   - Ability to check for updates  
