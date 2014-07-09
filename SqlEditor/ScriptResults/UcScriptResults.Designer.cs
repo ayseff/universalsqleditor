@@ -96,9 +96,9 @@ namespace SqlEditor.ScriptResults
             this.QueryResultsControl2_Fill_Panel.ClientArea.Controls.Add(this._uaiActivity);
             this.QueryResultsControl2_Fill_Panel.Cursor = System.Windows.Forms.Cursors.Default;
             this.QueryResultsControl2_Fill_Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.QueryResultsControl2_Fill_Panel.Location = new System.Drawing.Point(0, 52);
+            this.QueryResultsControl2_Fill_Panel.Location = new System.Drawing.Point(0, 27);
             this.QueryResultsControl2_Fill_Panel.Name = "QueryResultsControl2_Fill_Panel";
-            this.QueryResultsControl2_Fill_Panel.Size = new System.Drawing.Size(786, 354);
+            this.QueryResultsControl2_Fill_Panel.Size = new System.Drawing.Size(786, 379);
             this.QueryResultsControl2_Fill_Panel.TabIndex = 0;
             // 
             // _teScriptResults
@@ -109,7 +109,7 @@ namespace SqlEditor.ScriptResults
             this._teScriptResults.Location = new System.Drawing.Point(0, 0);
             this._teScriptResults.Name = "_teScriptResults";
             this._teScriptResults.ShowLineNumbers = false;
-            this._teScriptResults.Size = new System.Drawing.Size(786, 354);
+            this._teScriptResults.Size = new System.Drawing.Size(786, 379);
             this._teScriptResults.TabIndex = 4;
             // 
             // _uaiActivity
@@ -129,9 +129,9 @@ namespace SqlEditor.ScriptResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.BackColor = System.Drawing.SystemColors.Control;
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Left;
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 52);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 27);
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Left";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 354);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 379);
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
             // 
             // _utm
@@ -272,9 +272,9 @@ namespace SqlEditor.ScriptResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.BackColor = System.Drawing.SystemColors.Control;
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(786, 52);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(786, 27);
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Right";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 354);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 379);
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
             // 
             // _QueryResultsControl2_Toolbars_Dock_Area_Top
@@ -285,7 +285,7 @@ namespace SqlEditor.ScriptResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Top";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(786, 52);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(786, 27);
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
             // 
             // _QueryResultsControl2_Toolbars_Dock_Area_Bottom

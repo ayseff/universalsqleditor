@@ -1,6 +1,7 @@
 ﻿Version: 0.3.2.0
   New Features:
-  - Open query results files after export is complete
+  - Upgraded to Infragistics 14.1 controls
+  - Open query results files automatically after export is complete
   - Updated pin icon on query results to better icon
   - Save query history immediately after query execution
   Bug Fixes:
