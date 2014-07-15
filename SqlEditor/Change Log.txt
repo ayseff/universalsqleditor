@@ -1,4 +1,9 @@
-﻿Version: 0.3.2.0
+﻿Version: 0.3.3.0
+  New Features:
+  - Added a feature that allows you to double-click a column or a table and have it automatically paste into SQL worksheet
+  Bug Fixes:
+  - Fixed regression issue where some icons on the File menu did not have icons
+Version: 0.3.2.0
   New Features:
   - Upgraded to Infragistics 14.1 controls
   - Open query results files automatically after export is complete

@@ -293,6 +293,8 @@ namespace SqlEditor
             try
             {
                 textArea.Document.Insert(_sqlEditor.ActiveTextAreaControl.Caret.Offset, text);
+                _sqlEditor.ActiveTextAreaControl.Caret.Position =
+                    textArea.Document.OffsetToPosition(_sqlEditor.ActiveTextAreaControl.Caret.Offset + text.Length);
             }
             finally
             {

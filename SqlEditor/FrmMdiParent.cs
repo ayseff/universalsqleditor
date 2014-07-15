@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -10,7 +9,6 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
@@ -36,6 +34,8 @@ using log4net;
 using SqlEditor.SqlHistory;
 using log4net.Core;
 using log4net.Repository.Hierarchy;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
+using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using Resources = SqlEditor.Properties.Resources;
 
 namespace SqlEditor
@@ -2509,7 +2509,7 @@ namespace SqlEditor
             try
             {
                 const string url = "http://universalsqleditor.codeplex.com/releases";
-                HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument { OptionFixNestedTags = true };
+                var doc = new HtmlAgilityPack.HtmlDocument { OptionFixNestedTags = true };
                 using (var client = new WebClient())
                 {
                     string html;
@@ -2597,6 +2597,52 @@ namespace SqlEditor
                 _log.Error(ex.Message, ex);
                 Dialog.ShowErrorDialog(Application.ProductName, "Error checking for updates.", ex.Message,
                            ex.StackTrace);
+            }
+        }
+
+        private void UtConnections_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                var selectedNode = _utConnections.SelectedNodes.Cast<UltraTreeNode>().FirstOrDefault() as TreeNodeBase;
+                if (selectedNode == null)
+                {
+                    var element = _utConnections.UIElement.LastElementEntered;
+                    if (element == null)
+                    {
+                        return;
+                    }
+
+                    selectedNode = element.GetContext(typeof(UltraTreeNode)) as TreeNodeBase;
+                    if (selectedNode == null)
+                    {
+                        return;
+                    }
+                }
+
+                if (!(selectedNode is ColumnTreeNode || selectedNode is TableTreeNode || selectedNode is IndexTreeNode ||
+                     selectedNode is ViewTreeNode
+                     || selectedNode is SequenceTreeNode || selectedNode is FunctionTreeNode ||
+                     selectedNode is PartitionTreeNode || selectedNode is SchemaTreeNode
+                     || selectedNode is StoredProcedureTreeNode || selectedNode is SynonymTreeNode ||
+                     selectedNode is TriggerTreeNode))
+                {
+                    return;
+                }
+
+                var activeWorksheet = GetActiveWorksheet();
+                if (activeWorksheet == null)
+                {
+                    throw new Exception("There are no active SQL worksheets available");
+                }
+                activeWorksheet.AppendText(selectedNode.GetClipboardText());
+            }
+            catch (Exception ex)
+            {
+                const string message = "Error getting TreeNode information to be displayed in the worksheet.";
+                _log.Error(message);
+                _log.Error(ex.Message, ex);
+                Dialog.ShowErrorDialog(Application.ProductName, message, ex.Message, ex.StackTrace);
             }
         }
     }

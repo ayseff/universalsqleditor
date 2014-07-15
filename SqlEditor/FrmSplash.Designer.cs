@@ -54,7 +54,7 @@
             this._uaiLoadingActivity.CausesValidation = true;
             this._uaiLoadingActivity.Location = new System.Drawing.Point(150, 217);
             this._uaiLoadingActivity.Name = "_uaiLoadingActivity";
-            this._uaiLoadingActivity.Size = new System.Drawing.Size(300, 23);
+            this._uaiLoadingActivity.Size = new System.Drawing.Size(300, 20);
             this._uaiLoadingActivity.TabIndex = 1;
             this._uaiLoadingActivity.TabStop = true;
             this._uaiLoadingActivity.ViewStyle = Infragistics.Win.UltraActivityIndicator.ActivityIndicatorViewStyle.Aero;
@@ -79,12 +79,17 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(600, 306);
+            this.ControlBox = false;
             this.Controls.Add(this._lblVersion);
             this.Controls.Add(this._uaiLoadingActivity);
             this.Controls.Add(this._lblCopyright);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximumSize = new System.Drawing.Size(600, 306);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(600, 306);
             this.Name = "FrmSplash";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FrmSplash";
