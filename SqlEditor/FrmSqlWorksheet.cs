@@ -292,9 +292,10 @@ namespace SqlEditor
             textArea.Document.UndoStack.StartUndoGroup();
             try
             {
-                textArea.Document.Insert(_sqlEditor.ActiveTextAreaControl.Caret.Offset, text);
-                _sqlEditor.ActiveTextAreaControl.Caret.Position =
-                    textArea.Document.OffsetToPosition(_sqlEditor.ActiveTextAreaControl.Caret.Offset + text.Length);
+                textArea.InsertString(text);
+                //textArea.Document.Insert(_sqlEditor.ActiveTextAreaControl.Caret.Offset, text);
+                //_sqlEditor.ActiveTextAreaControl.Caret.Position =
+                //    textArea.Document.OffsetToPosition(_sqlEditor.ActiveTextAreaControl.Caret.Offset + text.Length);
             }
             finally
             {

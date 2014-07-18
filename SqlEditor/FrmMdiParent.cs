@@ -816,7 +816,7 @@ namespace SqlEditor
             }
         }
 
-        private void Utm_ToolClick(object sender, ToolClickEventArgs e)
+        private async void Utm_ToolClick(object sender, ToolClickEventArgs e)
         {
             if (_skipToolClickEvents) return;
             try
@@ -969,7 +969,7 @@ namespace SqlEditor
                         break;
 
                     case "SQL History - Export to Excel":
-                        _ugGrid.ExportToExcel();
+                        await _ugGrid.ExportToExcelAsync();
                         break;
 
                     case "Logging Tools - Debug": 

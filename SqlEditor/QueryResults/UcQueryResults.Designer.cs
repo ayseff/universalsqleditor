@@ -32,8 +32,6 @@ namespace SqlEditor.QueryResults
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Infragistics.Win.Appearance appearance28 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance29 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance30 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance31 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance32 = new Infragistics.Win.Appearance();
@@ -43,6 +41,8 @@ namespace SqlEditor.QueryResults
             Infragistics.Win.Appearance appearance36 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance37 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance38 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance39 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance40 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.UltraToolbar ultraToolbar1 = new Infragistics.Win.UltraWinToolbars.UltraToolbar("QueryToolbar");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool2 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Flag", "");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool7 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Show SQL");
@@ -86,6 +86,7 @@ namespace SqlEditor.QueryResults
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool12 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool24 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy w/ Headers");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool21 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy for SQL IN Clause");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool33 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Visualize Data");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool13 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export to Excel");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool29 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export to CSV");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool30 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export to Text");
@@ -112,6 +113,9 @@ namespace SqlEditor.QueryResults
             Infragistics.Win.Appearance appearance26 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool26 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export to Text");
             Infragistics.Win.Appearance appearance27 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool31 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Visualize Data");
+            Infragistics.Win.Appearance appearance28 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance29 = new Infragistics.Win.Appearance();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UcQueryResults));
             this.QueryResultsControl2_Fill_Panel = new Infragistics.Win.Misc.UltraPanel();
             this._ugGrid = new Infragistics.Win.UltraWinGrid.UltraGrid();
@@ -139,77 +143,78 @@ namespace SqlEditor.QueryResults
             this.QueryResultsControl2_Fill_Panel.ClientArea.Controls.Add(this._uaiActivity);
             this.QueryResultsControl2_Fill_Panel.Cursor = System.Windows.Forms.Cursors.Default;
             this.QueryResultsControl2_Fill_Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.QueryResultsControl2_Fill_Panel.Location = new System.Drawing.Point(0, 27);
+            this.QueryResultsControl2_Fill_Panel.Location = new System.Drawing.Point(0, 52);
             this.QueryResultsControl2_Fill_Panel.Name = "QueryResultsControl2_Fill_Panel";
-            this.QueryResultsControl2_Fill_Panel.Size = new System.Drawing.Size(786, 379);
+            this.QueryResultsControl2_Fill_Panel.Size = new System.Drawing.Size(786, 354);
             this.QueryResultsControl2_Fill_Panel.TabIndex = 0;
             // 
             // _ugGrid
             // 
             this._utm.SetContextMenuUltra(this._ugGrid, "GridPopupMenu");
-            appearance28.BackColor = System.Drawing.SystemColors.Window;
-            appearance28.BorderColor = System.Drawing.SystemColors.InactiveCaption;
-            this._ugGrid.DisplayLayout.Appearance = appearance28;
+            appearance30.BackColor = System.Drawing.SystemColors.Window;
+            appearance30.BorderColor = System.Drawing.SystemColors.InactiveCaption;
+            this._ugGrid.DisplayLayout.Appearance = appearance30;
             this._ugGrid.DisplayLayout.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
             this._ugGrid.DisplayLayout.CaptionVisible = Infragistics.Win.DefaultableBoolean.False;
-            appearance29.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            appearance29.BackColor2 = System.Drawing.SystemColors.ControlDark;
-            appearance29.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
-            appearance29.BorderColor = System.Drawing.SystemColors.Window;
-            this._ugGrid.DisplayLayout.GroupByBox.Appearance = appearance29;
-            appearance30.ForeColor = System.Drawing.SystemColors.GrayText;
-            this._ugGrid.DisplayLayout.GroupByBox.BandLabelAppearance = appearance30;
+            appearance31.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            appearance31.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance31.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
+            appearance31.BorderColor = System.Drawing.SystemColors.Window;
+            this._ugGrid.DisplayLayout.GroupByBox.Appearance = appearance31;
+            appearance32.ForeColor = System.Drawing.SystemColors.GrayText;
+            this._ugGrid.DisplayLayout.GroupByBox.BandLabelAppearance = appearance32;
             this._ugGrid.DisplayLayout.GroupByBox.BorderStyle = Infragistics.Win.UIElementBorderStyle.Solid;
-            appearance31.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            appearance31.BackColor2 = System.Drawing.SystemColors.Control;
-            appearance31.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
-            appearance31.ForeColor = System.Drawing.SystemColors.GrayText;
-            this._ugGrid.DisplayLayout.GroupByBox.PromptAppearance = appearance31;
+            appearance33.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            appearance33.BackColor2 = System.Drawing.SystemColors.Control;
+            appearance33.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance33.ForeColor = System.Drawing.SystemColors.GrayText;
+            this._ugGrid.DisplayLayout.GroupByBox.PromptAppearance = appearance33;
             this._ugGrid.DisplayLayout.MaxColScrollRegions = 1;
             this._ugGrid.DisplayLayout.MaxRowScrollRegions = 1;
             this._ugGrid.DisplayLayout.Override.AllowMultiCellOperations = Infragistics.Win.UltraWinGrid.AllowMultiCellOperation.Copy;
             this._ugGrid.DisplayLayout.Override.AllowRowFiltering = Infragistics.Win.DefaultableBoolean.True;
             this._ugGrid.DisplayLayout.Override.BorderStyleCell = Infragistics.Win.UIElementBorderStyle.Dotted;
             this._ugGrid.DisplayLayout.Override.BorderStyleRow = Infragistics.Win.UIElementBorderStyle.Dotted;
-            appearance32.BackColor = System.Drawing.SystemColors.Window;
-            this._ugGrid.DisplayLayout.Override.CardAreaAppearance = appearance32;
-            appearance33.BorderColor = System.Drawing.Color.Silver;
-            appearance33.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
-            this._ugGrid.DisplayLayout.Override.CellAppearance = appearance33;
+            appearance34.BackColor = System.Drawing.SystemColors.Window;
+            this._ugGrid.DisplayLayout.Override.CardAreaAppearance = appearance34;
+            appearance35.BorderColor = System.Drawing.Color.Silver;
+            appearance35.TextTrimming = Infragistics.Win.TextTrimming.EllipsisCharacter;
+            this._ugGrid.DisplayLayout.Override.CellAppearance = appearance35;
             this._ugGrid.DisplayLayout.Override.CellClickAction = Infragistics.Win.UltraWinGrid.CellClickAction.CellSelect;
             this._ugGrid.DisplayLayout.Override.CellPadding = 0;
             this._ugGrid.DisplayLayout.Override.FilterOperatorDefaultValue = Infragistics.Win.UltraWinGrid.FilterOperatorDefaultValue.Contains;
-            appearance34.BackColor = System.Drawing.SystemColors.Control;
-            appearance34.BackColor2 = System.Drawing.SystemColors.ControlDark;
-            appearance34.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
-            appearance34.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
-            appearance34.BorderColor = System.Drawing.SystemColors.Window;
-            this._ugGrid.DisplayLayout.Override.GroupByRowAppearance = appearance34;
-            appearance35.TextHAlignAsString = "Left";
-            this._ugGrid.DisplayLayout.Override.HeaderAppearance = appearance35;
+            appearance36.BackColor = System.Drawing.SystemColors.Control;
+            appearance36.BackColor2 = System.Drawing.SystemColors.ControlDark;
+            appearance36.BackGradientAlignment = Infragistics.Win.GradientAlignment.Element;
+            appearance36.BackGradientStyle = Infragistics.Win.GradientStyle.Horizontal;
+            appearance36.BorderColor = System.Drawing.SystemColors.Window;
+            this._ugGrid.DisplayLayout.Override.GroupByRowAppearance = appearance36;
+            appearance37.TextHAlignAsString = "Left";
+            this._ugGrid.DisplayLayout.Override.HeaderAppearance = appearance37;
             this._ugGrid.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
             this._ugGrid.DisplayLayout.Override.HeaderStyle = Infragistics.Win.HeaderStyle.WindowsVista;
-            appearance36.BackColor = System.Drawing.Color.Gainsboro;
-            appearance36.BackColor2 = System.Drawing.Color.Silver;
-            appearance36.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
-            this._ugGrid.DisplayLayout.Override.RowAlternateAppearance = appearance36;
-            appearance37.BackColor = System.Drawing.SystemColors.Window;
-            appearance37.BorderColor = System.Drawing.Color.Silver;
-            this._ugGrid.DisplayLayout.Override.RowAppearance = appearance37;
+            appearance38.BackColor = System.Drawing.Color.Gainsboro;
+            appearance38.BackColor2 = System.Drawing.Color.Silver;
+            appearance38.BackGradientStyle = Infragistics.Win.GradientStyle.Vertical;
+            this._ugGrid.DisplayLayout.Override.RowAlternateAppearance = appearance38;
+            appearance39.BackColor = System.Drawing.SystemColors.Window;
+            appearance39.BorderColor = System.Drawing.Color.Silver;
+            this._ugGrid.DisplayLayout.Override.RowAppearance = appearance39;
             this._ugGrid.DisplayLayout.Override.RowSelectorNumberStyle = Infragistics.Win.UltraWinGrid.RowSelectorNumberStyle.RowIndex;
             this._ugGrid.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.True;
             this._ugGrid.DisplayLayout.Override.RowSelectorStyle = Infragistics.Win.HeaderStyle.WindowsVista;
-            appearance38.BackColor = System.Drawing.SystemColors.ControlLight;
-            this._ugGrid.DisplayLayout.Override.TemplateAddRowAppearance = appearance38;
+            appearance40.BackColor = System.Drawing.SystemColors.ControlLight;
+            this._ugGrid.DisplayLayout.Override.TemplateAddRowAppearance = appearance40;
             this._ugGrid.DisplayLayout.ScrollBounds = Infragistics.Win.UltraWinGrid.ScrollBounds.ScrollToFill;
             this._ugGrid.DisplayLayout.ScrollStyle = Infragistics.Win.UltraWinGrid.ScrollStyle.Immediate;
             this._ugGrid.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
             this._ugGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this._ugGrid.Location = new System.Drawing.Point(0, 0);
             this._ugGrid.Name = "_ugGrid";
-            this._ugGrid.Size = new System.Drawing.Size(786, 379);
+            this._ugGrid.Size = new System.Drawing.Size(786, 354);
             this._ugGrid.TabIndex = 3;
             this._ugGrid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.UgGrid_InitializeLayout);
+            this._ugGrid.DoubleClickCell += new Infragistics.Win.UltraWinGrid.DoubleClickCellEventHandler(this.UgGrid_DoubleClickCell);
             // 
             // _uaiActivity
             // 
@@ -228,9 +233,9 @@ namespace SqlEditor.QueryResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.BackColor = System.Drawing.SystemColors.Control;
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Left;
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 27);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 52);
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Left";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 379);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(0, 354);
             this._QueryResultsControl2_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
             // 
             // _utm
@@ -324,12 +329,14 @@ namespace SqlEditor.QueryResults
             buttonTool3.SharedPropsInternal.ToolTipText = "Rollback executed statement to the database.";
             buttonTool3.SharedPropsInternal.ToolTipTitle = "Rollback";
             popupMenuTool1.SharedPropsInternal.Caption = "GridPopupMenu";
+            buttonTool33.InstanceProps.IsFirstInGroup = true;
             buttonTool13.InstanceProps.IsFirstInGroup = true;
             buttonTool22.InstanceProps.IsFirstInGroup = true;
             popupMenuTool1.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool12,
             buttonTool24,
             buttonTool21,
+            buttonTool33,
             buttonTool13,
             buttonTool29,
             buttonTool30,
@@ -388,6 +395,11 @@ namespace SqlEditor.QueryResults
             buttonTool26.SharedPropsInternal.Caption = "Export to Text";
             buttonTool26.SharedPropsInternal.ToolTipText = "Export result set to Text file.";
             buttonTool26.SharedPropsInternal.ToolTipTitle = "Export to Text";
+            appearance28.Image = 17;
+            buttonTool31.SharedPropsInternal.AppearancesLarge.Appearance = appearance28;
+            appearance29.Image = 17;
+            buttonTool31.SharedPropsInternal.AppearancesSmall.Appearance = appearance29;
+            buttonTool31.SharedPropsInternal.Caption = "Visualize Data";
             this._utm.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool2,
             buttonTool4,
@@ -407,7 +419,8 @@ namespace SqlEditor.QueryResults
             buttonTool23,
             buttonTool20,
             buttonTool25,
-            buttonTool26});
+            buttonTool26,
+            buttonTool31});
             this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.UtmToolClick);
             // 
             // _iml32
@@ -431,6 +444,7 @@ namespace SqlEditor.QueryResults
             this._iml32.Images.SetKeyName(14, "export_excel.png");
             this._iml32.Images.SetKeyName(15, "MapMarker_PushPin2__Pink.png");
             this._iml32.Images.SetKeyName(16, "MapMarker_PushPin2_Left_Chartreuse.png");
+            this._iml32.Images.SetKeyName(17, "data_chooser.png");
             // 
             // _iml16
             // 
@@ -453,6 +467,7 @@ namespace SqlEditor.QueryResults
             this._iml16.Images.SetKeyName(14, "database_left.png");
             this._iml16.Images.SetKeyName(15, "MapMarker_PushPin2__Pink.png");
             this._iml16.Images.SetKeyName(16, "MapMarker_PushPin2_Left_Chartreuse.png");
+            this._iml16.Images.SetKeyName(17, "data_chooser.png");
             // 
             // _QueryResultsControl2_Toolbars_Dock_Area_Right
             // 
@@ -460,9 +475,9 @@ namespace SqlEditor.QueryResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.BackColor = System.Drawing.SystemColors.Control;
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(786, 27);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(786, 52);
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Right";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 379);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(0, 354);
             this._QueryResultsControl2_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
             // 
             // _QueryResultsControl2_Toolbars_Dock_Area_Top
@@ -473,7 +488,7 @@ namespace SqlEditor.QueryResults
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.Name = "_QueryResultsControl2_Toolbars_Dock_Area_Top";
-            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(786, 27);
+            this._QueryResultsControl2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(786, 52);
             this._QueryResultsControl2_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
             // 
             // _QueryResultsControl2_Toolbars_Dock_Area_Bottom

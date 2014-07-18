@@ -8,13 +8,16 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using Infragistics.Win.UltraWinGrid;
 using Infragistics.Win.UltraWinMaskedEdit;
 using Infragistics.Win.UltraWinToolbars;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using SqlEditor.Annotations;
 using SqlEditor.DatabaseExplorer;
+using SqlEditor.Properties;
 using SqlEditor.SqlHelpers;
+using Utilities.Forms;
 using Utilities.Forms.Dialogs;
 using Utilities.InfragisticsUtilities.UltraGridUtilities;
 using Utilities.Text;
@@ -47,6 +50,8 @@ namespace SqlEditor.QueryResults
         private readonly ButtonTool _copyTool;
         private readonly ButtonTool _copyWithHeaders;
         private readonly ButtonTool _copyForSql;
+        private readonly ButtonTool _visualizedataTool;
+        private readonly PopupMenuTool _gridMenuTool;
         
         private readonly DatabaseConnection _databaseConnection;
         private IDbConnection _connection;
@@ -148,6 +153,9 @@ namespace SqlEditor.QueryResults
             _copyTool = (ButtonTool)_utm.Tools["Copy"];
             _copyWithHeaders = (ButtonTool)_utm.Tools["Copy w/ Headers"];
             _copyForSql = (ButtonTool)_utm.Tools["Copy for SQL IN Clause"];
+            _visualizedataTool = (ButtonTool)_utm.Tools["Visualize Data"];
+            _gridMenuTool = (PopupMenuTool)_utm.Tools["GridPopupMenu"];
+            _gridMenuTool.BeforeToolDropdown += (sender, args) => RefreshUserInterface();
 
             RefreshUserInterface();
         }
@@ -497,7 +505,9 @@ namespace SqlEditor.QueryResults
                 _showFilterTool.SharedProps.Enabled =
                 _copyTool.SharedProps.Enabled =
                 _copyWithHeaders.SharedProps.Enabled =
-                _copyForSql.SharedProps.Enabled = !IsBusy;
+                _copyForSql.SharedProps.Enabled = !IsBusy && !string.IsNullOrEmpty(Sql) && _databaseConnection != null;
+
+            _visualizedataTool.SharedProps.Enabled = _ugGrid.Selected.Cells.Count > 0;
 
             _activityIndicatorTool.SharedProps.Visible = 
                 _uaiActivity.AnimationEnabled = 
@@ -506,10 +516,11 @@ namespace SqlEditor.QueryResults
             _stopButton.SharedProps.Enabled = IsBusy && !_cancellationTokenSource.IsCancellationRequested;
 
             _commitTool.SharedProps.Enabled =
-                _rollbackTool.SharedProps.Enabled = !IsBusy && _databaseConnection != null && _databaseConnection.IsConnected && !_databaseConnection.AutoCommit && _transaction != null && _connection != null;
+                _rollbackTool.SharedProps.Enabled = !IsBusy && _databaseConnection != null && _databaseConnection.IsConnected 
+                && !_databaseConnection.AutoCommit && _transaction != null && _connection != null;
 
             _refreshQueryResultsTool.SharedProps.Enabled =
-                !IsBusy && _databaseConnection != null && _databaseConnection.IsConnected && _transaction == null;
+                !IsBusy && !string.IsNullOrEmpty(Sql) && _databaseConnection != null && _databaseConnection.IsConnected && _transaction == null;
 
             _fetchAllRowsTool.SharedProps.Enabled =
                 _fetchMoreRowsTool.SharedProps.Enabled =
@@ -627,6 +638,10 @@ namespace SqlEditor.QueryResults
 
                     case "Export to Text":
                         await _ugGrid.ExportToDelimitedFileAsync("\t", ".txt");
+                        break;
+                    
+                    case "Visualize Data":
+                        VisualizeData();
                         break;
                 }
             }
@@ -873,6 +888,83 @@ namespace SqlEditor.QueryResults
         {
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void UgGrid_DoubleClickCell(object sender, DoubleClickCellEventArgs e)
+        {
+            try
+            {
+                VisualizeData(e.Cell.Column.DataType, e.Cell.GetText(MaskMode.IncludeLiterals));
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error visualizing data");
+                _log.Error(ex.Message, ex);
+                Dialog.ShowErrorDialog(Application.ProductName, "Error visualizing data,", ex.Message, ex.StackTrace);
+            }
+        }
+
+        private void VisualizeData()
+        {
+            var selectedCell = _ugGrid.Selected.Cells.Cast<UltraGridCell>().FirstOrDefault();
+            if (selectedCell == null)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "No cells are selected to be visualized", string.Empty, null);
+                return;
+            }
+            VisualizeData(selectedCell.Column.DataType, selectedCell.GetText(MaskMode.IncludeLiterals));
+        }
+
+        private static void VisualizeData(Type dataType, string textValue)
+        {
+            var textType = TextType.Text;
+            if (dataType == typeof (string) &&
+                textValue.TrimStart().StartsWith("<"))
+            {
+                // try XML
+                try
+                {
+                    var xmlText = textValue.PrettyPrintXml();
+                    textValue = xmlText;
+                    textType = TextType.Xml;
+                }
+                catch
+                {
+                }
+            }
+
+            // Create form
+            var form = new FrmTextVisualizer(textValue, textType) {StartPosition = FormStartPosition.CenterParent};
+
+            // Restore geometry
+            try
+            {
+                if (!string.IsNullOrEmpty(Settings.Default.FrmVisualizeData_Geometry))
+                {
+                    RestoreFormPosition.GeometryFromString(Settings.Default.FrmVisualizeData_Geometry, form);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.ErrorFormat("Error restoring data visualization form geometry.");
+                _log.Error(ex.Message, ex);
+            }
+
+            // Show form
+            form.ShowDialog();
+
+            // Save geometry
+            try
+            {
+                Settings.Default.FrmVisualizeData_Geometry = RestoreFormPosition.GeometryToString(form);
+                Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                _log.ErrorFormat("Error saving data visualization form geometry.");
+                _log.Error(ex.Message, ex);
+            }
+
         }
     }
 }

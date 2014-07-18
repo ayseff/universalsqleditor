@@ -246,6 +246,12 @@
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />
     <Compile Include="Databases\ObjectScripter.cs" />
+    <Compile Include="FrmTextVisualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmTextVisualizer.Designer.cs">
+      <DependentUpon>FrmTextVisualizer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -420,6 +426,11 @@
     <Compile Include="SqlTextEditor\SqlEditorExtensions.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="WaitActionStatus.cs" />
+    <Compile Include="SqlTextEditor\XmlFoldingStrategy.cs" />
+    <Compile Include="SqlTextEditor\XmlFormattingStrategy.cs" />
+    <EmbeddedResource Include="FrmTextVisualizer.resx">
+      <DependentUpon>FrmTextVisualizer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RunMultipleFiles\FrmRunMultipleFiles.resx">
       <DependentUpon>FrmRunMultipleFiles.cs</DependentUpon>
     </EmbeddedResource>

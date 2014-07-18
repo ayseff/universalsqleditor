@@ -1,8 +1,11 @@
 ﻿Version: 0.3.3.0
   New Features:
   - Added a feature that allows you to double-click a column or a table and have it automatically paste into SQL worksheet
+  - Added a new feature that allows a double-click (or a right click menu item) on a cell to view it's value in an editor. If a column value if valid XML document, XML editor will be shown
   Bug Fixes:
   - Fixed regression issue where some icons on the File menu did not have icons
+  - Fixed an issue where refresh button was enabled on query results before any query was run. Clicking on a button in that state caused a crash
+  - Fixed an issue where appending text to SQL worksheet was appending text in overwrite mode. Text is now inserted
 Version: 0.3.2.0
   New Features:
   - Upgraded to Infragistics 14.1 controls
@@ -15,7 +18,7 @@ Version: 0.3.1.0
   New Features:
   - Ability to browse functions in Database Explorer
   - Ability to check for updates  
-  - When connecting to SQL Server, all databases are now shown and ability to browse each database is working
+  - When connecting to SQL Server, all databases are now shown and ability to browse each database is working;
   - When browsing database objects in Database Explorer, folder icons now reflect whether a node is expanded or not
   - Enforce initial catalog/database when connecting to the database server (SQL Server and MySQL)
   - Allow viewing connection details while connection is open
