@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Drawing;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor;
+using ICSharpCode.TextEditor.Actions;
 using ICSharpCode.TextEditor.Document;
+using log4net;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using SqlEditor.SqlTextEditor;
+using Utilities.Forms.Dialogs;
 
 namespace SqlEditor
 {
@@ -15,8 +20,13 @@ namespace SqlEditor
     }
     public partial class FrmTextVisualizer : Form
     {
+        private readonly TextType _textType;
+        private readonly FrmFindReplace _findForm = new FrmFindReplace();
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public FrmTextVisualizer(string text, TextType textType)
         {
+            _textType = textType;
             InitializeComponent();
             if (textType == TextType.Xml)
             {
@@ -76,6 +86,70 @@ namespace SqlEditor
                 Encoding = Encoding.Unicode
             };
             return properties;
+        }
+
+        private void Utm_ToolClick(object sender, Infragistics.Win.UltraWinToolbars.ToolClickEventArgs e)
+        {
+            try
+            {
+                switch (e.Tool.Key)
+                {
+                    case "Save":
+                        Save();
+                        break;
+
+                    case "Copy":
+                        _editor.DoEditAction(new Copy());
+                        break;
+
+                    case "Undo":
+                        _editor.DoEditAction(new Undo());
+                        break;
+
+                    case "Redo":
+                        _editor.DoEditAction(new Redo());
+                        break;
+
+                    case "Find":
+                        _findForm.ShowFor(_editor, false);
+                        break;
+
+                    case "Replace":
+                        _findForm.ShowFor(_editor, true);
+                        break;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                const string message = "Error performing operation.";
+                _log.Error(message);
+                _log.Error(ex.Message, ex);
+                Dialog.ShowErrorDialog(Application.ProductName, message, ex.Message, ex.StackTrace);
+            }
+        }
+
+        private void Save()
+        {
+            string selectedFile;
+            var commonFileDialogFilters = new[]
+                                          {
+                                              new CommonFileDialogFilter("Text files", ".txt"),
+                                              new CommonFileDialogFilter("All files", "*.*")
+                                          };
+            if (_textType == TextType.Xml)
+            {
+                commonFileDialogFilters = new[]
+                                          {
+                                              new CommonFileDialogFilter("XML files", ".xml"),
+                                              new CommonFileDialogFilter("All files", "*.*")
+                                          };
+            }
+            
+            var dialogResult = Dialog.ShowSaveFileDialog("Select a file", out selectedFile,
+                                                 commonFileDialogFilters);
+            if (dialogResult != CommonFileDialogResult.Ok) return;
+            _editor.SaveFile(selectedFile);
         }
     }
 }
