@@ -202,6 +202,7 @@ namespace SqlEditor.ScriptResults
                     _transaction = _connection.BeginTransaction();
                 }
 
+                var individualSqlStopwatch = new Stopwatch();
                 foreach (var sqlStatement in sqlStatements)
                 {
                     // Create new command
@@ -218,10 +219,12 @@ namespace SqlEditor.ScriptResults
                             // Execute SELECT query
                             _log.Debug("Running query ...");
                             //queryTask = _connection.ExecuteQueryKeepAliveAsync(sqlStatement, maxResults, _cancellationTokenSource.Token);
+                            individualSqlStopwatch.Restart();
                             queryTask = _command.ExecuteQueryKeepAliveAsync(sqlStatement, maxResults, _cancellationTokenSource.Token);
                             var results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
+                            individualSqlStopwatch.Stop();
                             _log.Debug("Query complete.");
-                            SetResults(results.Result, sqlStatement);
+                            SetResults(results.Result, sqlStatement, individualSqlStopwatch.Elapsed);
                             _log.Debug("Results bound.");
                         }
                         else
@@ -229,11 +232,13 @@ namespace SqlEditor.ScriptResults
                             // Execute DML or DDL query
                             _log.Debug("Running non-query - it will use a transaction ...");
                             //queryTask = _connection.ExecuteNonQueryTransactionAsync(_transaction, sqlStatement, _cancellationTokenSource.Token);
+                            individualSqlStopwatch.Restart();
                             queryTask = _command.ExecuteNonQueryTransactionAsync(_transaction, sqlStatement, _cancellationTokenSource.Token);
                             var results = await queryTask.WithCancellation(_cancellationTokenSource.Token);
+                            individualSqlStopwatch.Stop();
                             _log.Debug("Non-query complete.");
                             var resultsTable = new DataTable();
-                            resultsTable.Columns.Add("Results", typeof(string));
+                            resultsTable.Columns.Add("Results (" + ((int)individualSqlStopwatch.ElapsedMilliseconds).ToString("#,0") + " ms)", typeof(string));
                             if (sqlType == SqlType.Dml && results.RowsAffected >= 0)
                             {
                                 // Ex: Inserted x rows
@@ -248,7 +253,7 @@ namespace SqlEditor.ScriptResults
                             {
                                 resultsTable.Rows.Add(string.Format("{0} successful", sqlFirstKeyword.Trim().ToUpper()));
                             }
-                            SetResults(resultsTable, sqlStatement);
+                            SetResults(resultsTable, sqlStatement, individualSqlStopwatch.Elapsed);
                             _log.Debug("Results bound.");
                         }
                     }
@@ -258,10 +263,11 @@ namespace SqlEditor.ScriptResults
                     }
                     catch (Exception ex)
                     {
+                        individualSqlStopwatch.Stop();
                         _log.Error("Error running query:");
                         _log.Error(sqlStatement);
                         _log.Error(ex.Message, ex);
-                        SetResults(GetErrorMessageTable(ex), sqlStatement, true);
+                        SetResults(GetErrorMessageTable(ex), sqlStatement, individualSqlStopwatch.Elapsed, true);
                     }
                 }
 
@@ -288,7 +294,7 @@ namespace SqlEditor.ScriptResults
             catch (Exception ex)
             {
                 CleanupAfterQueryAbort("Operation failed");
-                SetResults(GetErrorMessageTable(ex), string.Empty, true);
+                SetResults(GetErrorMessageTable(ex), string.Empty, TimeSpan.Zero, true);
 
                 _log.ErrorFormat("Error executing query {0}.", Sql);
                 _log.Error(ex.Message, ex);
@@ -485,13 +491,13 @@ namespace SqlEditor.ScriptResults
             return errorsTable;
         }
 
-        private void SetResults(DataTable table, string sqlStatement, bool isError = false)
+        private void SetResults(DataTable table, string sqlStatement, TimeSpan elapsedTime, bool isError = false)
         {
             if (table != null && table.Columns.Count == 0)
             {
-                table.Columns.Add("Results", typeof(string));
+                table.Columns.Add("Results (" + ((int)elapsedTime.TotalMilliseconds).ToString("#,0") + " ms)", typeof(string));
                 table.Rows.Add("Command executed successfully");
-                SetResults(table, sqlStatement, isError: isError);
+                SetResults(table, sqlStatement, elapsedTime, isError);
                 return;
             }
 
@@ -625,7 +631,7 @@ namespace SqlEditor.ScriptResults
                 _log.Debug("Rollback done.");
                 StopTimer();
                 _transaction = null;
-                SetResults(GetNonQueryResultsTable("Rollback complete."), string.Empty);
+                SetResults(GetNonQueryResultsTable("Rollback complete."), string.Empty, _stopwatch.Elapsed);
                 await CloseCurrentConnectionAsync();
             }
             catch (OperationCanceledException)
@@ -636,7 +642,7 @@ namespace SqlEditor.ScriptResults
             catch (Exception ex)
             {
                 CleanupAfterQueryAbort("Operation failed");
-                SetResults(GetErrorMessageTable(ex), string.Empty, true);
+                SetResults(GetErrorMessageTable(ex), string.Empty, TimeSpan.Zero, true);
 
                 _log.Error("Error rolling back transaction.");
                 _log.Error(ex.Message, ex);
@@ -668,7 +674,7 @@ namespace SqlEditor.ScriptResults
                 _log.Debug("Commit done.");
                 StopTimer();
                 _transaction = null;
-                SetResults(GetNonQueryResultsTable("Commit complete."), string.Empty);
+                SetResults(GetNonQueryResultsTable("Commit complete."), string.Empty, _stopwatch.Elapsed);
                 await CloseCurrentConnectionAsync();
             }
             catch (OperationCanceledException)
@@ -679,7 +685,7 @@ namespace SqlEditor.ScriptResults
             catch (Exception ex)
             {
                 CleanupAfterQueryAbort("Operation failed");
-                SetResults(GetErrorMessageTable(ex), string.Empty, true);
+                SetResults(GetErrorMessageTable(ex), string.Empty, TimeSpan.Zero, true);
 
                 _log.Error("Error committing transaction.");
                 _log.Error(ex.Message, ex);
