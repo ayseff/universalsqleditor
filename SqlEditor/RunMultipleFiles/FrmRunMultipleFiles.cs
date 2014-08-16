@@ -165,7 +165,7 @@ namespace SqlEditor.RunMultipleFiles
                         }
                         else
                         {
-                            var sqlSplitter = new SqlTextExtractor(_databaseConnection.DatabaseServer.SqlTerminators);
+                            var sqlSplitter = new SqlTextExtractor(_databaseConnection.DatabaseServer.SqlTerminators, _databaseConnection.DatabaseServer);
                             sqlStatements.AddRange(sqlSplitter.SplitSqlStatements(sqlFileText));
                         }
 

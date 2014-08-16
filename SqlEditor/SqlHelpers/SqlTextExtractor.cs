@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ICSharpCode.TextEditor;
+using JetBrains.Annotations;
+using SqlEditor.Databases;
 using Utilities;
 using Utilities.Collections;
 
@@ -10,6 +12,7 @@ namespace SqlEditor.SqlHelpers
 {
     public class SqlTextExtractor
     {
+        private readonly DatabaseServer _databaseServer;
         private static readonly Regex _spaceRegex = new Regex(@"\s+", RegexOptions.Compiled);
         private static readonly Regex _trimStartRegex = new Regex(@"^[\s\r\n\f]+", RegexOptions.Multiline | RegexOptions.Compiled);
         private static readonly Regex _trimEndRegex = new Regex(@"[\s\r\n\f]+$", RegexOptions.Multiline | RegexOptions.Compiled);
@@ -21,9 +24,12 @@ namespace SqlEditor.SqlHelpers
             LiteralQualifiers = new List<string> {"\"", "'", "`"};
         }
 
-        public SqlTextExtractor(IEnumerable<string> sqlTerminators)
+        public SqlTextExtractor([NotNull] IEnumerable<string> sqlTerminators, [NotNull] DatabaseServer databaseServer)
             : this()
         {
+            if (sqlTerminators == null) throw new ArgumentNullException("sqlTerminators");
+            if (databaseServer == null) throw new ArgumentNullException("databaseServer");
+            _databaseServer = databaseServer;
             SqlTerminators = new List<string>();
             SqlTerminators.AddRange(sqlTerminators);
         }
@@ -75,6 +81,9 @@ namespace SqlEditor.SqlHelpers
             {
                 return list;
             }
+
+            text = _databaseServer.InlineCommentRegex.Replace(text, string.Empty);
+            text = _databaseServer.BlockCommentRegex.Replace(text, string.Empty);
 
             var sqlTerminators = SqlTerminators.ToArray();
             var literalQualifiers = LiteralQualifiers.ToArray();

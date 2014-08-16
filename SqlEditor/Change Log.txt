@@ -6,6 +6,7 @@
   - Fixed regression issue where some icons on the File menu did not have icons
   - Fixed an issue where refresh button was enabled on query results before any query was run. Clicking on a button in that state caused a crash
   - Fixed an issue where appending text to SQL worksheet was appending text in overwrite mode. Text is now inserted
+  - Fixed an issue where a completely commented SQL statement was attempted to be run as part of a Run as Script option
 Version: 0.3.2.0
   New Features:
   - Upgraded to Infragistics 14.1 controls

@@ -108,5 +108,43 @@ namespace SqlEditor.Tests
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        ///A test for SplitSqlStatements
+        ///</summary>
+        [TestMethod]
+        public void GetFirstKeyword_LineCommentSpace_Test()
+        {
+            // Arrange
+            var sql = "    -- COMMENT" + Environment.NewLine + "SELECT * FROM DUAL";
+            const string expected = "SELECT";
+            var dbServer = Databases.DatabaseServerFactory.Instance.GetDatabaseServer("DB2");
+
+            // Act
+            var actual = SqlHelper.GetFirstKeyword(sql,
+                                                   new Regex[] { dbServer.LineCommentRegex, dbServer.BlockCommentRegex });
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        /// <summary>
+        ///A test for SplitSqlStatements
+        ///</summary>
+        [TestMethod]
+        public void GetFirstKeyword_LineCommentTabs_Test()
+        {
+            // Arrange
+            var sql = "    \t-- COMMENT" + Environment.NewLine + "SELECT * FROM DUAL";
+            const string expected = "SELECT";
+            var dbServer = Databases.DatabaseServerFactory.Instance.GetDatabaseServer("DB2");
+
+            // Act
+            var actual = SqlHelper.GetFirstKeyword(sql,
+                                                   new Regex[] { dbServer.LineCommentRegex, dbServer.BlockCommentRegex });
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

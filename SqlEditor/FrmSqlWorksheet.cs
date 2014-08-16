@@ -675,7 +675,7 @@ namespace SqlEditor
             {
                 throw new Exception("No query selected to run");
             }
-            var sqlSplitter = new SqlHelpers.SqlTextExtractor(DatabaseConnection.DatabaseServer.SqlTerminators);
+            var sqlSplitter = new SqlHelpers.SqlTextExtractor(DatabaseConnection.DatabaseServer.SqlTerminators, DatabaseConnection.DatabaseServer);
             var sqlStatements = sqlSplitter.SplitSqlStatements(sql);
             var control = FindUsableScriptResultsTab();
             control.RunQueryAsync(sqlStatements, DatabaseConnection.MaxResults);

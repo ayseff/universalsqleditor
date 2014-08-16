@@ -12,6 +12,7 @@ namespace SqlEditor.Databases
         public abstract Regex ValidIdentifierRegex { get; }
         public abstract Regex ValidFullyQualifiedIdentifierRegex { get; }
         public virtual Regex LineCommentRegex { get { return new Regex(@"^\s*--.*?[\r\n]+", RegexOptions.Multiline | RegexOptions.Compiled); }}
+        public virtual Regex InlineCommentRegex { get { return new Regex(@"--.*?((?=[\r\n]+)|$)", RegexOptions.Multiline | RegexOptions.Compiled); } }
         public virtual Regex BlockCommentRegex { get { return new Regex(@"/\*(?>(?:(?>[^*]+)|\*(?!/))*)\*/", RegexOptions.Multiline | RegexOptions.Compiled); }}
         public virtual string[] SqlTerminators { get { return new[] {";"}; }}
         public virtual string HighlightingDefinitionsFile { get { return Name.ToUpper() + "SQL"; } }
