@@ -612,6 +612,16 @@ namespace SqlEditor
                     return Resources.Office2010Silver;
                 case "Office 2010 Black":
                     return Resources.Office2010Black;
+                case "Office 2013 Dark Gray":
+                    return Resources.Office2013DarkGray;
+                case "Office 2013 Light Gray":
+                    return Resources.Office2013LightGray;
+                case "Office 2013 White":
+                    return Resources.Office2013White;
+                case "Windows 8 Dark Gray-Blue":
+                    return Resources.Windows8DarkGrayBlue;
+                case "Windows 8 Dark Gray-Green":
+                    return Resources.Windows8DarkGrayGreen;
                 case "Metro":
                     return Resources.Metro;
                 case "Aero":
@@ -842,6 +852,11 @@ namespace SqlEditor
                     case "Office 2010 Blue":
                     case "Office 2010 Silver":
                     case "Office 2010 Black":
+                    case "Office 2013 Dark Gray":
+                    case "Office 2013 Light Gray":
+                    case "Office 2013 White":
+                    case "Windows 8 Dark Gray-Blue":
+                    case "Windows 8 Dark Gray-Green":
                     case "Metro":
                     case "Aero":
                     case "Windows7":

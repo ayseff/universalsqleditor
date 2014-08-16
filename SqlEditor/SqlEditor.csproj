@@ -491,20 +491,22 @@
     <Content Include="Resources\DB2SQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Metro.isl" />
-    <None Include="Resources\Office2007Black.isl" />
-    <None Include="Resources\Office2007Silver.isl" />
-    <None Include="Resources\Office2010Black.isl" />
-    <None Include="Resources\Office2010Blue.isl" />
-    <None Include="Resources\Office2010Silver.isl" />
+    <EmbeddedResource Include="Resources\Metro.isl" />
+    <EmbeddedResource Include="Resources\Office2007Black.isl" />
+    <EmbeddedResource Include="Resources\Office2007Silver.isl" />
+    <EmbeddedResource Include="Resources\Office2010Black.isl" />
+    <EmbeddedResource Include="Resources\Office2010Blue.isl" />
+    <EmbeddedResource Include="Resources\Office2010Silver.isl" />
     <Content Include="Resources\ORACLESQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SQLSERVERSQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\VS2010.isl" />
-    <None Include="Resources\Windows7.isl" />
+    <EmbeddedResource Include="Resources\VS2010.isl" />
+    <EmbeddedResource Include="Resources\Windows7.isl" />
+    <None Include="Resources\Windows8DarkGrayBlue.isl" />
+    <None Include="Resources\Windows8DarkGrayGreen.isl" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Change Log.txt" />
@@ -516,6 +518,9 @@
     <Content Include="References\ICSharpCode.TextEditor.dll" />
     <EmbeddedResource Include="Resources\folder.png" />
     <None Include="Resources\disk.png" />
+    <None Include="Resources\Office2013DarkGray.isl" />
+    <None Include="Resources\Office2013LightGray.isl" />
+    <None Include="Resources\Office2013White.isl" />
     <None Include="Resources\save_as.png" />
     <None Include="Resources\information.png" />
     <None Include="Resources\door_out.png" />

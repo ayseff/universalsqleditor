@@ -99,6 +99,11 @@
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool13 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2010 Black", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool14 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2010 Blue", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool15 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2010 Silver", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool38 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 Dark Gray", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool39 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 Light Gray", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool40 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 White", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool41 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows 8 Dark Gray-Blue", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool42 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows 8 Dark Gray-Green", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool16 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Metro", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool17 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Aero", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool18 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows7", "");
@@ -270,6 +275,11 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool102 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Connection Properties");
             Infragistics.Win.Appearance appearance78 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool104 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Select");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool33 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 Dark Gray", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool34 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 Light Gray", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool35 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 White", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool36 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows 8 Dark Gray-Blue", "");
+            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool37 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows 8 Dark Gray-Green", "");
             Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane1 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.DockedLeft, new System.Guid("49f48064-8544-45d6-b272-86c54f1e6b53"));
             Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane1 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("7c2601ae-79f9-4d92-a6f0-4ed69e3eb55b"), new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"), -1, new System.Guid("49f48064-8544-45d6-b272-86c54f1e6b53"), -1);
             Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane2 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.Floating, new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"));
@@ -670,6 +680,11 @@
             stateButtonTool13,
             stateButtonTool14,
             stateButtonTool15,
+            stateButtonTool38,
+            stateButtonTool39,
+            stateButtonTool40,
+            stateButtonTool41,
+            stateButtonTool42,
             stateButtonTool16,
             stateButtonTool17,
             stateButtonTool18});
@@ -1044,6 +1059,16 @@
             buttonTool102.SharedPropsInternal.Category = "Connections";
             buttonTool104.SharedPropsInternal.Caption = "SELECT";
             buttonTool104.SharedPropsInternal.Category = "Tables";
+            stateButtonTool33.SharedPropsInternal.Caption = "Office 2013 Dark Gray";
+            stateButtonTool33.SharedPropsInternal.Category = "Styles";
+            stateButtonTool34.SharedPropsInternal.Caption = "Office 2013 Light Gray";
+            stateButtonTool34.SharedPropsInternal.Category = "Styles";
+            stateButtonTool35.SharedPropsInternal.Caption = "Office 2013 White";
+            stateButtonTool35.SharedPropsInternal.Category = "Styles";
+            stateButtonTool36.SharedPropsInternal.Caption = "Windows 8 Dark Gray-Blue";
+            stateButtonTool36.SharedPropsInternal.Category = "Styles";
+            stateButtonTool37.SharedPropsInternal.Caption = "Windows 8 Dark Gray-Green";
+            stateButtonTool37.SharedPropsInternal.Category = "Styles";
             this._utm.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool28,
             popupMenuTool12,
@@ -1111,7 +1136,12 @@
             buttonTool99,
             buttonTool101,
             buttonTool102,
-            buttonTool104});
+            buttonTool104,
+            stateButtonTool33,
+            stateButtonTool34,
+            stateButtonTool35,
+            stateButtonTool36,
+            stateButtonTool37});
             this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.Utm_ToolClick);
             // 
             // _iml32

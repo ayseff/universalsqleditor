@@ -151,9 +151,6 @@
   <data name="SQLReservedWords" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SQLReservedWords.xml;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Aero" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Aero.isl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="Office2007Silver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Office2007Silver.isl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -180,5 +177,23 @@
   </data>
   <data name="information2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\information2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Aero" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Aero.isl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Office2013DarkGray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Office2013DarkGray.isl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Office2013LightGray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Office2013LightGray.isl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Office2013White" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Office2013White.isl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Windows8DarkGrayBlue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Windows8DarkGrayBlue.isl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Windows8DarkGrayGreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Windows8DarkGrayGreen.isl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
