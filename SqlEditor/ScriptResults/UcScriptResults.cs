@@ -246,14 +246,14 @@ namespace SqlEditor.ScriptResults
                             }
                             else if (sqlType == SqlType.Dml)
                             {
-                                resultsTable.Columns.Add("Results", typeof(int));
+                                //resultsTable.Columns.Add("Results", typeof(int));
                                 resultsTable.Rows.Add(string.Format("{0} affected {1} row{2}", sqlFirstKeyword.Trim().ToUpper(), results.RowsAffected.ToString("#,0"), results.RowsAffected > 1 ? "s" : string.Empty));
                             }
                             else
                             {
                                 resultsTable.Rows.Add(string.Format("{0} successful", sqlFirstKeyword.Trim().ToUpper()));
                             }
-                            SetResults(resultsTable, sqlStatement, individualSqlStopwatch.Elapsed);
+                            SetResults(resultsTable, sqlStatement, individualSqlStopwatch.Elapsed, false, false);
                             _log.Debug("Results bound.");
                         }
                     }
@@ -491,13 +491,13 @@ namespace SqlEditor.ScriptResults
             return errorsTable;
         }
 
-        private void SetResults(DataTable table, string sqlStatement, TimeSpan elapsedTime, bool isError = false)
+        private void SetResults(DataTable table, string sqlStatement, TimeSpan elapsedTime, bool isError = false, bool showTiming = true)
         {
             if (table != null && table.Columns.Count == 0)
             {
                 table.Columns.Add("Results (" + ((int)elapsedTime.TotalMilliseconds).ToString("#,0") + " ms)", typeof(string));
                 table.Rows.Add("Command executed successfully");
-                SetResults(table, sqlStatement, elapsedTime, isError);
+                SetResults(table, sqlStatement, elapsedTime, isError, false);
                 return;
             }
 
@@ -507,6 +507,10 @@ namespace SqlEditor.ScriptResults
             sb.Append(sqlStatement);
             _queryRanges.Add(new TextRange(startOffset, sb.Length));
             sb.Append(Environment.NewLine);
+            if (showTiming)
+            {
+                sb.AppendLine("Results (" + ((int) elapsedTime.TotalMilliseconds).ToString("#,0") + " ms)");
+            }
             sb.Append(table == null ? string.Empty : table.AsFormattedString());
             sb.Append(Environment.NewLine);
             sb.Append(Environment.NewLine);
