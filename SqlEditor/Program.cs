@@ -27,6 +27,7 @@ namespace SqlEditor
             {
                 _log.Error("UNHANDLED exception occurred.");
                 _log.Error(ex.Message, ex);
+                Utilities.Logging.Log4NetHelper.FlushAllAppenders();
                 throw;
             }
         }
