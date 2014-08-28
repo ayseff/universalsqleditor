@@ -83,7 +83,7 @@ namespace SqlEditor
             {
                 var sel = sm.SelectionCollection[0];
                 if (sel.StartPosition.Line == sel.EndPosition.Line)
-                    txtLookFor.Text = sm.SelectedText;
+                    _tbSearchTerm.Text = sm.SelectedText;
                 else
                     _search.SetScanRegion(sel);
             }
@@ -93,7 +93,7 @@ namespace SqlEditor
                 Caret caret = editor.ActiveTextAreaControl.Caret;
                 int start = TextUtilities.FindWordStart(editor.Document, caret.Offset);
                 int endAt = TextUtilities.FindWordEnd(editor.Document, caret.Offset);
-                txtLookFor.Text = editor.Document.GetText(start, endAt - start);
+                _tbSearchTerm.Text = editor.Document.GetText(start, endAt - start);
             }
 
             ReplaceMode = replaceMode;
@@ -101,17 +101,17 @@ namespace SqlEditor
             this.Owner = (Form)editor.TopLevelControl;
             this.Show();
 
-            txtLookFor.SelectAll();
-            txtLookFor.Focus();
+            _tbSearchTerm.SelectAll();
+            _tbSearchTerm.Focus();
         }
 
         public bool ReplaceMode
         {
-            get { return txtReplaceWith.Visible; }
+            get { return _tbReplacementText.Visible; }
             set
             {
                 btnReplace.Visible = btnReplaceAll.Visible = value;
-                lblReplaceWith.Visible = txtReplaceWith.Visible = value;
+                lblReplaceWith.Visible = _tbReplacementText.Visible = value;
                 btnHighlightAll.Visible = !value;
                 this.AcceptButton = value ? btnReplace : btnFindNext;
                 UpdateTitleBar();
@@ -131,17 +131,23 @@ namespace SqlEditor
 
         public TextRange FindNext(bool viaF3, bool searchBackward, string messageIfNotFound)
         {
+            _lblStatus.Text = string.Empty;
+            _lblStatus.ForeColor = Color.Blue;
+
             RemoveHighlighting();
-            if (string.IsNullOrEmpty(txtLookFor.Text))
+            if (string.IsNullOrEmpty(_tbSearchTerm.Text))
             {
-                Dialog.ShowDialog(Application.ProductName, "No string specified to look for!", string.Empty);
+                _lblStatus.ForeColor = Color.Red;
+                _lblStatus.Text = "Nothing specified to look for.";
                 return null;
             }
+
             _lastSearchWasBackward = searchBackward;
-            _search.LookFor = txtLookFor.Text;
+            _search.LookFor = _tbSearchTerm.Text;
             _search.MatchCase = chkMatchCase.Checked;
             _search.MatchWholeWordOnly = chkMatchWholeWord.Checked;
 
+            _editor.Focus();
             var caret = _editor.ActiveTextAreaControl.Caret;
             if (viaF3 && _search.HasScanRegion && !caret.Offset.
                 IsInRange(_search.BeginOffset, _search.EndOffset))
@@ -151,12 +157,17 @@ namespace SqlEditor
                 UpdateTitleBar();
             }
 
-            int startFrom = caret.Offset - (searchBackward ? 1 : 0);
+            var startFrom = caret.Offset - (searchBackward ? 1 : 0);
             var range = _search.FindNext(startFrom, searchBackward, out _lastSearchLoopedAround);
             if (range != null)
                 SelectResult(range);
             else if (messageIfNotFound != null)
-                MessageBox.Show(messageIfNotFound);
+            {
+                //Dialog.ShowDialog(Application.ProductName, messageIfNotFound, string.Empty);
+                _lblStatus.ForeColor = Color.Red;
+                _lblStatus.Text = messageIfNotFound;
+            }
+            Focus();
             return range;
         }
 
@@ -185,7 +196,7 @@ namespace SqlEditor
                 group.ClearMarkers();
             else
             {
-                _search.LookFor = txtLookFor.Text;
+                _search.LookFor = _tbSearchTerm.Text;
                 _search.MatchCase = chkMatchCase.Checked;
                 _search.MatchWholeWordOnly = chkMatchWholeWord.Checked;
 
@@ -240,7 +251,6 @@ namespace SqlEditor
             {
                 SaveSettings();
             }
-
         }
 
         private void SaveSettings()
@@ -265,8 +275,8 @@ namespace SqlEditor
         private void BtnReplace_Click(object sender, EventArgs e)
         {
             var sm = _editor.ActiveTextAreaControl.SelectionManager;
-            if (string.Equals(sm.SelectedText, txtLookFor.Text, StringComparison.OrdinalIgnoreCase))
-                InsertText(txtReplaceWith.Text);
+            if (string.Equals(sm.SelectedText, _tbSearchTerm.Text, StringComparison.OrdinalIgnoreCase))
+                InsertText(_tbReplacementText.Text);
             FindNext(false, _lastSearchWasBackward, "Text not found.");
         }
 
@@ -277,6 +287,7 @@ namespace SqlEditor
             // (e.g. replace "red" with "very red") we must avoid looping around and
             // replacing forever! To fix, start replacing at beginning of region (by 
             // moving the caret) and stop as soon as we loop around.
+            _editor.Focus();
             _editor.ActiveTextAreaControl.Caret.Position =
                 _editor.Document.OffsetToPosition(_search.BeginOffset);
 
@@ -290,22 +301,28 @@ namespace SqlEditor
 
                     // Replace
                     count++;
-                    InsertText(txtReplaceWith.Text);
+                    InsertText(_tbReplacementText.Text);
                 }
             }
             finally
             {
                 _editor.Document.UndoStack.EndUndoGroup();
+                Focus();
             }
             if (count == 0)
             {
-                Dialog.ShowDialog(Application.ProductName, "No occurrences found.", string.Empty);
+                _lblStatus.ForeColor = Color.Red;
+                _lblStatus.Text = "No occurrences found.";
+                //Dialog.ShowDialog(Application.ProductName, "No occurrences found.", string.Empty);
             }
             else
             {
-                Dialog.ShowDialog(Application.ProductName, string.Format("Replaced {0} occurrence{1}.", count, count > 1 ? "s" : string.Empty), string.Empty);
-                Close();
+                _lblStatus.ForeColor = Color.Blue;
+                _lblStatus.Text = string.Format("Replaced {0} occurrence{1}.", count, count > 1 ? "s" : string.Empty);
+                //Dialog.ShowDialog(Application.ProductName, string.Format("Replaced {0} occurrence{1}.", count, count > 1 ? "s" : string.Empty), string.Empty);
+                //Close();
             }
+            Focus();
         }
 
         private void InsertText(string text)
@@ -327,7 +344,12 @@ namespace SqlEditor
             }
         }
 
-        public string LookFor { get { return txtLookFor.Text; } }
+        public string LookFor { get { return _tbSearchTerm.Text; } }
+
+        private void TxtReplaceWith_Enter(object sender, EventArgs e)
+        {
+            _tbReplacementText.SelectAll();
+        }
 
     }
 

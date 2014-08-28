@@ -30,8 +30,8 @@
 		{
             this.label1 = new System.Windows.Forms.Label();
             this.lblReplaceWith = new System.Windows.Forms.Label();
-            this.txtLookFor = new System.Windows.Forms.TextBox();
-            this.txtReplaceWith = new System.Windows.Forms.TextBox();
+            this._tbSearchTerm = new System.Windows.Forms.TextBox();
+            this._tbReplacementText = new System.Windows.Forms.TextBox();
             this.chkMatchWholeWord = new System.Windows.Forms.CheckBox();
             this.chkMatchCase = new System.Windows.Forms.CheckBox();
             this.btnFindNext = new Infragistics.Win.Misc.UltraButton();
@@ -40,6 +40,7 @@
             this.btnReplace = new Infragistics.Win.Misc.UltraButton();
             this.btnReplaceAll = new Infragistics.Win.Misc.UltraButton();
             this.btnCancel = new Infragistics.Win.Misc.UltraButton();
+            this._lblStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -60,23 +61,24 @@
             this.lblReplaceWith.TabIndex = 2;
             this.lblReplaceWith.Text = "Re&place with:";
             // 
-            // txtLookFor
+            // _tbSearchTerm
             // 
-            this.txtLookFor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this._tbSearchTerm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLookFor.Location = new System.Drawing.Point(90, 12);
-            this.txtLookFor.Name = "txtLookFor";
-            this.txtLookFor.Size = new System.Drawing.Size(322, 20);
-            this.txtLookFor.TabIndex = 1;
+            this._tbSearchTerm.Location = new System.Drawing.Point(90, 12);
+            this._tbSearchTerm.Name = "_tbSearchTerm";
+            this._tbSearchTerm.Size = new System.Drawing.Size(322, 20);
+            this._tbSearchTerm.TabIndex = 1;
             // 
-            // txtReplaceWith
+            // _tbReplacementText
             // 
-            this.txtReplaceWith.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this._tbReplacementText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtReplaceWith.Location = new System.Drawing.Point(90, 38);
-            this.txtReplaceWith.Name = "txtReplaceWith";
-            this.txtReplaceWith.Size = new System.Drawing.Size(322, 20);
-            this.txtReplaceWith.TabIndex = 2;
+            this._tbReplacementText.Location = new System.Drawing.Point(90, 38);
+            this._tbReplacementText.Name = "_tbReplacementText";
+            this._tbReplacementText.Size = new System.Drawing.Size(322, 20);
+            this._tbReplacementText.TabIndex = 2;
+            this._tbReplacementText.Enter += new System.EventHandler(this.TxtReplaceWith_Enter);
             // 
             // chkMatchWholeWord
             // 
@@ -158,12 +160,21 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // _lblStatus
+            // 
+            this._lblStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this._lblStatus.Location = new System.Drawing.Point(0, 166);
+            this._lblStatus.Name = "_lblStatus";
+            this._lblStatus.Size = new System.Drawing.Size(424, 16);
+            this._lblStatus.TabIndex = 28;
+            // 
             // FrmFindReplace
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(424, 160);
+            this.ClientSize = new System.Drawing.Size(424, 182);
+            this.Controls.Add(this._lblStatus);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnReplaceAll);
             this.Controls.Add(this.btnReplace);
@@ -171,8 +182,8 @@
             this.Controls.Add(this.btnFindNext);
             this.Controls.Add(this.chkMatchCase);
             this.Controls.Add(this.chkMatchWholeWord);
-            this.Controls.Add(this.txtReplaceWith);
-            this.Controls.Add(this.txtLookFor);
+            this.Controls.Add(this._tbReplacementText);
+            this.Controls.Add(this._tbSearchTerm);
             this.Controls.Add(this.lblReplaceWith);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnHighlightAll);
@@ -181,7 +192,7 @@
             this.Location = global::SqlEditor.Properties.Settings.Default.FrmFindReplace_Location;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(334, 193);
+            this.MinimumSize = new System.Drawing.Size(440, 216);
             this.Name = "FrmFindReplace";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -196,8 +207,8 @@
 
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label lblReplaceWith;
-		private System.Windows.Forms.TextBox txtLookFor;
-        private System.Windows.Forms.TextBox txtReplaceWith;
+		private System.Windows.Forms.TextBox _tbSearchTerm;
+        private System.Windows.Forms.TextBox _tbReplacementText;
 		private System.Windows.Forms.CheckBox chkMatchWholeWord;
         private System.Windows.Forms.CheckBox chkMatchCase;
         private Infragistics.Win.Misc.UltraButton btnFindNext;
@@ -206,5 +217,6 @@
         private Infragistics.Win.Misc.UltraButton btnReplace;
         private Infragistics.Win.Misc.UltraButton btnReplaceAll;
         private Infragistics.Win.Misc.UltraButton btnCancel;
+        private System.Windows.Forms.Label _lblStatus;
 	}
 }
