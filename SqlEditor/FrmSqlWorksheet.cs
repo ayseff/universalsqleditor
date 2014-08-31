@@ -587,7 +587,9 @@ namespace SqlEditor
                         break;
                     
                     case "Find":
-                        _findForm.ShowFor(_sqlEditor, false);
+                        var findForm2 = new FrmFindReplace1();
+                        findForm2.ShowFor(_sqlEditor, false);
+                        //_findForm.ShowFor(_sqlEditor, false);
                         break;
 
                     case "Replace":

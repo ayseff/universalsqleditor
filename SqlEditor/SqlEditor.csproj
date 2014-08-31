@@ -246,6 +246,12 @@
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />
     <Compile Include="Databases\ObjectScripter.cs" />
+    <Compile Include="FrmFindReplace1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmFindReplace1.designer.cs">
+      <DependentUpon>FrmFindReplace1.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmTextVisualizer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -428,6 +434,9 @@
     <Compile Include="WaitActionStatus.cs" />
     <Compile Include="SqlTextEditor\XmlFoldingStrategy.cs" />
     <Compile Include="SqlTextEditor\XmlFormattingStrategy.cs" />
+    <EmbeddedResource Include="FrmFindReplace1.resx">
+      <DependentUpon>FrmFindReplace1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmTextVisualizer.resx">
       <DependentUpon>FrmTextVisualizer.cs</DependentUpon>
     </EmbeddedResource>
