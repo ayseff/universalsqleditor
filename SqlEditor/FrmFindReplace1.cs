@@ -61,9 +61,30 @@ namespace SqlEditor
         {
             set
             {
+                if (_editor != null)
+                {
+                    _editor.Document.DocumentChanged -= DocumentOnDocumentChanged;
+                }
                 _editor = value;
                 _search.Document = _editor.Document;
                 UpdateTitleBar();
+            }
+        }
+
+        private void DocumentOnDocumentChanged(object sender, DocumentEventArgs documentEventArgs)
+        {
+            if (this.Visible)
+            {
+                var sm = _editor.ActiveTextAreaControl.SelectionManager;
+                if (sm.HasSomethingSelected && sm.SelectionCollection.Count == 1)
+                {
+                    _cbInSelection.Enabled = true;
+                }
+                else
+                {
+                    _cbInSelection.CheckState = CheckState.Unchecked;
+                    _cbInSelection.Enabled = true;
+                }
             }
         }
 
@@ -131,14 +152,23 @@ namespace SqlEditor
             FindNext(false, false, "Text not found");
         }
 
+        private void InitializeSearch()
+        {
+            _search.BeginOffset
+        }
+
 
 
         public TextRange FindNext(bool viaF3, bool searchBackward, string messageIfNotFound)
         {
+            // UPDATE LABEL
             _ulStatus.Text = string.Empty;
             _ulStatus.ForeColor = Color.Blue;
 
+            // Reset highlighting if any
             RemoveHighlighting();
+
+            // Ensure we have a valid search term
             if (string.IsNullOrEmpty(_ucFind.Text))
             {
                 _ulStatus.ForeColor = Color.Red;
@@ -354,7 +384,6 @@ namespace SqlEditor
         {
             _ucReplaceWith.SelectAll();
         }
-
     }
 
 
@@ -362,7 +391,8 @@ namespace SqlEditor
     /// editor's IDocument... it's like Find box without a GUI.</summary>
     public class TextEditorSearcherNew : IDisposable
     {
-        private Regex _regex ;
+        private Regex _regex;
+        private TextMarker _region;
 
         IDocument _document;
         public IDocument Document
@@ -387,7 +417,7 @@ namespace SqlEditor
         // not the editor control, so TextEditorSearcher doesn't need a reference 
         // to the TextEditorControl. After adding the marker to the document, we
         // must remember to remove it when it is no longer needed.
-        TextMarker _region;
+        //private TextMarker _region;
         /// <summary>Sets the region to search. The region is updated 
         /// automatically as the document changes.</summary>
         public void SetScanRegion(ISelection sel)
