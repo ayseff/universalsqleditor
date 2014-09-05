@@ -431,6 +431,7 @@
     <Compile Include="SqlQueryResult.cs" />
     <Compile Include="SqlTextEditor\SqlEditorExtensions.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="TextEditorSearcherNew.cs" />
     <Compile Include="WaitActionStatus.cs" />
     <Compile Include="SqlTextEditor\XmlFoldingStrategy.cs" />
     <Compile Include="SqlTextEditor\XmlFormattingStrategy.cs" />

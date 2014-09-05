@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using ICSharpCode.TextEditor.Document;
 using ICSharpCode.TextEditor;
@@ -15,19 +13,31 @@ using log4net;
 
 namespace SqlEditor
 {
+    public enum SearchMode
+    {
+        Find = 0,
+        Replace = 1,
+        Mark = 2
+    }
+
+    public enum SearchDirection
+    {
+        Down = 0,
+        Up = 1
+    }
+
     public partial class FrmFindReplace1 : Form
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly Dictionary<TextEditorControl, HighlightGroup> _highlightGroups = new Dictionary<TextEditorControl, HighlightGroup>();
-        private bool _lastSearchWasBackward;
         private bool _lastSearchLoopedAround;
-        private readonly TextEditorSearcher _search;
+        private readonly TextEditorSearcherNew _searcher;
         private TextEditorControl _editor;
 
         public FrmFindReplace1()
         {
             InitializeComponent();
-            _search = new TextEditorSearcher();
+            _searcher = new TextEditorSearcherNew();
 
             LoadSettings();
         }
@@ -62,116 +72,160 @@ namespace SqlEditor
             set
             {
                 _editor = value;
-                _search.Document = _editor.Document;
+                _searcher.Document = _editor.Document;
                 UpdateTitleBar();
             }
         }
 
         private void UpdateTitleBar()
         {
-            var text = ReplaceMode ? "Find & Replace" : "Find";
-            if (_editor != null && _editor.FileName != null)
-                text += " - " + Path.GetFileName(_editor.FileName);
-            if (_search.HasScanRegion)
-                text += " (selection only)";
-            this.Text = text;
+            //var text = ReplaceMode ? "Find & Replace" : "Find";
+            //if (_editor != null && _editor.FileName != null)
+            //    text += " - " + Path.GetFileName(_editor.FileName);
+            //if (_searcher.HasScanRegion)
+            //    text += " (selection only)";
+            //this.Text = text;
         }
 
-        public void ShowFor(TextEditorControl editor, bool replaceMode)
+        public void ShowFor(TextEditorControl editor, SearchMode searchMode)
         {
             Editor = editor;
+            _searcher.ClearScanRegion();
 
-            _search.ClearScanRegion();
+            string searchText = null;
             var sm = editor.ActiveTextAreaControl.SelectionManager;
             if (sm.HasSomethingSelected && sm.SelectionCollection.Count == 1)
             {
                 var sel = sm.SelectionCollection[0];
                 if (sel.StartPosition.Line == sel.EndPosition.Line)
-                    _ucFind.Text = sm.SelectedText;
+                {
+                    searchText = sm.SelectedText;
+                }
                 else
-                    _search.SetScanRegion(sel);
+                {
+                    _searcher.SetScanRegion(sel);
+                }
             }
             else
             {
                 // Get the current word that the caret is on
-                Caret caret = editor.ActiveTextAreaControl.Caret;
-                int start = TextUtilities.FindWordStart(editor.Document, caret.Offset);
-                int endAt = TextUtilities.FindWordEnd(editor.Document, caret.Offset);
-                _ucFind.Text = editor.Document.GetText(start, endAt - start);
+                var caret = editor.ActiveTextAreaControl.Caret;
+                var start = TextUtilities.FindWordStart(editor.Document, caret.Offset);
+                var endAt = TextUtilities.FindWordEnd(editor.Document, caret.Offset);
+                searchText = editor.Document.GetText(start, endAt - start);
             }
-
-            ReplaceMode = replaceMode;
 
             this.Owner = (Form)editor.TopLevelControl;
             this.Show();
 
-            _ucFind.SelectAll();
-            _ucFind.Focus();
-        }
-
-        public bool ReplaceMode
-        {
-            get { return _ucReplaceWith.Visible; }
-            set
+            // Activate appropriate tab
+            if (searchMode == SearchMode.Find)
             {
-                //btnReplace.Visible = btnReplaceAll.Visible = value;
-                //lblReplaceWith.Visible = _ucReplaceWith.Visible = value;
-                //btnHighlightAll.Visible = !value;
-                //this.AcceptButton = value ? btnReplace : btnFindNext;
-                UpdateTitleBar();
+                _utcTabs.Tabs["Find"].Selected = true;
+                if (searchText != null)
+                {
+                    _ucFind.Text = searchText;
+                }
+                _ucFind.SelectAll();
+                _ucFind.Focus();
+            }
+            else if (searchMode == SearchMode.Replace)
+            {
+                _utcTabs.Tabs["Replace"].Selected = true;
+                if (searchText != null)
+                {
+                    _ucReplaceFind.Text = searchText;
+                }
+                _cbInSelection.Checked = _searcher.HasScanRegion;
+                _ucReplaceFind.SelectAll();
+                _ucReplaceFind.Focus();
+            }
+            else if (searchMode == SearchMode.Mark)
+            {
+                _utcTabs.Tabs["Mark"].Selected = true;
+                //_ucFind.Focus();
             }
         }
 
         private void BtnFindPrevious_Click(object sender, EventArgs e)
         {
-            FindNext(false, true, "Text not found");
+            FindNext();
         }
         private void BtnFindNext_Click(object sender, EventArgs e)
         {
-            FindNext(false, false, "Text not found");
+            FindNext();
         }
 
 
 
-        public TextRange FindNext(bool viaF3, bool searchBackward, string messageIfNotFound)
+        public TextRange FindNext()
         {
-            _ulStatus.Text = string.Empty;
-            _ulStatus.ForeColor = Color.Blue;
+            _ulStatus.Text = "Ready.";
+            _ulStatus.ForeColor = Color.Green;
 
             RemoveHighlighting();
-            if (string.IsNullOrEmpty(_ucFind.Text))
+
+            var searchText = _ucFind.Text;
+            if (string.IsNullOrEmpty(searchText))
             {
                 _ulStatus.ForeColor = Color.Red;
-                _ulStatus.Text = "Nothing specified to look for.";
+                _ulStatus.Text = "Nothing specified to find.";
                 return null;
             }
 
-            _lastSearchWasBackward = searchBackward;
-            _search.LookFor = _ucFind.Text;
-            _search.MatchCase = _cbMatchCase.Checked;
-            _search.MatchWholeWordOnly = _cbMatchWholeWord.Checked;
+            //_lastSearchWasBackward = _searcher.SearchDirection == SearchDirection.Up;
+            _searcher.SearchTerm = searchText;
 
-            _editor.Focus();
+            // Make sure that the editor we're searching for is focused
+            //if (!_editor.Visible)
+            //{
+            //    _editor.Focus();
+            //    Focus();
+            //}
+
+            //var caret = _editor.ActiveTextAreaControl.Caret;
+            //if (viaF3 && _searcher.HasScanRegion && !caret.Offset.
+            //    IsInRange(_searcher.BeginOffset, _searcher.EndOffset))
+            //{
+            //    // user moved outside of the originally selected region
+            //    _searcher.ClearScanRegion();
+            //    UpdateTitleBar();
+            //}
+
             var caret = _editor.ActiveTextAreaControl.Caret;
-            if (viaF3 && _search.HasScanRegion && !caret.Offset.
-                IsInRange(_search.BeginOffset, _search.EndOffset))
+            int startFrom = caret.Offset;
+            if (_searcher.SearchDirection == _searcher.PreviousSearchDirection && _searcher.SearchDirection == SearchDirection.Down)
             {
-                // user moved outside of the originally selected region
-                _search.ClearScanRegion();
-                UpdateTitleBar();
+                startFrom = caret.Offset;
             }
-
-            var startFrom = caret.Offset - (searchBackward ? 1 : 0);
-            var range = _search.FindNext(startFrom, searchBackward, out _lastSearchLoopedAround);
+            else if (_searcher.SearchDirection == _searcher.PreviousSearchDirection && _searcher.SearchDirection == SearchDirection.Up)
+            {
+                startFrom = caret.Offset - 1;
+            }
+            else if (_searcher.SearchDirection == SearchDirection.Down && _searcher.PreviousSearchDirection == SearchDirection.Up)
+            {
+                startFrom = caret.Offset;
+            }
+            else if (_searcher.SearchDirection == SearchDirection.Up && _searcher.PreviousSearchDirection == SearchDirection.Down)
+            {
+                startFrom = caret.Offset - 1;
+            }
+            //startFrom = caret.Offset + (_searcher.SearchDirection == SearchDirection.Down ? 1 : 0);
+            var range = _searcher.FindNext(startFrom, out _lastSearchLoopedAround);
             if (range != null)
-                SelectResult(range);
-            else if (messageIfNotFound != null)
             {
-                //Dialog.ShowDialog(Application.ProductName, messageIfNotFound, string.Empty);
-                _ulStatus.ForeColor = Color.Red;
-                _ulStatus.Text = messageIfNotFound;
+                SelectResult(range);
+                if (_lastSearchLoopedAround)
+                {
+                    _ulStatus.Text = "Match was found at the " + (_searcher.SearchDirection == SearchDirection.Down ?  "beginning" : "end" ) + " of the document.";
+                    _ulStatus.ForeColor = Color.Green;
+                }
             }
-            Focus();
+            else
+            {
+                _ulStatus.ForeColor = Color.Red;
+                _ulStatus.Text = "Nothing found.";
+            }
             return range;
         }
 
@@ -200,15 +254,15 @@ namespace SqlEditor
                 group.ClearMarkers();
             else
             {
-                _search.LookFor = _ucFind.Text;
-                _search.MatchCase = _cbMatchCase.Checked;
-                _search.MatchWholeWordOnly = _cbMatchWholeWord.Checked;
+                _searcher.SearchTerm = _ucFind.Text;
+                _searcher.MatchCase = _cbMatchCase.Checked;
+                _searcher.MatchWholeWordOnly = _cbMatchWholeWord.Checked;
 
                 int offset = 0, count = 0;
                 for (; ; )
                 {
                     bool looped;
-                    TextRange range = _search.FindNext(offset, false, out looped);
+                    TextRange range = _searcher.FindNext(offset, out looped);
                     if (range == null || looped)
                         break;
                     offset = range.Offset + range.Length;
@@ -248,7 +302,7 @@ namespace SqlEditor
                 Hide();
 
                 // Discard search region
-                _search.ClearScanRegion();
+                _searcher.ClearScanRegion();
                 _editor.Refresh(); // must repaint manually
             }
             else
@@ -281,7 +335,7 @@ namespace SqlEditor
             var sm = _editor.ActiveTextAreaControl.SelectionManager;
             if (string.Equals(sm.SelectedText, _ucFind.Text, StringComparison.OrdinalIgnoreCase))
                 InsertText(_ucReplaceWith.Text);
-            FindNext(false, _lastSearchWasBackward, "Text not found.");
+            FindNext();
         }
 
         private void BtnReplaceAll_Click(object sender, EventArgs e)
@@ -293,12 +347,12 @@ namespace SqlEditor
             // moving the caret) and stop as soon as we loop around.
             _editor.Focus();
             _editor.ActiveTextAreaControl.Caret.Position =
-                _editor.Document.OffsetToPosition(_search.BeginOffset);
+                _editor.Document.OffsetToPosition(_searcher.BeginOffset);
 
             _editor.Document.UndoStack.StartUndoGroup();
             try
             {
-                while (FindNext(false, false, null) != null)
+                while (FindNext() != null)
                 {
                     if (_lastSearchLoopedAround)
                         break;
@@ -355,250 +409,96 @@ namespace SqlEditor
             _ucReplaceWith.SelectAll();
         }
 
-    }
-
-
-    /// <summary>This class finds occurrences of a search string in a text 
-    /// editor's IDocument... it's like Find box without a GUI.</summary>
-    public class TextEditorSearcherNew : IDisposable
-    {
-        private Regex _regex ;
-
-        IDocument _document;
-        public IDocument Document
+        private void SearchMode_CheckedChanged(object sender, EventArgs e)
         {
-            get { return _document; }
-            set
+            if (_rbSearchModeNormal.Checked)
             {
-                if (_document != value)
-                {
-                    ClearScanRegion();
-                    _document = value;
-                }
+                _searcher.IsRegex = false;
+                _cbMatchWholeWord.Enabled = true;
+                _rbDirectionUp.Enabled = true;
+                _rbDirectionDown.Enabled = true;
+            }
+            else if (_rbSearchModeRegularExpression.Checked)
+            {
+                _searcher.IsRegex = true;
+                _cbMatchWholeWord.Checked = false;
+                _cbMatchWholeWord.Enabled = false;
+                _rbDirectionUp.Checked = false;
+                _rbDirectionDown.Checked = true;
+                _rbDirectionUp.Enabled = false;
+                _rbDirectionDown.Enabled = false;
             }
         }
 
-        // I would have used the TextAnchor class to represent the beginning and 
-        // end of the region to scan while automatically adjusting to changes in 
-        // the document--but for some reason it is sealed and its constructor is 
-        // internal. Instead I use a TextMarker, which is perhaps even better as 
-        // it gives me the opportunity to highlight the region. Note that all the 
-        // markers and coloring information is associated with the text document, 
-        // not the editor control, so TextEditorSearcher doesn't need a reference 
-        // to the TextEditorControl. After adding the marker to the document, we
-        // must remember to remove it when it is no longer needed.
-        TextMarker _region;
-        /// <summary>Sets the region to search. The region is updated 
-        /// automatically as the document changes.</summary>
-        public void SetScanRegion(ISelection sel)
+        private void CbMatchWholeWord_CheckedChanged(object sender, EventArgs e)
         {
-            SetScanRegion(sel.Offset, sel.Length);
-        }
-        /// <summary>Sets the region to search. The region is updated 
-        /// automatically as the document changes.</summary>
-        public void SetScanRegion(int offset, int length)
-        {
-            var bkgColor = _document.HighlightingStrategy.GetColorFor("Default").BackgroundColor;
-            _region = new TextMarker(offset, length, TextMarkerType.SolidBlock,
-                bkgColor.HalfMix(Color.FromArgb(160, 160, 160)));
-            _document.MarkerStrategy.AddMarker(_region);
-        }
-        public bool HasScanRegion
-        {
-            get { return _region != null; }
-        }
-        public void ClearScanRegion()
-        {
-            if (_region != null)
+            if (_cbMatchWholeWord.Checked)
             {
-                _document.MarkerStrategy.RemoveMarker(_region);
-                _region = null;
-            }
-        }
-        public void Dispose() { ClearScanRegion(); GC.SuppressFinalize(this); }
-        ~TextEditorSearcherNew() { Dispose(); }
-
-        /// <summary>Begins the start offset for searching</summary>
-        public int BeginOffset
-        {
-            get
-            {
-                if (_region != null)
-                    return _region.Offset;
-                else
-                    return 0;
-            }
-        }
-        /// <summary>Begins the end offset for searching</summary>
-        public int EndOffset
-        {
-            get
-            {
-                if (_region != null)
-                    return _region.EndOffset;
-                else
-                    return _document.TextLength;
-            }
-        }
-
-        public bool MatchCase { get; set; }
-
-        public bool MatchWholeWordOnly { get; set; }
-
-        string _searchTerm;
-        string _lookFor2; // uppercase in case-insensitive mode
-        public string SearchTerm
-        {
-            get { return _searchTerm; }
-            set { _searchTerm = value; }
-        }
-
-        public bool IsRegex { get; set; }
-
-        public bool WrapAround { get; set; }
-
-        /// <summary>Finds next instance of LookFor, according to the search rules 
-        /// (MatchCase, MatchWholeWordOnly).</summary>
-        /// <param name="beginAtOffset">Offset in Document at which to begin the search</param>
-        /// <param name="searchBackward">Whether to search backwards.</param>
-        /// <param name="loopedAround">Whether to loop around.</param>
-        /// <remarks>If there is a match at beginAtOffset precisely, it will be returned.</remarks>
-        /// <returns>Region of document that matches the search string</returns>
-        public TextRange FindNext(int beginAtOffset, bool searchBackward, out bool loopedAround)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(_searchTerm));
-            loopedAround = false;
-
-            int startAt = BeginOffset, endAt = EndOffset;
-            int curOffs = beginAtOffset.InRange(startAt, endAt);
-            TextRange result;
-
-            if (IsRegex)
-            {
-                _lookFor2 = _searchTerm;
-                var flags = RegexOptions.Compiled;
-                if (MatchCase)
-                {
-                    flags = flags | RegexOptions.IgnoreCase;
-                }
-                try
-                {
-                    _regex = new Regex(SearchTerm, flags);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Invalid regular expression: " + ex.Message);
-                }
-
-                // Run a search
-                result = FindNextRegexIn(curOffs, endAt);
-                if (result == null && WrapAround)
-                {
-                    loopedAround = true;
-                    result = FindNextRegexIn(startAt, curOffs);
-                }
+                _searcher.MatchWholeWordOnly = true;
             }
             else
             {
-                _lookFor2 = MatchCase ? _searchTerm : _searchTerm.ToUpperInvariant();
-                if (searchBackward)
+                _searcher.MatchWholeWordOnly = false;
+            }
+        }
+
+        private void CbMatchCase_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_cbMatchCase.Checked)
+            {
+                _searcher.MatchCase = true;
+            }
+            else
+            {
+                _searcher.MatchCase = false;
+            }
+        }
+
+        private void RbDirection_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_rbDirectionDown.Checked)
+            {
+                _searcher.SearchDirection = SearchDirection.Down;
+            }
+            else
+            {
+                _searcher.SearchDirection = SearchDirection.Up;
+            }
+        }
+
+        private void CbWrapAround_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_cbWrapAround.Checked)
+            {
+                _searcher.WrapAround = true;
+            }
+            else
+            {
+                _searcher.WrapAround = false;
+            }
+        }
+
+        private void CbInSelection_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_cbInSelection.Checked)
+            {
+                var sm = _editor.ActiveTextAreaControl.SelectionManager;
+                if (sm.HasSomethingSelected && sm.SelectionCollection.Count == 1)
                 {
-                    result = FindNextIn(startAt, curOffs, true);
-                    if (result == null && WrapAround)
-                    {
-                        loopedAround = true;
-                        result = FindNextIn(curOffs, endAt, true);
-                    }
+                    var sel = sm.SelectionCollection[0];
+                    _searcher.SetScanRegion(sel);
                 }
                 else
                 {
-                    result = FindNextIn(curOffs, endAt, false);
-                    if (result == null && WrapAround)
-                    {
-                        loopedAround = true;
-                        result = FindNextIn(startAt, curOffs, false);
-                    }
-                }
-            }
-            
-            return result;
-        }
-
-        private TextRange FindNextIn(int offset1, int offset2, bool searchBackward)
-        {
-            Debug.Assert(offset2 >= offset1);
-            offset2 -= _searchTerm.Length;
-
-            // Make behavior decisions before starting search loop
-            Func<char, char, bool> matchFirstCh;
-            Func<int, bool> matchWord;
-            if (MatchCase)
-                matchFirstCh = (lookFor, c) => (lookFor == c);
-            else
-                matchFirstCh = (lookFor, c) => (lookFor == Char.ToUpperInvariant(c));
-            if (MatchWholeWordOnly)
-                matchWord = IsWholeWordMatch;
-            else
-                matchWord = IsPartWordMatch;
-
-            // Search
-            var lookForCh = _lookFor2[0];
-            if (searchBackward)
-            {
-                for (var offset = offset2; offset >= offset1; offset--)
-                {
-                    if (matchFirstCh(lookForCh, _document.GetCharAt(offset))
-                        && matchWord(offset))
-                        return new TextRange(offset, _searchTerm.Length);
+                    Dialog.ShowErrorDialog(Application.ProductName, "Editor must have a selection to use this option.",
+                        string.Empty, null);
+                    _cbInSelection.Checked = false;
                 }
             }
             else
             {
-                for (var offset = offset1; offset <= offset2; offset++)
-                {
-                    if (matchFirstCh(lookForCh, _document.GetCharAt(offset))
-                        && matchWord(offset))
-                        return new TextRange(offset, _searchTerm.Length);
-                }
+                _searcher.ClearScanRegion();
             }
-            return null;
-        }
-
-        private TextRange FindNextRegexIn(int offset1, int offset2)
-        {
-            Debug.Assert(offset2 >= offset1);
-            var searchText = _document.GetText(offset1, offset2 - offset1);
-            var match = _regex.Match(searchText, offset1);
-            if (match.Success)
-            {
-                return new TextRange(match.Index, match.Length); 
-            }
-            return null;
-        }
-        private bool IsWholeWordMatch(int offset)
-        {
-            if (IsWordBoundary(offset) && IsWordBoundary(offset + _searchTerm.Length))
-                return IsPartWordMatch(offset);
-            else
-                return false;
-        }
-        private bool IsWordBoundary(int offset)
-        {
-            return offset <= 0 || offset >= _document.TextLength ||
-                !IsAlphaNumeric(offset - 1) || !IsAlphaNumeric(offset);
-        }
-        private bool IsAlphaNumeric(int offset)
-        {
-            char c = _document.GetCharAt(offset);
-            return Char.IsLetterOrDigit(c) || c == '_';
-        }
-        private bool IsPartWordMatch(int offset)
-        {
-            string substr = _document.GetText(offset, _searchTerm.Length);
-            if (!MatchCase)
-                substr = substr.ToUpperInvariant();
-            return substr == _lookFor2;
         }
     }
-
 }
