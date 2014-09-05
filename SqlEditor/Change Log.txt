@@ -9,6 +9,7 @@
   - Fixed an issue where refresh button was enabled on query results before any query was run. Clicking on a button in that state caused a crash
   - Fixed an issue where appending text to SQL worksheet was appending text in overwrite mode. Text is now inserted
   - Fixed an issue where a completely commented SQL statement was attempted to be run as part of a Run as Script option
+  - Fixed an issue where row highlighting was not correct in query results grid after sorting
 Version: 0.3.2.0
   New Features:
   - Upgraded to Infragistics 14.1 controls

@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using Infragistics.Win.UltraWinGrid;
 using Infragistics.Win.UltraWinMaskedEdit;
 using Infragistics.Win.UltraWinToolbars;
@@ -66,7 +65,8 @@ namespace SqlEditor.QueryResults
         private bool _isBusy;
         private string _sql;
         private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-        private Infragistics.Win.Appearance _appearance = new Infragistics.Win.Appearance { BackColor = Color.LightYellow };
+        private readonly Infragistics.Win.Appearance _alternateRowAppearance = new Infragistics.Win.Appearance { BackColor = Color.LightYellow };
+        private readonly Infragistics.Win.Appearance _normalRowAppearance = new Infragistics.Win.Appearance { BackColor = Color.White };
         #endregion
 
 
@@ -566,10 +566,22 @@ namespace SqlEditor.QueryResults
             }
 
             if (showAlternateAppearance)
-            {                
-                for (var i = 0; i < _ugGrid.Rows.Count; i+=2)
+            {
+                SetAlternateRowAppearance();
+            }
+        }
+
+        private void SetAlternateRowAppearance()
+        {
+            for (var i = 0; i < _ugGrid.Rows.Count; ++i)
+            {
+                if (_ugGrid.Rows[i].VisibleIndex%2 == 1)
                 {
-                    _ugGrid.Rows[i].Appearance = _appearance;
+                    _ugGrid.Rows[i].Appearance = _normalRowAppearance;
+                }
+                else
+                {
+                    _ugGrid.Rows[i].Appearance = _alternateRowAppearance;
                 }
             }
         }
@@ -851,6 +863,7 @@ namespace SqlEditor.QueryResults
                 column.Editor.DataFilter = _nullColumnDataFilter;
                 column.CellActivation = Activation.ActivateOnly;
             }
+            _ugGrid.DisplayLayout.Override.RowAlternateAppearance.BackColor = Color.LightYellow;
         }
 
         private void CopyWithHeaders()
@@ -965,6 +978,18 @@ namespace SqlEditor.QueryResults
                 _log.Error(ex.Message, ex);
             }
 
+        }
+
+        private void UgGrid_AfterSortChange(object sender, BandEventArgs e)
+        {
+            try
+            {
+                SetAlternateRowAppearance();
+            }
+            catch (Exception ex)
+            {
+                _log.ErrorFormat(ex.Message, ex);
+            }
         }
     }
 }

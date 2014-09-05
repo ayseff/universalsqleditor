@@ -215,6 +215,7 @@ namespace SqlEditor.QueryResults
             this._ugGrid.TabIndex = 3;
             this._ugGrid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.UgGrid_InitializeLayout);
             this._ugGrid.DoubleClickCell += new Infragistics.Win.UltraWinGrid.DoubleClickCellEventHandler(this.UgGrid_DoubleClickCell);
+            this._ugGrid.AfterSortChange += new Infragistics.Win.UltraWinGrid.BandEventHandler(this.UgGrid_AfterSortChange);
             // 
             // _uaiActivity
             // 
