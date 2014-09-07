@@ -118,5 +118,29 @@ namespace SqlEditor.Properties {
                 this["FrmVisualizeData_Geometry"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FrmFindReplace_SearchTerms {
+            get {
+                return ((string)(this["FrmFindReplace_SearchTerms"]));
+            }
+            set {
+                this["FrmFindReplace_SearchTerms"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FrmFindReplace_ReplaceTerms {
+            get {
+                return ((string)(this["FrmFindReplace_ReplaceTerms"]));
+            }
+            set {
+                this["FrmFindReplace_ReplaceTerms"] = value;
+            }
+        }
     }
 }

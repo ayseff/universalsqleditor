@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             Infragistics.Win.UltraWinEditors.EditorButton editorButton1 = new Infragistics.Win.UltraWinEditors.EditorButton("Clear");
-            Infragistics.Win.Appearance appearance79 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance1 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinGrid.UltraGridBand ultraGridBand1 = new Infragistics.Win.UltraWinGrid.UltraGridBand("BindingList`1", -1);
             Infragistics.Win.Appearance appearance2 = new Infragistics.Win.Appearance();
@@ -45,22 +45,22 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool4 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Options");
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool8 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Help");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool15 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Exit");
-            Infragistics.Win.UltraWinToolbars.ContextualTabGroup contextualTabGroup1 = new Infragistics.Win.UltraWinToolbars.ContextualTabGroup("Logging Tools");
-            Infragistics.Win.UltraWinToolbars.ContextualTabGroup contextualTabGroup2 = new Infragistics.Win.UltraWinToolbars.ContextualTabGroup("Database Explorer Tools");
-            Infragistics.Win.UltraWinToolbars.ContextualTabGroup contextualTabGroup3 = new Infragistics.Win.UltraWinToolbars.ContextualTabGroup("SQL History Tools");
-            Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab1 = new Infragistics.Win.UltraWinToolbars.RibbonTab("SQL History");
-            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup1 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("SQL History");
+            Infragistics.Win.UltraWinToolbars.ContextualTabGroup contextualTabGroup4 = new Infragistics.Win.UltraWinToolbars.ContextualTabGroup("Logging Tools");
+            Infragistics.Win.UltraWinToolbars.ContextualTabGroup contextualTabGroup5 = new Infragistics.Win.UltraWinToolbars.ContextualTabGroup("Database Explorer Tools");
+            Infragistics.Win.UltraWinToolbars.ContextualTabGroup contextualTabGroup6 = new Infragistics.Win.UltraWinToolbars.ContextualTabGroup("SQL History Tools");
+            Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab5 = new Infragistics.Win.UltraWinToolbars.RibbonTab("SQL History");
+            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup8 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("SQL History");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool7 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Use SQL");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool73 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool12 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Delete");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool72 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Export to Excel");
-            Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab2 = new Infragistics.Win.UltraWinToolbars.RibbonTab("Log - Logging");
-            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup2 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Level");
+            Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab6 = new Infragistics.Win.UltraWinToolbars.RibbonTab("Log - Logging");
+            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup9 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Level");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool29 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Debug", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool30 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Info", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool31 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Warning", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool32 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Error", "");
-            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup3 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Edit");
+            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup10 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Edit");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool66 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool20 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - ClearLog");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool21 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Save");
@@ -75,8 +75,8 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool82 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool88 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool84 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Create");
-            Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab3 = new Infragistics.Win.UltraWinToolbars.RibbonTab("Database Explorer");
-            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup4 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Connections");
+            Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab7 = new Infragistics.Win.UltraWinToolbars.RibbonTab("Database Explorer");
+            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup11 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Connections");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool26 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New SQL Worksheet");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool24 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Connect");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool25 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Disconnect");
@@ -87,12 +87,12 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool103 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Connection Properties");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool46 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export");
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool1 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Import");
-            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup5 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Folders");
+            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup12 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Folders");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool65 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New Folder");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool75 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Edit Folder");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool67 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Delete Folder");
-            Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab4 = new Infragistics.Win.UltraWinToolbars.RibbonTab("View");
-            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup6 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Style");
+            Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab8 = new Infragistics.Win.UltraWinToolbars.RibbonTab("View");
+            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup13 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Style");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool10 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2007 Black", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool11 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2007 Blue", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool12 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2007 Silver", "");
@@ -107,13 +107,13 @@
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool16 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Metro", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool17 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Aero", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool18 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows7", "");
-            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup7 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Windows");
+            Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup14 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Windows");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool21 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - Connections", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool22 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - SQL History", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool24 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - Log", "");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool28 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New Connection");
-            Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance13 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance81 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance82 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool12 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Connection - Context Menu");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool29 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Connect");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool30 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Disconnect");
@@ -129,52 +129,52 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool40 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Sort");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool41 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Refresh");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool42 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Connect");
-            Infragistics.Win.Appearance appearance14 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance15 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance83 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance84 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool45 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Delete Connection");
-            Infragistics.Win.Appearance appearance16 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance17 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance85 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance86 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool49 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Refresh");
-            Infragistics.Win.Appearance appearance18 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance19 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance87 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance88 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool50 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New Folder");
-            Infragistics.Win.Appearance appearance20 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance89 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool51 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Delete Folder");
-            Infragistics.Win.Appearance appearance21 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance90 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool52 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Sort");
-            Infragistics.Win.Appearance appearance22 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance23 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance91 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance92 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool53 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Disconnect");
-            Infragistics.Win.Appearance appearance24 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance25 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance93 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance94 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool54 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Export");
-            Infragistics.Win.Appearance appearance26 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance27 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance95 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance96 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool55 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Edit Connection");
-            Infragistics.Win.Appearance appearance28 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance29 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance97 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance98 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool56 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Edit Folder");
-            Infragistics.Win.Appearance appearance30 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance31 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance99 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance100 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool57 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New SQL Worksheet");
-            Infragistics.Win.Appearance appearance32 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance33 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance101 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance102 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool58 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy Text");
-            Infragistics.Win.Appearance appearance34 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance35 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance103 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance104 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool59 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Details");
-            Infragistics.Win.Appearance appearance36 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance37 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance105 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance106 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool13 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Import");
-            Infragistics.Win.Appearance appearance38 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance107 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool60 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Import Sql Editor Connections");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool61 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Import Aqua Data Studio Connections");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool62 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Import Sql Editor Connections");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool63 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Import Aqua Data Studio Connections");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool1 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Collapse All");
-            Infragistics.Win.Appearance appearance39 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance108 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool2 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Expand All");
-            Infragistics.Win.Appearance appearance40 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance109 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool1 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2007 Blue", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool2 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2007 Silver", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool3 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2007 Black", "");
@@ -185,63 +185,63 @@
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool8 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Aero", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool9 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows7", "");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool14 = new Infragistics.Win.UltraWinToolbars.ButtonTool("About ...");
-            Infragistics.Win.Appearance appearance41 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance110 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool16 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Exit");
-            Infragistics.Win.Appearance appearance42 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance43 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance111 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance112 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool19 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - SQL History", "");
-            Infragistics.Win.Appearance appearance44 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance45 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance113 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance114 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool20 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - Connections", "");
-            Infragistics.Win.Appearance appearance46 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance47 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance115 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance116 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool17 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - ClearLog");
-            Infragistics.Win.Appearance appearance48 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance49 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance117 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance118 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool18 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Save");
-            Infragistics.Win.Appearance appearance50 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance51 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance119 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance120 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool23 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - Log", "");
-            Infragistics.Win.Appearance appearance52 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance53 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance121 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance122 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool13 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Copy");
-            Infragistics.Win.Appearance appearance54 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance55 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance123 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance124 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool2 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Logging Tools - Context Menu");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool70 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool69 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - ClearLog");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool68 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Save");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool3 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Use SQL");
-            Infragistics.Win.Appearance appearance56 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance57 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance125 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance126 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool5 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Delete");
-            Infragistics.Win.Appearance appearance58 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance59 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance127 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance128 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool6 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Copy");
-            Infragistics.Win.Appearance appearance60 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance61 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance129 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance130 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool3 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("SQL History - Context Menu");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool11 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Use SQL");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool71 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Export to Excel");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool9 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool10 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Delete");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool64 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Export to Excel");
-            Infragistics.Win.Appearance appearance62 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance63 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance131 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance132 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool8 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Clone Connection");
-            Infragistics.Win.Appearance appearance64 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance65 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance133 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance134 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool25 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Debug", "");
-            Infragistics.Win.Appearance appearance66 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance135 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool26 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Info", "");
-            Infragistics.Win.Appearance appearance67 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance68 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance136 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance137 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool27 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Warning", "");
-            Infragistics.Win.Appearance appearance69 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance70 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance138 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance139 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool28 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Error", "");
-            Infragistics.Win.Appearance appearance71 = new Infragistics.Win.Appearance();
-            Infragistics.Win.Appearance appearance72 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance140 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance141 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool4 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Script Table As - Context Menu");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool105 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Select");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool44 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Insert");
@@ -252,42 +252,42 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool48 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Update");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool77 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Delete");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool47 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Edit");
-            Infragistics.Win.Appearance appearance73 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance142 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool5 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Stored Procedures - Script As");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool79 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool80 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Drop");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool81 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Create");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool83 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Edit");
-            Infragistics.Win.Appearance appearance74 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance143 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool6 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Functions - Script As");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool94 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool93 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool85 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool87 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
             Infragistics.Win.UltraWinToolbars.PopupMenuTool popupMenuTool7 = new Infragistics.Win.UltraWinToolbars.PopupMenuTool("Help");
-            Infragistics.Win.Appearance appearance75 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance144 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool100 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Check for Updates");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool98 = new Infragistics.Win.UltraWinToolbars.ButtonTool("About ...");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool99 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Check for Updates");
-            Infragistics.Win.Appearance appearance76 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance145 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool101 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Options");
-            Infragistics.Win.Appearance appearance77 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance146 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool102 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Connection Properties");
-            Infragistics.Win.Appearance appearance78 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance147 = new Infragistics.Win.Appearance();
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool104 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Select");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool33 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 Dark Gray", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool34 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 Light Gray", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool35 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Office 2013 White", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool36 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows 8 Dark Gray-Blue", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool37 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows 8 Dark Gray-Green", "");
-            Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane1 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.DockedLeft, new System.Guid("49f48064-8544-45d6-b272-86c54f1e6b53"));
-            Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane1 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("7c2601ae-79f9-4d92-a6f0-4ed69e3eb55b"), new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"), -1, new System.Guid("49f48064-8544-45d6-b272-86c54f1e6b53"), -1);
-            Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane2 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.Floating, new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"));
-            Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane3 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.DockedBottom, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"));
-            Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane2 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("fb2b8d6e-b392-45a4-828a-688935e5db2a"), new System.Guid("31b96ff4-b575-498e-bdde-c33abc7bab00"), -1, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"), 0);
-            Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane3 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("a782c7c9-b62f-465f-a9af-813a11f9e2f5"), new System.Guid("00000000-0000-0000-0000-000000000000"), -1, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"), -1);
-            Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane4 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.Floating, new System.Guid("31b96ff4-b575-498e-bdde-c33abc7bab00"));
-            Infragistics.Win.Appearance appearance11 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane5 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.DockedLeft, new System.Guid("49f48064-8544-45d6-b272-86c54f1e6b53"));
+            Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane4 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("7c2601ae-79f9-4d92-a6f0-4ed69e3eb55b"), new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"), -1, new System.Guid("49f48064-8544-45d6-b272-86c54f1e6b53"), -1);
+            Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane6 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.Floating, new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"));
+            Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane7 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.DockedBottom, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"));
+            Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane5 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("fb2b8d6e-b392-45a4-828a-688935e5db2a"), new System.Guid("31b96ff4-b575-498e-bdde-c33abc7bab00"), -1, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"), 0);
+            Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane6 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("a782c7c9-b62f-465f-a9af-813a11f9e2f5"), new System.Guid("00000000-0000-0000-0000-000000000000"), -1, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"), -1);
+            Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane8 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.Floating, new System.Guid("31b96ff4-b575-498e-bdde-c33abc7bab00"));
+            Infragistics.Win.Appearance appearance80 = new Infragistics.Win.Appearance();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMdiParent));
             this._tlpConnections = new System.Windows.Forms.TableLayoutPanel();
             this._utConnections = new Infragistics.Win.UltraWinTree.UltraTree();
@@ -473,10 +473,10 @@
             this._uteConnectionsSearch.AlwaysInEditMode = true;
             this._uteConnectionsSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            appearance79.Image = "034.png";
-            appearance79.ImageHAlign = Infragistics.Win.HAlign.Center;
-            appearance79.ImageVAlign = Infragistics.Win.VAlign.Middle;
-            editorButton1.Appearance = appearance79;
+            appearance12.Image = "034.png";
+            appearance12.ImageHAlign = Infragistics.Win.HAlign.Center;
+            appearance12.ImageVAlign = Infragistics.Win.VAlign.Middle;
+            editorButton1.Appearance = appearance12;
             editorButton1.Key = "Clear";
             editorButton1.Text = "";
             editorButton1.Width = 24;
@@ -596,39 +596,39 @@
             popupMenuTool8,
             buttonTool15});
             this._utm.Ribbon.ApplicationMenu2010.NavigationMenu.Settings.UseLargeImages = Infragistics.Win.DefaultableBoolean.True;
-            contextualTabGroup1.Caption = "Logging Tools";
-            contextualTabGroup1.Key = "Logging Tools";
-            contextualTabGroup1.Visible = false;
-            contextualTabGroup2.Caption = "Database Explorer Tools";
-            contextualTabGroup2.Key = "Database Explorer Tools";
-            contextualTabGroup2.Visible = false;
-            contextualTabGroup3.Caption = "SQL History Tools";
-            contextualTabGroup3.Key = "SQL History Tools";
+            contextualTabGroup4.Caption = "Logging Tools";
+            contextualTabGroup4.Key = "Logging Tools";
+            contextualTabGroup4.Visible = false;
+            contextualTabGroup5.Caption = "Database Explorer Tools";
+            contextualTabGroup5.Key = "Database Explorer Tools";
+            contextualTabGroup5.Visible = false;
+            contextualTabGroup6.Caption = "SQL History Tools";
+            contextualTabGroup6.Key = "SQL History Tools";
             this._utm.Ribbon.NonInheritedContextualTabGroups.AddRange(new Infragistics.Win.UltraWinToolbars.ContextualTabGroup[] {
-            contextualTabGroup1,
-            contextualTabGroup2,
-            contextualTabGroup3});
-            ribbonTab1.Caption = "SQL History";
-            ribbonTab1.ContextualTabGroupKey = "SQL History Tools";
-            ribbonGroup1.Caption = "SQL History";
+            contextualTabGroup4,
+            contextualTabGroup5,
+            contextualTabGroup6});
+            ribbonTab5.Caption = "SQL History";
+            ribbonTab5.ContextualTabGroupKey = "SQL History Tools";
+            ribbonGroup8.Caption = "SQL History";
             buttonTool7.InstanceProps.PreferredSizeOnRibbon = Infragistics.Win.UltraWinToolbars.RibbonToolSize.Large;
-            ribbonGroup1.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            ribbonGroup8.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool7,
             buttonTool73,
             buttonTool12,
             buttonTool72});
-            ribbonTab1.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
-            ribbonGroup1});
-            ribbonTab2.Caption = "Logging";
-            ribbonTab2.ContextualTabGroupKey = "Logging Tools";
-            ribbonGroup2.Caption = "Level";
-            ribbonGroup2.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            ribbonTab5.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
+            ribbonGroup8});
+            ribbonTab6.Caption = "Logging";
+            ribbonTab6.ContextualTabGroupKey = "Logging Tools";
+            ribbonGroup9.Caption = "Level";
+            ribbonGroup9.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             stateButtonTool29,
             stateButtonTool30,
             stateButtonTool31,
             stateButtonTool32});
-            ribbonGroup3.Caption = "Edit";
-            ribbonGroup3.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            ribbonGroup10.Caption = "Edit";
+            ribbonGroup10.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool66,
             buttonTool20,
             buttonTool21,
@@ -643,16 +643,16 @@
             buttonTool82,
             buttonTool88,
             buttonTool84});
-            ribbonTab2.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
-            ribbonGroup2,
-            ribbonGroup3});
-            ribbonTab3.Caption = "Database Explorer";
-            ribbonTab3.ContextualTabGroupKey = "Database Explorer Tools";
-            ribbonGroup4.Caption = "Connections";
+            ribbonTab6.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
+            ribbonGroup9,
+            ribbonGroup10});
+            ribbonTab7.Caption = "Database Explorer";
+            ribbonTab7.ContextualTabGroupKey = "Database Explorer Tools";
+            ribbonGroup11.Caption = "Connections";
             buttonTool26.InstanceProps.PreferredSizeOnRibbon = Infragistics.Win.UltraWinToolbars.RibbonToolSize.Large;
             buttonTool23.InstanceProps.IsFirstInGroup = true;
             buttonTool46.InstanceProps.IsFirstInGroup = true;
-            ribbonGroup4.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            ribbonGroup11.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool26,
             buttonTool24,
             buttonTool25,
@@ -663,17 +663,17 @@
             buttonTool103,
             buttonTool46,
             popupMenuTool1});
-            ribbonGroup5.Caption = "Folders";
-            ribbonGroup5.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            ribbonGroup12.Caption = "Folders";
+            ribbonGroup12.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool65,
             buttonTool75,
             buttonTool67});
-            ribbonTab3.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
-            ribbonGroup4,
-            ribbonGroup5});
-            ribbonTab4.Caption = "View";
-            ribbonGroup6.Caption = "Style";
-            ribbonGroup6.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            ribbonTab7.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
+            ribbonGroup11,
+            ribbonGroup12});
+            ribbonTab8.Caption = "View";
+            ribbonGroup13.Caption = "Style";
+            ribbonGroup13.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             stateButtonTool10,
             stateButtonTool11,
             stateButtonTool12,
@@ -688,28 +688,28 @@
             stateButtonTool16,
             stateButtonTool17,
             stateButtonTool18});
-            ribbonGroup7.Caption = "Windows";
-            ribbonGroup7.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            ribbonGroup14.Caption = "Windows";
+            ribbonGroup14.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             stateButtonTool21,
             stateButtonTool22,
             stateButtonTool24});
-            ribbonTab4.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
-            ribbonGroup6,
-            ribbonGroup7});
-            ribbonTab4.MergeOrder = 1;
+            ribbonTab8.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
+            ribbonGroup13,
+            ribbonGroup14});
+            ribbonTab8.MergeOrder = 1;
             this._utm.Ribbon.NonInheritedRibbonTabs.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonTab[] {
-            ribbonTab1,
-            ribbonTab2,
-            ribbonTab3,
-            ribbonTab4});
+            ribbonTab5,
+            ribbonTab6,
+            ribbonTab7,
+            ribbonTab8});
             this._utm.Ribbon.Visible = true;
             this._utm.SettingsKey = "FrmMdiParent._utm";
             this._utm.ShowFullMenusDelay = 500;
             this._utm.Style = Infragistics.Win.UltraWinToolbars.ToolbarStyle.Office2010;
-            appearance12.Image = 2;
-            buttonTool28.SharedPropsInternal.AppearancesLarge.Appearance = appearance12;
-            appearance13.Image = 41;
-            buttonTool28.SharedPropsInternal.AppearancesSmall.Appearance = appearance13;
+            appearance81.Image = 2;
+            buttonTool28.SharedPropsInternal.AppearancesLarge.Appearance = appearance81;
+            appearance82.Image = 41;
+            buttonTool28.SharedPropsInternal.AppearancesSmall.Appearance = appearance82;
             buttonTool28.SharedPropsInternal.Caption = "New Connection";
             buttonTool28.SharedPropsInternal.Category = "Connections";
             buttonTool28.SharedPropsInternal.Priority = 10;
@@ -736,107 +736,107 @@
             buttonTool39,
             buttonTool40,
             buttonTool41});
-            appearance14.Image = 9;
-            buttonTool42.SharedPropsInternal.AppearancesLarge.Appearance = appearance14;
-            appearance15.Image = 11;
-            buttonTool42.SharedPropsInternal.AppearancesSmall.Appearance = appearance15;
+            appearance83.Image = 9;
+            buttonTool42.SharedPropsInternal.AppearancesLarge.Appearance = appearance83;
+            appearance84.Image = 11;
+            buttonTool42.SharedPropsInternal.AppearancesSmall.Appearance = appearance84;
             buttonTool42.SharedPropsInternal.Caption = "Connect";
             buttonTool42.SharedPropsInternal.Category = "Connections";
             buttonTool42.SharedPropsInternal.Priority = 2;
             buttonTool42.Tag = "Connect";
-            appearance16.Image = 3;
-            buttonTool45.SharedPropsInternal.AppearancesLarge.Appearance = appearance16;
-            appearance17.Image = 42;
-            buttonTool45.SharedPropsInternal.AppearancesSmall.Appearance = appearance17;
+            appearance85.Image = 3;
+            buttonTool45.SharedPropsInternal.AppearancesLarge.Appearance = appearance85;
+            appearance86.Image = 42;
+            buttonTool45.SharedPropsInternal.AppearancesSmall.Appearance = appearance86;
             buttonTool45.SharedPropsInternal.Caption = "Delete Connection";
             buttonTool45.SharedPropsInternal.Category = "Connections";
             buttonTool45.SharedPropsInternal.Priority = 12;
             buttonTool45.Tag = "EditConnection";
-            appearance18.Image = 6;
-            buttonTool49.SharedPropsInternal.AppearancesLarge.Appearance = appearance18;
-            appearance19.Image = 10;
-            buttonTool49.SharedPropsInternal.AppearancesSmall.Appearance = appearance19;
+            appearance87.Image = 6;
+            buttonTool49.SharedPropsInternal.AppearancesLarge.Appearance = appearance87;
+            appearance88.Image = 10;
+            buttonTool49.SharedPropsInternal.AppearancesSmall.Appearance = appearance88;
             buttonTool49.SharedPropsInternal.Caption = "Refresh";
             buttonTool49.SharedPropsInternal.Category = "Connections";
             buttonTool49.SharedPropsInternal.Priority = 999;
             buttonTool49.Tag = "Refresh";
-            appearance20.Image = 25;
-            buttonTool50.SharedPropsInternal.AppearancesSmall.Appearance = appearance20;
+            appearance89.Image = 25;
+            buttonTool50.SharedPropsInternal.AppearancesSmall.Appearance = appearance89;
             buttonTool50.SharedPropsInternal.Caption = "New Folder";
             buttonTool50.SharedPropsInternal.Category = "Connections";
             buttonTool50.SharedPropsInternal.Priority = 20;
             buttonTool50.Tag = "EditFolder";
-            appearance21.Image = 45;
-            buttonTool51.SharedPropsInternal.AppearancesSmall.Appearance = appearance21;
+            appearance90.Image = 45;
+            buttonTool51.SharedPropsInternal.AppearancesSmall.Appearance = appearance90;
             buttonTool51.SharedPropsInternal.Caption = "Delete Folder";
             buttonTool51.SharedPropsInternal.Category = "Connections";
             buttonTool51.SharedPropsInternal.Priority = 22;
             buttonTool51.Tag = "EditFolder";
-            appearance22.Image = 8;
-            buttonTool52.SharedPropsInternal.AppearancesLarge.Appearance = appearance22;
-            appearance23.Image = 20;
-            buttonTool52.SharedPropsInternal.AppearancesSmall.Appearance = appearance23;
+            appearance91.Image = 8;
+            buttonTool52.SharedPropsInternal.AppearancesLarge.Appearance = appearance91;
+            appearance92.Image = 20;
+            buttonTool52.SharedPropsInternal.AppearancesSmall.Appearance = appearance92;
             buttonTool52.SharedPropsInternal.Caption = "Sort";
             buttonTool52.SharedPropsInternal.Category = "Connections";
             buttonTool52.SharedPropsInternal.Priority = 42;
             buttonTool52.Tag = "Order";
-            appearance24.Image = 10;
-            buttonTool53.SharedPropsInternal.AppearancesLarge.Appearance = appearance24;
-            appearance25.Image = 14;
-            buttonTool53.SharedPropsInternal.AppearancesSmall.Appearance = appearance25;
+            appearance93.Image = 10;
+            buttonTool53.SharedPropsInternal.AppearancesLarge.Appearance = appearance93;
+            appearance94.Image = 14;
+            buttonTool53.SharedPropsInternal.AppearancesSmall.Appearance = appearance94;
             buttonTool53.SharedPropsInternal.Caption = "Disconnect";
             buttonTool53.SharedPropsInternal.Category = "Connections";
             buttonTool53.SharedPropsInternal.Priority = 3;
             buttonTool53.Tag = "Connect";
-            appearance26.Image = 12;
-            buttonTool54.SharedPropsInternal.AppearancesLarge.Appearance = appearance26;
-            appearance27.Image = 21;
-            buttonTool54.SharedPropsInternal.AppearancesSmall.Appearance = appearance27;
+            appearance95.Image = 12;
+            buttonTool54.SharedPropsInternal.AppearancesLarge.Appearance = appearance95;
+            appearance96.Image = 21;
+            buttonTool54.SharedPropsInternal.AppearancesSmall.Appearance = appearance96;
             buttonTool54.SharedPropsInternal.Caption = "Export";
             buttonTool54.SharedPropsInternal.Category = "Connections";
             buttonTool54.SharedPropsInternal.Priority = 50;
             buttonTool54.Tag = "ExportImport";
-            appearance28.Image = 13;
-            buttonTool55.SharedPropsInternal.AppearancesLarge.Appearance = appearance28;
-            appearance29.Image = 47;
-            buttonTool55.SharedPropsInternal.AppearancesSmall.Appearance = appearance29;
+            appearance97.Image = 13;
+            buttonTool55.SharedPropsInternal.AppearancesLarge.Appearance = appearance97;
+            appearance98.Image = 47;
+            buttonTool55.SharedPropsInternal.AppearancesSmall.Appearance = appearance98;
             buttonTool55.SharedPropsInternal.Caption = "Edit Connection";
             buttonTool55.SharedPropsInternal.Category = "Connections";
             buttonTool55.SharedPropsInternal.Priority = 11;
             buttonTool55.Tag = "EditConnection";
-            appearance30.Image = 15;
-            buttonTool56.SharedPropsInternal.AppearancesLarge.Appearance = appearance30;
-            appearance31.Image = 48;
-            buttonTool56.SharedPropsInternal.AppearancesSmall.Appearance = appearance31;
+            appearance99.Image = 15;
+            buttonTool56.SharedPropsInternal.AppearancesLarge.Appearance = appearance99;
+            appearance100.Image = 48;
+            buttonTool56.SharedPropsInternal.AppearancesSmall.Appearance = appearance100;
             buttonTool56.SharedPropsInternal.Caption = "Edit Folder";
             buttonTool56.SharedPropsInternal.Category = "Connections";
             buttonTool56.SharedPropsInternal.Priority = 21;
             buttonTool56.Tag = "EditFolder";
-            appearance32.Image = 16;
-            buttonTool57.SharedPropsInternal.AppearancesLarge.Appearance = appearance32;
-            appearance33.Image = 49;
-            buttonTool57.SharedPropsInternal.AppearancesSmall.Appearance = appearance33;
+            appearance101.Image = 16;
+            buttonTool57.SharedPropsInternal.AppearancesLarge.Appearance = appearance101;
+            appearance102.Image = 49;
+            buttonTool57.SharedPropsInternal.AppearancesSmall.Appearance = appearance102;
             buttonTool57.SharedPropsInternal.Caption = "New SQL Worksheet";
             buttonTool57.SharedPropsInternal.Category = "Connections";
             buttonTool57.SharedPropsInternal.Priority = 1;
             buttonTool57.Tag = "Connect";
-            appearance34.Image = 17;
-            buttonTool58.SharedPropsInternal.AppearancesLarge.Appearance = appearance34;
-            appearance35.Image = 17;
-            buttonTool58.SharedPropsInternal.AppearancesSmall.Appearance = appearance35;
+            appearance103.Image = 17;
+            buttonTool58.SharedPropsInternal.AppearancesLarge.Appearance = appearance103;
+            appearance104.Image = 17;
+            buttonTool58.SharedPropsInternal.AppearancesSmall.Appearance = appearance104;
             buttonTool58.SharedPropsInternal.Caption = "Copy";
             buttonTool58.SharedPropsInternal.Category = "Connections";
             buttonTool58.SharedPropsInternal.Priority = 30;
             buttonTool58.Tag = "Copy";
-            appearance36.Image = 14;
-            buttonTool59.SharedPropsInternal.AppearancesLarge.Appearance = appearance36;
-            appearance37.Image = 18;
-            buttonTool59.SharedPropsInternal.AppearancesSmall.Appearance = appearance37;
+            appearance105.Image = 14;
+            buttonTool59.SharedPropsInternal.AppearancesLarge.Appearance = appearance105;
+            appearance106.Image = 18;
+            buttonTool59.SharedPropsInternal.AppearancesSmall.Appearance = appearance106;
             buttonTool59.SharedPropsInternal.Caption = "Details";
             buttonTool59.SharedPropsInternal.Category = "Connections";
             buttonTool59.Tag = "Details";
-            appearance38.Image = 23;
-            popupMenuTool13.SharedPropsInternal.AppearancesSmall.Appearance = appearance38;
+            appearance107.Image = 23;
+            popupMenuTool13.SharedPropsInternal.AppearancesSmall.Appearance = appearance107;
             popupMenuTool13.SharedPropsInternal.Caption = "Import";
             popupMenuTool13.SharedPropsInternal.Category = "Connections";
             popupMenuTool13.SharedPropsInternal.DisplayStyle = Infragistics.Win.UltraWinToolbars.ToolDisplayStyle.DefaultForToolType;
@@ -849,14 +849,14 @@
             buttonTool62.Tag = "EditConnection";
             buttonTool63.SharedPropsInternal.Caption = "Import Aqua Data Studio Connections";
             buttonTool63.Tag = "EditConnection";
-            appearance39.Image = 92;
-            buttonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance39;
+            appearance108.Image = 92;
+            buttonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance108;
             buttonTool1.SharedPropsInternal.Caption = "Collapse All";
             buttonTool1.SharedPropsInternal.Category = "Connections";
             buttonTool1.SharedPropsInternal.Priority = 40;
             buttonTool1.Tag = "Order";
-            appearance40.Image = 91;
-            buttonTool2.SharedPropsInternal.AppearancesSmall.Appearance = appearance40;
+            appearance109.Image = 91;
+            buttonTool2.SharedPropsInternal.AppearancesSmall.Appearance = appearance109;
             buttonTool2.SharedPropsInternal.Caption = "Expand All";
             buttonTool2.SharedPropsInternal.Category = "Connections";
             buttonTool2.SharedPropsInternal.Priority = 41;
@@ -879,52 +879,52 @@
             stateButtonTool8.SharedPropsInternal.Category = "Styles";
             stateButtonTool9.SharedPropsInternal.Caption = "Windows7";
             stateButtonTool9.SharedPropsInternal.Category = "Styles";
-            appearance41.Image = global::SqlEditor.Properties.Resources.information2;
-            buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance41;
+            appearance110.Image = global::SqlEditor.Properties.Resources.information2;
+            buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance110;
             buttonTool14.SharedPropsInternal.Caption = "About ...";
             buttonTool14.SharedPropsInternal.Category = "File Menu";
             buttonTool14.SharedPropsInternal.MergeOrder = 99;
-            appearance42.Image = global::SqlEditor.Properties.Resources.door_out;
-            buttonTool16.SharedPropsInternal.AppearancesLarge.Appearance = appearance42;
-            appearance43.Image = 60;
-            buttonTool16.SharedPropsInternal.AppearancesSmall.Appearance = appearance43;
+            appearance111.Image = global::SqlEditor.Properties.Resources.door_out;
+            buttonTool16.SharedPropsInternal.AppearancesLarge.Appearance = appearance111;
+            appearance112.Image = 60;
+            buttonTool16.SharedPropsInternal.AppearancesSmall.Appearance = appearance112;
             buttonTool16.SharedPropsInternal.Caption = "Exit";
             buttonTool16.SharedPropsInternal.Category = "File Menu";
             buttonTool16.SharedPropsInternal.MergeOrder = 100;
-            appearance44.Image = 18;
-            stateButtonTool19.SharedPropsInternal.AppearancesLarge.Appearance = appearance44;
-            appearance45.Image = 55;
-            stateButtonTool19.SharedPropsInternal.AppearancesSmall.Appearance = appearance45;
+            appearance113.Image = 18;
+            stateButtonTool19.SharedPropsInternal.AppearancesLarge.Appearance = appearance113;
+            appearance114.Image = 55;
+            stateButtonTool19.SharedPropsInternal.AppearancesSmall.Appearance = appearance114;
             stateButtonTool19.SharedPropsInternal.Caption = "SQL History";
             stateButtonTool19.SharedPropsInternal.Category = "Windows";
-            appearance46.Image = 19;
-            stateButtonTool20.SharedPropsInternal.AppearancesLarge.Appearance = appearance46;
-            appearance47.Image = 1;
-            stateButtonTool20.SharedPropsInternal.AppearancesSmall.Appearance = appearance47;
+            appearance115.Image = 19;
+            stateButtonTool20.SharedPropsInternal.AppearancesLarge.Appearance = appearance115;
+            appearance116.Image = 1;
+            stateButtonTool20.SharedPropsInternal.AppearancesSmall.Appearance = appearance116;
             stateButtonTool20.SharedPropsInternal.Caption = "Connections";
             stateButtonTool20.SharedPropsInternal.Category = "Windows";
-            appearance48.Image = 21;
-            buttonTool17.SharedPropsInternal.AppearancesLarge.Appearance = appearance48;
-            appearance49.Image = 57;
-            buttonTool17.SharedPropsInternal.AppearancesSmall.Appearance = appearance49;
+            appearance117.Image = 21;
+            buttonTool17.SharedPropsInternal.AppearancesLarge.Appearance = appearance117;
+            appearance118.Image = 57;
+            buttonTool17.SharedPropsInternal.AppearancesSmall.Appearance = appearance118;
             buttonTool17.SharedPropsInternal.Caption = "Clear";
             buttonTool17.SharedPropsInternal.Category = "Logging Tools";
-            appearance50.Image = 22;
-            buttonTool18.SharedPropsInternal.AppearancesLarge.Appearance = appearance50;
-            appearance51.Image = 58;
-            buttonTool18.SharedPropsInternal.AppearancesSmall.Appearance = appearance51;
+            appearance119.Image = 22;
+            buttonTool18.SharedPropsInternal.AppearancesLarge.Appearance = appearance119;
+            appearance120.Image = 58;
+            buttonTool18.SharedPropsInternal.AppearancesSmall.Appearance = appearance120;
             buttonTool18.SharedPropsInternal.Caption = "Save";
             buttonTool18.SharedPropsInternal.Category = "Logging Tools";
-            appearance52.Image = 20;
-            stateButtonTool23.SharedPropsInternal.AppearancesLarge.Appearance = appearance52;
-            appearance53.Image = 56;
-            stateButtonTool23.SharedPropsInternal.AppearancesSmall.Appearance = appearance53;
+            appearance121.Image = 20;
+            stateButtonTool23.SharedPropsInternal.AppearancesLarge.Appearance = appearance121;
+            appearance122.Image = 56;
+            stateButtonTool23.SharedPropsInternal.AppearancesSmall.Appearance = appearance122;
             stateButtonTool23.SharedPropsInternal.Caption = "Log";
             stateButtonTool23.SharedPropsInternal.Category = "Windows";
-            appearance54.Image = 17;
-            buttonTool13.SharedPropsInternal.AppearancesLarge.Appearance = appearance54;
-            appearance55.Image = 17;
-            buttonTool13.SharedPropsInternal.AppearancesSmall.Appearance = appearance55;
+            appearance123.Image = 17;
+            buttonTool13.SharedPropsInternal.AppearancesLarge.Appearance = appearance123;
+            appearance124.Image = 17;
+            buttonTool13.SharedPropsInternal.AppearancesSmall.Appearance = appearance124;
             buttonTool13.SharedPropsInternal.Caption = "Copy";
             buttonTool13.SharedPropsInternal.Category = "Logging Tools";
             popupMenuTool2.SharedPropsInternal.Caption = "Logging Tools - Context Menu";
@@ -934,22 +934,22 @@
             buttonTool70,
             buttonTool69,
             buttonTool68});
-            appearance56.Image = 26;
-            buttonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance56;
-            appearance57.Image = 61;
-            buttonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance57;
+            appearance125.Image = 26;
+            buttonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance125;
+            appearance126.Image = 61;
+            buttonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance126;
             buttonTool3.SharedPropsInternal.Caption = "Use SQL";
             buttonTool3.SharedPropsInternal.Category = "SQL History";
-            appearance58.Image = 25;
-            buttonTool5.SharedPropsInternal.AppearancesLarge.Appearance = appearance58;
-            appearance59.Image = 62;
-            buttonTool5.SharedPropsInternal.AppearancesSmall.Appearance = appearance59;
+            appearance127.Image = 25;
+            buttonTool5.SharedPropsInternal.AppearancesLarge.Appearance = appearance127;
+            appearance128.Image = 62;
+            buttonTool5.SharedPropsInternal.AppearancesSmall.Appearance = appearance128;
             buttonTool5.SharedPropsInternal.Caption = "Delete";
             buttonTool5.SharedPropsInternal.Category = "SQL History";
-            appearance60.Image = 17;
-            buttonTool6.SharedPropsInternal.AppearancesLarge.Appearance = appearance60;
-            appearance61.Image = 17;
-            buttonTool6.SharedPropsInternal.AppearancesSmall.Appearance = appearance61;
+            appearance129.Image = 17;
+            buttonTool6.SharedPropsInternal.AppearancesLarge.Appearance = appearance129;
+            appearance130.Image = 17;
+            buttonTool6.SharedPropsInternal.AppearancesSmall.Appearance = appearance130;
             buttonTool6.SharedPropsInternal.Caption = "Copy";
             buttonTool6.SharedPropsInternal.Category = "SQL History";
             popupMenuTool3.SharedPropsInternal.Caption = "SQL History - Context Menu";
@@ -961,40 +961,40 @@
             buttonTool71,
             buttonTool9,
             buttonTool10});
-            appearance62.Image = 27;
-            buttonTool64.SharedPropsInternal.AppearancesLarge.Appearance = appearance62;
-            appearance63.Image = 63;
-            buttonTool64.SharedPropsInternal.AppearancesSmall.Appearance = appearance63;
+            appearance131.Image = 27;
+            buttonTool64.SharedPropsInternal.AppearancesLarge.Appearance = appearance131;
+            appearance132.Image = 63;
+            buttonTool64.SharedPropsInternal.AppearancesSmall.Appearance = appearance132;
             buttonTool64.SharedPropsInternal.Caption = "Export to Excel";
             buttonTool64.SharedPropsInternal.Category = "SQL History";
-            appearance64.Image = 32;
-            buttonTool8.SharedPropsInternal.AppearancesLarge.Appearance = appearance64;
-            appearance65.Image = 78;
-            buttonTool8.SharedPropsInternal.AppearancesSmall.Appearance = appearance65;
+            appearance133.Image = 32;
+            buttonTool8.SharedPropsInternal.AppearancesLarge.Appearance = appearance133;
+            appearance134.Image = 78;
+            buttonTool8.SharedPropsInternal.AppearancesSmall.Appearance = appearance134;
             buttonTool8.SharedPropsInternal.Caption = "Clone Connection";
             buttonTool8.SharedPropsInternal.Category = "Connections";
             buttonTool8.SharedPropsInternal.Priority = 31;
             buttonTool8.Tag = "Copy";
-            appearance66.Image = 74;
-            stateButtonTool25.SharedPropsInternal.AppearancesSmall.Appearance = appearance66;
+            appearance135.Image = 74;
+            stateButtonTool25.SharedPropsInternal.AppearancesSmall.Appearance = appearance135;
             stateButtonTool25.SharedPropsInternal.Caption = "Debug";
             stateButtonTool25.SharedPropsInternal.Category = "Logging Tools";
-            appearance67.Image = 29;
-            stateButtonTool26.SharedPropsInternal.AppearancesLarge.Appearance = appearance67;
-            appearance68.Image = 75;
-            stateButtonTool26.SharedPropsInternal.AppearancesSmall.Appearance = appearance68;
+            appearance136.Image = 29;
+            stateButtonTool26.SharedPropsInternal.AppearancesLarge.Appearance = appearance136;
+            appearance137.Image = 75;
+            stateButtonTool26.SharedPropsInternal.AppearancesSmall.Appearance = appearance137;
             stateButtonTool26.SharedPropsInternal.Caption = "Info";
             stateButtonTool26.SharedPropsInternal.Category = "Logging Tools";
-            appearance69.Image = 31;
-            stateButtonTool27.SharedPropsInternal.AppearancesLarge.Appearance = appearance69;
-            appearance70.Image = 77;
-            stateButtonTool27.SharedPropsInternal.AppearancesSmall.Appearance = appearance70;
+            appearance138.Image = 31;
+            stateButtonTool27.SharedPropsInternal.AppearancesLarge.Appearance = appearance138;
+            appearance139.Image = 77;
+            stateButtonTool27.SharedPropsInternal.AppearancesSmall.Appearance = appearance139;
             stateButtonTool27.SharedPropsInternal.Caption = "Warning";
             stateButtonTool27.SharedPropsInternal.Category = "Logging Tools";
-            appearance71.Image = 30;
-            stateButtonTool28.SharedPropsInternal.AppearancesLarge.Appearance = appearance71;
-            appearance72.Image = 76;
-            stateButtonTool28.SharedPropsInternal.AppearancesSmall.Appearance = appearance72;
+            appearance140.Image = 30;
+            stateButtonTool28.SharedPropsInternal.AppearancesLarge.Appearance = appearance140;
+            appearance141.Image = 76;
+            stateButtonTool28.SharedPropsInternal.AppearancesSmall.Appearance = appearance141;
             stateButtonTool28.SharedPropsInternal.Caption = "Error";
             stateButtonTool28.SharedPropsInternal.Category = "Logging Tools";
             popupMenuTool4.SharedPropsInternal.Caption = "Script Table As";
@@ -1014,8 +1014,8 @@
             buttonTool48.SharedPropsInternal.Category = "Tables";
             buttonTool77.SharedPropsInternal.Caption = "DELETE";
             buttonTool77.SharedPropsInternal.Category = "Tables";
-            appearance73.Image = 80;
-            buttonTool47.SharedPropsInternal.AppearancesSmall.Appearance = appearance73;
+            appearance142.Image = 80;
+            buttonTool47.SharedPropsInternal.AppearancesSmall.Appearance = appearance142;
             buttonTool47.SharedPropsInternal.Caption = "Edit";
             buttonTool47.SharedPropsInternal.Category = "Stored Procedures";
             popupMenuTool5.SharedPropsInternal.Caption = "Script As";
@@ -1026,8 +1026,8 @@
             buttonTool80.SharedPropsInternal.Category = "Tables";
             buttonTool81.SharedPropsInternal.Caption = "CREATE";
             buttonTool81.SharedPropsInternal.Category = "Stored Procedures";
-            appearance74.Image = 84;
-            buttonTool83.SharedPropsInternal.AppearancesSmall.Appearance = appearance74;
+            appearance143.Image = 84;
+            buttonTool83.SharedPropsInternal.AppearancesSmall.Appearance = appearance143;
             buttonTool83.SharedPropsInternal.Caption = "Edit Function";
             buttonTool83.SharedPropsInternal.Category = "Functions";
             popupMenuTool6.SharedPropsInternal.Caption = "Script As";
@@ -1039,22 +1039,22 @@
             buttonTool85.SharedPropsInternal.Category = "Functions";
             buttonTool87.SharedPropsInternal.Caption = "DROP";
             buttonTool87.SharedPropsInternal.Category = "Functions";
-            appearance75.Image = global::SqlEditor.Properties.Resources.help_desk_icon;
-            popupMenuTool7.SharedPropsInternal.AppearancesLarge.Appearance = appearance75;
+            appearance144.Image = global::SqlEditor.Properties.Resources.help_desk_icon;
+            popupMenuTool7.SharedPropsInternal.AppearancesLarge.Appearance = appearance144;
             popupMenuTool7.SharedPropsInternal.Caption = "Help";
             popupMenuTool7.SharedPropsInternal.Category = "File Menu";
             popupMenuTool7.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool100,
             buttonTool98});
-            appearance76.Image = global::SqlEditor.Properties.Resources.download_32x32;
-            buttonTool99.SharedPropsInternal.AppearancesSmall.Appearance = appearance76;
+            appearance145.Image = global::SqlEditor.Properties.Resources.download_32x32;
+            buttonTool99.SharedPropsInternal.AppearancesSmall.Appearance = appearance145;
             buttonTool99.SharedPropsInternal.Caption = "Check for Updates ...";
             buttonTool99.SharedPropsInternal.Category = "File Menu";
-            appearance77.Image = global::SqlEditor.Properties.Resources.app_32x32;
-            buttonTool101.SharedPropsInternal.AppearancesSmall.Appearance = appearance77;
+            appearance146.Image = global::SqlEditor.Properties.Resources.app_32x32;
+            buttonTool101.SharedPropsInternal.AppearancesSmall.Appearance = appearance146;
             buttonTool101.SharedPropsInternal.Caption = "Options";
-            appearance78.Image = 90;
-            buttonTool102.SharedPropsInternal.AppearancesSmall.Appearance = appearance78;
+            appearance147.Image = 90;
+            buttonTool102.SharedPropsInternal.AppearancesSmall.Appearance = appearance147;
             buttonTool102.SharedPropsInternal.Caption = "Properties";
             buttonTool102.SharedPropsInternal.Category = "Connections";
             buttonTool104.SharedPropsInternal.Caption = "SELECT";
@@ -1223,49 +1223,50 @@
             this._utmdi.SettingsKey = "FrmMdiParent._utmdi";
             this._utmdi.TabGroupSettings.CloseButtonLocation = Infragistics.Win.UltraWinTabs.TabCloseButtonLocation.Tab;
             this._utmdi.ViewStyle = Infragistics.Win.UltraWinTabbedMdi.ViewStyle.Office2007;
+            this._utmdi.TabClosed += new Infragistics.Win.UltraWinTabbedMdi.MdiTabEventHandler(this.Utmdi_TabClosed);
             this._utmdi.TabActivated += new Infragistics.Win.UltraWinTabbedMdi.MdiTabEventHandler(this.Utmdi_TabActivated);
             // 
             // _udm
             // 
             this._udm.CompressUnpinnedTabs = false;
-            dockAreaPane1.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
-            dockAreaPane1.DockedBefore = new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1");
-            dockableControlPane1.Control = this._tlpConnections;
-            dockableControlPane1.Key = "Database Explorer";
-            dockableControlPane1.OriginalControlBounds = new System.Drawing.Rectangle(448, 178, 200, 352);
-            dockableControlPane1.Settings.AllowClose = Infragistics.Win.DefaultableBoolean.True;
-            dockableControlPane1.Size = new System.Drawing.Size(100, 100);
-            dockableControlPane1.Text = "Database Explorer";
-            dockAreaPane1.Panes.AddRange(new Infragistics.Win.UltraWinDock.DockablePaneBase[] {
-            dockableControlPane1});
-            dockAreaPane1.Size = new System.Drawing.Size(290, 666);
-            dockAreaPane2.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
-            dockAreaPane2.DockedBefore = new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11");
-            dockAreaPane2.FloatingLocation = new System.Drawing.Point(126, 483);
-            dockAreaPane2.Size = new System.Drawing.Size(100, 100);
-            dockAreaPane3.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
-            dockAreaPane3.DockedBefore = new System.Guid("31b96ff4-b575-498e-bdde-c33abc7bab00");
-            dockableControlPane2.Control = this._ugGrid;
-            dockableControlPane2.OriginalControlBounds = new System.Drawing.Rectangle(25, 212, 780, 419);
-            dockableControlPane2.Size = new System.Drawing.Size(100, 100);
-            dockableControlPane2.Text = "SQL History";
-            dockableControlPane3.Control = this._rtbLog;
-            dockableControlPane3.Key = "Log";
-            dockableControlPane3.OriginalControlBounds = new System.Drawing.Rectangle(442, 357, 100, 96);
-            dockableControlPane3.Size = new System.Drawing.Size(100, 100);
-            dockableControlPane3.Text = "Log";
-            dockAreaPane3.Panes.AddRange(new Infragistics.Win.UltraWinDock.DockablePaneBase[] {
-            dockableControlPane2,
-            dockableControlPane3});
-            dockAreaPane3.Size = new System.Drawing.Size(1032, 258);
-            dockAreaPane4.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
-            dockAreaPane4.FloatingLocation = new System.Drawing.Point(301, 884);
-            dockAreaPane4.Size = new System.Drawing.Size(1032, 157);
+            dockAreaPane5.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
+            dockAreaPane5.DockedBefore = new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1");
+            dockableControlPane4.Control = this._tlpConnections;
+            dockableControlPane4.Key = "Database Explorer";
+            dockableControlPane4.OriginalControlBounds = new System.Drawing.Rectangle(448, 178, 200, 352);
+            dockableControlPane4.Settings.AllowClose = Infragistics.Win.DefaultableBoolean.True;
+            dockableControlPane4.Size = new System.Drawing.Size(100, 100);
+            dockableControlPane4.Text = "Database Explorer";
+            dockAreaPane5.Panes.AddRange(new Infragistics.Win.UltraWinDock.DockablePaneBase[] {
+            dockableControlPane4});
+            dockAreaPane5.Size = new System.Drawing.Size(290, 666);
+            dockAreaPane6.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
+            dockAreaPane6.DockedBefore = new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11");
+            dockAreaPane6.FloatingLocation = new System.Drawing.Point(126, 483);
+            dockAreaPane6.Size = new System.Drawing.Size(100, 100);
+            dockAreaPane7.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
+            dockAreaPane7.DockedBefore = new System.Guid("31b96ff4-b575-498e-bdde-c33abc7bab00");
+            dockableControlPane5.Control = this._ugGrid;
+            dockableControlPane5.OriginalControlBounds = new System.Drawing.Rectangle(25, 212, 780, 419);
+            dockableControlPane5.Size = new System.Drawing.Size(100, 100);
+            dockableControlPane5.Text = "SQL History";
+            dockableControlPane6.Control = this._rtbLog;
+            dockableControlPane6.Key = "Log";
+            dockableControlPane6.OriginalControlBounds = new System.Drawing.Rectangle(442, 357, 100, 96);
+            dockableControlPane6.Size = new System.Drawing.Size(100, 100);
+            dockableControlPane6.Text = "Log";
+            dockAreaPane7.Panes.AddRange(new Infragistics.Win.UltraWinDock.DockablePaneBase[] {
+            dockableControlPane5,
+            dockableControlPane6});
+            dockAreaPane7.Size = new System.Drawing.Size(1032, 258);
+            dockAreaPane8.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
+            dockAreaPane8.FloatingLocation = new System.Drawing.Point(301, 884);
+            dockAreaPane8.Size = new System.Drawing.Size(1032, 157);
             this._udm.DockAreas.AddRange(new Infragistics.Win.UltraWinDock.DockAreaPane[] {
-            dockAreaPane1,
-            dockAreaPane2,
-            dockAreaPane3,
-            dockAreaPane4});
+            dockAreaPane5,
+            dockAreaPane6,
+            dockAreaPane7,
+            dockAreaPane8});
             this._udm.DragIndicatorStyle = Infragistics.Win.UltraWinDock.DragIndicatorStyle.VisualStudio2008Vista;
             this._udm.DragWindowStyle = Infragistics.Win.UltraWinDock.DragWindowStyle.LayeredWindowWithIndicators;
             this._udm.HostControl = this;
@@ -1327,8 +1328,8 @@
             // 
             // _usbStatus
             // 
-            appearance11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(88)))), ((int)(((byte)(156)))));
-            this._usbStatus.Appearance = appearance11;
+            appearance80.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(88)))), ((int)(((byte)(156)))));
+            this._usbStatus.Appearance = appearance80;
             this._usbStatus.Location = new System.Drawing.Point(0, 812);
             this._usbStatus.Name = "_usbStatus";
             this._usbStatus.Size = new System.Drawing.Size(1335, 23);

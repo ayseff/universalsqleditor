@@ -26,5 +26,11 @@
     <Setting Name="FrmVisualizeData_Geometry" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="FrmFindReplace_SearchTerms" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FrmFindReplace_ReplaceTerms" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

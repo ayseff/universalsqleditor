@@ -21,7 +21,7 @@ namespace SqlEditor
     public partial class FrmTextVisualizer : Form
     {
         private readonly TextType _textType;
-        private readonly FrmFindReplace _findForm = new FrmFindReplace();
+        private readonly FrmFindReplaceSimple _findForm = new FrmFindReplaceSimple();
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public FrmTextVisualizer(string text, TextType textType)

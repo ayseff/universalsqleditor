@@ -14,14 +14,14 @@ using log4net;
 
 namespace SqlEditor
 {
-    public partial class FrmFindReplace : Form
+    public partial class FrmFindReplaceSimple : Form
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly Dictionary<TextEditorControl, HighlightGroup> _highlightGroups = new Dictionary<TextEditorControl, HighlightGroup>();
         private bool _lastSearchWasBackward;
         private bool _lastSearchLoopedAround;
 
-        public FrmFindReplace()
+        public FrmFindReplaceSimple()
         {
             InitializeComponent();
             _search = new TextEditorSearcher();

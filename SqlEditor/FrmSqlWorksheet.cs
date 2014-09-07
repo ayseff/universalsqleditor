@@ -20,6 +20,7 @@ using SqlEditor.Intellisense;
 using SqlEditor.Properties;
 using SqlEditor.RunMultipleFiles;
 using SqlEditor.ScriptResults;
+using SqlEditor.SearchAndReplace;
 using SqlEditor.SqlTextEditor;
 using Utilities.Forms.Dialogs;
 using Utilities.Text;
@@ -50,7 +51,7 @@ namespace SqlEditor
         private string _title;
         private string _worksheetFile;
         private IntelisenseData _intellisenseData;
-        private readonly FrmFindReplace _findForm = new FrmFindReplace();
+        private readonly FrmFindReplace _findReplaceForm = new FrmFindReplace();
         private readonly StateButtonTool _autoCommitTool;
         private bool _skipToolClickEvents;
         #endregion
@@ -98,6 +99,13 @@ namespace SqlEditor
                 return _nextTabKey;
             }
         }
+
+        public TextEditorControl SqlEditor
+        {
+            get { return _sqlEditor; }
+            private set { _sqlEditor = value; }
+        }
+
         #endregion
 
 
@@ -587,13 +595,14 @@ namespace SqlEditor
                         break;
                     
                     case "Find":
-                        var findForm2 = new FrmFindReplace1();
-                        findForm2.ShowFor(_sqlEditor, SearchMode.Find);
+                        //var findForm2 = new FrmFindReplace();
+                        //findForm2.Show(SearchMode.Find);
+                        _findReplaceForm.Show(SearchMode.Replace);
                         //_findForm.ShowFor(_sqlEditor, false);
                         break;
 
                     case "Replace":
-                        _findForm.ShowFor(_sqlEditor, true);
+                        _findReplaceForm.Show(SearchMode.Replace);
                         break;
 
                     case "Auto Commit":
@@ -715,11 +724,11 @@ namespace SqlEditor
             }
             else if (e.Control && e.KeyCode == Keys.F)
             {
-                _findForm.ShowFor(_sqlEditor, false);
+                _findReplaceForm.ShowFor(_sqlEditor, false);
             }
             else if (e.Control && e.KeyCode == Keys.H)
             {
-                _findForm.ShowFor(_sqlEditor, true);
+                _findReplaceForm.ShowFor(_sqlEditor, true);
             }
         }
 

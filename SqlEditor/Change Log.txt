@@ -3,7 +3,7 @@
   - Added a feature that allows you to double-click a column or a table and have it automatically paste into SQL worksheet
   - Added a new feature that allows a double-click (or a right click menu item) on a cell to view it's value in an editor. If a column value if valid XML document, XML editor will be shown
   - Added additional themes for Office 2013 and Windows 8
-  - Small enhancements to Find/Replace dialog
+  - Completely new Find/Replace dialog with more robust searching/replacing and ability to use regular expressions
   Bug Fixes:
   - Fixed regression issue where some icons on the File menu did not have icons
   - Fixed an issue where refresh button was enabled on query results before any query was run. Clicking on a button in that state caused a crash

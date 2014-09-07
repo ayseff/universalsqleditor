@@ -16,6 +16,7 @@ using Infragistics.Win.AppStyling;
 using Infragistics.Win.UltraWinDock;
 using Infragistics.Win.UltraWinEditors;
 using Infragistics.Win.UltraWinGrid;
+using Infragistics.Win.UltraWinTabbedMdi;
 using Infragistics.Win.UltraWinToolbars;
 using Infragistics.Win.UltraWinTree;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -40,6 +41,9 @@ using Resources = SqlEditor.Properties.Resources;
 
 namespace SqlEditor
 {
+    public delegate void ActiveWorksheetChangedEventHanlder(object sender, ActiveWorksheetChangedEventArgs e);
+    public delegate void ActiveSqlEditorChangedEventHanlder(object sender, ActiveSqlEditorChangedEventArgs e);
+
     public sealed partial class FrmMdiParent : Form
     {
         private static FrmMdiParent _instance;
@@ -185,11 +189,7 @@ namespace SqlEditor
             _connectionsPopupMenu = (PopupMenuTool)_utm.Tools["Connection - Context Menu"];
             
             _newConnectionButtonTool = _utm.Tools["New Connection"];
-            
            
-            
-            
-            
             _connectionEditButtonTool = _utm.Tools["Edit Connection"];
             _refreshButtonTool = _utm.Tools["Refresh"];
             _copyButtonTool = _utm.Tools["Copy Text"];
@@ -780,9 +780,24 @@ namespace SqlEditor
                 });
         }
 
-        private FrmSqlWorksheet GetActiveWorksheet()
+        public FrmSqlWorksheet[] GetAllWorksheets()
+        {
+            return _utmdi.TabGroups.Cast<MdiTabGroup>().SelectMany(x => x.Tabs.Cast<MdiTab>().Select(y => y.Form as FrmSqlWorksheet)).ToArray();
+        }
+
+        public FrmSqlWorksheet GetActiveWorksheet()
         {
            return _utmdi.ActiveTab.Form as FrmSqlWorksheet;            
+        }
+
+        public TextEditorControl GetActiveSqlTextEditor()
+        {
+            var worksheet = GetActiveWorksheet();
+            if (worksheet == null)
+            {
+                return null;
+            }
+            else return worksheet.SqlEditor;
         }
 
         private void FrmMdiParentFormClosed(object sender, FormClosedEventArgs e)
@@ -2493,7 +2508,7 @@ namespace SqlEditor
             }
         }
 
-        private void Utmdi_TabActivated(object sender, Infragistics.Win.UltraWinTabbedMdi.MdiTabEventArgs e)
+        private void Utmdi_TabActivated(object sender, MdiTabEventArgs e)
         {
             SelectSqlTabOnRibbon();
             var sqlEditor = e.Tab.Form.Controls.Cast<Control>()
@@ -2502,6 +2517,7 @@ namespace SqlEditor
             if (sqlEditor != null)
             {
                 sqlEditor.Focus();
+                OnActiveWorksheetChanged(new ActiveWorksheetChangedEventArgs((FrmSqlWorksheet) e.Tab.Form));
             }
         }
 
@@ -2659,6 +2675,32 @@ namespace SqlEditor
                 _log.Error(ex.Message, ex);
                 Dialog.ShowErrorDialog(Application.ProductName, message, ex.Message, ex.StackTrace);
             }
+        }
+
+        public event ActiveWorksheetChangedEventHanlder ActiveWorksheetChanged;
+        private void OnActiveWorksheetChanged(ActiveWorksheetChangedEventArgs e)
+        {
+            if (ActiveWorksheetChanged != null)
+            {
+                ActiveWorksheetChanged(this, e);
+            }
+
+            var sqlEditor = e.Worksheet == null ? null : e.Worksheet.SqlEditor;
+            OnActiveSqlEditorChanged(new ActiveSqlEditorChangedEventArgs(sqlEditor));
+        }
+
+        public event ActiveSqlEditorChangedEventHanlder ActiveSqlEditorChanged;
+        private void OnActiveSqlEditorChanged(ActiveSqlEditorChangedEventArgs e)
+        {
+            if (ActiveSqlEditorChanged != null)
+            {
+                ActiveSqlEditorChanged(this, e);
+            }
+        }
+
+        private void Utmdi_TabClosed(object sender, MdiTabEventArgs e)
+        {
+            OnActiveWorksheetChanged(new ActiveWorksheetChangedEventArgs(null));
         }
     }
 }

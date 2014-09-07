@@ -192,6 +192,8 @@
   <ItemGroup>
     <Compile Include="ActionStatus.cs" />
     <Compile Include="ActionStatusManager.cs" />
+    <Compile Include="ActiveSqlEditorChangedEventArgs.cs" />
+    <Compile Include="ActiveWorksheetChangedEventArgs.cs" />
     <Compile Include="CloseAction.cs" />
     <Compile Include="DatabaseExplorer\Extensions.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Base\TreeNodeFactory.cs" />
@@ -246,11 +248,11 @@
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />
     <Compile Include="Databases\ObjectScripter.cs" />
-    <Compile Include="FrmFindReplace1.cs">
+    <Compile Include="SearchAndReplace\FrmFindReplace.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmFindReplace1.designer.cs">
-      <DependentUpon>FrmFindReplace1.cs</DependentUpon>
+    <Compile Include="SearchAndReplace\FrmFindReplace.designer.cs">
+      <DependentUpon>FrmFindReplace.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmTextVisualizer.cs">
       <SubType>Form</SubType>
@@ -339,11 +341,11 @@
     <Compile Include="FrmConnectionDetails.Designer.cs">
       <DependentUpon>FrmConnectionDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmFindReplace.cs">
+    <Compile Include="SearchAndReplace\FrmFindReplaceSimple.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmFindReplace.designer.cs">
-      <DependentUpon>FrmFindReplace.cs</DependentUpon>
+    <Compile Include="SearchAndReplace\FrmFindReplaceSimple.designer.cs">
+      <DependentUpon>FrmFindReplaceSimple.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmPassword.cs">
       <SubType>Form</SubType>
@@ -378,6 +380,26 @@
     <Compile Include="ScriptResults\UcScriptResults.Designer.cs">
       <DependentUpon>UcScriptResults.cs</DependentUpon>
     </Compile>
+    <Compile Include="SearchAndReplace\Engine\DocumentIterator\AllOpenDocumentIterator.cs" />
+    <Compile Include="SearchAndReplace\Engine\DocumentIterator\CurrentDocumentIterator.cs" />
+    <Compile Include="SearchAndReplace\Engine\DocumentIterator\IDocumentIterator.cs" />
+    <Compile Include="SearchAndReplace\Engine\ITextIteratorBuilder.cs" />
+    <Compile Include="SearchAndReplace\Engine\Search.cs" />
+    <Compile Include="SearchAndReplace\Engine\SearchReplaceManager.cs" />
+    <Compile Include="SearchAndReplace\Engine\SearchReplaceUtilities.cs" />
+    <Compile Include="SearchAndReplace\Engine\SearchStrategy\BruteForceSearchStrategy.cs" />
+    <Compile Include="SearchAndReplace\Engine\SearchStrategy\ISearchStrategy.cs" />
+    <Compile Include="SearchAndReplace\Engine\SearchStrategy\ProvidedDocumentInformation.cs" />
+    <Compile Include="SearchAndReplace\Engine\SearchStrategy\RegExSearchStrategy.cs" />
+    <Compile Include="SearchAndReplace\Engine\SearchStrategy\SearchResultMatch.cs" />
+    <Compile Include="SearchAndReplace\Engine\SearchStrategy\SimpleSearchResultMatch.cs" />
+    <Compile Include="SearchAndReplace\Engine\TextIterator\ForwardTextIterator.cs" />
+    <Compile Include="SearchAndReplace\Engine\TextIterator\ForwardTextIteratorBuilder.cs" />
+    <Compile Include="SearchAndReplace\Engine\TextIterator\ITextIterator.cs" />
+    <Compile Include="SearchAndReplace\Engine\TextSelection.cs" />
+    <Compile Include="SearchAndReplace\Properties.cs" />
+    <Compile Include="SearchAndReplace\PropertyChangedEventArgs.cs" />
+    <Compile Include="SearchAndReplace\SearchOptions.cs" />
     <Compile Include="SqlHelpers\SqlHelper.cs" />
     <Compile Include="SqlHelpers\SqlTextExtractor.cs" />
     <Compile Include="SqlHistory\ExecutedSqlStatement.cs" />
@@ -435,8 +457,8 @@
     <Compile Include="WaitActionStatus.cs" />
     <Compile Include="SqlTextEditor\XmlFoldingStrategy.cs" />
     <Compile Include="SqlTextEditor\XmlFormattingStrategy.cs" />
-    <EmbeddedResource Include="FrmFindReplace1.resx">
-      <DependentUpon>FrmFindReplace1.cs</DependentUpon>
+    <EmbeddedResource Include="SearchAndReplace\FrmFindReplace.resx">
+      <DependentUpon>FrmFindReplace.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTextVisualizer.resx">
       <DependentUpon>FrmTextVisualizer.cs</DependentUpon>
@@ -549,8 +571,8 @@
     <Content Include="x86\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="FrmFindReplace.resx">
-      <DependentUpon>FrmFindReplace.cs</DependentUpon>
+    <EmbeddedResource Include="SearchAndReplace\FrmFindReplaceSimple.resx">
+      <DependentUpon>FrmFindReplaceSimple.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPassword.resx">
       <DependentUpon>FrmPassword.cs</DependentUpon>

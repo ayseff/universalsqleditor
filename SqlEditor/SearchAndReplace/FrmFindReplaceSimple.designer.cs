@@ -1,6 +1,6 @@
 ﻿namespace SqlEditor
 {
-	partial class FrmFindReplace
+	partial class FrmFindReplaceSimple
 	{
 		/// <summary>
 		/// Required designer variable.
