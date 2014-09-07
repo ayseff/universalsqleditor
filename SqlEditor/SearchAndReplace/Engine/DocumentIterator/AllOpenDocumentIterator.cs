@@ -7,8 +7,9 @@
 
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
+using SqlEditor.SearchAndReplace.Engine.SearchStrategy;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine.DocumentIterator
 {
 	public class AllOpenDocumentIterator : IDocumentIterator
 	{
@@ -22,48 +23,40 @@ namespace SearchAndReplace
 		}
 		
 		public string CurrentFileName {
-			get {
-				IViewContent viewContent = GetCurrentTextEditorViewContent();
-				if (viewContent != null) {
-					return viewContent.PrimaryFileName;
-				}
+			get
+			{
+			    var frmSqlWorksheet = FrmMdiParent.Instance.GetActiveWorksheet();
+                if (frmSqlWorksheet != null)
+                {
+                    return frmSqlWorksheet.WorksheetFile ?? frmSqlWorksheet.Title;
+                }
 				return null;
 			}
 		}
 		
-		IViewContent GetCurrentTextEditorViewContent()
-		{
-			GetCurIndex();
-			if (curIndex >= 0) {
-				IViewContent viewContent = WorkbenchSingleton.Workbench.ViewContentCollection.ToList()[curIndex];
-				if (viewContent is ITextEditorControlProvider) {
-					return viewContent;
-				}
-			}
-			return null;
-		}
-		
 		public ProvidedDocumentInformation Current {
 			get {
-				IViewContent viewContent = GetCurrentTextEditorViewContent();
-				if (viewContent != null) {
-					TextEditorControl textEditor = (((ITextEditorControlProvider)viewContent).TextEditorControl);
-					IDocument document = textEditor.Document;
-					return new ProvidedDocumentInformation(document,
-				    	CurrentFileName,
-				   		textEditor.ActiveTextAreaControl);
-				}
+                TextEditorControl textEditor = FrmMdiParent.Instance.GetActiveSqlTextEditor();
+                if (textEditor != null)
+                {
+                    IDocument document = textEditor.Document;
+                    return new ProvidedDocumentInformation(document,
+                        CurrentFileName,
+                        textEditor.ActiveTextAreaControl);
+                }
 				return null;
 			}
 		}
 		
 		void GetCurIndex()
 		{
-			IViewContent[] viewContentCollection = WorkbenchSingleton.Workbench.ViewContentCollection.ToArray();
-			int viewCount = WorkbenchSingleton.Workbench.ViewContentCollection.Count;
+		    var activeWorksheet = FrmMdiParent.Instance.GetActiveWorksheet();
+		    var worksheets = FrmMdiParent.Instance.GetAllWorksheets();
+		    int viewCount = worksheets.Length;
 			if (curIndex == -1 || curIndex >= viewCount) {
 				for (int i = 0; i < viewCount; ++i) {
-					if (WorkbenchSingleton.Workbench.ActiveViewContent == viewContentCollection[i]) {
+                    if (activeWorksheet == worksheets[i])
+                    {
 						curIndex = i;
 						return;
 					}
@@ -83,8 +76,8 @@ namespace SearchAndReplace
 				resetted = false;
 				return true;
 			}
-			
-			curIndex = (curIndex + 1) % WorkbenchSingleton.Workbench.ViewContentCollection.Count;
+
+            curIndex = (curIndex + 1) % FrmMdiParent.Instance.GetAllWorksheets().Length;
 			if (curIndex == startIndex) {
 				return false;
 			}
@@ -103,7 +96,7 @@ namespace SearchAndReplace
 			}
 			
 			if (curIndex == 0) {
-				curIndex = WorkbenchSingleton.Workbench.ViewContentCollection.Count - 1;
+                curIndex = FrmMdiParent.Instance.GetAllWorksheets().Length - 1;
 			}
 			
 			if (curIndex > 0) {

@@ -8,8 +8,9 @@
 using System;
 using System.Diagnostics;
 using ICSharpCode.TextEditor.Document;
+using SqlEditor.SearchAndReplace.Engine.SearchStrategy;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine.TextIterator
 {
 	public class ForwardTextIterator : ITextIterator
 	{
@@ -37,13 +38,13 @@ namespace SearchAndReplace
 			get {
 				switch (state) {
 					case TextIteratorState.Resetted:
-						throw new System.InvalidOperationException("Call moveAhead first");
+						throw new InvalidOperationException("Call moveAhead first");
 					case TextIteratorState.Iterating:
 						return textBuffer.GetCharAt(Position);
 					case TextIteratorState.Done:
-						throw new System.InvalidOperationException("TextIterator is at the end");
+						throw new InvalidOperationException("TextIterator is at the end");
 					default:
-						throw new System.InvalidOperationException("unknown text iterator state");
+						throw new InvalidOperationException("unknown text iterator state");
 				}
 			}
 		}

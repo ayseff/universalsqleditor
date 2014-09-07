@@ -5,9 +5,7 @@
 //     <version>$Revision$</version>
 // </file>
 
-using System;
-
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine
 {
 	public class TextSelection
 	{

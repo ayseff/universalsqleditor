@@ -6,8 +6,9 @@
 // </file>
 
 using ICSharpCode.TextEditor;
+using SqlEditor.SearchAndReplace.Engine.SearchStrategy;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine.DocumentIterator
 {
 	public class CurrentDocumentIterator : IDocumentIterator
 	{
@@ -23,7 +24,8 @@ namespace SearchAndReplace
 				if (!SearchReplaceUtilities.IsTextAreaSelected) {
 					return null;
 				}
-			    return "";//WorkbenchSingleton.Workbench.ActiveViewContent.PrimaryFileName;
+			    var frmSqlWorksheet = FrmMdiParent.Instance.GetActiveWorksheet();
+                return frmSqlWorksheet.WorksheetFile ?? frmSqlWorksheet.Title;
 			}
 		}
 		
@@ -32,7 +34,7 @@ namespace SearchAndReplace
 				if (!SearchReplaceUtilities.IsTextAreaSelected) {
 					return null;
 				}
-				TextEditorControl textEditor = (((ITextEditorControlProvider)WorkbenchSingleton.Workbench.ActiveViewContent).TextEditorControl);
+                TextEditorControl textEditor = FrmMdiParent.Instance.GetActiveSqlTextEditor();
 				return new ProvidedDocumentInformation(textEditor.Document, CurrentFileName, textEditor.ActiveTextAreaControl);
 			}
 		}

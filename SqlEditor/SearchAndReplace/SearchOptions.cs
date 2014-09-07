@@ -6,8 +6,9 @@
 // </file>
 
 using System;
+using SqlEditor.SearchAndReplace.Engine.DocumentIterator;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace
 {
 	public enum SearchStrategyType {
 		Normal,
@@ -17,9 +18,7 @@ namespace SearchAndReplace
 	
 	public static class SearchOptions
 	{
-		const string searchPropertyKey = "SearchAndReplaceProperties";
-		
-		static Properties properties;
+	    static Properties properties;
 		
 		public static Properties Properties {
 			get {
@@ -167,7 +166,7 @@ namespace SearchAndReplace
 		
 		static SearchOptions()
 		{
-			properties = PropertyService.Get(searchPropertyKey, new Properties());
+			properties = new Properties();
 		}
 	}
 }

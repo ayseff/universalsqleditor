@@ -5,10 +5,9 @@
 //     <version>$Revision$</version>
 // </file>
 
-using System;
 using ICSharpCode.TextEditor.Document;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine.TextIterator
 {
 	/// <summary>
 	/// This iterator iterates on a text buffer strategy.

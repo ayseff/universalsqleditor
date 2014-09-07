@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
+using SqlEditor.SearchAndReplace.Engine.SearchStrategy;
+using SqlEditor.SearchAndReplace.Engine.TextIterator;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine
 {
 	public class SearchReplaceManager
 	{
@@ -24,87 +25,92 @@ namespace SearchAndReplace
 			find.TextIteratorBuilder = new ForwardTextIteratorBuilder();
 		}
 		
-		static void SetSearchOptions(IProgressMonitor monitor)
+		static void SetSearchOptions()
 		{
 			find.SearchStrategy   = SearchReplaceUtilities.CreateSearchStrategy(SearchOptions.SearchStrategyType);
-			find.DocumentIterator = SearchReplaceUtilities.CreateDocumentIterator(SearchOptions.DocumentIteratorType, monitor);
+			find.DocumentIterator = SearchReplaceUtilities.CreateDocumentIterator(SearchOptions.DocumentIteratorType);
 		}
 		
-		public static void Replace(IProgressMonitor monitor, TextEditorControl textarea)
+		public static bool Replace()
 		{
-			SetSearchOptions(monitor);
+			SetSearchOptions();
 			if (lastResult != null) {
 				//ITextEditorControlProvider provider = WorkbenchSingleton.Workbench.ActiveViewContent as ITextEditorControlProvider;
 				//if (provider != null) {
-					//TextEditorControl textarea = provider.TextEditorControl;
-					SelectionManager selectionManager = textarea.ActiveTextAreaControl.TextArea.SelectionManager;
+			    var textarea = FrmMdiParent.Instance.GetActiveSqlTextEditor();
+			    var activeWorksheet = FrmMdiParent.Instance.GetActiveWorksheet();
+			    var fileName = activeWorksheet.WorksheetFile ?? activeWorksheet.Title;
+				SelectionManager selectionManager = textarea.ActiveTextAreaControl.TextArea.SelectionManager;
 					
-					if (selectionManager.SelectionCollection.Count == 1
-					    && selectionManager.SelectionCollection[0].Offset == lastResult.Offset
-					    && selectionManager.SelectionCollection[0].Length == lastResult.Length
-					    && lastResult.FileName == textarea.FileName)
-					{
-						string replacePattern = lastResult.TransformReplacePattern(SearchOptions.ReplacePattern);
+				if (selectionManager.SelectionCollection.Count == 1
+					&& selectionManager.SelectionCollection[0].Offset == lastResult.Offset
+					&& selectionManager.SelectionCollection[0].Length == lastResult.Length
+                    && lastResult.FileName == fileName)
+				{
+					string replacePattern = lastResult.TransformReplacePattern(SearchOptions.ReplacePattern);
 						
-						textarea.BeginUpdate();
-						selectionManager.ClearSelection();
-						textarea.Document.Replace(lastResult.Offset, lastResult.Length, replacePattern);
-						textarea.ActiveTextAreaControl.Caret.Position = textarea.Document.OffsetToPosition(lastResult.Offset + replacePattern.Length);
-						textarea.EndUpdate();
-					}
+					textarea.BeginUpdate();
+					selectionManager.ClearSelection();
+					textarea.Document.Replace(lastResult.Offset, lastResult.Length, replacePattern);
+					textarea.ActiveTextAreaControl.Caret.Position = textarea.Document.OffsetToPosition(lastResult.Offset + replacePattern.Length);
+					textarea.EndUpdate();
+				}
 				//}
 			}
-			FindNext(monitor);
+			return FindNext();
 		}
 		
 		static TextSelection textSelection;
 		
-		public static void ReplaceFirstInSelection(int offset, int length, IProgressMonitor monitor)
+		public static bool ReplaceFirstInSelection(int offset, int length)
 		{
-			SetSearchOptions(monitor);
-			FindFirstInSelection(offset, length, monitor);
+			SetSearchOptions();
+			return FindFirstInSelection(offset, length);
 		}
 
-        public static bool ReplaceNextInSelection(IProgressMonitor monitor, TextEditorControl textarea)
+        public static bool ReplaceNextInSelection()
 		{
 			if (lastResult != null) // && WorkbenchSingleton.Workbench.ActiveWorkbenchWindow != null) 
             {
 				//ITextEditorControlProvider provider = WorkbenchSingleton.Workbench.ActiveViewContent as ITextEditorControlProvider;
 				//if (provider != null) {
 					//TextEditorControl textarea = provider.TextEditorControl;
-					SelectionManager selectionManager = textarea.ActiveTextAreaControl.TextArea.SelectionManager;
+                var textarea = FrmMdiParent.Instance.GetActiveSqlTextEditor();
+                var activeWorksheet = FrmMdiParent.Instance.GetActiveWorksheet();
+                var fileName = activeWorksheet.WorksheetFile ?? activeWorksheet.Title;
+				SelectionManager selectionManager = textarea.ActiveTextAreaControl.TextArea.SelectionManager;
 					
-					if (selectionManager.SelectionCollection.Count == 1
-					    && selectionManager.SelectionCollection[0].Offset == lastResult.Offset
-					    && selectionManager.SelectionCollection[0].Length == lastResult.Length
-					    && lastResult.FileName == textarea.FileName)
-					{
-						string replacePattern = lastResult.TransformReplacePattern(SearchOptions.ReplacePattern);
+				if (selectionManager.SelectionCollection.Count == 1
+					&& selectionManager.SelectionCollection[0].Offset == lastResult.Offset
+					&& selectionManager.SelectionCollection[0].Length == lastResult.Length
+                    && lastResult.FileName == fileName)
+				{
+					string replacePattern = lastResult.TransformReplacePattern(SearchOptions.ReplacePattern);
 						
-						textarea.BeginUpdate();
-						selectionManager.ClearSelection();
-						textarea.Document.Replace(lastResult.Offset, lastResult.Length, replacePattern);
-						textarea.ActiveTextAreaControl.Caret.Position = textarea.Document.OffsetToPosition(lastResult.Offset + replacePattern.Length);
-						textarea.EndUpdate();
+					textarea.BeginUpdate();
+					selectionManager.ClearSelection();
+					textarea.Document.Replace(lastResult.Offset, lastResult.Length, replacePattern);
+					textarea.ActiveTextAreaControl.Caret.Position = textarea.Document.OffsetToPosition(lastResult.Offset + replacePattern.Length);
+					textarea.EndUpdate();
 						
-						textSelection.Length -= lastResult.Length - replacePattern.Length;
-					}
+					textSelection.Length -= lastResult.Length - replacePattern.Length;
+				}
 				//}
 			}
-			return FindNextInSelection(monitor);
+			return FindNextInSelection();
 		}
 		
-		public static void MarkAll(IProgressMonitor monitor)
+		public static void MarkAll()
 		{
-			SetSearchOptions(monitor);
+			SetSearchOptions();
 			ClearSelection();
 			find.Reset();
-			if (!find.SearchStrategy.CompilePattern(monitor))
+			if (!find.SearchStrategy.CompilePattern())
 				return;
 			List<TextEditorControl> textAreas = new List<TextEditorControl>();
 			int count;
 			for (count = 0;; count++) {
-				SearchResultMatch result = SearchReplaceManager.find.FindNext(monitor);
+				SearchResultMatch result = SearchReplaceManager.find.FindNext();
 				
 				if (result == null) {
 					break;
@@ -116,16 +122,16 @@ namespace SearchAndReplace
 			foreach (TextEditorControl ctl in textAreas) {
 				ctl.Refresh();
 			}
-			ShowMarkDoneMessage(count, monitor);
+			ShowMarkDoneMessage(count);
 		}
 		
-		public static void MarkAll(int offset, int length, IProgressMonitor monitor)
+		public static int MarkAll(int offset, int length)
 		{
-			SetSearchOptions(monitor);
+			SetSearchOptions();
 			find.Reset();
 			
-			if (!find.SearchStrategy.CompilePattern(monitor))
-				return;
+			if (!find.SearchStrategy.CompilePattern())
+				return 0;
 			
 			List<TextEditorControl> textAreas = new List<TextEditorControl>();
 			int count;
@@ -133,15 +139,16 @@ namespace SearchAndReplace
 				SearchResultMatch result = find.FindNext(offset, length);
 				if (result == null) {
 					break;
-				} else {
+				} else 
+                {
 					MarkResult(textAreas, result);
-				}
+                }
 			}
 			find.Reset();
 			foreach (TextEditorControl ctl in textAreas) {
 				ctl.Refresh();
 			}
-			ShowMarkDoneMessage(count, monitor);
+		    return count;
 		}
 		
 		static void MarkResult(List<TextEditorControl> textAreas, SearchResultMatch result)
@@ -161,42 +168,42 @@ namespace SearchAndReplace
 			}
 		}
 		
-		static void ShowMarkDoneMessage(int count, IProgressMonitor monitor)
+		static void ShowMarkDoneMessage(int count)
 		{
 			if (count == 0) {
-				ShowNotFoundMessage(monitor);
+				ShowNotFoundMessage();
 			} else {
-				if (monitor != null) monitor.ShowingDialog = true;
+				//if (monitor != null) monitor.ShowingDialog = true;
                 //MessageService.ShowMessage(StringParser.Parse("${res:ICSharpCode.TextEditor.Document.SearchReplaceManager.MarkAllDone}", new string[,]{{ "Count", count.ToString() }}),
                 //                           "${res:Global.FinishedCaptionText}");
-				if (monitor != null) monitor.ShowingDialog = false;
+				//if (monitor != null) monitor.ShowingDialog = false;
 			}
 		}
 		
-		static void ShowReplaceDoneMessage(int count, IProgressMonitor monitor)
+		static void ShowReplaceDoneMessage(int count)
 		{
 			if (count == 0) {
-				ShowNotFoundMessage(monitor);
+				ShowNotFoundMessage();
 			} else {
-				if (monitor != null) monitor.ShowingDialog = true;
+				//if (monitor != null) monitor.ShowingDialog = true;
                 //MessageService.ShowMessage(StringParser.Parse("${res:ICSharpCode.TextEditor.Document.SearchReplaceManager.ReplaceAllDone}", new string[,]{{ "Count", count.ToString() }}),
                 //                           "${res:Global.FinishedCaptionText}");
-				if (monitor != null) monitor.ShowingDialog = false;
+				//if (monitor != null) monitor.ShowingDialog = false;
 			}
 		}
 		
-		public static void ReplaceAll(IProgressMonitor monitor)
+		public static int ReplaceAll()
 		{
-			SetSearchOptions(monitor);
+			SetSearchOptions();
 			ClearSelection();
 			find.Reset();
-			if (!find.SearchStrategy.CompilePattern(monitor))
-				return;
+			if (!find.SearchStrategy.CompilePattern())
+				return 0;
 			
 			List<TextEditorControl> textAreas = new List<TextEditorControl>();
 			TextEditorControl textArea = null;
 			for (int count = 0;; count++) {
-				SearchResultMatch result = SearchReplaceManager.find.FindNext(monitor);
+				SearchResultMatch result = SearchReplaceManager.find.FindNext();
 				
 				if (result == null) {
 					if (count != 0) {
@@ -205,9 +212,8 @@ namespace SearchAndReplace
 							ta.Refresh();
 						}
 					}
-					ShowReplaceDoneMessage(count, monitor);
 					find.Reset();
-					return;
+                    return count;
 				} else {
 					if (textArea == null || textArea.FileName != result.FileName) {
 						// we need to open another text area
@@ -233,22 +239,22 @@ namespace SearchAndReplace
 			}
 		}
 		
-		public static void ReplaceAll(int offset, int length, IProgressMonitor monitor)
+		public static int ReplaceAll(int offset, int length)
 		{
-			SetSearchOptions(monitor);
+			SetSearchOptions();
 			find.Reset();
 			
-			if (!find.SearchStrategy.CompilePattern(monitor))
-				return;
+			if (!find.SearchStrategy.CompilePattern())
+				return 0;
 			
-			for (int count = 0;; count++) {
+			for (var count = 0;; count++) {
 				SearchResultMatch result = find.FindNext(offset, length);
-				if (result == null) {
-					ShowReplaceDoneMessage(count, monitor);
-					return;
+				if (result == null)
+				{
+				    return count;
 				}
 				
-				string replacement = result.TransformReplacePattern(SearchOptions.ReplacePattern);
+				var replacement = result.TransformReplacePattern(SearchOptions.ReplacePattern);
 				find.Replace(result.Offset,
 				             result.Length,
 				             replacement);
@@ -264,34 +270,38 @@ namespace SearchAndReplace
 		
 		static SearchResultMatch lastResult = null;
 		
-		public static void FindNext(IProgressMonitor monitor)
+		public static bool FindNext()
 		{
-			SetSearchOptions(monitor);
+			SetSearchOptions();
 			if (find == null ||
 			    SearchOptions.FindPattern == null ||
 			    SearchOptions.FindPattern.Length == 0) {
-				return;
+				return false;
 			}
 			
-			if (!find.SearchStrategy.CompilePattern(monitor)) {
+			if (!find.SearchStrategy.CompilePattern()) {
 				find.Reset();
 				lastResult = null;
-				return;
+				return false;
 			}
 			
 			TextEditorControl textArea = null;
 			while (textArea == null) {
-				SearchResultMatch result = find.FindNext(monitor);
-				if (result == null) {
-					ShowNotFoundMessage(monitor);
+				SearchResultMatch result = find.FindNext();
+				if (result == null) 
+                {
 					find.Reset();
 					lastResult = null;
-					return;
-				} else {
+					return false;
+				} 
+                else 
+                {
 					textArea = OpenTextArea(result.FileName);
-					if (textArea != null) {
+					if (textArea != null) 
+                    {
 						if (lastResult != null  && lastResult.FileName == result.FileName &&
-						    textArea.ActiveTextAreaControl.Caret.Offset != lastResult.Offset + lastResult.Length) {
+						    textArea.ActiveTextAreaControl.Caret.Offset != lastResult.Offset + lastResult.Length) 
+                        {
 							find.Reset();
 						}
 						int startPos = Math.Min(textArea.Document.TextLength, Math.Max(0, result.Offset));
@@ -299,52 +309,54 @@ namespace SearchAndReplace
 						
 						SearchReplaceUtilities.SelectText(textArea, startPos, endPos);
 						lastResult = result;
-					}
+                        return true;
+                    }
 				}
 			}
+		    return false;
 		}
 		
-		static bool foundAtLeastOneItem = false;
+		static bool _foundAtLeastOneItem = false;
 
-		public static void FindFirstInSelection(int offset, int length, IProgressMonitor monitor)
+		public static bool FindFirstInSelection(int offset, int length)
 		{
-			foundAtLeastOneItem = false;
+			_foundAtLeastOneItem = false;
 			textSelection = null;
-			SetSearchOptions(monitor);
+			SetSearchOptions();
 			
 			if (find == null ||
 			    SearchOptions.FindPattern == null ||
 			    SearchOptions.FindPattern.Length == 0) {
-				return;
+				return false;
 			}
 			
-			if (!find.SearchStrategy.CompilePattern(monitor)) {
+			if (!find.SearchStrategy.CompilePattern()) {
 				find.Reset();
 				lastResult = null;
-				return;
+                return false;
 			}
 			
 			textSelection = new TextSelection(offset, length);
-			FindNextInSelection(monitor);
+			return FindNextInSelection();
 		}
 
-		public static bool FindNextInSelection(IProgressMonitor monitor)
+		public static bool FindNextInSelection()
 		{
 			TextEditorControl textArea = null;
 			while (textArea == null) {
 				SearchResultMatch result = find.FindNext(textSelection.Offset, textSelection.Length);
 				if (result == null) {
-					if (!foundAtLeastOneItem) {
-						ShowNotFoundMessage(monitor);
+					if (!_foundAtLeastOneItem) {
+						ShowNotFoundMessage();
 					}
 					find.Reset();
 					lastResult = null;
-					foundAtLeastOneItem = false;
+					_foundAtLeastOneItem = false;
 					return false;
 				} else {
 					textArea = OpenTextArea(result.FileName);
 					if (textArea != null) {
-						foundAtLeastOneItem = true;
+						_foundAtLeastOneItem = true;
 						if (lastResult != null  && lastResult.FileName == result.FileName &&
 						    textArea.ActiveTextAreaControl.Caret.Offset != lastResult.Offset + lastResult.Length) {
 						}
@@ -358,21 +370,22 @@ namespace SearchAndReplace
 			return true;
 		}
 		
-		static void ShowNotFoundMessage(IProgressMonitor monitor)
+		static void ShowNotFoundMessage()
 		{
-			if (monitor != null && monitor.IsCancelled)
-				return;
-			if (monitor != null) monitor.ShowingDialog = true;
+            //if (monitor != null && monitor.IsCancelled)
+            //    return;
+            //if (monitor != null) monitor.ShowingDialog = true;
             //MessageBox.Show(WorkbenchSingleton.MainForm,
             //                ResourceService.GetString("Dialog.NewProject.SearchReplace.SearchStringNotFound"),
             //                ResourceService.GetString("Dialog.NewProject.SearchReplace.SearchStringNotFound.Title"),
             //                MessageBoxButtons.OK,
             //                MessageBoxIcon.Information);
-			if (monitor != null) monitor.ShowingDialog = false;
+            //if (monitor != null) monitor.ShowingDialog = false;
 		}
 		
 		static TextEditorControl OpenTextArea(string fileName)
 		{
+		    return FrmMdiParent.Instance.GetActiveSqlTextEditor();
             //ITextEditorControlProvider textEditorProvider = null;
             //if (fileName != null) {
             //    textEditorProvider = FileService.OpenFile(fileName) as ITextEditorControlProvider;
@@ -383,11 +396,12 @@ namespace SearchAndReplace
             //if (textEditorProvider != null) {
             //    return textEditorProvider.TextEditorControl;
             //}
-			return null;
+			//return null;
 		}
 		
 		static void ClearSelection()
 		{
+            FrmMdiParent.Instance.GetActiveSqlTextEditor().ActiveTextAreaControl.TextArea.SelectionManager.ClearSelection();
             //if (WorkbenchSingleton.Workbench.ActiveWorkbenchWindow != null) {
             //    ITextEditorControlProvider provider = WorkbenchSingleton.Workbench.ActiveViewContent as ITextEditorControlProvider;
             //    if (provider != null) {

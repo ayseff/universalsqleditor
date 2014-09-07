@@ -7,14 +7,17 @@
 
 using System;
 using System.Text.RegularExpressions;
+using SqlEditor.SearchAndReplace.Engine.TextIterator;
+using Utilities.Forms.Dialogs;
+using Application = System.Windows.Forms.Application;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine.SearchStrategy
 {
 	public class RegExSearchStrategy : ISearchStrategy
 	{
 		Regex regex = null;
 		
-		public bool CompilePattern(IProgressMonitor monitor)
+		public bool CompilePattern()
 		{
 			RegexOptions regexOptions = RegexOptions.Compiled | RegexOptions.Multiline;
 			if (!SearchOptions.MatchCase) {
@@ -23,10 +26,9 @@ namespace SearchAndReplace
 			try {
 				regex = new Regex(SearchOptions.FindPattern, regexOptions);
 				return true;
-			} catch (ArgumentException ex) {
-				//if (monitor != null) monitor.ShowingDialog = true;
-				//MessageService.ShowError("${res:Dialog.NewProject.SearchReplace.ErrorParsingRegex}\n" + ex.Message);
-				//if (monitor != null) monitor.ShowingDialog = false;
+			} catch (ArgumentException ex)
+			{
+			    Dialog.ShowErrorDialog(Application.ProductName, "Invalid regular expression.", ex.Message, ex.StackTrace);
 				return false;
 			}
 		}

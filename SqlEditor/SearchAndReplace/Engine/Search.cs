@@ -5,11 +5,12 @@
 //     <version>$Revision$</version>
 // </file>
 
-using System;
 using System.Diagnostics;
-using ICSharpCode.SharpDevelop.Gui;
+using SqlEditor.SearchAndReplace.Engine.DocumentIterator;
+using SqlEditor.SearchAndReplace.Engine.SearchStrategy;
+using SqlEditor.SearchAndReplace.Engine.TextIterator;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine
 {
 	public class Search
 	{
@@ -81,15 +82,12 @@ namespace SearchAndReplace
 			}
 		}
 		
-		public SearchResultMatch FindNext(IProgressMonitor monitor)
+		public SearchResultMatch FindNext()
 		{
 			// insanity check
 			Debug.Assert(searchStrategy      != null);
 			Debug.Assert(documentIterator    != null);
 			Debug.Assert(textIteratorBuilder != null);
-			
-			if (monitor != null && monitor.IsCancelled)
-				return null;
 			
 			if (info != null && textIterator != null && documentIterator.CurrentFileName != null) {
 				ProvidedDocumentInformation currentInfo = documentIterator.Current;
@@ -119,7 +117,7 @@ namespace SearchAndReplace
 					textIterator = null;
 				}
 				
-				return FindNext(monitor);
+				return FindNext();
 			}
 			return null;
 		}

@@ -5,9 +5,10 @@
 //     <version>$Revision$</version>
 // </file>
 
-using System;
+using SqlEditor.SearchAndReplace.Engine.SearchStrategy;
+using SqlEditor.SearchAndReplace.Engine.TextIterator;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine
 {
 	/// <summary>
 	/// Builds a text iterator object.

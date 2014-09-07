@@ -5,9 +5,9 @@
 //     <version>$Revision$</version>
 // </file>
 
-using System;
+using SqlEditor.SearchAndReplace.Engine.SearchStrategy;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine.DocumentIterator
 {
 	public enum DocumentIteratorType {
 		CurrentDocument,

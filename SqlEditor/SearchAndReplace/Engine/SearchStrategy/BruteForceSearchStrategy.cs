@@ -7,8 +7,9 @@
 
 using System;
 using ICSharpCode.TextEditor.Document;
+using SqlEditor.SearchAndReplace.Engine.TextIterator;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine.SearchStrategy
 {
 	/// <summary>
 	///  Only for fallback purposes.
@@ -40,7 +41,7 @@ namespace SearchAndReplace
 		bool IsWholeWordAt(ITextBufferStrategy document, int offset, int length)
 		{
 			return (offset - 1 < 0 || !Char.IsLetterOrDigit(document.GetCharAt(offset - 1))) &&
-			       (offset + length + 1 >= document.Length || !Char.IsLetterOrDigit(document.GetCharAt(offset + length)));
+			       (offset + length >= document.Length || !Char.IsLetterOrDigit(document.GetCharAt(offset + length)));
 		}
 		
 		int InternalFindNext(ITextIterator textIterator)
@@ -71,7 +72,7 @@ namespace SearchAndReplace
 			return -1;
 		}
 		
-		public bool CompilePattern(ICSharpCode.SharpDevelop.Gui.IProgressMonitor monitor)
+		public bool CompilePattern()
 		{
 			searchPattern = SearchOptions.MatchCase ? SearchOptions.FindPattern : SearchOptions.FindPattern.ToUpper();
 			return true;

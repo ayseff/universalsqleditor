@@ -5,7 +5,9 @@
 //     <version>$Revision$</version>
 // </file>
 
-namespace SearchAndReplace
+using SqlEditor.SearchAndReplace.Engine.TextIterator;
+
+namespace SqlEditor.SearchAndReplace.Engine.SearchStrategy
 {
 	/// <summary>
 	/// This interface is the basic interface which all
@@ -19,7 +21,7 @@ namespace SearchAndReplace
 		/// before the FindNext function.
 		/// The method might show a message box to the user if the pattern is invalid.
 		/// </remarks>
-		bool CompilePattern(IProgressMonitor monitor);
+		bool CompilePattern();
 		
 		/// <remarks>
 		/// The find next method should search the next occurrence of the

@@ -6,12 +6,12 @@
 // </file>
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using ICSharpCode.TextEditor;
 using ICSharpCode.TextEditor.Document;
+using SqlEditor.SearchAndReplace.Engine.DocumentIterator;
+using SqlEditor.SearchAndReplace.Engine.SearchStrategy;
 
-namespace SearchAndReplace
+namespace SqlEditor.SearchAndReplace.Engine
 {
 	public sealed class SearchReplaceUtilities
 	{
@@ -43,14 +43,12 @@ namespace SearchAndReplace
 					return new BruteForceSearchStrategy(); // new KMPSearchStrategy();
 				case SearchStrategyType.RegEx:
 					return new RegExSearchStrategy();
-				case SearchStrategyType.Wildcard:
-					return new WildcardSearchStrategy();
 				default:
 					throw new System.NotImplementedException("CreateSearchStrategy for type " + type);
 			}
 		}
 		
-		public static IDocumentIterator CreateDocumentIterator(DocumentIteratorType type, IProgressMonitor monitor)
+		public static IDocumentIterator CreateDocumentIterator(DocumentIteratorType type)
 		{
 			switch (type) {
 				case DocumentIteratorType.CurrentDocument:
@@ -62,10 +60,8 @@ namespace SearchAndReplace
 					throw new System.NotImplementedException("CreateDocumentIterator for type " + type);
 			}
 		}
-		
-		static List<string> excludedFileExtensions;
-		
-        //public static bool IsSearchable(string fileName)
+
+	    //public static bool IsSearchable(string fileName)
         //{
         //    if (fileName == null)
         //        return false;
