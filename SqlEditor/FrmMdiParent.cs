@@ -1038,8 +1038,8 @@ namespace SqlEditor
                         Connections_ScriptTableAsDrop();
                         break;
 
-                    case "Tables - Script as - Create": 
-                        throw new NotImplementedException();
+                    case "Tables - Script as - Create":
+                        Connections_ScriptTableDdl();
                         break;
 
                     case "Stored Procedures - Edit":
@@ -1077,6 +1077,27 @@ namespace SqlEditor
             {
                 RefreshUserInterface();
             }
+        }
+
+        private void Connections_ScriptTableDdl()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as TableTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("Table not selected.");
+            }
+
+            var table = selectedNode.Table;
+            var databaseConnection = selectedNode.DatabaseConnection;
+            var worksheet = NewWorksheet(databaseConnection);
+            var insertSql = databaseConnection.DatabaseServer.GetDdlGenerator()
+                .GenerateTableDdl(databaseConnection, table.Parent.Name, table.Name);
+            worksheet.AppendText(insertSql);
         }
 
         private void Connections_FunctionDrop()

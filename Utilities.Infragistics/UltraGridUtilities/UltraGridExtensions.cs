@@ -324,7 +324,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
             return Task.Run(() =>
                             {
                                 ExportToExcel(grid, excelFile);
-                                Process.Start(excelFile);
+                                System.Diagnostics.Process.Start(excelFile);
                             });
         }
 
@@ -529,7 +529,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
             return Task.Run(() =>
             {
                 ExportToDelimitedFile(grid, exportFile, delimiter);
-                Process.Start(exportFile);
+                System.Diagnostics.Process.Start(exportFile);
             });
         }
     }

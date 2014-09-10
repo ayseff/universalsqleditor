@@ -10,6 +10,7 @@
   - Fixed an issue where appending text to SQL worksheet was appending text in overwrite mode. Text is now inserted
   - Fixed an issue where a completely commented SQL statement was attempted to be run as part of a Run as Script option
   - Fixed an issue where row highlighting was not correct in query results grid after sorting
+  - Fixed an issue where SQL Server queries were timing out after 30 seconds because default timeout on SqlCommand is 30 seconds
 Version: 0.3.2.0
   New Features:
   - Upgraded to Infragistics 14.1 controls

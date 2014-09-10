@@ -69,6 +69,11 @@ namespace SqlEditor.Databases.SqlServer
             return _sqlServerInfoProvider;
         }
 
+        public override DdlGenerator GetDdlGenerator()
+        {
+            throw new NotImplementedException();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             _log.Debug("Creating connection ...");

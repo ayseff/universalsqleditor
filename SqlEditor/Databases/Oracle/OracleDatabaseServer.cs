@@ -75,6 +75,11 @@ namespace SqlEditor.Databases.Oracle
             return new OracleInfoProvider();
         }
 
+        public override DdlGenerator GetDdlGenerator()
+        {
+            throw new NotImplementedException();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             var oracleConnection = new OracleConnection(connectionString);

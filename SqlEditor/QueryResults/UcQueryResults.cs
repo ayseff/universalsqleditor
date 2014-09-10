@@ -219,6 +219,7 @@ namespace SqlEditor.QueryResults
 
                 // Create command
                 _command = _connection.CreateCommand();
+                _command.CommandTimeout = 0;
 
                 // Run task
                 Task<SqlQueryResult> queryTask;

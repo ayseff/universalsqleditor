@@ -12,7 +12,7 @@ using log4net;
 
 namespace SqlEditor.Databases
 {
-    public class ObjectScripter
+    public static class ObjectScripter
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 

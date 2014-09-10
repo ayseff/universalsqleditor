@@ -89,6 +89,11 @@ namespace SqlEditor.Databases.Db2
             return new Db2InfoProvider();
         }
 
+        public override DdlGenerator GetDdlGenerator()
+        {
+            return new Db2DdlGenerator();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             var db2Connection = new DB2Connection(connectionString);

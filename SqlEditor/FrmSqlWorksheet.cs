@@ -722,14 +722,6 @@ namespace SqlEditor
                                            ex.StackTrace);
                 }
             }
-            else if (e.Control && e.KeyCode == Keys.F)
-            {
-                _findReplaceForm.ShowFor(_sqlEditor, false);
-            }
-            else if (e.Control && e.KeyCode == Keys.H)
-            {
-                _findReplaceForm.ShowFor(_sqlEditor, true);
-            }
         }
 
         private void ShowIntellisense(char value)

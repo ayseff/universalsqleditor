@@ -70,6 +70,11 @@ namespace SqlEditor.Databases.MySql
             return new MySqlInfoProvider();
         }
 
+        public override DdlGenerator GetDdlGenerator()
+        {
+            throw new NotImplementedException();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             return new MySqlConnection(connectionString);

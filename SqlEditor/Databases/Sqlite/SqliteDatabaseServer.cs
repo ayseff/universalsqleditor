@@ -67,6 +67,11 @@ namespace SqlEditor.Databases.Sqlite
             return _sqliteInfoProvider;
         }
 
+        public override DdlGenerator GetDdlGenerator()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             var connection = new SQLiteConnection(connectionString);
