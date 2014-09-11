@@ -293,14 +293,19 @@ namespace SqlEditor
             }
         }
 
-        public void AppendText(string text)
+        public void AppendText(string text, bool resetCaret = false)
         {
             var textArea = _sqlEditor.ActiveTextAreaControl.TextArea;
             textArea.BeginUpdate();
             textArea.Document.UndoStack.StartUndoGroup();
             try
             {
+                var position = textArea.Caret.Position;
                 textArea.InsertString(text);
+                if (resetCaret)
+                {
+                    textArea.Caret.Position = position;
+                }
                 //textArea.Document.Insert(_sqlEditor.ActiveTextAreaControl.Caret.Offset, text);
                 //_sqlEditor.ActiveTextAreaControl.Caret.Position =
                 //    textArea.Document.OffsetToPosition(_sqlEditor.ActiveTextAreaControl.Caret.Offset + text.Length);

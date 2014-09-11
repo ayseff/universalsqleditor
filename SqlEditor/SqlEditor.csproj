@@ -150,6 +150,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAPICodePack-Core.1.1\lib\Microsoft.WindowsAPICodePack.dll</HintPath>
@@ -248,6 +257,7 @@
     <Compile Include="Databases\Oracle\OracleSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\SqlCe\SqlCeSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\Sqlite\SqliteSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\SqlServer\SqlServerDdlGenerator.cs" />
     <Compile Include="Databases\SqlServer\SqlServerSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />

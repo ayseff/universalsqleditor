@@ -247,6 +247,7 @@ namespace SqlEditor
             
             var tableScriptAsDropButtonTool = _utm.Tools["Tables - Script as - Drop"];
             var tableScriptAsCreateButtonTool = _utm.Tools["Tables - Script as - Create"];
+            var tableScriptAsCreateFullButtonTool = _utm.Tools["Tables - Script as - Create (Full)"];
             var tableScriptAsSelectButtonTool = _utm.Tools["Tables - Script as - Select"];
             var tableScriptAsInsertButtonTool = _utm.Tools["Tables - Script as - Insert"];
             var tableScriptAsUpdateButtonTool = _utm.Tools["Tables - Script as - Update"];
@@ -259,6 +260,7 @@ namespace SqlEditor
             tableScriptPopupMenu.Tools.Add(tableScriptAsDeleteButtonTool);
             var index = tableScriptPopupMenu.Tools.Add(tableScriptAsCreateButtonTool);
             tableScriptPopupMenu.Tools[index].InstanceProps.IsFirstInGroup = true;
+            tableScriptPopupMenu.Tools.Add(tableScriptAsCreateFullButtonTool);
             tableScriptPopupMenu.Tools.Add(tableScriptAsDropButtonTool);
             _tableCommands.Add(_tableDetailsButtonTool);
             _tableCommands.Add(tableScriptPopupMenu);
@@ -1041,6 +1043,10 @@ namespace SqlEditor
                     case "Tables - Script as - Create":
                         Connections_ScriptTableDdl();
                         break;
+                    
+                    case "Tables - Script as - Create (Full)":
+                        Connections_ScriptTableFullDdl();
+                        break;
 
                     case "Stored Procedures - Edit":
                     case "Stored Procedures - Script As - Create":
@@ -1079,6 +1085,27 @@ namespace SqlEditor
             }
         }
 
+        private void Connections_ScriptTableFullDdl()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as TableTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("Table not selected.");
+            }
+
+            var table = selectedNode.Table;
+            var databaseConnection = selectedNode.DatabaseConnection;
+            var worksheet = NewWorksheet(databaseConnection);
+            var sql = databaseConnection.DatabaseServer.GetDdlGenerator()
+                .GenerateTableFullDdl(databaseConnection, TODO, table.Parent.Name, table.Name);
+            worksheet.AppendText(sql, true);
+        }
+
         private void Connections_ScriptTableDdl()
         {
             if (_utConnections.SelectedNodes.Count == 0)
@@ -1095,9 +1122,9 @@ namespace SqlEditor
             var table = selectedNode.Table;
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateTableDdl(databaseConnection, table.Parent.Name, table.Name);
-            worksheet.AppendText(insertSql);
+            var sql = databaseConnection.DatabaseServer.GetDdlGenerator()
+                .GenerateTableDdl(databaseConnection, table.Parent.Parent.Name, table.Parent.Name, table.Name);
+            worksheet.AppendText(sql, true);
         }
 
         private void Connections_FunctionDrop()
@@ -1116,8 +1143,8 @@ namespace SqlEditor
 
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = ObjectScripter.GenerateFunctionDropStatement(selectedNode.Function, databaseConnection);
-            worksheet.AppendText(insertSql);
+            var sql = ObjectScripter.GenerateFunctionDropStatement(selectedNode.Function, databaseConnection);
+            worksheet.AppendText(sql, true);
         }
 
         private void Connections_FunctionEdit()
@@ -1138,7 +1165,7 @@ namespace SqlEditor
             var worksheet = NewWorksheet(databaseConnection);
             worksheet.Title = selectedNode.Function.Name;
             var insertSql = selectedNode.Function.Definition;
-            worksheet.AppendText(insertSql);
+            worksheet.AppendText(insertSql, true);
         }
 
         private void Connections_StoredProcedureEdit()
@@ -1159,7 +1186,7 @@ namespace SqlEditor
             var worksheet = NewWorksheet(databaseConnection);
             worksheet.Title = selectedNode.StoredProcedure.Name;
             var insertSql = selectedNode.StoredProcedure.Definition;
-            worksheet.AppendText(insertSql);
+            worksheet.AppendText(insertSql, true);
         }
 
         private void Connections_StoredProcedureDrop()
@@ -1179,7 +1206,7 @@ namespace SqlEditor
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
             var insertSql = ObjectScripter.GenerateStoredProcedureDropStatement(selectedNode.StoredProcedure, databaseConnection);
-            worksheet.AppendText(insertSql);
+            worksheet.AppendText(insertSql, true);
         }
 
         private async void Connections_ScriptTableAsDelete()
@@ -1198,7 +1225,7 @@ namespace SqlEditor
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
             var insertSql = await ObjectScripter.GenerateTableDeleteStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql);
+            worksheet.AppendText(insertSql, true);
         }
 
         private void Connections_ScriptTableAsDrop()
@@ -1217,7 +1244,7 @@ namespace SqlEditor
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
             var insertSql = ObjectScripter.GenerateTableDropStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql);
+            worksheet.AppendText(insertSql, true);
         }
 
         private async void Connections_ScriptTableAsSelect()
@@ -1236,7 +1263,7 @@ namespace SqlEditor
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
             var insertSql = await ObjectScripter.GenerateTableSelectStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql);
+            worksheet.AppendText(insertSql, true);
         }
 
         private async void Connections_ScriptTableAsInsert()
@@ -1255,7 +1282,7 @@ namespace SqlEditor
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
             var insertSql = await ObjectScripter.GenerateTableInsertStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql);
+            worksheet.AppendText(insertSql, true);
         }
 
         private async void Connections_ScriptTableAsUpdate()
@@ -1274,7 +1301,7 @@ namespace SqlEditor
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
             var insertSql = await ObjectScripter.GenerateTableUpdateStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql);
+            worksheet.AppendText(insertSql, true);
         }
 
         private void Connections_Clone()

@@ -12,14 +12,14 @@ namespace SqlEditor.Databases.Db2
 {
     public class Db2DdlGenerator : DdlGenerator
     {
-        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string schema,
+        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string schema, string database,
             [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
             // Get full DDL
-            var ddl = GenerateTableFullDdl(databaseConnection, schema, tableName);
+            var ddl = GenerateTableFullDdl(databaseConnection, TODO, schema, tableName);
 
             // Find start of create table
             var lines = ddl.Split(new []{ "\r\n" }, StringSplitOptions.None ).ToList();
@@ -48,7 +48,7 @@ namespace SqlEditor.Databases.Db2
             return string.Join(Environment.NewLine, validLines);
         }
 
-        public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string schema, [NotNull] string tableName)
+        public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
@@ -93,12 +93,16 @@ namespace SqlEditor.Databases.Db2
                 Path.GetFileNameWithoutExtension(scriptFile) + ".bat");
             var scriptContents = "@echo off" + Environment.NewLine;
             scriptContents += @"@set PATH=%~d0%~p0..\db2tss\bin;%PATH%" + Environment.NewLine;
+            scriptContents += @"@cd " + db2Home + @"\..\bnd" + Environment.NewLine;
             scriptContents += @"@db2clpsetcp" + Environment.NewLine;
             scriptContents += "\"" + db2Look + "\" " + db2LookArguments;
             File.WriteAllText(scriptFile, scriptContents);
             var executor = new BackgroundProcessExecutor();
             var commandOutput = executor.RunBackgroundProcess(scriptFile, null);
-            executor.VerifyExitCode(commandOutput, 0);
+            if (commandOutput.ExitCode != 0)
+            {
+                throw new Exception(commandOutput.StandardError + Environment.NewLine + commandOutput.StandardError);
+            }
             return commandOutput.StandardOutput;
         }
     }

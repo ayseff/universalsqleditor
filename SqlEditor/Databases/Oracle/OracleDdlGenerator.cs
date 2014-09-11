@@ -13,14 +13,14 @@ namespace SqlEditor.Databases.Oracle
 {
     public class OracleDdlGenerator : DdlGenerator
     {
-        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string schema,
+        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string schema, string database,
             [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
             // Get full DDL
-            var ddl = GenerateTableFullDdl(databaseConnection, schema, tableName);
+            var ddl = GenerateTableFullDdl(databaseConnection, TODO, schema, tableName);
 
             // Find start of create table
             var lines = ddl.Split(new []{ "\r\n" }, StringSplitOptions.None ).ToList();
@@ -49,8 +49,7 @@ namespace SqlEditor.Databases.Oracle
             return string.Join(Environment.NewLine, validLines);
         }
 
-        public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection,
-            [NotNull] string schema, [NotNull] string tableName)
+        public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, [NotNull] string schema, [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (schema == null) throw new ArgumentNullException("schema");

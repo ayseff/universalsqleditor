@@ -71,7 +71,7 @@ namespace SqlEditor.Databases.SqlServer
 
         public override DdlGenerator GetDdlGenerator()
         {
-            throw new NotImplementedException();
+            return new SqlServerDdlGenerator();
         }
 
         public override IDbConnection CreateConnection(string connectionString)
