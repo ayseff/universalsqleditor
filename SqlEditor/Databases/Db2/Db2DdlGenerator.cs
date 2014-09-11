@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Windows.Documents;
 using IBM.Data.DB2;
 using JetBrains.Annotations;
 using SqlEditor.DatabaseExplorer;
@@ -19,15 +18,8 @@ namespace SqlEditor.Databases.Db2
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
-            var connectionStringBuilder = (DB2ConnectionStringBuilder)
-                databaseConnection.DatabaseServer.GetConnectionStringBuilder(databaseConnection.ConnectionString);
-            var arguments = string.Format("-t {0} ", tableName);
-            if (!string.IsNullOrEmpty(schema))
-            {
-                arguments += string.Format("-z {0} ", schema);
-            }
-            var ddl = RunDb2Look(connectionStringBuilder.Database, connectionStringBuilder.UserID,
-                connectionStringBuilder.Password, arguments);
+            // Get full DDL
+            var ddl = GenerateTableFullDdl(databaseConnection, schema, tableName);
 
             // Find start of create table
             var lines = ddl.Split(new []{ "\r\n" }, StringSplitOptions.None ).ToList();
@@ -41,7 +33,16 @@ namespace SqlEditor.Databases.Db2
             }
 
             // Find end of create table
-            var validLines = lines.TakeWhile(line => !(line.Trim().ToCharArray().Distinct().Count() == 1 && line.Trim().ToCharArray().Distinct().FirstOrDefault() != '-')).ToList();
+            var validLines = new List<string>(); // lines.TakeWhile(line => !(line.Trim().ToCharArray().Distinct().Count() == 1 && line.Trim().ToCharArray().Distinct().FirstOrDefault() != '-')).ToList();
+            foreach (var line in lines)
+            {
+                var chars = line.Trim().ToCharArray().Distinct().ToList();
+                if (chars.Count == 1 && chars[0] == '-')
+                {
+                    break;
+                }
+                validLines.Add(line);
+            }
 
 
             return string.Join(Environment.NewLine, validLines);
@@ -88,7 +89,7 @@ namespace SqlEditor.Databases.Db2
 
             // Build script
             var scriptFile = Path.GetTempFileName();
-            scriptFile = Path.Combine(Path.GetDirectoryName(scriptFile),
+            scriptFile = Path.Combine(Path.GetDirectoryName(scriptFile) ?? string.Empty,
                 Path.GetFileNameWithoutExtension(scriptFile) + ".bat");
             var scriptContents = "@echo off" + Environment.NewLine;
             scriptContents += @"@set PATH=%~d0%~p0..\db2tss\bin;%PATH%" + Environment.NewLine;

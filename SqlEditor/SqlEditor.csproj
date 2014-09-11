@@ -244,6 +244,7 @@
     <Compile Include="Databases\Function.cs" />
     <Compile Include="Databases\MySql\MySqlInfoProvider.cs" />
     <Compile Include="Databases\MySql\MySqlSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\Oracle\OracleDdlGenerator.cs" />
     <Compile Include="Databases\Oracle\OracleSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\SqlCe\SqlCeSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\Sqlite\SqliteSimpleConnectionStringBuilder.cs" />
