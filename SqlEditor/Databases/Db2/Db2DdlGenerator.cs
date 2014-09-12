@@ -12,14 +12,14 @@ namespace SqlEditor.Databases.Db2
 {
     public class Db2DdlGenerator : DdlGenerator
     {
-        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string schema, string database,
+        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
             [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
             // Get full DDL
-            var ddl = GenerateTableFullDdl(databaseConnection, TODO, schema, tableName);
+            var ddl = GenerateTableFullDdl(databaseConnection, null, schema, tableName);
 
             // Find start of create table
             var lines = ddl.Split(new []{ "\r\n" }, StringSplitOptions.None ).ToList();

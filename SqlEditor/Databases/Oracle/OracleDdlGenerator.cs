@@ -20,7 +20,7 @@ namespace SqlEditor.Databases.Oracle
             if (tableName == null) throw new ArgumentNullException("tableName");
 
             // Get full DDL
-            var ddl = GenerateTableFullDdl(databaseConnection, TODO, schema, tableName);
+            var ddl = GenerateTableFullDdl(databaseConnection, null, schema, tableName);
 
             // Find start of create table
             var lines = ddl.Split(new []{ "\r\n" }, StringSplitOptions.None ).ToList();

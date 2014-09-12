@@ -1101,8 +1101,9 @@ namespace SqlEditor
             var table = selectedNode.Table;
             var databaseConnection = selectedNode.DatabaseConnection;
             var worksheet = NewWorksheet(databaseConnection);
+            var parent = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
             var sql = databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateTableFullDdl(databaseConnection, TODO, table.Parent.Name, table.Name);
+                .GenerateTableFullDdl(databaseConnection, parent, table.Parent.Name, table.Name);
             worksheet.AppendText(sql, true);
         }
 
