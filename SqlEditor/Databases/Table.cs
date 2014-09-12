@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SqlEditor.Database;
 
 namespace SqlEditor.Databases
 {
@@ -9,16 +8,20 @@ namespace SqlEditor.Databases
             : base(name, parent)
         {
             Indexes = new List<Index>();
+            Constraints = new List<Constraint>();
             Partitions = new List<Partition>();
         }
 
         public Table()
         {
             Indexes = new List<Index>();
+            Constraints = new List<Constraint>();
             Partitions = new List<Partition>();
         }
 
         public IList<Index> Indexes { get; private set; }
+
+        public IList<Constraint> Constraints { get; private set; }
 
         public IList<Partition> Partitions { get; private set; }
     }

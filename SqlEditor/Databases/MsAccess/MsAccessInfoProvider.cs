@@ -133,6 +133,17 @@ namespace SqlEditor.Databases.MsAccess
             return new List<Sequence>();
         }
 
+        public override IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName,
+            string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Trigger>();

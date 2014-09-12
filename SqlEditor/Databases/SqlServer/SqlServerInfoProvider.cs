@@ -220,6 +220,17 @@ namespace SqlEditor.Databases.SqlServer
                                     schemaName.Trim().ToUpper());
         }
 
+        public override IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName,
+            string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName,
             [JetBrains.Annotations.NotNull] string databaseInstanceName = null)
         {

@@ -184,6 +184,25 @@ namespace SqlEditor.Databases.Db2
                                     schemaName.Trim().ToUpper());
         }
 
+        public override IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            return GetConstraintsBase(connection, schemaName,
+                                   "SELECT tabschema, constname, ENFORCED, CASE TYPE 	WHEN 'F' THEN 'Foreign key' 	WHEN 'I' THEN 'Functional dependency' 	WHEN 'K' THEN 'Check' 	WHEN 'P' THEN 'Primary key' 	WHEN 'U' THEN 'Unique' 	END from syscat.tabconst WHERE UPPER(tabschema) = @1 order by constname for fetch only with ur",
+                                   schemaName.Trim().ToUpper());
+        }
+
+        public override IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName,
+            string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            return GetConstraintsBase(connection, schemaName,
+                                   "SELECT tabschema, constname, ENFORCED, CASE TYPE 	WHEN 'F' THEN 'Foreign key' 	WHEN 'I' THEN 'Functional dependency' 	WHEN 'K' THEN 'Check' 	WHEN 'P' THEN 'Primary key' 	WHEN 'U' THEN 'Unique' 	END from syscat.tabconst WHERE UPPER(tabschema) = @1 AND upper(tabname) = @2 order by constname for fetch only with ur",
+                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
+        }
+
         public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");

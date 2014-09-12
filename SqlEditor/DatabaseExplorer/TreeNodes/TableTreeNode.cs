@@ -27,6 +27,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             nodes.Add(tablePrimaryKeyColumnsNode);
             var indexesNode = new TableIndexesTreeNode(Table, DatabaseConnection);
             nodes.Add(indexesNode);
+            var constraintsNode = new TableConstraintsTreeNode(Table, DatabaseConnection);
+            nodes.Add(constraintsNode);
             var partitionsNode = new TablePartitionsTreeNode(Table, DatabaseConnection);
             nodes.Add(partitionsNode);
             return nodes;

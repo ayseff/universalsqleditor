@@ -207,6 +207,8 @@
     <Compile Include="CloseAction.cs" />
     <Compile Include="DatabaseExplorer\Extensions.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Base\TreeNodeFactory.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ConstraintsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\ConstraintTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\DatabaseInstanceTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Db2\Db2SchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Db2\Db2ConnectionTreeNode.cs" />
@@ -230,6 +232,7 @@
     <Compile Include="DatabaseExplorer\TreeNodes\StoredProcedureParametersTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\StoredProceduresTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\StoredProcedureTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\TableConstraintsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\TablePrimaryKeyColumnsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\ViewColumnsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\FolderContainerTreeNode.cs" />
@@ -246,16 +249,20 @@
     <Compile Include="DatabaseExplorer\TreeNodes\SequenceTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SequencesTreeNode.cs" />
     <Compile Include="Databases\ColumnParameter.cs" />
+    <Compile Include="Databases\Constraint.cs" />
     <Compile Include="Databases\DatabaseInstance.cs" />
     <Compile Include="Databases\Db2\Db2DdlGenerator.cs" />
     <Compile Include="Databases\Db2\Db2SimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\DdlGenerator.cs" />
     <Compile Include="Databases\Function.cs" />
+    <Compile Include="Databases\MySql\MySqlDdlGenerator.cs" />
     <Compile Include="Databases\MySql\MySqlInfoProvider.cs" />
     <Compile Include="Databases\MySql\MySqlSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\Oracle\OracleDdlGenerator.cs" />
     <Compile Include="Databases\Oracle\OracleSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\SqlCe\SqlCeDdlGenerator.cs" />
     <Compile Include="Databases\SqlCe\SqlCeSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\Sqlite\SqliteDdlGenerator.cs" />
     <Compile Include="Databases\Sqlite\SqliteSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\SqlServer\SqlServerDdlGenerator.cs" />
     <Compile Include="Databases\SqlServer\SqlServerSimpleConnectionStringBuilder.cs" />
@@ -311,7 +318,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Databases\Db2\Db2InfoProvider.cs" />
-    <Compile Include="Databases\DbInfoProvider.cs" />
+    <Compile Include="Databases\DatabaseInfoProvider.cs" />
     <Compile Include="Databases\Index.cs" />
     <Compile Include="Databases\MaterializedView.cs" />
     <Compile Include="Databases\MsAccess\MsAccess2007ConnectionStringBuilder.cs" />
@@ -638,6 +645,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ISqlCeScripting\ISqlCeScripting.csproj">
+      <Project>{b690cb18-0dc5-4c20-aeb3-f9f4b55b4601}</Project>
+      <Name>ISqlCeScripting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlCeScripting40\SqlCeScripting40.csproj">
+      <Project>{a732fb3f-e50f-47fd-a3e7-cb6b4a3e57af}</Project>
+      <Name>SqlCeScripting40</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utilities.Infragistics\Utilities.InfragisticsUtilities.csproj">
       <Project>{8032CEF7-29D1-4C28-830B-D055455BD350}</Project>
       <Name>Utilities.InfragisticsUtilities</Name>

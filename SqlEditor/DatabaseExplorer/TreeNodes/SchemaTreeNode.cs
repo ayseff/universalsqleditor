@@ -27,6 +27,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             nodes.Add(viewsNode);
             var indexesNode = new IndexesTreeNode(Schema, DatabaseConnection);
             nodes.Add(indexesNode);
+            var constraintsNode = new ConstraintsTreeNode(Schema, DatabaseConnection);
+            nodes.Add(constraintsNode);
             var storedProcedures = new StoredProceduresTreeNode(Schema, DatabaseConnection);
             nodes.Add(storedProcedures);
             var sequencesNode = new SequencesTreeNode(Schema, DatabaseConnection);

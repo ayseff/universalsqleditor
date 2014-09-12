@@ -329,6 +329,46 @@ namespace SqlEditor.Databases
             return sequences;
         }
 
+        public abstract IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null);
+        protected virtual IList<Constraint> GetConstraintsBase(IDbConnection connection, string schemaName,
+                                                         [NotNull] string sql, params object[] parameters)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (sql == null) throw new ArgumentNullException("sql");
+
+            _log.DebugFormat("Getting constraints for schema {0} ...", schemaName);
+            Schema schema = null;
+            var constraints = new List<Constraint>();
+            BeforeRunQuery(connection, schemaName);
+            using (var command = connection.CreateCommand())
+            {
+                BuildSqlCommand(command, sql, parameters);
+                using (var dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var schemaNameQuery = dr.GetString(0).Trim().ToUpper();
+                        if (schema == null || schema.Name != schemaNameQuery)
+                        {
+                            schema = new Schema(schemaNameQuery);
+                        }
+                        var constraint = new Constraint(dr.GetString(1).Trim().ToUpper(), schema);
+                        var isEnforcedString = dr.IsDBNull(2) ? "0" : dr[2].ToString().Trim().ToUpper();
+                        constraint.IsEnforced = isEnforcedString == "1" || isEnforcedString == "Y" ||
+                                                isEnforcedString == "YES";
+                        constraint.Type = dr.GetString(3);
+                        constraints.Add(constraint);
+                    }
+                }
+            }
+            AfterRunQuery(connection, schemaName);
+            _log.DebugFormat("Retrieved {0} constraint(s).", constraints.Count.ToString("#,0"));
+            return constraints;
+        }
+
+        public abstract IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
+
         public abstract IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null);
         protected virtual IList<Trigger> GetTriggersBase(IDbConnection connection, string schemaName, [NotNull] string sql, params object[] parameters)
         {

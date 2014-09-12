@@ -124,6 +124,24 @@ namespace SqlEditor.Databases.MySql
             return new List<Sequence>();
         }
 
+        public override IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            return GetConstraintsBase(connection, schemaName, "select TABLE_SCHEMA, CONSTRAINT_NAME, 'Y', CONSTRAINT_TYPE from information_schema.TABLE_CONSTRAINTS where UPPER(TABLE_SCHEMA) = @1 order by CONSTRAINT_NAME",
+                                       schemaName.Trim().ToUpper());
+            
+        }
+
+        public override IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName,
+            string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            return GetConstraintsBase(connection, schemaName, "select TABLE_SCHEMA, CONSTRAINT_NAME, 'Y', CONSTRAINT_TYPE from information_schema.TABLE_CONSTRAINTS where UPPER(TABLE_SCHEMA) = @1 and UPPER(TABLE_NAME) = @2 order by CONSTRAINT_NAME",
+                                       schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
+        }
+
         public override IList<Trigger> GetTriggers([NotNull] IDbConnection connection, [NotNull] string schemaName, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");

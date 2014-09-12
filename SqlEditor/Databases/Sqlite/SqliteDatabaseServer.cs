@@ -2,6 +2,7 @@
 using System.Data.Common;
 using System.Data.SQLite;
 using System.Text.RegularExpressions;
+using SqlEditor.DatabaseExplorer;
 
 namespace SqlEditor.Databases.Sqlite
 {
@@ -69,12 +70,13 @@ namespace SqlEditor.Databases.Sqlite
 
         public override DdlGenerator GetDdlGenerator()
         {
-            throw new System.NotImplementedException();
+            return new SqliteDdlGenerator();
         }
 
         public override IDbConnection CreateConnection(string connectionString)
         {
             var connection = new SQLiteConnection(connectionString);
+            connection.OpenIfRequired();
             return connection;
         }
 

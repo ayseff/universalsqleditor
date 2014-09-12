@@ -66,7 +66,7 @@ namespace SqlEditor.Databases.SqlCe
 
         public override DdlGenerator GetDdlGenerator()
         {
-            throw new System.NotImplementedException();
+            return new SqlCeDdlGenerator();
         }
 
         public override IDbConnection CreateConnection(string connectionString)

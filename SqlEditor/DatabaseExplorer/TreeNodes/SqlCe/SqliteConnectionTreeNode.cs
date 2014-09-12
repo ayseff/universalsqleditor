@@ -31,6 +31,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.SqlCe
                         nodes.Add(tablesNode);
                         var viewsNode = new ViewsTreeNode(dummySchema, DatabaseConnection);
                         nodes.Add(viewsNode);
+                        var constraintsNode = new ConstraintsTreeNode(dummySchema, DatabaseConnection);
+                        nodes.Add(constraintsNode);
                         var indexesNode = new IndexesTreeNode(dummySchema, DatabaseConnection);
                         nodes.Add(indexesNode);
                         var triggerssNode = new TriggersTreeNode(dummySchema, DatabaseConnection);

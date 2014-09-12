@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SqlEditor.Databases;
-using Utilities.Collections;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes
 {

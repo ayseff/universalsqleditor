@@ -107,6 +107,22 @@ namespace SqlEditor.Databases.SqlCe
             return new List<Sequence>();
         }
 
+        public override IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            return GetConstraintsBase(connection, _defaultSchema.Name,
+                                       "select '', constraint_name, 'Y', constraint_type from information_schema.TABLE_CONSTRAINTS order by constraint_name");
+        }
+
+        public override IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName,
+            string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            return GetConstraintsBase(connection, _defaultSchema.Name,
+                                       "select '', constraint_name, 'Y', constraint_type from information_schema.TABLE_CONSTRAINTS WHERE UPPER(table_name) = @1 order by constraint_name",
+                                       tableName.Trim().ToUpper());
+        }
+
         public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
             return new List<Trigger>();
