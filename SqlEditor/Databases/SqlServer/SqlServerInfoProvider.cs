@@ -222,13 +222,29 @@ namespace SqlEditor.Databases.SqlServer
 
         public override IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
-            throw new NotImplementedException();
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (databaseInstanceName == null) throw new ArgumentNullException("databaseInstanceName");
+
+            UseDatabase(connection, databaseInstanceName);
+            return GetConstraintsBase(connection, schemaName,
+                                    "SELECT CONSTRAINT_SCHEMA, CONSTRAINT_NAME, CASE INITIALLY_DEFERRED WHEN 'NO' THEN 'Y' ELSE 'N' END, CONSTRAINT_TYPE FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE UPPER(CONSTRAINT_CATALOG) = @1 AND UPPER(CONSTRAINT_SCHEMA) = @2 ORDER BY CONSTRAINT_NAME",
+                                    databaseInstanceName.Trim().ToUpper(), schemaName.Trim().ToUpper());
         }
 
-        public override IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName,
-            string databaseInstanceName = null)
+        public override IList<Constraint> GetConstraintsForTable(
+            [JetBrains.Annotations.NotNull] IDbConnection connection, [JetBrains.Annotations.NotNull] string schemaName,
+            [JetBrains.Annotations.NotNull] string tableName,
+            [JetBrains.Annotations.NotNull] string databaseInstanceName = null)
         {
-            throw new NotImplementedException();
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (tableName == null) throw new ArgumentNullException("tableName");
+            if (databaseInstanceName == null) throw new ArgumentNullException("databaseInstanceName");
+            UseDatabase(connection, databaseInstanceName);
+            return GetConstraintsBase(connection, schemaName,
+                                    "SELECT CONSTRAINT_SCHEMA, CONSTRAINT_NAME, CASE INITIALLY_DEFERRED WHEN 'NO' THEN 'Y' ELSE 'N' END, CONSTRAINT_TYPE FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE UPPER(CONSTRAINT_CATALOG) = @1 AND UPPER(CONSTRAINT_SCHEMA) = @2 AND UPPER(TABLE_NAME) = @3 ORDER BY CONSTRAINT_NAME",
+                                    databaseInstanceName.Trim().ToUpper(), schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
         public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName,

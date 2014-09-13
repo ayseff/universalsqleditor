@@ -234,13 +234,13 @@ namespace SqlEditor.Databases.Sqlite
 
         public override IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
-            throw new NotImplementedException();
+            return new List<Constraint>();
         }
 
         public override IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName,
             string databaseInstanceName = null)
         {
-            throw new NotImplementedException();
+            return new List<Constraint>();
         }
 
         public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)

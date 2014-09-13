@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using ICSharpCode.TextEditor.Actions;
 using SqlEditor.Annotations;
 using SqlEditor.Database;
 using SqlEditor.Intellisense;
@@ -190,13 +191,22 @@ namespace SqlEditor.Databases.Oracle
 
         public override IList<Constraint> GetConstraints(IDbConnection connection, string schemaName, string databaseInstanceName = null)
         {
-            throw new NotImplementedException();
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            return GetConstraintsBase(connection, schemaName,
+                                   "SELECT owner, constraint_name, DECODE(STATUS, 'ENABLED', 'Y', 'N'),  CASE constraint_type 	 WHEN 'R' THEN 'Referential integrity' 	WHEN 'U' THEN 'Unique key' 	WHEN 'C' THEN 'Check' 	WHEN 'P' THEN 'Primary key' WHEN 'V' THEN 'With check option, on a view' WHEN 'O' THEN 'With read only, on a view' ELSE 'Unknown' END from all_constraints WHERE UPPER(owner) = @1 order by constraint_name",
+                                   schemaName.Trim().ToUpper());
+            
         }
 
         public override IList<Constraint> GetConstraintsForTable(IDbConnection connection, string schemaName, string tableName,
             string databaseInstanceName = null)
         {
-            throw new NotImplementedException();
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            return GetConstraintsBase(connection, schemaName,
+                                   "SELECT owner, constraint_name, DECODE(STATUS, 'ENABLED', 'Y', 'N'),  CASE constraint_type 	 WHEN 'R' THEN 'Referential integrity' 	WHEN 'U' THEN 'Unique key' 	WHEN 'C' THEN 'Check' 	WHEN 'P' THEN 'Primary key' WHEN 'V' THEN 'With check option, on a view' WHEN 'O' THEN 'With read only, on a view' ELSE 'Unknown' END from all_constraints WHERE UPPER(owner) = @1 AND UPPER(table_name) = @2 order by constraint_name",
+                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
         public override IList<Trigger> GetTriggers(IDbConnection connection, string schemaName, string databaseInstanceName = null)
