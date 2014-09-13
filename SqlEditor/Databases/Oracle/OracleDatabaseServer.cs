@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Oracle.ManagedDataAccess.Client;
+using SqlEditor.DatabaseExplorer;
 using Utilities.Text;
 using log4net;
 
@@ -24,8 +25,8 @@ namespace SqlEditor.Databases.Oracle
         protected override string UserIdToken { get { return "USER ID"; } }
         protected override string PasswordToken { get { return "PASSWORD"; } }
 
-        private static readonly string[] _numericDataTypes = new[] { "NUMBER", "BINARY_FLOAT", "BINARY_DOUBLE" };
-        private static readonly string[] _dateTimeDataTypes = new[] { "DATE", "TIME", "TIMESTAMP", "DATETIME" };
+        private static readonly string[] _numericDataTypes = { "NUMBER", "BINARY_FLOAT", "BINARY_DOUBLE" };
+        private static readonly string[] _dateTimeDataTypes = { "DATE", "TIME", "TIMESTAMP", "DATETIME" };
 
 
         public override string[] NumericDataTypes
@@ -77,12 +78,13 @@ namespace SqlEditor.Databases.Oracle
 
         public override DdlGenerator GetDdlGenerator()
         {
-            throw new NotImplementedException();
+            return new OracleDdlGenerator();
         }
 
         public override IDbConnection CreateConnection(string connectionString)
         {
             var oracleConnection = new OracleConnection(connectionString);
+            oracleConnection.OpenIfRequired();
             return oracleConnection;
         }
     }

@@ -16,5 +16,8 @@
         extensions = ".sql"/>
   <Mode file       = "SQLCESQL.xshd"
         name       = "SQLCESQL"
-        extensions = ".sql"/>  
+        extensions = ".sql"/>
+  <Mode file       = "MSACCESSSQL.xshd"
+        name       = "MSACCESSSQL"
+        extensions = ".sql"/>
 </SyntaxModes>

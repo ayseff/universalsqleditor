@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using QuickGraph.Algorithms;
 using QuickGraph.Data;
-using System.Diagnostics;
 
 namespace ErikEJ.SqlCeScripting
 {
@@ -25,7 +24,7 @@ namespace ErikEJ.SqlCeScripting
         private String _outFile;
         private IRepository _repository;
         private StringBuilder _sbScript;
-        private String _sep = "GO" + Environment.NewLine;
+        private String _sep = Environment.NewLine;
         private List<string> _tableNames;
         private Int32 _fileCounter = -1;
         private List<Column> _allColumns;

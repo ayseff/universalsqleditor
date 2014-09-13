@@ -21,7 +21,7 @@ namespace SqlEditor.Database.MsAccess
 
         public MsAccess2003ConnectionStringBuilder(string connectionString)
         {
-            if (connectionString.IsNullEmptyOrWhitespace())
+            if (!connectionString.IsNullEmptyOrWhitespace())
             {
                 ConnectionString = connectionString;
             }

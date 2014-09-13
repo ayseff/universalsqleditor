@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<!-- syntax definition for MS Acess SQL -->
+
+<SyntaxDefinition name = "MSACCESSSQL" extensions = ".SQL">
+	
+	<Properties>
+		<Property name="LineComment" value="--"/>
+	</Properties>
+	
+	<Digits name = "Digits" bold = "false" italic = "false" color = "DarkBlue"/>
+
+	<RuleSets>
+		<RuleSet ignorecase="true">
+			<Delimiters>&amp;&lt;&gt;~!%^*()-+=|\#/{}[]:;"' ,	.?</Delimiters>
+			
+		  	<Span name = "LineComment" rule = "CommentMarkerSet" bold = "false" italic = "false" color = "Green" stopateol = "true">
+			   	<Begin>--</Begin>
+		  	</Span>
+		  
+			<Span name = "BlockComment" rule = "CommentMarkerSet" bold = "false" italic = "false" color = "Green" stopateol = "false">
+				<Begin>/*</Begin>
+				<End>*/</End>
+			</Span>
+		  	
+			<Span name = "String" bold = "false" italic = "false" color = "Red" stopateol = "true">
+				<Begin>'</Begin>
+				<End>'</End>
+			</Span>
+			
+			<Span name = "MultiLineString" bold = "false" italic = "false" color = "Magenta" stopateol = "false" noescapesequences="true">
+				<Begin>@@'</Begin>
+				<End>'</End>
+			</Span>
+			
+			<Span name = "Char" bold = "false" italic = "false" color = "Magenta" stopateol = "true">
+				<Begin>&apos;</Begin>
+				<End>&apos;</End>
+			</Span>
+
+      <Span name = "Char" bold = "false" italic = "false" color = "Black" stopateol = "true">
+        <Begin>[</Begin>
+        <End>]</End>
+      </Span>
+      
+			<MarkPrevious bold = "true" italic = "false" color = "MidnightBlue">(</MarkPrevious>
+			
+			<KeyWords name = "Punctuation" bold = "false" italic = "false" color = "DarkGreen">
+				<Key word = "?" />
+				<Key word = "," />
+				<Key word = "." />
+				<Key word = ";" />
+				<Key word = "(" />
+				<Key word = ")" />
+				<Key word = "[" />
+				<Key word = "]" />
+				<Key word = "{" />
+				<Key word = "}" />
+				<Key word = "+" />
+				<Key word = "-" />
+				<Key word = "/" />
+				<Key word = "%" />
+				<Key word = "*" />
+				<Key word = "&lt;" />
+				<Key word = "&gt;" />
+				<Key word = "^" />
+				<Key word = "=" />
+				<Key word = "~" />
+				<Key word = "!" />
+				<Key word = "|" />
+		    <Key word = "&amp;" />
+		  </KeyWords>		  
+			
+			<KeyWords name = "ReservredWords" bold="true" italic="false" color="Blue">
+        <Key word = "ADD" />
+        <Key word = "ALL" />
+        <Key word = "ALPHANUMERIC" />
+        <Key word = "ALTER" />
+        <Key word = "AND" />
+        <Key word = "ANY" />
+        <Key word = "APPLICATION" />
+        <Key word = "AS" />
+        <Key word = "ASC" />
+        <Key word = "ASSISTANT" />
+        <Key word = "AUTOINCREMENT" />
+        <Key word = "AVG" />
+        <Key word = "BETWEEN" />
+        <Key word = "BINARY" />
+        <Key word = "BIT" />
+        <Key word = "BOOLEAN" />
+        <Key word = "BY" />
+        <Key word = "BYTE" />
+        <Key word = "CHAR" />
+        <Key word = "CHARACTER" />
+        <Key word = "COLUMN" />
+        <Key word = "COMPACTDATABASE" />
+        <Key word = "CONSTRAINT" />
+        <Key word = "CONTAINER" />
+        <Key word = "COUNT" />
+        <Key word = "COUNTER" />
+        <Key word = "CREATE" />
+        <Key word = "CREATEDATABASE" />
+        <Key word = "CREATEFIELD" />
+        <Key word = "CREATEGROUP" />
+        <Key word = "CREATEINDEX" />
+        <Key word = "CREATEOBJECT" />
+        <Key word = "CREATEPROPERTY" />
+        <Key word = "CREATERELATION" />
+        <Key word = "CREATETABLEDEF" />
+        <Key word = "CREATEUSER" />
+        <Key word = "CREATEWORKSPACE" />
+        <Key word = "CURRENCY" />
+        <Key word = "CURRENTUSER" />
+        <Key word = "DATABASE" />
+        <Key word = "DATE" />
+        <Key word = "DATETIME" />
+        <Key word = "DELETE" />
+        <Key word = "DESC" />
+        <Key word = "DESCRIPTION" />
+        <Key word = "DISALLOW" />
+        <Key word = "DISTINCT" />
+        <Key word = "DISTINCTROW" />
+        <Key word = "DOCUMENT" />
+        <Key word = "DOUBLE" />
+        <Key word = "DROP" />
+        <Key word = "ECHO" />
+        <Key word = "ELSE" />
+        <Key word = "END" />
+        <Key word = "EQV" />
+        <Key word = "ERROR" />
+        <Key word = "EXISTS" />
+        <Key word = "EXIT" />
+        <Key word = "FALSE" />
+        <Key word = "FIELD" />
+        <Key word = "FIELDS" />
+        <Key word = "FILLCACHE" />
+        <Key word = "FLOAT" />
+        <Key word = "FLOAT4" />
+        <Key word = "FLOAT8" />
+        <Key word = "FOREIGN" />
+        <Key word = "FORM" />
+        <Key word = "FORMS" />
+        <Key word = "FROM" />
+        <Key word = "FULL" />
+        <Key word = "FUNCTION" />
+        <Key word = "GENERAL" />
+        <Key word = "GETOBJECT" />
+        <Key word = "GETOPTION" />
+        <Key word = "GOTOPAGE" />
+        <Key word = "GROUP" />
+        <Key word = "GROUP BY" />
+        <Key word = "GUID" />
+        <Key word = "HAVING" />
+        <Key word = "IDLE" />
+        <Key word = "IEEEDOUBLE" />
+        <Key word = "IEEESINGLE" />
+        <Key word = "IF" />
+        <Key word = "IGNORE" />
+        <Key word = "IMP" />
+        <Key word = "IN" />
+        <Key word = "INDEX" />
+        <Key word = "INDEXES" />
+        <Key word = "INNER" />
+        <Key word = "INSERT" />
+        <Key word = "INSERTTEXT" />
+        <Key word = "INT" />
+        <Key word = "INTEGER" />
+        <Key word = "INTEGER1" />
+        <Key word = "INTEGER2" />
+        <Key word = "INTEGER4" />
+        <Key word = "INTO" />
+        <Key word = "IS" />
+        <Key word = "JOIN" />
+        <Key word = "KEY" />
+        <Key word = "LASTMODIFIED" />
+        <Key word = "LEFT" />
+        <Key word = "LEVEL" />
+        <Key word = "LIKE" />
+        <Key word = "LOGICAL" />
+        <Key word = "LOGICAL1" />
+        <Key word = "LONG" />
+        <Key word = "LONGBINARY" />
+        <Key word = "LONGTEXT" />
+        <Key word = "MACRO" />
+        <Key word = "MATCH" />
+        <Key word = "MAX" />
+        <Key word = "MIN" />
+        <Key word = "MOD" />
+        <Key word = "MEMO" />
+        <Key word = "MODULE" />
+        <Key word = "MONEY" />
+        <Key word = "MOVE" />
+        <Key word = "NAME" />
+        <Key word = "NEWPASSWORD" />
+        <Key word = "NO" />
+        <Key word = "NOT" />
+        <Key word = "NOTE" />
+        <Key word = "NULL" />
+        <Key word = "NUMBER" />
+        <Key word = "NUMERIC" />
+        <Key word = "OBJECT" />
+        <Key word = "OLEOBJECT" />
+        <Key word = "OFF" />
+        <Key word = "ON" />
+        <Key word = "OPENRECORDSET" />
+        <Key word = "OPTION" />
+        <Key word = "OR" />
+        <Key word = "ORDER" />
+        <Key word = "ORIENTATION" />
+        <Key word = "OUTER" />
+        <Key word = "OWNERACCESS" />
+        <Key word = "PARAMETER" />
+        <Key word = "PARAMETERS" />
+        <Key word = "PARTIAL" />
+        <Key word = "PERCENT" />
+        <Key word = "PIVOT" />
+        <Key word = "PRIMARY" />
+        <Key word = "PROCEDURE" />
+        <Key word = "PROPERTY" />
+        <Key word = "QUERIES" />
+        <Key word = "QUERY" />
+        <Key word = "QUIT" />
+        <Key word = "REAL" />
+        <Key word = "RECALC" />
+        <Key word = "RECORDSET" />
+        <Key word = "REFERENCES" />
+        <Key word = "REFRESH" />
+        <Key word = "REFRESHLINK" />
+        <Key word = "REGISTERDATABASE" />
+        <Key word = "RELATION" />
+        <Key word = "REPAINT" />
+        <Key word = "REPAIRDATABASE" />
+        <Key word = "REPORT" />
+        <Key word = "REPORTS" />
+        <Key word = "REQUERY" />
+        <Key word = "RIGHT" />
+        <Key word = "SCREEN" />
+        <Key word = "SECTION" />
+        <Key word = "SELECT" />
+        <Key word = "SET" />
+        <Key word = "SETFOCUS" />
+        <Key word = "SETOPTION" />
+        <Key word = "SHORT" />
+        <Key word = "SINGLE" />
+        <Key word = "SMALLINT" />
+        <Key word = "SOME" />
+        <Key word = "SQL" />
+        <Key word = "STDEV" />
+        <Key word = "STDEVP" />
+        <Key word = "STRING" />
+        <Key word = "SUM" />
+        <Key word = "TABLE" />
+        <Key word = "TABLEDEF" />
+        <Key word = "TABLEDEFS" />
+        <Key word = "TABLEID" />
+        <Key word = "TEXT" />
+        <Key word = "TIME" />
+        <Key word = "TIMESTAMP" />
+        <Key word = "TOP" />
+        <Key word = "TRANSFORM" />
+        <Key word = "TRUE" />
+        <Key word = "TYPE" />
+        <Key word = "UNION" />
+        <Key word = "UNIQUE" />
+        <Key word = "UPDATE" />
+        <Key word = "USER" />
+        <Key word = "VALUE" />
+        <Key word = "VALUES" />
+        <Key word = "VAR" />
+        <Key word = "VARP" />
+        <Key word = "VARBINARY" />
+        <Key word = "VARCHAR" />
+        <Key word = "VERSION" />
+        <Key word = "WHERE" />
+        <Key word = "WITH" />
+        <Key word = "WORKSPACE" />
+        <Key word = "XOR" />
+        <Key word = "YEAR" />
+        <Key word = "YES" />
+        <Key word = "YESNO" />
+      </KeyWords>			
+		</RuleSet>		
+		<RuleSet name = "CommentMarkerSet" ignorecase = "true"></RuleSet>		
+		<RuleSet name = "DocCommentSet" ignorecase = "false"></RuleSet>		
+		<RuleSet name = "XmlDocSet" ignorecase = "false"></RuleSet>
+	</RuleSets>
+</SyntaxDefinition>

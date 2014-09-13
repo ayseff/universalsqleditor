@@ -19,6 +19,8 @@ namespace SqlEditor.Databases.MsAccess
         private static readonly string[] _numericDataTypes = new[] { "BIGINT", "INT", "SMALLINT", "TINYINT", "NUMERIC", "DECIMAL", "FLOAT", "REAL", "BIT", "MONEY", "SMALLMONEY" };
         private static readonly string[] _dateTimeDataTypes = new[] { "DATE", "TIME", "TIMESTAMP", "DATETIME", "DATETIME2", "SMALLDATETIME", "DATETIMEOFFSET" };
 
+        public override string HighlightingDefinitionsFile { get { return "MSACCESSSQL"; } }
+
 
         public override string[] NumericDataTypes
         {
