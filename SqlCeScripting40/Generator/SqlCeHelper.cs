@@ -16,7 +16,7 @@ namespace ErikEJ.SqlCeScripting
             {
                 return Helper.ShowErrors((SqlCeException)ex);
             }
-            else if (ex.GetType() == typeof(SqlException))
+            else if (ex is SqlException)
             {
                 return Helper.ShowErrors((SqlException)ex);
             }
