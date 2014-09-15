@@ -32,5 +32,8 @@
     <Setting Name="FrmFindReplace_ReplaceTerms" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="LastUpdateCheck" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2014-09-01</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

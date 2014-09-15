@@ -711,8 +711,24 @@ namespace SqlEditor
                 _log.Error(ex.Message, ex);
                 Dialog.ShowErrorDialog("Error", "Error loading connections.", ex.Message, ex.StackTrace);
             }
-            
-            
+
+            // Check for updates in background
+            if (DateTime.Now.Subtract(Settings.Default.LastUpdateCheck).TotalDays > 7)
+            {
+                 try
+                 {
+                     CheckForUpdatesAsync(false);
+                     Settings.Default.LastUpdateCheck = DateTime.Now;
+                     Settings.Default.Save();
+                 }
+                 catch (Exception ex)
+                 {
+                     _log.Error("Error checking for updates");
+                     _log.Error(ex.Message, ex);
+                 }
+            }
+
+
             BringToFront();
             TopMost = true;
             Application.DoEvents();
@@ -2595,10 +2611,11 @@ namespace SqlEditor
             }
         }
 
-        private static async void CheckForUpdatesAsync()
+        private static async void CheckForUpdatesAsync(bool showDialogIfUsingLatestVersion = true)
         {
             try
             {
+                _log.Debug("Checking for updates ...");
                 const string url = "http://universalsqleditor.codeplex.com/releases";
                 var doc = new HtmlAgilityPack.HtmlDocument { OptionFixNestedTags = true };
                 using (var client = new WebClient())
@@ -2640,6 +2657,8 @@ namespace SqlEditor
                             Application.ProductVersion.Split('.').Select(x => x.PadLeft(4, '0')));
                         if (String.Compare(latestVersionFormatted, thisVersionFormatted, StringComparison.Ordinal) > 0)
                         {
+                            _log.InfoFormat("Newer version {0} is available.", latestVersion);
+
                             // Prompt to download new version
                             var taskdlg = new TaskDialog
                             {
@@ -2671,7 +2690,7 @@ namespace SqlEditor
                             
                             taskdlg.Show();
                         }
-                        else
+                        else if (showDialogIfUsingLatestVersion)
                         {
                             Dialog.ShowDialog(Application.ProductName,
                                 "You are using the latest version of " + Application.ProductName + ".", string.Empty);

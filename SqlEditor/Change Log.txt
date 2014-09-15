@@ -4,6 +4,9 @@
   - Added a new feature that allows a double-click (or a right click menu item) on a cell to view it's value in an editor. If a column value if valid XML document, XML editor will be shown
   - Added additional themes for Office 2013 and Windows 8
   - Completely new Find/Replace dialog with more robust searching/replacing and ability to use regular expressions
+  - Added the ability to view and browse constraints
+  - Implemented better handling of database object browsing for MS Access (using ADOX)
+  - Added automatic check for updates to run every week
   Bug Fixes:
   - Fixed regression issue where some icons on the File menu did not have icons
   - Fixed an issue where refresh button was enabled on query results before any query was run. Clicking on a button in that state caused a crash
@@ -12,7 +15,7 @@
   - Fixed an issue where row highlighting was not correct in query results grid after sorting
   - Fixed an issue where SQL Server queries were timing out after 30 seconds because default timeout on SqlCommand is 30 seconds
   - Fixed an issue where MS Access connection string was not being saved properly
-  - Fixed an issue where MS Access SQL highlighting would not work in the editor
+  - Fixed an issue where MS Access SQL highlighting would not work in the editor  
 Version: 0.3.2.0
   New Features:
   - Upgraded to Infragistics 14.1 controls
