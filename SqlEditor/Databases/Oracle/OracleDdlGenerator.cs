@@ -19,7 +19,7 @@ namespace SqlEditor.Databases.Oracle
 
             // Get full DDL
             var ddl = RunDbmsMetadata(databaseConnection, "TABLE", schema, tableName);
-            ddl += Environment.NewLine + databaseConnection.DatabaseServer.SqlTerminators[0] + Environment.NewLine;
+            ddl += Environment.NewLine + databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault() + Environment.NewLine;
             return ddl;
         }
 
@@ -39,12 +39,12 @@ namespace SqlEditor.Databases.Oracle
             {
                 if (Regex.IsMatch(lines[i].Trim(), @"^CREATE\s+INDEX", RegexOptions.IgnoreCase))
                 {
-                    linesList.Add(databaseConnection.DatabaseServer.SqlTerminators[0] + Environment.NewLine+Environment.NewLine);
+                    linesList.Add(databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault() + Environment.NewLine+Environment.NewLine);
                 }
                 linesList.Add(lines[i]);
             }
 
-            linesList.Add(databaseConnection.DatabaseServer.SqlTerminators[0] + Environment.NewLine + Environment.NewLine);
+            linesList.Add(databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault() + Environment.NewLine + Environment.NewLine);
             ddl += string.Join(Environment.NewLine, linesList);
             return ddl;
         }

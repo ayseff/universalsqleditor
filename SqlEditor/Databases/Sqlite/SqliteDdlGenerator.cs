@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using SqlEditor.DatabaseExplorer;
 
@@ -26,7 +28,8 @@ namespace SqlEditor.Databases.Sqlite
                     {
                         if (dr.Read())
                         {
-                            return dr.GetString(0);
+                            return dr.GetString(0) + Environment.NewLine +
+                                   databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault();
                         }
                         throw new Exception("SQLite sqlite_master table does not have an entry for the table " + tableName);
                     }
@@ -39,7 +42,27 @@ namespace SqlEditor.Databases.Sqlite
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
-            throw new NotImplementedException();
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(GenerateTableDdl(databaseConnection, database, schema, tableName));
+            stringBuilder.AppendLine(Environment.NewLine);
+
+            var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
+            using (var connection = databaseConnection.CreateNewConnection())
+            {
+                connection.OpenIfRequired();
+                var indexes = infoProvider.GetIndexesForTable(connection, string.Empty, tableName);
+                foreach (var index in indexes)
+                {
+                    var columns = infoProvider.GetIndexColumns(connection, string.Empty, index.Name);
+                    stringBuilder.AppendFormat("CREATE {0}INDEX {1} ON {2}({3})",
+                        index.IsUnique ? "UNIQUE " : string.Empty, index.Name, tableName,
+                        string.Join(", ", columns.Select(x => x.Name).ToList()));
+                    stringBuilder.AppendLine();
+                    stringBuilder.AppendLine(databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault());
+                    stringBuilder.AppendLine(Environment.NewLine);
+                }
+            }
+            return stringBuilder.ToString();
         }
     }
 }

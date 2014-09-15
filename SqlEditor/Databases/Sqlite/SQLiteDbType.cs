@@ -1,4 +1,4 @@
-namespace SqlEditor.Database.Sqlite
+namespace SqlEditor.Databases.Sqlite
 {
     public enum SqliteDbType
     {

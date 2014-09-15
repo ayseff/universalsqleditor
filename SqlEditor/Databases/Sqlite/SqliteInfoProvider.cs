@@ -187,7 +187,7 @@ namespace SqlEditor.Databases.Sqlite
                 command.CommandText = "PRAGMA index_list('" + tableName + "')";
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var index = new Index(dr.GetString(1), schema);
                         index.IsUnique = dr[2].ToString() == "1";
@@ -214,7 +214,7 @@ namespace SqlEditor.Databases.Sqlite
                 command.CommandText = "PRAGMA index_info('" + indexName + "')";
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr != null && dr.Read())
+                    while (dr.Read())
                     {
                         var column = new Column(dr.GetString(2), index);
                         columns.Add(column);

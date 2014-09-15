@@ -112,7 +112,7 @@ namespace SqlEditor.Databases.SqlServer
             foreach (var line in stringCollection)
             {
                 sb.Append(line);
-                sb.AppendLine(databaseConnection.DatabaseServer.SqlTerminators[0]);
+                sb.AppendLine(databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault());
                 sb.AppendLine();
             }
             return sb.ToString();
