@@ -199,7 +199,7 @@ namespace SqlEditor.Databases.Sqlite
             return indices;
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, [NotNull] string indexName, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, [NotNull] string indexName, object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (indexName == null) throw new ArgumentNullException("indexName");
@@ -223,6 +223,12 @@ namespace SqlEditor.Databases.Sqlite
             }
             _log.DebugFormat("Retrieved {0} indexed columns.", columns.Count.ToString("#,0"));
             return columns;
+        }
+
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
+            string databaseInstanceName = null)
+        {
+            return new List<Column>();
         }
 
         public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName, string databaseInstanceName = null)

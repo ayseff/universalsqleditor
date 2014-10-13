@@ -8,6 +8,7 @@
   - Implemented better handling of database object browsing for MS Access (using ADOX)
   - Added automatic check for updates to run every week
   - Added the ability to create table DDL (requires db2look for DB2)
+  - Added the ability to view included columns on unique indexes
   Bug Fixes:
   - Fixed regression issue where some icons on the File menu did not have icons
   - Fixed an issue where refresh button was enabled on query results before any query was run. Clicking on a button in that state caused a crash
@@ -17,6 +18,8 @@
   - Fixed an issue where SQL Server queries were timing out after 30 seconds because default timeout on SqlCommand is 30 seconds
   - Fixed an issue where MS Access connection string was not being saved properly
   - Fixed an issue where MS Access SQL highlighting would not work in the editor  
+  - Fixed an issues where listing index columns in Database Explorer for SQL Server was not accurate
+  - Fixed an issues where listing synonyms for DB2 would throw an exception
 Version: 0.3.2.0
   New Features:
   - Upgraded to Infragistics 14.1 controls

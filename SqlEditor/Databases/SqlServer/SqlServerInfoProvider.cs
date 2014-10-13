@@ -14,8 +14,8 @@ namespace SqlEditor.Databases.SqlServer
     {
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private const string GET_OBJECTS_SQL = 
-            "SELECT t.name FROM sys.{0} t INNER JOIN sys.objects o ON o.object_id = t.object_id INNER JOIN sys.schemas s on o.schema_id = s.schema_id  WHERE UPPER(s.name) = @1 AND  t.is_ms_shipped = 0 ORDER BY t.name";
+        private const string GET_OBJECTS_SQL =
+            "SELECT t.name, o.object_id FROM sys.{0} t INNER JOIN sys.objects o ON o.object_id = t.object_id INNER JOIN sys.schemas s on o.schema_id = s.schema_id  WHERE UPPER(s.name) = @1 AND  t.is_ms_shipped = 0 ORDER BY t.name";
 
         private const string GET_OBJECT_COLUMNS_SQL =
             "SELECT c.name AS column_name, t.name AS data_type, c.max_length, c.precision, c.scale, c.is_nullable, c.column_id FROM sys.columns c INNER JOIN sys.{0} ob ON c.object_id = ob.object_id INNER JOIN sys.objects o ON ob.object_id = o.object_id INNER JOIN sys.schemas s ON s.schema_id = o.schema_id INNER JOIN sys.types t ON c.system_type_id = t.system_type_id where UPPER(s.name) = @1 AND UPPER(ob.name) = @2  AND t.name <> 'sysname' ORDER BY c.column_id";
@@ -60,9 +60,7 @@ namespace SqlEditor.Databases.SqlServer
 
             UseDatabase(connection, databaseInstanceName);
             return GetTablesBase(connection, schemaName,
-                                 //"SELECT name FROM sys.tables WHERE is_ms_shipped = 0 ORDER BY name");
                                  string.Format(GET_OBJECTS_SQL, "tables"),
-                                 //"SELECT t.name FROM sys.tables t INNER JOIN sys.objects o ON o.object_id = t.object_id INNER JOIN sys.schemas s on o.schema_id = s.schema_id  WHERE UPPER(s.name) = @1 AND  t.is_ms_shipped = 0 ORDER BY t.name",
                                  schemaName.Trim().ToUpper());
         }
 
@@ -73,11 +71,9 @@ namespace SqlEditor.Databases.SqlServer
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             if (tableName == null) throw new ArgumentNullException("tableName");
             if (databaseInstanceName == null) throw new ArgumentNullException("databaseInstanceName");
-
+            
             UseDatabase(connection, databaseInstanceName);
             return GetTableColumnsBase(connection, schemaName, tableName,
-                                       //"SELECT column_name, data_type, character_maximum_length, numeric_precision, numeric_scale, is_nullable, ordinal_position FROM information_schema.columns WHERE UPPER(table_name) = @1 ORDER BY ordinal_position",
-                                       // "SELECT c.name AS column_name, t.name AS data_type, c.max_length, c.precision, c.scale, c.is_nullable, c.column_id FROM sys.columns c INNER JOIN sys.objects o ON c.object_id = o.object_id INNER JOIN sys.schemas s ON s.schema_id = o.schema_id INNER JOIN sys.types t ON c.system_type_id = t.system_type_id where UPPER(s.name) = @1 AND UPPER(o.name) = @2 ORDER BY c.column_id",
                                        string.Format(GET_OBJECT_COLUMNS_SQL, "tables"),
                                        schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
@@ -175,7 +171,7 @@ namespace SqlEditor.Databases.SqlServer
 
             UseDatabase(connection, databaseInstanceName);
             return GetIndexesBase(connection, schemaName,
-                                  "SELECT DISTINCT '" + schemaName + "' as schema_name, a.name, a.is_unique FROM sys.indexes a INNER JOIN sys.objects o ON a.object_id = o.object_id INNER JOIN sys.schemas s ON s.schema_id = o.schema_id WHERE o.is_ms_shipped = 0 AND a.name IS NOT NULL AND UPPER(s.name) = @1 ORDER BY a.name",
+                                  "SELECT DISTINCT '" + schemaName + "' as schema_name, a.name, a.is_unique, a.index_id FROM sys.indexes a INNER JOIN sys.objects o ON a.object_id = o.object_id INNER JOIN sys.schemas s ON s.schema_id = o.schema_id WHERE o.is_ms_shipped = 0 AND a.name IS NOT NULL AND UPPER(s.name) = @1 ORDER BY a.name",
                                   schemaName.Trim().ToUpper());
         }
 
@@ -188,23 +184,43 @@ namespace SqlEditor.Databases.SqlServer
 
             UseDatabase(connection, databaseInstanceName);
             return GetIndexesBase(connection, schemaName,
-                                  "SELECT DISTINCT s.name, i.name, i.is_unique FROM sys.indexes AS i INNER JOIN sys.data_spaces AS ds ON i.data_space_id = ds.data_space_id 	INNER JOIN sys.objects AS o ON o.object_id = i.object_id 	INNER JOIN sys.schemas AS s ON o.schema_id = s.schema_id WHERE is_hypothetical = 0 AND i.index_id <> 0 AND UPPER(s.name) = @1 AND UPPER(o.name) = UPPER(@2) ORDER BY i.name", schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
+                                  "SELECT DISTINCT s.name, i.name, i.is_unique, i.index_id FROM sys.indexes AS i INNER JOIN sys.data_spaces AS ds ON i.data_space_id = ds.data_space_id 	INNER JOIN sys.objects AS o ON o.object_id = i.object_id 	INNER JOIN sys.schemas AS s ON o.schema_id = s.schema_id WHERE is_hypothetical = 0 AND i.index_id <> 0 AND UPPER(s.name) = @1 AND UPPER(o.name) = UPPER(@2) ORDER BY i.name", schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
         public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string indexName,
-            [JetBrains.Annotations.NotNull] string databaseInstanceName = null)
+            [JetBrains.Annotations.NotNull] object indexId = null, [JetBrains.Annotations.NotNull] string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             if (indexName == null) throw new ArgumentNullException("indexName");
+            if (indexId == null) throw new ArgumentNullException("indexId");
             if (databaseInstanceName == null) throw new ArgumentNullException("databaseInstanceName");
 
+            var indexIdInt = (int) indexId;
             UseDatabase(connection, databaseInstanceName);
             return GetIndexColumnsBase(connection, schemaName, indexName,
-                                        string.Format(GET_OBJECT_COLUMNS_SQL, "indexes"),
-                                       //"SELECT column_name, data_type, character_maximum_length, numeric_precision, numeric_scale, c.is_nullable, ordinal_position from sys.objects t inner join sys.schemas s on t.schema_id = s.schema_id inner join sys.indexes i on i.object_id = t.object_id inner join sys.index_columns ic on ic.object_id = t.object_id inner join sys.columns c on c.object_id = t.object_id and ic.column_id = c.column_id INNER JOIN INFORMATION_SCHEMA.COLUMNS cl ON cl.TABLE_NAME = t.name AND cl.COLUMN_NAME = c.name where i.index_id > 0    and i.is_disabled = 0 and i.is_hypothetical = 0 and ic.key_ordinal > 0 AND UPPER(i.name) = @1",
+                                        "SELECT col.name AS column_name, t.name AS data_type, col.max_length, col.precision, col.scale, col.is_nullable, col.column_id FROM 	sys.indexes ind 	INNER JOIN sys.index_columns ic 		ON  ind.object_id = ic.object_id and ind.index_id = ic.index_id 	INNER JOIN sys.columns col 		ON ic.object_id = col.object_id and ic.column_id = col.column_id 	 	INNER JOIN sys.objects o ON ind.object_id = o.object_id 	INNER JOIN sys.schemas s ON s.schema_id = o.schema_id 	INNER JOIN sys.types t ON col.system_type_id = t.system_type_id where UPPER(s.name) = @1 AND UPPER(ind.name) = @2  AND t.name <> 'sysname' AND ind.index_id = @3 AND ic.is_included_column = 0 ORDER BY ic.index_column_id",
                                        schemaName.Trim().ToUpper(),
-                                       indexName.Trim().ToUpper());
+                                       indexName.Trim().ToUpper(),
+                                       indexIdInt);
+        }
+
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
+            string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (indexName == null) throw new ArgumentNullException("indexName");
+            if (indexId == null) throw new ArgumentNullException("indexId");
+            if (databaseInstanceName == null) throw new ArgumentNullException("databaseInstanceName");
+
+            var indexIdInt = (int)indexId;
+            UseDatabase(connection, databaseInstanceName);
+            return GetIndexColumnsBase(connection, schemaName, indexName,
+                                        "SELECT col.name AS column_name, t.name AS data_type, col.max_length, col.precision, col.scale, col.is_nullable, col.column_id FROM 	sys.indexes ind 	INNER JOIN sys.index_columns ic 		ON  ind.object_id = ic.object_id and ind.index_id = ic.index_id 	INNER JOIN sys.columns col 		ON ic.object_id = col.object_id and ic.column_id = col.column_id 	 	INNER JOIN sys.objects o ON ind.object_id = o.object_id 	INNER JOIN sys.schemas s ON s.schema_id = o.schema_id 	INNER JOIN sys.types t ON col.system_type_id = t.system_type_id where UPPER(s.name) = @1 AND UPPER(ind.name) = @2  AND t.name <> 'sysname' AND ind.index_id = @3 AND ic.is_included_column = 1 ORDER BY ic.index_column_id",
+                                       schemaName.Trim().ToUpper(),
+                                       indexName.Trim().ToUpper(),
+                                       indexIdInt);
         }
 
         public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName,

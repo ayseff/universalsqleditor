@@ -89,6 +89,10 @@ namespace SqlEditor.Databases
                     while (dr.Read())
                     {
                         var table = new Table(dr.GetString(0), schema);
+                        if (dr.FieldCount == 2)
+                        {
+                            table.Id = dr[1];
+                        }
                         tables.Add(table);
                     }
                 }
@@ -174,6 +178,10 @@ namespace SqlEditor.Databases
                     while (dr.Read())
                     {
                         var view = new View(dr.GetString(0).Trim().ToUpper(), schema);
+                        if (dr.FieldCount == 2)
+                        {
+                            view.Id = dr[1];
+                        }
                         views.Add(view);
                     }
                 }
@@ -215,6 +223,10 @@ namespace SqlEditor.Databases
                     while (dr.Read())
                     {
                         var view = new MaterializedView(dr.GetString(0).Trim().ToUpper(), schema);
+                        if (dr.FieldCount == 2)
+                        {
+                            view.Id = dr[1];
+                        }
                         views.Add(view);
                     }
                 }
@@ -267,6 +279,10 @@ namespace SqlEditor.Databases
                         var isUnqiueString = dr.IsDBNull(2) ? "0" : dr[2].ToString().Trim().ToUpper();
                         index.IsUnique = isUnqiueString == "1" || isUnqiueString == "Y" || isUnqiueString == "YES" ||
                                          isUnqiueString == "U" || isUnqiueString == "P";
+                        if (dr.FieldCount == 4)
+                        {
+                            index.Id = dr[3];
+                        }
                         indices.Add(index);
                     }
                 }
@@ -278,7 +294,9 @@ namespace SqlEditor.Databases
 
         public abstract IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
 
-        public abstract IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null);
+        public abstract IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null, string databaseInstanceName = null);
+
+        public abstract IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null, string databaseInstanceName = null);
         protected virtual IList<Column> GetIndexColumnsBase([NotNull] IDbConnection connection,
                                                             [NotNull] string schemaName, [NotNull] string indexName,
                                                             [NotNull] string sql,
@@ -321,6 +339,10 @@ namespace SqlEditor.Databases
                         sequence.MaximumValue = decimal.Parse(dr[2].ToString());
                         sequence.Increment = decimal.Parse(dr[3].ToString());
                         sequence.CurrentValue = decimal.Parse(dr[4].ToString());
+                        if (dr.FieldCount == 6)
+                        {
+                            sequence.Id = dr[5];
+                        }
                         sequences.Add(sequence);
                     }
                 }
@@ -358,6 +380,10 @@ namespace SqlEditor.Databases
                         constraint.IsEnforced = isEnforcedString == "1" || isEnforcedString == "Y" ||
                                                 isEnforcedString == "YES";
                         constraint.Type = dr.GetString(3);
+                        if (dr.FieldCount == 5)
+                        {
+                            constraint.Id = dr[4];
+                        }
                         constraints.Add(constraint);
                     }
                 }
@@ -388,6 +414,10 @@ namespace SqlEditor.Databases
                     while (dr.Read())
                     {
                         var trigger = new Trigger(dr.GetString(0).Trim().ToUpper(), schema);
+                        if (dr.FieldCount == 2)
+                        {
+                            trigger.Id = dr[1];
+                        }
                         triggers.Add(trigger);
                     }
                 }
@@ -419,6 +449,10 @@ namespace SqlEditor.Databases
                     {
                         var synonym = new Synonym(dr.GetString(0).Trim().ToUpper(), schema);
                         synonym.TargetObjectName = dr.GetString(1);
+                        if (dr.FieldCount == 3)
+                        {
+                            synonym.Id = dr[2];
+                        }
                         synonyms.Add(synonym);
                     }
                 }
@@ -449,6 +483,10 @@ namespace SqlEditor.Databases
                         var storedProcedure = new StoredProcedure(dr.GetString(1).Trim().ToUpper(), schema);
                         storedProcedure.ObjectId = dr[0].ToString();
                         storedProcedure.Definition = dr.IsDBNull(2) ? null : dr.GetString(2);
+                        if (dr.FieldCount == 4)
+                        {
+                            storedProcedure.Id = dr[3];
+                        }
                         storedProcedures.Add(storedProcedure);
                     }
                 }
@@ -479,6 +517,10 @@ namespace SqlEditor.Databases
                         var function = new Function(dr.GetString(1).Trim().ToUpper(), schema);
                         function.ObjectId = dr[0].ToString();
                         function.Definition = dr.IsDBNull(2) ? null : dr.GetString(2);
+                        if (dr.FieldCount == 4)
+                        {
+                            function.Id = dr[3];
+                        }
                         functions.Add(function);
                     }
                 }
@@ -853,7 +895,7 @@ namespace SqlEditor.Databases
             return parameter;
         }
 
-        private static void BuildSqlCommand(IDbCommand command, string sql, object[] parameters)
+        protected static void BuildSqlCommand(IDbCommand command, string sql, object[] parameters)
         {
             var parameterSymbol = "@";
             command.CommandText = sql;

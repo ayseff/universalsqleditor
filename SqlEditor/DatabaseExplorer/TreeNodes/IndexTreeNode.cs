@@ -25,8 +25,10 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             var nodes = new List<TreeNodeBase>();
-            var tableColumnsNode = new IndexColumnsTreeNode(IndexObject, DatabaseConnection);
-            nodes.Add(tableColumnsNode);
+            var columnsTreeNode = new IndexColumnsTreeNode(IndexObject, DatabaseConnection);
+            nodes.Add(columnsTreeNode);
+            var includedColumnsTreeNode = new IndexIncludedColumnsTreeNode(IndexObject, DatabaseConnection);
+            nodes.Add(includedColumnsTreeNode);
 
             return nodes;
         }

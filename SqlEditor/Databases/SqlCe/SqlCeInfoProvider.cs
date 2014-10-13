@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using JetBrains.Annotations;
 using SqlEditor.Database;
 using SqlEditor.Intellisense;
 
@@ -93,13 +94,20 @@ namespace SqlEditor.Databases.SqlCe
                                   "SELECT DISTINCT '" + DEFAULT_SCHEMA + "', idx.index_name, CASE WHEN idx.[unique]= 1 THEN 1 ELSE 0 END AS is_unique  FROM information_schema.indexes as idx WHERE UPPER(table_name) = @1 ORDER BY idx.index_name", tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName,
+            [NotNull] object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (indexName == null) throw new ArgumentNullException("indexName");
             return GetIndexColumnsBase(connection, _defaultSchema.Name, indexName,
                                        "SELECT c.column_name, c.data_type, c.character_maximum_length, c.numeric_precision, c.numeric_scale, c.is_nullable, c.ordinal_position FROM information_schema.indexes s INNER JOIN information_schema.columns c ON c.table_name = s.TABLE_NAME AND c.column_name = s.column_name WHERE UPPER(index_name) = @1",
                                        indexName.Trim().ToUpper());
+        }
+
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
+            string databaseInstanceName = null)
+        {
+            return new List<Column>();
         }
 
         public override IList<Sequence> GetSequences(IDbConnection connection, string schema, string databaseInstanceName = null)

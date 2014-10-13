@@ -45,7 +45,9 @@ namespace SqlEditor.Databases.Db2
             }
 
 
-            return string.Join(Environment.NewLine, validLines);
+            var sql = string.Join("\n", validLines);
+            sql = sql.Replace("\r", string.Empty);
+            return sql;
         }
 
         public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
@@ -62,7 +64,8 @@ namespace SqlEditor.Databases.Db2
             }
             var ddl = RunDb2Look(connectionStringBuilder.Database, connectionStringBuilder.UserID,
                 connectionStringBuilder.Password, arguments);
-            return ddl;
+            var sql = ddl.Replace("\r", string.Empty);
+            return sql;
         }
 
         private string RunDb2Look(string database, string user, string password, string arguments)

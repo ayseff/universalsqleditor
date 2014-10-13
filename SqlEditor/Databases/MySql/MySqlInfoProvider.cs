@@ -109,7 +109,7 @@ namespace SqlEditor.Databases.MySql
                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string indexName, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string indexName, object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -117,6 +117,12 @@ namespace SqlEditor.Databases.MySql
             return GetIndexColumnsBase(connection, schemaName, indexName,
                                        "SELECT c.column_name, c.data_type, c.character_maximum_length, c.numeric_precision, c.numeric_scale, c.is_nullable, c.ordinal_position FROM information_schema.STATISTICS s INNER JOIN information_schema.COLUMNS c ON c.TABLE_SCHEMA = s.TABLE_SCHEMA AND c.TABLE_NAME = s.TABLE_NAME AND c.COLUMN_NAME = s.COLUMN_NAME WHERE UPPER(s.INDEX_NAME) = @1 and UPPER(s.TABLE_SCHEMA) = @2 ORDER BY seq_in_index",
                                        indexName.Trim().ToUpper(), schemaName.Trim().ToUpper());
+        }
+
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
+            string databaseInstanceName = null)
+        {
+            return new List<Column>();
         }
 
         public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName, string databaseInstanceName = null)

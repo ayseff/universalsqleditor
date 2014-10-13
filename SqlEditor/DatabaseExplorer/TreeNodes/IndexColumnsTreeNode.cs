@@ -26,7 +26,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<Column> GetColumns(DbInfoProvider infoProvider, IDbConnection connection)
         {
             var databaseInstanceName = DatabaseObject.Parent.Parent == null ? null : DatabaseObject.Parent.Parent.Name;
-            var columns = infoProvider.GetIndexColumns(connection, DatabaseObject.Parent.Name, DatabaseObject.Name, databaseInstanceName);
+            var columns = infoProvider.GetIndexColumns(connection, DatabaseObject.Parent.Name, DatabaseObject.Name, this.DatabaseObject.Id, databaseInstanceName);
             foreach (var column in columns)
             {
                 column.Parent = DatabaseObject;

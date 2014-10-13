@@ -170,7 +170,7 @@ namespace SqlEditor.Databases.Oracle
                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string indexName, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string indexName, object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -178,6 +178,12 @@ namespace SqlEditor.Databases.Oracle
             return GetIndexColumnsBase(connection, schemaName, indexName,
                                        "SELECT atc.column_name, atc.data_type, atc.data_length, atc.data_precision, atc.data_scale, atc.nullable, atc.column_id FROM all_tab_columns atc INNER JOIN all_ind_columns aic ON aic.table_owner = atc.owner AND aic.table_name = atc.table_name AND aic.column_name = atc.column_name WHERE UPPER(atc.owner) = @1 AND UPPER(aic.index_name) = @2 ORDER BY aic.column_position",
                                        schemaName.Trim().ToUpper(), indexName.Trim().ToUpper());
+        }
+
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
+            string databaseInstanceName = null)
+        {
+            return new List<Column>();
         }
 
         public override IList<Sequence> GetSequences([NotNull] IDbConnection connection, [NotNull] string schemaName, string databaseInstanceName = null)

@@ -1120,6 +1120,7 @@ namespace SqlEditor
             var parent = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
             var sql = databaseConnection.DatabaseServer.GetDdlGenerator()
                 .GenerateTableFullDdl(databaseConnection, parent, table.Parent.Name, table.Name);
+            //sql = sql.Replace("\r", string.Empty);
             worksheet.AppendText(sql, true);
         }
 

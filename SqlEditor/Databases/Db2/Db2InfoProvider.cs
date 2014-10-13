@@ -126,7 +126,7 @@ namespace SqlEditor.Databases.Db2
                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
@@ -134,11 +134,11 @@ namespace SqlEditor.Databases.Db2
             
             _log.DebugFormat("Getting columns for schema {0} and index {1} ...", schemaName, indexName);
             List<string> columnNames = null;
-            string tableName = null, tableSchemaName = null;
+            string tableName = null, tableSchemaName = null, uniqueRule = null;
             using (var command = connection.CreateCommand())
             {
                 command.CommandText =
-                    "SELECT colnames, tabname, tabschema FROM syscat.indexes WHERE TRIM(UPPER(indname)) = @1 AND TRIM(UPPER(indschema)) = @2 FETCH FIRST ROW ONLY WITH ur";
+                    "SELECT colnames, tabname, tabschema, uniquerule, unique_colcount, colcount FROM syscat.indexes WHERE TRIM(UPPER(indname)) = @1 AND TRIM(UPPER(indschema)) = @2 FETCH FIRST ROW ONLY WITH ur";
                 var param = command.CreateParameter();
                 param.ParameterName = "@1";
                 param.Value = indexName.Trim().ToUpper();
@@ -149,13 +149,82 @@ namespace SqlEditor.Databases.Db2
                 command.Parameters.Add(param);
                 using (var dr = command.ExecuteReader())
                 {
-                    while (dr.Read())
+                    if (dr.Read())
                     {
                         columnNames = dr.GetString(0).Trim().ToUpper().Split(new[] { '+' },
                                                                                       StringSplitOptions.
                                                                                           RemoveEmptyEntries).ToList();
                         tableName = dr.GetString(1);
                         tableSchemaName = dr.GetString(2);
+                        uniqueRule = dr.GetString(3);
+                        int uniqueColumnCount = dr.GetInt16(4);
+                        int columnCount = dr.GetInt16(5);
+                        if (uniqueRule.Trim().ToUpper() == "U" && columnCount > uniqueColumnCount)
+                        {
+                            
+                            columnNames = columnNames.Take(uniqueColumnCount).ToList();
+                        }
+                    }
+                }
+            }
+
+            if (tableName == null || tableSchemaName == null) return new List<Column>();
+            var parameters = new List<string> { tableName.Trim().ToUpper(), tableSchemaName.Trim().ToUpper() };
+            var sql = "SELECT c.colname, c.typename, c.length, c.length as precision, c.scale, c.nulls, c.colno FROM syscat.columns c INNER JOIN syscat.tables t on (c.tabschema = t.tabschema AND c.tabname = t.tabname) WHERE TRIM(UPPER(c.tabname)) = @1 AND TRIM(UPPER(c.tabschema)) = @2 AND TRIM(UPPER(c.colname)) IN (";
+            var separator = string.Empty;
+            for (var i = 0; i < columnNames.Count; i++)
+            {
+                sql += separator + "@" + (i + 3);
+                separator = ", ";
+                parameters.Add(columnNames[i].Trim().ToUpper());
+            }
+            sql += ")  ORDER BY c.colno WITH ur";
+
+            return GetTableColumnsBase(connection, tableSchemaName, tableName, sql, parameters.Cast<object>().ToArray());
+        }
+
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
+            string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (indexName == null) throw new ArgumentNullException("indexName");
+
+            _log.DebugFormat("Getting columns for schema {0} and index {1} ...", schemaName, indexName);
+            List<string> columnNames = null;
+            string tableName = null, tableSchemaName = null;
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText =
+                    "SELECT colnames, tabname, tabschema, uniquerule, unique_colcount, colcount FROM syscat.indexes WHERE TRIM(UPPER(indname)) = @1 AND TRIM(UPPER(indschema)) = @2 FETCH FIRST ROW ONLY WITH ur";
+                var param = command.CreateParameter();
+                param.ParameterName = "@1";
+                param.Value = indexName.Trim().ToUpper();
+                command.Parameters.Add(param);
+                param = command.CreateParameter();
+                param.ParameterName = "@2";
+                param.Value = schemaName.Trim().ToUpper();
+                command.Parameters.Add(param);
+                using (var dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        columnNames = dr.GetString(0).Trim().ToUpper().Split(new[] { '+' },
+                                                                                      StringSplitOptions.
+                                                                                          RemoveEmptyEntries).ToList();
+                        tableName = dr.GetString(1);
+                        tableSchemaName = dr.GetString(2);
+                        var uniqueRule = dr.GetString(3);
+                        int uniqueColumnCount = dr.GetInt16(4);
+                        int columnCount = dr.GetInt16(5);
+                        if (uniqueRule.Trim().ToUpper() == "U" && columnCount > uniqueColumnCount)
+                        {
+                            columnNames = columnNames.Skip(uniqueColumnCount).ToList();
+                        }
+                        else
+                        {
+                            return new List<Column>();
+                        }
                     }
                 }
             }
@@ -225,7 +294,7 @@ namespace SqlEditor.Databases.Db2
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             return GetSynonymsBase(connection, schemaName,
-                                   "SELECT tabname FROM syscat.tables WHERE TRIM(UPPER(tabschema)) = @1 AND type = 'A' ORDER BY tabname WITH ur",
+                                   "SELECT tabname, base_tabname FROM syscat.tables WHERE TRIM(UPPER(tabschema)) = @1 AND type = 'A' ORDER BY tabname WITH ur",
                                    schemaName.ToUpper());
         }
 

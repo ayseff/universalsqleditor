@@ -7,6 +7,7 @@ namespace SqlEditor.Databases
     public abstract class DatabaseObject
     {
         private string _name;
+        private object _id;
 
         protected DatabaseObject()
         {
@@ -39,6 +40,12 @@ namespace SqlEditor.Databases
                     _name = _name.Trim();
                 }
             }
+        }
+
+        public object Id
+        {
+            get { return _id; }
+            set { _id = value; }
         }
 
         [Browsable(false)]

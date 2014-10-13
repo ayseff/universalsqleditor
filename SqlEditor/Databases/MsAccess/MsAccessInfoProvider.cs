@@ -352,7 +352,7 @@ namespace SqlEditor.Databases.MsAccess
             return indexes;
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null, string databaseInstanceName = null)
         {
             var columns = new List<Column>();
             var cnn = new ADODB.Connection();
@@ -392,6 +392,12 @@ namespace SqlEditor.Databases.MsAccess
                 }
             }
             return columns;
+        }
+
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
+            string databaseInstanceName = null)
+        {
+            return new List<Column>();
         }
 
         public override IList<Sequence> GetSequences(IDbConnection connection, string schemaName, string databaseInstanceName = null)

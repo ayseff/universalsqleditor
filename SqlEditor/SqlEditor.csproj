@@ -217,6 +217,7 @@
     <Compile Include="DatabaseExplorer\TreeNodes\FunctionsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\FunctionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\GenericTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\IndexIncludedColumnsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MsAccess\MsAccessConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlSchemaTreeNode.cs" />
