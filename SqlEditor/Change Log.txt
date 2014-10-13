@@ -7,6 +7,7 @@
   - Added the ability to view and browse constraints
   - Implemented better handling of database object browsing for MS Access (using ADOX)
   - Added automatic check for updates to run every week
+  - Added the ability to create table DDL (requires db2look for DB2)
   Bug Fixes:
   - Fixed regression issue where some icons on the File menu did not have icons
   - Fixed an issue where refresh button was enabled on query results before any query was run. Clicking on a button in that state caused a crash
