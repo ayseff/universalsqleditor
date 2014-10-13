@@ -602,7 +602,7 @@ namespace SqlEditor
                     case "Find":
                         //var findForm2 = new FrmFindReplace();
                         //findForm2.Show(SearchMode.Find);
-                        _findReplaceForm.Show(SearchMode.Replace);
+                        _findReplaceForm.Show(SearchMode.Find);
                         //_findForm.ShowFor(_sqlEditor, false);
                         break;
 

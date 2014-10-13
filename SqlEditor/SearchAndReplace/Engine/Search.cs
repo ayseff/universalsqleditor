@@ -89,7 +89,8 @@ namespace SqlEditor.SearchAndReplace.Engine
 			Debug.Assert(documentIterator    != null);
 			Debug.Assert(textIteratorBuilder != null);
 			
-			if (info != null && textIterator != null && documentIterator.CurrentFileName != null) {
+			if (info != null && textIterator != null && documentIterator.CurrentFileName != null) 
+            {
 				ProvidedDocumentInformation currentInfo = documentIterator.Current;
 				if (currentInfo != null) {
 					if (!info.Equals(currentInfo)) { // create new iterator, if document changed

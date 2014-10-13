@@ -40,8 +40,8 @@ namespace SqlEditor.SearchAndReplace.Engine.SearchStrategy
 		
 		bool IsWholeWordAt(ITextBufferStrategy document, int offset, int length)
 		{
-			return (offset - 1 < 0 || !Char.IsLetterOrDigit(document.GetCharAt(offset - 1))) &&
-			       (offset + length >= document.Length || !Char.IsLetterOrDigit(document.GetCharAt(offset + length)));
+            return (offset - 1 < 0 || (!Char.IsLetterOrDigit(document.GetCharAt(offset - 1)) && document.GetCharAt(offset - 1) != '_')) &&
+			       (offset + length >= document.Length || (!Char.IsLetterOrDigit(document.GetCharAt(offset + length)) && document.GetCharAt(offset + length) != '_'));
 		}
 		
 		int InternalFindNext(ITextIterator textIterator)

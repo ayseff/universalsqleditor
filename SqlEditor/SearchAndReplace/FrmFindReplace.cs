@@ -148,14 +148,14 @@ namespace SqlEditor.SearchAndReplace
             if (searchMode == SearchMode.Find)
             {
                 SearchOptions.FindPattern = _ucFind.Text;
-                MoveToTop(_ucFind.Text, _searchTerms);
+                MoveSearchTermToTop(_ucFind.Text, _searchTerms);
             }
             else if (searchMode == SearchMode.Replace)
             {
                 SearchOptions.FindPattern = _ucReplaceFind.Text;
                 SearchOptions.ReplacePattern = _ucReplaceWith.Text;
-                MoveToTop(_ucReplaceFind.Text, _searchTerms);
-                MoveToTop(_ucReplaceWith.Text, _replaceTerms);
+                MoveSearchTermToTop(_ucReplaceFind.Text, _searchTerms);
+                MoveSearchTermToTop(_ucReplaceWith.Text, _replaceTerms);
             }
             SearchOptions.MatchCase = _cbMatchCase.Checked;
             SearchOptions.MatchWholeWord = _cbMatchWholeWord.Checked;
@@ -176,12 +176,13 @@ namespace SqlEditor.SearchAndReplace
             }
         }
 
-        private static void MoveToTop(string text, IList<string> list)
+        private static void MoveSearchTermToTop(string text, IList<string> list)
         {
             var index = list.IndexOf(text);
-            if (index > 0)
+            while (index >= 0)
             {
                 list.RemoveAt(index);
+                index = list.IndexOf(text);
             }
             list.Insert(0, text);
         }
@@ -521,7 +522,7 @@ namespace SqlEditor.SearchAndReplace
                 Hide();
 
                 // Discard search region
-                _textEditor.Refresh(); // must repaint manually
+                if (_textEditor != null) _textEditor.Refresh(); // must repaint manually
             }
             else
             {

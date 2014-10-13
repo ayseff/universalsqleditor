@@ -286,8 +286,9 @@ namespace SqlEditor.SearchAndReplace.Engine
 			}
 			
 			TextEditorControl textArea = null;
-			while (textArea == null) {
-				SearchResultMatch result = find.FindNext();
+			while (textArea == null) 
+            {
+				var result = find.FindNext();
 				if (result == null) 
                 {
 					find.Reset();
