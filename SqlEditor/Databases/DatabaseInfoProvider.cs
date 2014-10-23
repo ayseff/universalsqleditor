@@ -191,6 +191,12 @@ namespace SqlEditor.Databases
         }
 
         public abstract IList<Column> GetViewColumns(IDbConnection connection, string schemaName, string viewName, string databaseInstanceName = null);
+
+        public Task<IList<Column>> GetViewColumnsAsync(IDbConnection connection, string schemaName, string viewName, string databaseInstanceName)
+        {
+            var task = Task.Run(() => GetViewColumns(connection, schemaName, viewName, databaseInstanceName));
+            return task;
+        }
         protected virtual IList<Column> GetViewColumnsBase([NotNull] IDbConnection connection, [NotNull] string schemaName,
                                                      [NotNull] string viewName, [NotNull] string sql, params object[] parameters)
         {

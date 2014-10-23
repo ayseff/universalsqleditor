@@ -49,6 +49,23 @@ namespace SqlEditor.Databases.Oracle
             return ddl;
         }
 
+        public override string GenerateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        {
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (schema == null) throw new ArgumentNullException("schema");
+            if (viewName == null) throw new ArgumentNullException("viewName");
+
+            // Get full DDL
+            var ddl = RunDbmsMetadata(databaseConnection, "VIEW", schema, viewName);
+            ddl += Environment.NewLine + databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault() + Environment.NewLine;
+            return ddl;
+        }
+
+        public override string GenerateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        {
+            return GenerateViewDdl(databaseConnection, database, schema, viewName);
+        }
+
         private static string RunDbmsMetadata([NotNull] DatabaseConnection databaseConnection, [NotNull] string objectType, [NotNull] string schema,
             [NotNull] string objectName)
         {

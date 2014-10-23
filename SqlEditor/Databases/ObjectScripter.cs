@@ -19,32 +19,56 @@ namespace SqlEditor.Databases
         public static async Task<string> GenerateViewSelectStatement([JetBrains.Annotations.NotNull] View view,
             [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
         {
-            return await GenerateSelectStatement(view, databaseConnection);
+            if (view == null) throw new ArgumentNullException("view");
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+
+            _log.DebugFormat("Generating SELECT statement for view {0} ...", view.FullyQualifiedName);
+            await LoadViewColumns(view, databaseConnection);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("SELECT");
+            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", view.Columns.Select(x => x.Name)));
+            sb.AppendLine("FROM");
+            sb.AppendLine("\t" + view.FullyQualifiedName);
+            _log.DebugFormat("Generating complete.");
+            return sb.ToString();
         }
 
         public static async Task<string> GenerateTableSelectStatement([JetBrains.Annotations.NotNull] Table table,
             [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
         {
-            return await GenerateSelectStatement(table, databaseConnection);
-        }
-
-        public static async Task<string> GenerateSelectStatement([JetBrains.Annotations.NotNull] DatabaseObjectWithColumns objectWithColumns,
-            [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
-        {
-            if (objectWithColumns == null) throw new ArgumentNullException("objectWithColumns");
+            if (table == null) throw new ArgumentNullException("table");
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
-            _log.DebugFormat("Generating SELECT statement for view {0} ...", objectWithColumns.FullyQualifiedName);
-            await LoadColumns(objectWithColumns, databaseConnection);
+            _log.DebugFormat("Generating SELECT statement for view {0} ...", table.FullyQualifiedName);
+            await LoadTableColumns(table, databaseConnection);
 
             var sb = new StringBuilder();
             sb.AppendLine("SELECT");
-            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", objectWithColumns.Columns.Select(x => x.Name)));
+            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", table.Columns.Select(x => x.Name)));
             sb.AppendLine("FROM");
-            sb.AppendLine("\t" + objectWithColumns.FullyQualifiedName);
+            sb.AppendLine("\t" + table.FullyQualifiedName);
             _log.DebugFormat("Generating complete.");
             return sb.ToString();
         }
+
+        //public static async Task<string> GenerateSelectStatement([JetBrains.Annotations.NotNull] DatabaseObjectWithColumns objectWithColumns,
+        //    [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
+        //{
+        //    if (objectWithColumns == null) throw new ArgumentNullException("objectWithColumns");
+        //    if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+
+        //    _log.DebugFormat("Generating SELECT statement for view {0} ...", objectWithColumns.FullyQualifiedName);
+        //    await LoadTableColumns(objectWithColumns, databaseConnection);
+
+        //    var sb = new StringBuilder();
+        //    sb.AppendLine("SELECT");
+        //    sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", objectWithColumns.Columns.Select(x => x.Name)));
+        //    sb.AppendLine("FROM");
+        //    sb.AppendLine("\t" + objectWithColumns.FullyQualifiedName);
+        //    _log.DebugFormat("Generating complete.");
+        //    return sb.ToString();
+        //}
 
         public static async Task<string> GenerateTableInsertStatement([NotNull] Table table,
                                                      [NotNull] DatabaseConnection databaseConnection)
@@ -53,7 +77,7 @@ namespace SqlEditor.Databases
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
             _log.DebugFormat("Generating INSERT statement for table {0} ...", table.FullyQualifiedName);
-            await LoadColumns(table, databaseConnection);
+            await LoadTableColumns(table, databaseConnection);
 
             var sb = new StringBuilder();
             sb.AppendLine("INSERT INTO " + table.FullyQualifiedName + " (");
@@ -89,7 +113,7 @@ namespace SqlEditor.Databases
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
             _log.DebugFormat("Generating UPDATE statement for table {0} ...", table.FullyQualifiedName);
-            await LoadColumns(table, databaseConnection);
+            await LoadTableColumns(table, databaseConnection);
 
             var sb = new StringBuilder();
             sb.AppendLine("UPDATE " + table.FullyQualifiedName);
@@ -107,7 +131,7 @@ namespace SqlEditor.Databases
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
             _log.DebugFormat("Generating DELETE statement for table {0} ...", table.FullyQualifiedName);
-            await LoadColumns(table, databaseConnection);
+            await LoadTableColumns(table, databaseConnection);
 
             var sb = new StringBuilder();
             sb.AppendLine("DELETE FROM " + table.FullyQualifiedName);
@@ -126,6 +150,19 @@ namespace SqlEditor.Databases
 
             var sb = new StringBuilder();
             sb.AppendLine("DROP TABLE " + table.FullyQualifiedName);
+            _log.DebugFormat("Generating complete.");
+            return sb.ToString();
+        }
+
+        public static string GenerateViewDropStatement(View view, DatabaseConnection databaseConnection)
+        {
+            if (view == null) throw new ArgumentNullException("view");
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+
+            _log.DebugFormat("Generating DROP statement for view {0} ...", view.FullyQualifiedName);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("DROP VIEW " + view.FullyQualifiedName);
             _log.DebugFormat("Generating complete.");
             return sb.ToString();
         }
@@ -180,7 +217,7 @@ namespace SqlEditor.Databases
             }
         }
 
-        private static async Task LoadColumns(DatabaseObjectWithColumns table, DatabaseConnection databaseConnection)
+        private static async Task LoadTableColumns(Table table, DatabaseConnection databaseConnection)
         {
             if (table.Columns.Count != 0 &&
                 table.PrimaryKeyColumns.Count != 0)
@@ -211,7 +248,28 @@ namespace SqlEditor.Databases
             table.PrimaryKeyColumns.AddRange(primaryKeyColumns);
         }
 
+        private static async Task LoadViewColumns(View view, DatabaseConnection databaseConnection)
+        {
+            if (view.Columns.Count != 0 &&
+                view.PrimaryKeyColumns.Count != 0)
+            {
+                return;
+            }
 
-        
+            view.Columns.Clear();
+            view.PrimaryKeyColumns.Clear();
+
+            _log.DebugFormat("Fetching columns for table {0} ...", view.FullyQualifiedName);
+            var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
+            IList<Column> columns, primaryKeyColumns;
+            using (var connection = await databaseConnection.CreateNewConnectionAsync())
+            {
+                await connection.OpenIfRequiredAsync();
+                var databaseInstanceName = view.Parent.Parent == null ? null : view.Parent.Parent.Name;
+                columns = await infoProvider.GetViewColumnsAsync(connection, view.Parent.Name, view.Name, databaseInstanceName);
+                _log.DebugFormat("Fetching complete.");
+            }
+            view.Columns.AddRange(columns);
+        }
     }
 }

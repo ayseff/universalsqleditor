@@ -57,6 +57,10 @@ namespace SqlEditor.Databases.MySql
         {
             var mySqlConnectionStringBuilder = new MySqlConnectionStringBuilder(connectionString);
             mySqlConnectionStringBuilder.BrowsableConnectionString = false;
+            if (connectionString == null || connectionString.IndexOf("Pooling", StringComparison.InvariantCultureIgnoreCase) < 0)
+            {
+                mySqlConnectionStringBuilder.Pooling = false;
+            }
             return mySqlConnectionStringBuilder;
         }
 

@@ -67,7 +67,7 @@ namespace SqlEditor.Databases.MsAccess
 
         public override DdlGenerator GetDdlGenerator()
         {
-            throw new System.NotImplementedException();
+            throw new System.NotSupportedException("MS Access database does not support DDL generation");
         }
 
         public override IDbConnection CreateConnection(string connectionString)

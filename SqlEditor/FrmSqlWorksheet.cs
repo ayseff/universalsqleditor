@@ -196,7 +196,7 @@ namespace SqlEditor
                 if (tableTreeNode != null)
                 {
                     var table = tableTreeNode.Table;
-                    var text = await ObjectScripter.GenerateSelectStatement(table, DatabaseConnection);
+                    var text = await ObjectScripter.GenerateTableSelectStatement(table, DatabaseConnection);
                     AppendText(text);
                     return;
                 }
@@ -205,7 +205,7 @@ namespace SqlEditor
                 if (viewTreeNode != null)
                 {
                     var view = viewTreeNode.View;
-                    var text = await ObjectScripter.GenerateSelectStatement(view, DatabaseConnection);
+                    var text = await ObjectScripter.GenerateViewSelectStatement(view, DatabaseConnection);
                     AppendText(text);
                     return;
                 }

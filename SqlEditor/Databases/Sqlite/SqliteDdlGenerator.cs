@@ -11,30 +11,7 @@ namespace SqlEditor.Databases.Sqlite
         public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
             [NotNull] string tableName)
         {
-            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
-            if (tableName == null) throw new ArgumentNullException("tableName");
-
-            using (var connection = databaseConnection.CreateNewConnection())
-            {
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText =
-                        "SELECT sql FROM sqlite_master WHERE lower(type) = 'table' AND upper(name) = upper(@1)";
-                    var param = command.CreateParameter();
-                    param.ParameterName = "@1";
-                    param.Value = tableName;
-                    command.Parameters.Add(param);
-                    using (var dr = command.ExecuteReader())
-                    {
-                        if (dr.Read())
-                        {
-                            return dr.GetString(0) + Environment.NewLine +
-                                   databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault();
-                        }
-                        throw new Exception("SQLite sqlite_master table does not have an entry for the table " + tableName);
-                    }
-                }
-            }
+            return RunSqlLiteMasterQuery(databaseConnection, tableName, "table");
         }
 
         public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
@@ -63,6 +40,46 @@ namespace SqlEditor.Databases.Sqlite
                 }
             }
             return stringBuilder.ToString();
+        }
+
+        public override string GenerateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        {
+            return RunSqlLiteMasterQuery(databaseConnection, viewName, "view");
+        }
+
+        public override string GenerateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        {
+            return GenerateViewDdl(databaseConnection, database, schema, viewName);
+        }
+        
+        private static string RunSqlLiteMasterQuery(DatabaseConnection databaseConnection, string tableName,
+            [NotNull] string objectType)
+        {
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (tableName == null) throw new ArgumentNullException("tableName");
+            if (objectType == null) throw new ArgumentNullException("objectType");
+
+            using (var connection = databaseConnection.CreateNewConnection())
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        string.Format("SELECT sql FROM sqlite_master WHERE lower(type) = '{0}' AND upper(name) = upper(@1)", objectType.ToLower());
+                    var param = command.CreateParameter();
+                    param.ParameterName = "@1";
+                    param.Value = tableName;
+                    command.Parameters.Add(param);
+                    using (var dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            return dr.GetString(0) + Environment.NewLine +
+                                   databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault();
+                        }
+                        throw new Exception("SQLite sqlite_master " + objectType + " does not have an entry for " + tableName);
+                    }
+                }
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace SqlEditor.Databases.Db2
             var ddl = GenerateTableFullDdl(databaseConnection, null, schema, tableName);
 
             // Find start of create table
-            var lines = ddl.Split(new []{ "\r\n" }, StringSplitOptions.None ).ToList();
+            var lines = ddl.Split(new []{ "\n" }, StringSplitOptions.None ).ToList();
             while (lines.Count > 0)
             {
                 if (lines[0].Trim().StartsWith("CREATE TABLE", StringComparison.InvariantCultureIgnoreCase))
@@ -58,6 +58,60 @@ namespace SqlEditor.Databases.Db2
             var connectionStringBuilder = (DB2ConnectionStringBuilder)
                 databaseConnection.DatabaseServer.GetConnectionStringBuilder(databaseConnection.ConnectionString);
             var arguments = string.Format("-t {0} ", tableName);
+            if (!string.IsNullOrEmpty(schema))
+            {
+                arguments += string.Format("-z {0} ", schema);
+            }
+            var ddl = RunDb2Look(connectionStringBuilder.Database, connectionStringBuilder.UserID,
+                connectionStringBuilder.Password, arguments);
+            var sql = ddl.Replace("\r", string.Empty);
+            return sql;
+        }
+
+        public override string GenerateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        {
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (viewName == null) throw new ArgumentNullException("viewName");
+
+            // Get full DDL
+            var ddl = GenerateViewFullDdl(databaseConnection, null, schema, viewName);
+
+            // Find start of create table
+            var lines = ddl.Split(new[] { "\n" }, StringSplitOptions.None).ToList();
+            while (lines.Count > 0)
+            {
+                if (lines[0].Trim().StartsWith("CREATE VIEW", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    break;
+                }
+                lines.RemoveAt(0);
+            }
+
+            // Find end of create table
+            var validLines = new List<string>();
+            foreach (var line in lines)
+            {
+                if (line.Trim() == string.Empty)
+                {
+                    break;
+                }
+                validLines.Add(line);
+            }
+
+
+            var sql = string.Join("\n", validLines);
+            sql = sql.Replace("\r", string.Empty);
+            return sql;
+        }
+
+        public override string GenerateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        {
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (viewName == null) throw new ArgumentNullException("viewName");
+
+            var connectionStringBuilder = (DB2ConnectionStringBuilder)
+                databaseConnection.DatabaseServer.GetConnectionStringBuilder(databaseConnection.ConnectionString);
+            var arguments = string.Format("-v {0} ", viewName);
             if (!string.IsNullOrEmpty(schema))
             {
                 arguments += string.Format("-z {0} ", schema);

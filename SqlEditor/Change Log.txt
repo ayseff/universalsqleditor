@@ -9,6 +9,9 @@
   - Added automatic check for updates to run every week
   - Added the ability to create table DDL (requires db2look for DB2)
   - Added the ability to view included columns on unique indexes
+  - Added the ability to create view DDL (requires db2look for DB2)
+  - Added the ability to script SELECT and DROP statements for views
+  - Upgraded drivers for Oracle, MySQL and SQLite
   Bug Fixes:
   - Fixed regression issue where some items on the File menu did not have icons
   - Fixed an issue where refresh button was enabled on query results before any query was run. Clicking on a button in that state caused a crash
