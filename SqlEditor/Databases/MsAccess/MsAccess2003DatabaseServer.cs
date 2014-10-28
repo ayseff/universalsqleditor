@@ -70,6 +70,11 @@ namespace SqlEditor.Databases.MsAccess
             throw new System.NotSupportedException("MS Access database does not support DDL generation");
         }
 
+        public override ExplainPlanGenerator GetExplainPlanGenerator()
+        {
+            throw new System.NotSupportedException("MS Access database does not support execution plans");
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             var connection = new OleDbConnection(connectionString);

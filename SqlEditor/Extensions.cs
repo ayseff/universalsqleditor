@@ -312,9 +312,10 @@ namespace SqlEditor
             progress.Report(new ProgressInformation(progressPercentage, action));
         }
 
-        public static SqlQueryResult FetchDataTable(IDataReader dataReader, int maxRows, CancellationToken cancellationToken = default(CancellationToken),
+        public static SqlQueryResult FetchDataTable([JetBrains.Annotations.NotNull] this IDataReader dataReader, int maxRows, CancellationToken cancellationToken = default(CancellationToken),
                                                      IProgress<ProgressInformation> progress = null)
         {
+            if (dataReader == null) throw new ArgumentNullException("dataReader");
             const string action = "Fetching data ...";
             var hasMoreRows = true;
             var table = dataReader.CreateEmptyTable();

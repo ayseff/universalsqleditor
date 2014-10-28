@@ -44,7 +44,8 @@ namespace SqlEditor.SqlHelpers
                  sqlFirstKeyword.Trim().ToLower().StartsWith("call") || 
                  sqlFirstKeyword.Trim().ToLower().StartsWith("exec") || 
                  sqlFirstKeyword.Trim().ToLower().StartsWith("execute") ||
-                 sqlFirstKeyword.Trim().ToLower().StartsWith("show")
+                 sqlFirstKeyword.Trim().ToLower().StartsWith("show") ||
+                 sqlFirstKeyword.Trim().ToLower().StartsWith("explain")
                  ))
             {
                 return SqlType.Query;

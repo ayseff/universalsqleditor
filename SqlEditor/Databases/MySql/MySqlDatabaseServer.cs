@@ -79,6 +79,11 @@ namespace SqlEditor.Databases.MySql
             return new MySqlDdlGenerator();
         }
 
+        public override ExplainPlanGenerator GetExplainPlanGenerator()
+        {
+            return new MySqlExplainPlanGenerator();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             return new MySqlConnection(connectionString);

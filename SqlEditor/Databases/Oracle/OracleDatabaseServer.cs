@@ -81,6 +81,11 @@ namespace SqlEditor.Databases.Oracle
             return new OracleDdlGenerator();
         }
 
+        public override ExplainPlanGenerator GetExplainPlanGenerator()
+        {
+            return new OracleExplainPlanGenerator();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             var oracleConnection = new OracleConnection(connectionString);

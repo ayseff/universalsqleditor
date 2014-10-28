@@ -40,9 +40,10 @@ namespace SqlEditor
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool18 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Run");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool19 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Run Script");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool53 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Run from Files");
-            Infragistics.Win.UltraWinToolbars.TextBoxTool textBoxTool2 = new Infragistics.Win.UltraWinToolbars.TextBoxTool("Max Results");
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool54 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Show Explain Plan");
             Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup2 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Connection");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool2 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Auto Commit", "");
+            Infragistics.Win.UltraWinToolbars.TextBoxTool textBoxTool3 = new Infragistics.Win.UltraWinToolbars.TextBoxTool("Max Results");
             Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup3 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("File");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool45 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Open");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool46 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Save");
@@ -136,6 +137,9 @@ namespace SqlEditor
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool52 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Run from Files");
             Infragistics.Win.Appearance appearance41 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance42 = new Infragistics.Win.Appearance();
+            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool32 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Show Explain Plan");
+            Infragistics.Win.Appearance appearance43 = new Infragistics.Win.Appearance();
+            Infragistics.Win.Appearance appearance44 = new Infragistics.Win.Appearance();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSqlWorksheet));
             this.Worksheet2_Fill_Panel = new Infragistics.Win.Misc.UltraPanel();
             this._sqlEditor = new ICSharpCode.TextEditor.TextEditorControl();
@@ -143,12 +147,12 @@ namespace SqlEditor
             this._utcTabs = new Infragistics.Win.UltraWinTabControl.UltraTabControl();
             this.ultraTabSharedControlsPage1 = new Infragistics.Win.UltraWinTabControl.UltraTabSharedControlsPage();
             this._Worksheet2_Toolbars_Dock_Area_Left = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
-            this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
             this._img32 = new System.Windows.Forms.ImageList(this.components);
             this._img16 = new System.Windows.Forms.ImageList(this.components);
             this._Worksheet2_Toolbars_Dock_Area_Right = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._Worksheet2_Toolbars_Dock_Area_Top = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._Worksheet2_Toolbars_Dock_Area_Bottom = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
+            this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
             this.ucQueryResults1 = new SqlEditor.QueryResults.UcQueryResults();
             this.Worksheet2_Fill_Panel.ClientArea.SuspendLayout();
             this.Worksheet2_Fill_Panel.SuspendLayout();
@@ -167,9 +171,9 @@ namespace SqlEditor
             this.Worksheet2_Fill_Panel.ClientArea.Controls.Add(this._utcTabs);
             this.Worksheet2_Fill_Panel.Cursor = System.Windows.Forms.Cursors.Default;
             this.Worksheet2_Fill_Panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Worksheet2_Fill_Panel.Location = new System.Drawing.Point(4, 171);
+            this.Worksheet2_Fill_Panel.Location = new System.Drawing.Point(4, 146);
             this.Worksheet2_Fill_Panel.Name = "Worksheet2_Fill_Panel";
-            this.Worksheet2_Fill_Panel.Size = new System.Drawing.Size(1191, 474);
+            this.Worksheet2_Fill_Panel.Size = new System.Drawing.Size(1191, 499);
             this.Worksheet2_Fill_Panel.TabIndex = 0;
             // 
             // _sqlEditor
@@ -180,14 +184,14 @@ namespace SqlEditor
             this._sqlEditor.IsReadOnly = false;
             this._sqlEditor.Location = new System.Drawing.Point(0, 0);
             this._sqlEditor.Name = "_sqlEditor";
-            this._sqlEditor.Size = new System.Drawing.Size(1191, 198);
+            this._sqlEditor.Size = new System.Drawing.Size(1191, 223);
             this._sqlEditor.TabIndex = 4;
             // 
             // ultraSplitter1
             // 
             this.ultraSplitter1.BackColor = System.Drawing.SystemColors.Control;
             this.ultraSplitter1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.ultraSplitter1.Location = new System.Drawing.Point(0, 198);
+            this.ultraSplitter1.Location = new System.Drawing.Point(0, 223);
             this.ultraSplitter1.Name = "ultraSplitter1";
             this.ultraSplitter1.RestoreExtent = 154;
             this.ultraSplitter1.Size = new System.Drawing.Size(1191, 6);
@@ -198,7 +202,7 @@ namespace SqlEditor
             this._utcTabs.CloseButtonLocation = Infragistics.Win.UltraWinTabs.TabCloseButtonLocation.Tab;
             this._utcTabs.Controls.Add(this.ultraTabSharedControlsPage1);
             this._utcTabs.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this._utcTabs.Location = new System.Drawing.Point(0, 204);
+            this._utcTabs.Location = new System.Drawing.Point(0, 229);
             this._utcTabs.Name = "_utcTabs";
             this._utcTabs.SharedControlsPage = this.ultraTabSharedControlsPage1;
             this._utcTabs.Size = new System.Drawing.Size(1191, 270);
@@ -223,10 +227,100 @@ namespace SqlEditor
             this._Worksheet2_Toolbars_Dock_Area_Left.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Left;
             this._Worksheet2_Toolbars_Dock_Area_Left.ForeColor = System.Drawing.SystemColors.ControlText;
             this._Worksheet2_Toolbars_Dock_Area_Left.InitialResizeAreaExtent = 4;
-            this._Worksheet2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 171);
+            this._Worksheet2_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 146);
             this._Worksheet2_Toolbars_Dock_Area_Left.Name = "_Worksheet2_Toolbars_Dock_Area_Left";
-            this._Worksheet2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(4, 474);
+            this._Worksheet2_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(4, 499);
             this._Worksheet2_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
+            // 
+            // _img32
+            // 
+            this._img32.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_img32.ImageStream")));
+            this._img32.TransparentColor = System.Drawing.Color.Transparent;
+            this._img32.Images.SetKeyName(0, "page_copy.png");
+            this._img32.Images.SetKeyName(1, "page_paste.png");
+            this._img32.Images.SetKeyName(2, "select_restangular.png");
+            this._img32.Images.SetKeyName(3, "control_play_blue.png");
+            this._img32.Images.SetKeyName(4, "script_play.png");
+            this._img32.Images.SetKeyName(5, "draw_eraser.png");
+            this._img32.Images.SetKeyName(6, "text_lowercase.png");
+            this._img32.Images.SetKeyName(7, "text_replace.png");
+            this._img32.Images.SetKeyName(8, "text_uppercase.png");
+            this._img32.Images.SetKeyName(9, "cut.png");
+            this._img32.Images.SetKeyName(10, "document_comment_below.png");
+            this._img32.Images.SetKeyName(11, "disk.png");
+            this._img32.Images.SetKeyName(12, "save_as.png");
+            this._img32.Images.SetKeyName(13, "folder.png");
+            this._img32.Images.SetKeyName(14, "Undo_32x32.png");
+            this._img32.Images.SetKeyName(15, "Redo_32x32.png");
+            this._img32.Images.SetKeyName(16, "text_replace.png");
+            this._img32.Images.SetKeyName(17, "find.png");
+            this._img32.Images.SetKeyName(18, "database_check.png");
+            this._img32.Images.SetKeyName(19, "folder_vertical_document_play.png");
+            this._img32.Images.SetKeyName(20, "node-tree.png");
+            // 
+            // _img16
+            // 
+            this._img16.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_img16.ImageStream")));
+            this._img16.TransparentColor = System.Drawing.Color.Transparent;
+            this._img16.Images.SetKeyName(0, "page_copy.png");
+            this._img16.Images.SetKeyName(1, "page_paste.png");
+            this._img16.Images.SetKeyName(2, "select_restangular.png");
+            this._img16.Images.SetKeyName(3, "control_play_blue.png");
+            this._img16.Images.SetKeyName(4, "script_play.png");
+            this._img16.Images.SetKeyName(5, "draw_eraser.png");
+            this._img16.Images.SetKeyName(6, "cut.png");
+            this._img16.Images.SetKeyName(7, "text_uppercase.png");
+            this._img16.Images.SetKeyName(8, "text_lowercase.png");
+            this._img16.Images.SetKeyName(9, "text_replace.png");
+            this._img16.Images.SetKeyName(10, "document_comment_below.png");
+            this._img16.Images.SetKeyName(11, "save_as.png");
+            this._img16.Images.SetKeyName(12, "disk.png");
+            this._img16.Images.SetKeyName(13, "folder.png");
+            this._img16.Images.SetKeyName(14, "arrow_undo_blue.png");
+            this._img16.Images.SetKeyName(15, "arrow_redo_blue.png");
+            this._img16.Images.SetKeyName(16, "find.png");
+            this._img16.Images.SetKeyName(17, "text_replace.png");
+            this._img16.Images.SetKeyName(18, "table (2).png");
+            this._img16.Images.SetKeyName(19, "3d_glasses.png");
+            this._img16.Images.SetKeyName(20, "column_single.png");
+            this._img16.Images.SetKeyName(21, "database_check.png");
+            this._img16.Images.SetKeyName(22, "folder_vertical_document_play.png");
+            this._img16.Images.SetKeyName(23, "node-tree.png");
+            // 
+            // _Worksheet2_Toolbars_Dock_Area_Right
+            // 
+            this._Worksheet2_Toolbars_Dock_Area_Right.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this._Worksheet2_Toolbars_Dock_Area_Right.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this._Worksheet2_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
+            this._Worksheet2_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._Worksheet2_Toolbars_Dock_Area_Right.InitialResizeAreaExtent = 4;
+            this._Worksheet2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(1195, 146);
+            this._Worksheet2_Toolbars_Dock_Area_Right.Name = "_Worksheet2_Toolbars_Dock_Area_Right";
+            this._Worksheet2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(4, 499);
+            this._Worksheet2_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
+            // 
+            // _Worksheet2_Toolbars_Dock_Area_Top
+            // 
+            this._Worksheet2_Toolbars_Dock_Area_Top.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this._Worksheet2_Toolbars_Dock_Area_Top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this._Worksheet2_Toolbars_Dock_Area_Top.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Top;
+            this._Worksheet2_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._Worksheet2_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
+            this._Worksheet2_Toolbars_Dock_Area_Top.Name = "_Worksheet2_Toolbars_Dock_Area_Top";
+            this._Worksheet2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(1199, 146);
+            this._Worksheet2_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
+            // 
+            // _Worksheet2_Toolbars_Dock_Area_Bottom
+            // 
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Bottom;
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.ForeColor = System.Drawing.SystemColors.ControlText;
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.InitialResizeAreaExtent = 4;
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.Location = new System.Drawing.Point(0, 645);
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.Name = "_Worksheet2_Toolbars_Dock_Area_Bottom";
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.Size = new System.Drawing.Size(1199, 4);
+            this._Worksheet2_Toolbars_Dock_Area_Bottom.ToolbarsManager = this._utm;
             // 
             // _utm
             // 
@@ -247,10 +341,11 @@ namespace SqlEditor
             buttonTool18,
             buttonTool19,
             buttonTool53,
-            textBoxTool2});
+            buttonTool54});
             ribbonGroup2.Caption = "Connection";
             ribbonGroup2.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            stateButtonTool2});
+            stateButtonTool2,
+            textBoxTool3});
             ribbonGroup3.Caption = "File";
             ribbonGroup3.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool45,
@@ -459,6 +554,11 @@ namespace SqlEditor
             buttonTool52.SharedPropsInternal.Caption = "Run from Files";
             buttonTool52.SharedPropsInternal.ToolTipText = "Show run from files dialog.";
             buttonTool52.SharedPropsInternal.ToolTipTitle = "Run from Files";
+            appearance43.Image = 20;
+            buttonTool32.SharedPropsInternal.AppearancesLarge.Appearance = appearance43;
+            appearance44.Image = 23;
+            buttonTool32.SharedPropsInternal.AppearancesSmall.Appearance = appearance44;
+            buttonTool32.SharedPropsInternal.Caption = "Show Explain Plan";
             this._utm.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool1,
             buttonTool2,
@@ -481,96 +581,9 @@ namespace SqlEditor
             buttonTool48,
             buttonTool49,
             stateButtonTool1,
-            buttonTool52});
+            buttonTool52,
+            buttonTool32});
             this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.Utm_ToolClick);
-            // 
-            // _img32
-            // 
-            this._img32.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_img32.ImageStream")));
-            this._img32.TransparentColor = System.Drawing.Color.Transparent;
-            this._img32.Images.SetKeyName(0, "page_copy.png");
-            this._img32.Images.SetKeyName(1, "page_paste.png");
-            this._img32.Images.SetKeyName(2, "select_restangular.png");
-            this._img32.Images.SetKeyName(3, "control_play_blue.png");
-            this._img32.Images.SetKeyName(4, "script_play.png");
-            this._img32.Images.SetKeyName(5, "draw_eraser.png");
-            this._img32.Images.SetKeyName(6, "text_lowercase.png");
-            this._img32.Images.SetKeyName(7, "text_replace.png");
-            this._img32.Images.SetKeyName(8, "text_uppercase.png");
-            this._img32.Images.SetKeyName(9, "cut.png");
-            this._img32.Images.SetKeyName(10, "document_comment_below.png");
-            this._img32.Images.SetKeyName(11, "disk.png");
-            this._img32.Images.SetKeyName(12, "save_as.png");
-            this._img32.Images.SetKeyName(13, "folder.png");
-            this._img32.Images.SetKeyName(14, "Undo_32x32.png");
-            this._img32.Images.SetKeyName(15, "Redo_32x32.png");
-            this._img32.Images.SetKeyName(16, "text_replace.png");
-            this._img32.Images.SetKeyName(17, "find.png");
-            this._img32.Images.SetKeyName(18, "database_check.png");
-            this._img32.Images.SetKeyName(19, "folder_vertical_document_play.png");
-            // 
-            // _img16
-            // 
-            this._img16.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_img16.ImageStream")));
-            this._img16.TransparentColor = System.Drawing.Color.Transparent;
-            this._img16.Images.SetKeyName(0, "page_copy.png");
-            this._img16.Images.SetKeyName(1, "page_paste.png");
-            this._img16.Images.SetKeyName(2, "select_restangular.png");
-            this._img16.Images.SetKeyName(3, "control_play_blue.png");
-            this._img16.Images.SetKeyName(4, "script_play.png");
-            this._img16.Images.SetKeyName(5, "draw_eraser.png");
-            this._img16.Images.SetKeyName(6, "cut.png");
-            this._img16.Images.SetKeyName(7, "text_uppercase.png");
-            this._img16.Images.SetKeyName(8, "text_lowercase.png");
-            this._img16.Images.SetKeyName(9, "text_replace.png");
-            this._img16.Images.SetKeyName(10, "document_comment_below.png");
-            this._img16.Images.SetKeyName(11, "save_as.png");
-            this._img16.Images.SetKeyName(12, "disk.png");
-            this._img16.Images.SetKeyName(13, "folder.png");
-            this._img16.Images.SetKeyName(14, "arrow_undo_blue.png");
-            this._img16.Images.SetKeyName(15, "arrow_redo_blue.png");
-            this._img16.Images.SetKeyName(16, "find.png");
-            this._img16.Images.SetKeyName(17, "text_replace.png");
-            this._img16.Images.SetKeyName(18, "table (2).png");
-            this._img16.Images.SetKeyName(19, "3d_glasses.png");
-            this._img16.Images.SetKeyName(20, "column_single.png");
-            this._img16.Images.SetKeyName(21, "database_check.png");
-            this._img16.Images.SetKeyName(22, "folder_vertical_document_play.png");
-            // 
-            // _Worksheet2_Toolbars_Dock_Area_Right
-            // 
-            this._Worksheet2_Toolbars_Dock_Area_Right.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
-            this._Worksheet2_Toolbars_Dock_Area_Right.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
-            this._Worksheet2_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
-            this._Worksheet2_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._Worksheet2_Toolbars_Dock_Area_Right.InitialResizeAreaExtent = 4;
-            this._Worksheet2_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(1195, 171);
-            this._Worksheet2_Toolbars_Dock_Area_Right.Name = "_Worksheet2_Toolbars_Dock_Area_Right";
-            this._Worksheet2_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(4, 474);
-            this._Worksheet2_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
-            // 
-            // _Worksheet2_Toolbars_Dock_Area_Top
-            // 
-            this._Worksheet2_Toolbars_Dock_Area_Top.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
-            this._Worksheet2_Toolbars_Dock_Area_Top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
-            this._Worksheet2_Toolbars_Dock_Area_Top.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Top;
-            this._Worksheet2_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._Worksheet2_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
-            this._Worksheet2_Toolbars_Dock_Area_Top.Name = "_Worksheet2_Toolbars_Dock_Area_Top";
-            this._Worksheet2_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(1199, 171);
-            this._Worksheet2_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
-            // 
-            // _Worksheet2_Toolbars_Dock_Area_Bottom
-            // 
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(191)))), ((int)(((byte)(219)))), ((int)(((byte)(255)))));
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Bottom;
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.ForeColor = System.Drawing.SystemColors.ControlText;
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.InitialResizeAreaExtent = 4;
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.Location = new System.Drawing.Point(0, 645);
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.Name = "_Worksheet2_Toolbars_Dock_Area_Bottom";
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.Size = new System.Drawing.Size(1199, 4);
-            this._Worksheet2_Toolbars_Dock_Area_Bottom.ToolbarsManager = this._utm;
             // 
             // ucQueryResults1
             // 

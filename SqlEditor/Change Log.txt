@@ -1,4 +1,8 @@
-﻿Version: 0.3.3.0
+﻿Version: 0.3.4.0
+  New Features:
+  - Added the ability to show execution plans
+  Bug Fixes:
+Version: 0.3.3.0
   New Features:
   - Added a feature that allows you to double-click a column or a table and have it automatically paste into SQL worksheet
   - Added a new feature that allows a double-click (or a right click menu item) on a cell to view it's value in an editor. If a column value if valid XML document, XML editor will be shown

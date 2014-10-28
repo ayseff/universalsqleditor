@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Text.RegularExpressions;
@@ -92,6 +91,11 @@ namespace SqlEditor.Databases.Db2
         public override DdlGenerator GetDdlGenerator()
         {
             return new Db2DdlGenerator();
+        }
+
+        public override ExplainPlanGenerator GetExplainPlanGenerator()
+        {
+            return new Db2ExplainPlanGenerator();
         }
 
         public override IDbConnection CreateConnection(string connectionString)

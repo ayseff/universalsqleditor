@@ -74,6 +74,11 @@ namespace SqlEditor.Databases.SqlServer
             return new SqlServerDdlGenerator();
         }
 
+        public override ExplainPlanGenerator GetExplainPlanGenerator()
+        {
+            return new SqlServerExplainPlanGenerator();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             _log.Debug("Creating connection ...");

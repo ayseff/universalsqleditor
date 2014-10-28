@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="ExtensionsTest.cs" />
     <Compile Include="GenericTest.cs" />
+    <Compile Include="ExplainPlanTest.cs" />
     <Compile Include="SqlHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlTextExtractorTest.cs" />

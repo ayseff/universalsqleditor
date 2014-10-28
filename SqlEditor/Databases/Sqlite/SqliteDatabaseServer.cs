@@ -73,6 +73,11 @@ namespace SqlEditor.Databases.Sqlite
             return new SqliteDdlGenerator();
         }
 
+        public override ExplainPlanGenerator GetExplainPlanGenerator()
+        {
+            return new SqliteExplainPlanGenerator();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             var connection = new SQLiteConnection(connectionString);

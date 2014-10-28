@@ -69,6 +69,11 @@ namespace SqlEditor.Databases.SqlCe
             return new SqlCeDdlGenerator();
         }
 
+        public override ExplainPlanGenerator GetExplainPlanGenerator()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override IDbConnection CreateConnection(string connectionString)
         {
             var sqlCeConnection = new SqlCeConnection(connectionString);

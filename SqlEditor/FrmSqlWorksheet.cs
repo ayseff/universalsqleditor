@@ -16,6 +16,7 @@ using SqlEditor.Annotations;
 using SqlEditor.DatabaseExplorer;
 using SqlEditor.DatabaseExplorer.TreeNodes;
 using SqlEditor.Databases;
+using SqlEditor.ExplainPlan;
 using SqlEditor.Intellisense;
 using SqlEditor.Properties;
 using SqlEditor.RunMultipleFiles;
@@ -434,6 +435,38 @@ namespace SqlEditor
             return qr;
         }
 
+        private UcExplainPlan FindUsableExplainPlanTab(string sql = null)
+        {
+            sql = sql ?? string.Empty;
+            foreach (var tab in _utcTabs.Tabs)
+            {
+                foreach (var containedControl in tab.TabPage.Controls)
+                {
+                    var resultsControl = containedControl as UcExplainPlan;
+                    if (resultsControl != null && (!resultsControl.IsBusy && (!resultsControl.IsPinned || !tab.Visible)))
+                    {
+                        tab.Visible = true;
+                        tab.EnsureTabInView();
+                        tab.Active = true;
+                        tab.Selected = true;
+                        tab.ToolTipText = sql;
+                        return resultsControl;
+                    }
+                }
+            }
+
+            var tabText = "Explain Plan " + NextTabKey;
+            var newTab = _utcTabs.Tabs.Add(tabText, tabText);
+            newTab.ToolTipText = sql;
+            var qr = new UcExplainPlan(DatabaseConnection);
+            newTab.TabPage.SuspendLayout();
+            newTab.TabPage.Controls.Add(qr);
+            qr.Dock = DockStyle.Fill;
+            newTab.Selected = true;
+            newTab.TabPage.ResumeLayout();
+            return qr;
+        }
+
         //void QueryCompleted(object sender, QueryCompletedEventArgs queryCompletedEventArgs)
         //{
         //    // HACK: Force the tab control to redraw itself so it resizes the individual tab controls
@@ -540,6 +573,10 @@ namespace SqlEditor
                     
                     case "Run from Files":
                         RunFromFiles();
+                        break;
+
+                    case "Show Explain Plan":
+                        ShowExplainPlan();
                         break;
 
                     case "Clear":
@@ -707,6 +744,18 @@ namespace SqlEditor
             }
             var control = FindUsableResultsTab(sql);
             control.RunQueryAsync(sql, DatabaseConnection.MaxResults);
+            OnRunQuery(new RunQueryEventArgs(sql, DatabaseConnection.Name, DatabaseConnection.MaxResults));
+        }
+
+        private void ShowExplainPlan()
+        {
+            var sql = _sqlEditor.GetQueryText(DatabaseConnection.DatabaseServer.SqlTerminators);
+            if (sql.IsNullEmptyOrWhitespace())
+            {
+                throw new Exception("No query selected to explain");
+            }
+            var control = FindUsableExplainPlanTab(sql);
+            control.RunExplainAsync(sql);
             OnRunQuery(new RunQueryEventArgs(sql, DatabaseConnection.Name, DatabaseConnection.MaxResults));
         }
 
