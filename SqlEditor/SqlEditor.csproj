@@ -284,8 +284,11 @@
     <Compile Include="Databases\Oracle\OracleExplainPlanGenerator.cs" />
     <Compile Include="Databases\Oracle\OracleDdlGenerator.cs" />
     <Compile Include="Databases\Oracle\OracleSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\SqlCe\ShowPlanXML.cs" />
     <Compile Include="Databases\SqlCe\SqlCeDdlGenerator.cs" />
     <Compile Include="Databases\SqlCe\SqlCeSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\SqlCe\SqlCeExplainPlanData.cs" />
+    <Compile Include="Databases\SqlCe\SqlCeExplainPlanGenerator.cs" />
     <Compile Include="Databases\Sqlite\SqliteExplainPlanData.cs" />
     <Compile Include="Databases\Sqlite\SqliteExplainPlanGenerator.cs" />
     <Compile Include="Databases\Sqlite\SqliteDdlGenerator.cs" />

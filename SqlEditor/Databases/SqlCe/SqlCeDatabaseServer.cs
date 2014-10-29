@@ -71,7 +71,7 @@ namespace SqlEditor.Databases.SqlCe
 
         public override ExplainPlanGenerator GetExplainPlanGenerator()
         {
-            throw new System.NotImplementedException();
+            return new SqlCeExplainPlanGenerator();
         }
 
         public override IDbConnection CreateConnection(string connectionString)
