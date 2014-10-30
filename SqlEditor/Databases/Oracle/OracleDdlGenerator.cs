@@ -9,7 +9,7 @@ namespace SqlEditor.Databases.Oracle
 {
     public class OracleDdlGenerator : DdlGenerator
     {
-        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string database,
+        public override string GenerateCreateTableDdl([NotNull] DatabaseConnection databaseConnection, string database,
             [NotNull] string schema, 
             [NotNull] string tableName)
         {
@@ -23,13 +23,13 @@ namespace SqlEditor.Databases.Oracle
             return ddl;
         }
 
-        public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, [NotNull] string schema, [NotNull] string tableName)
+        public override string GenerateCreateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, [NotNull] string schema, [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (schema == null) throw new ArgumentNullException("schema");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
-            var ddl = GenerateTableDdl(databaseConnection, database, schema, tableName) + Environment.NewLine + Environment.NewLine;
+            var ddl = GenerateCreateTableDdl(databaseConnection, database, schema, tableName) + Environment.NewLine + Environment.NewLine;
 
             // Get indexes
             var indexDdl = RunDbmsDependentMetadata(databaseConnection, "INDEX", schema, tableName).Trim();
@@ -49,7 +49,7 @@ namespace SqlEditor.Databases.Oracle
             return ddl;
         }
 
-        public override string GenerateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        public override string GenerateCreateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (schema == null) throw new ArgumentNullException("schema");
@@ -61,9 +61,21 @@ namespace SqlEditor.Databases.Oracle
             return ddl;
         }
 
-        public override string GenerateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        public override string GenerateCreateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
         {
-            return GenerateViewDdl(databaseConnection, database, schema, viewName);
+            return GenerateCreateViewDdl(databaseConnection, database, schema, viewName);
+        }
+
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName)
+        {
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (schema == null) throw new ArgumentNullException("schema");
+            if (indexName == null) throw new ArgumentNullException("indexName");
+
+            // Get full DDL
+            var ddl = RunDbmsMetadata(databaseConnection, "INDEX", schema, indexName);
+            ddl += Environment.NewLine + databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault() + Environment.NewLine;
+            return ddl;
         }
 
         private static string RunDbmsMetadata([NotNull] DatabaseConnection databaseConnection, [NotNull] string objectType, [NotNull] string schema,

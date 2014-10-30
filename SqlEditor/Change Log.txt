@@ -2,6 +2,7 @@
   New Features:
   - Added the ability to show execution plans
   Bug Fixes:
+  - Fixed an issue where MySQL index columns were not accurate in the database explorer
 Version: 0.3.3.0
   New Features:
   - Added a feature that allows you to double-click a column or a table and have it automatically paste into SQL worksheet

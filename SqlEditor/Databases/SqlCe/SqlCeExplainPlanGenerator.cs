@@ -319,6 +319,13 @@ namespace SqlEditor.Databases.SqlCe
                 return;
             }
 
+            var convertType = item as ConvertType;
+            if (convertType != null && convertType.ScalarOperator != null)
+            {
+                ParseScalarType(row, table, convertType.ScalarOperator);
+                return;
+            }
+
             /*
                         * [System.Xml.Serialization.XmlElementAttribute("Aggregate", typeof(AggregateType))]
                            [System.Xml.Serialization.XmlElementAttribute("Arithmetic", typeof(ArithmeticType))]

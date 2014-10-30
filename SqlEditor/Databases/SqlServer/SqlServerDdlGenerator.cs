@@ -13,7 +13,7 @@ namespace SqlEditor.Databases.SqlServer
 {
     public class SqlServerDdlGenerator : DdlGenerator
     {
-        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection,
+        public override string GenerateCreateTableDdl([NotNull] DatabaseConnection databaseConnection,
             [NotNull] string database, [NotNull] string schema,
             [NotNull] string tableName)
         {
@@ -38,7 +38,7 @@ namespace SqlEditor.Databases.SqlServer
             return GenerateTableDdlInternal(databaseConnection, database, schema, tableName, options);
         }
 
-        public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
+        public override string GenerateCreateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (database == null) throw new ArgumentNullException("database");
@@ -62,7 +62,7 @@ namespace SqlEditor.Databases.SqlServer
             return GenerateTableDdlInternal(databaseConnection, database, schema, tableName, options);
         }
 
-        public override string GenerateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        public override string GenerateCreateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (database == null) throw new ArgumentNullException("database");
@@ -85,7 +85,7 @@ namespace SqlEditor.Databases.SqlServer
             return GenerateViewDdlInternal(databaseConnection, database, schema, viewName, options);
         }
 
-        public override string GenerateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        public override string GenerateCreateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (database == null) throw new ArgumentNullException("database");
@@ -107,6 +107,11 @@ namespace SqlEditor.Databases.SqlServer
             options.BatchSize = 1;
 
             return GenerateViewDdlInternal(databaseConnection, database, schema, viewName, options);
+        }
+
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName)
+        {
+            throw new NotImplementedException();
         }
 
         private static string GenerateTableDdlInternal([NotNull] DatabaseConnection databaseConnection, [NotNull] string database, string schema, string tableName,

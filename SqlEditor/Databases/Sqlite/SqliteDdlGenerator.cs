@@ -8,19 +8,19 @@ namespace SqlEditor.Databases.Sqlite
 {
     public class SqliteDdlGenerator : DdlGenerator
     {
-        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
+        public override string GenerateCreateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
             [NotNull] string tableName)
         {
             return RunSqlLiteMasterQuery(databaseConnection, tableName, "table");
         }
 
-        public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
+        public override string GenerateCreateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
             var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(GenerateTableDdl(databaseConnection, database, schema, tableName));
+            stringBuilder.AppendLine(GenerateCreateTableDdl(databaseConnection, database, schema, tableName));
             stringBuilder.AppendLine(Environment.NewLine);
 
             var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
@@ -42,16 +42,21 @@ namespace SqlEditor.Databases.Sqlite
             return stringBuilder.ToString();
         }
 
-        public override string GenerateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        public override string GenerateCreateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
         {
             return RunSqlLiteMasterQuery(databaseConnection, viewName, "view");
         }
 
-        public override string GenerateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        public override string GenerateCreateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
         {
-            return GenerateViewDdl(databaseConnection, database, schema, viewName);
+            return GenerateCreateViewDdl(databaseConnection, database, schema, viewName);
         }
-        
+
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName)
+        {
+            throw new NotImplementedException();
+        }
+
         private static string RunSqlLiteMasterQuery(DatabaseConnection databaseConnection, string tableName,
             [NotNull] string objectType)
         {

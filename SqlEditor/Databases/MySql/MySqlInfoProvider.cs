@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using log4net;
 using SqlEditor.Annotations;
 using SqlEditor.Database;
@@ -96,7 +97,7 @@ namespace SqlEditor.Databases.MySql
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             return GetIndexesBase(connection, schemaName,
-                                  "SELECT index_schema,  index_name, CASE WHEN non_unique = 0 THEN 1 ELSE 0 END as is_unique FROM  information_schema.STATISTICS WHERE UPPER(table_schema) = @1 ORDER BY index_name",
+                                  "SELECT index_schema,  index_name, CASE WHEN non_unique = 0 THEN 1 ELSE 0 END as is_unique FROM  information_schema.STATISTICS WHERE UPPER(index_schema) = @1 ORDER BY index_name",
                                   schemaName.Trim().ToUpper());
         }
 
@@ -105,7 +106,7 @@ namespace SqlEditor.Databases.MySql
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             return GetIndexesBase(connection, schemaName,
-                                  "SELECT index_schema, index_name, CASE WHEN non_unique = 0 THEN 1 ELSE 0 END as is_unique FROM  information_schema.STATISTICS WHERE UPPER(table_schema) = @1 AND table_name = @2 ORDER BY index_name",
+                                  "SELECT index_schema, index_name, CASE WHEN non_unique = 0 THEN 1 ELSE 0 END as is_unique FROM  information_schema.STATISTICS WHERE UPPER(table_schema) = @1 AND UPPER(table_name) = @2 ORDER BY index_name",
                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
@@ -114,9 +115,30 @@ namespace SqlEditor.Databases.MySql
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             if (indexName == null) throw new ArgumentNullException("indexName");
-            return GetIndexColumnsBase(connection, schemaName, indexName,
-                                       "SELECT c.column_name, c.data_type, c.character_maximum_length, c.numeric_precision, c.numeric_scale, c.is_nullable, c.ordinal_position FROM information_schema.STATISTICS s INNER JOIN information_schema.COLUMNS c ON c.TABLE_SCHEMA = s.TABLE_SCHEMA AND c.TABLE_NAME = s.TABLE_NAME AND c.COLUMN_NAME = s.COLUMN_NAME WHERE UPPER(s.INDEX_NAME) = @1 and UPPER(s.TABLE_SCHEMA) = @2 ORDER BY seq_in_index",
-                                       indexName.Trim().ToUpper(), schemaName.Trim().ToUpper());
+
+            // Find the table index belongs
+
+            string tableName = null, tableSchema = null;
+            using (var command = connection.CreateCommand())
+            {
+                BuildSqlCommand(command, "select s.TABLE_SCHEMA, s.TABLE_NAME, from information_schema.STATISTICS s where UPPER(s.INDEX_NAME) = @1 and UPPER(s.INDEX_SCHEMA) = @2 LIMIT 1", new object[] { indexName.Trim().ToUpper(), schemaName.Trim().ToUpper() });
+                using (var dr = command.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        tableSchema = dr.GetString(0);
+                        tableName = dr.GetString(1);
+                    }
+                    else
+                    {
+                        throw new Exception("Index " + schemaName + "." + indexName + " does not exist in the database");
+                    }
+                }
+            }
+            
+            return  GetIndexColumnsBase(connection, schemaName, indexName,
+                                       "SELECT c.column_name, c.data_type, c.character_maximum_length, c.numeric_precision, c.numeric_scale, c.is_nullable, c.ordinal_position FROM information_schema.STATISTICS s INNER JOIN information_schema.COLUMNS c ON c.TABLE_SCHEMA = s.TABLE_SCHEMA AND c.TABLE_NAME = s.TABLE_NAME AND c.COLUMN_NAME = s.COLUMN_NAME WHERE UPPER(s.INDEX_NAME) = @1 and UPPER(s.INDEX_SCHEMA) = @2 AND UPPER(s.TABLE_NAME) = @3 and UPPER(s.TABLE_SCHEMA) = @4 ORDER BY seq_in_index",
+                                       indexName.Trim().ToUpper(), schemaName.Trim().ToUpper(), tableName.Trim().ToUpper(), tableSchema.Trim().ToUpper());
         }
 
         public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,

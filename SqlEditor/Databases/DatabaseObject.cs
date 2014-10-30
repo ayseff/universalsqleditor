@@ -70,5 +70,26 @@ namespace SqlEditor.Databases
         }
 
         public abstract void Clear();
+
+        public string GetDatabaseName()
+        {
+            string databaseName = null;
+            if (Parent != null &&
+                Parent.Parent != null)
+            {
+                databaseName = Parent.Parent.Name;
+            }
+            return databaseName;
+        }
+
+        public string GetSchemaName()
+        {
+            string schemaName = null;
+            if (Parent != null)
+            {
+                schemaName = Parent.Name;
+            }
+            return schemaName;
+        }
     }
 }

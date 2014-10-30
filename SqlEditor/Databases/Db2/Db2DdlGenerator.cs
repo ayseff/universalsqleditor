@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using IBM.Data.DB2;
 using JetBrains.Annotations;
 using SqlEditor.DatabaseExplorer;
@@ -12,14 +14,19 @@ namespace SqlEditor.Databases.Db2
 {
     public class Db2DdlGenerator : DdlGenerator
     {
-        public override string GenerateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
+        //private readonly Regex _leadingSpaceRegex = new Regex("\"\\s+(?<text>[^\\s]+)\\s*\"", RegexOptions.Compiled);
+        private readonly Regex _trailingSpaceRegex = new Regex("\"\\s*(?<text>[^\\s]+)\\s+\"\\.", RegexOptions.Compiled);
+        //private readonly Regex _leadingSpaceRegex = new Regex("\\s+\"", RegexOptions.Compiled);
+        //private readonly Regex _trailingSpaceRegex = new Regex("\"\\s+", RegexOptions.Compiled);
+
+        public override string GenerateCreateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
             [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
             // Get full DDL
-            var ddl = GenerateTableFullDdl(databaseConnection, null, schema, tableName);
+            var ddl = GenerateCreateTableFullDdl(databaseConnection, null, schema, tableName);
 
             // Find start of create table
             var lines = ddl.Split(new []{ "\n" }, StringSplitOptions.None ).ToList();
@@ -50,7 +57,7 @@ namespace SqlEditor.Databases.Db2
             return sql;
         }
 
-        public override string GenerateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
+        public override string GenerateCreateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (tableName == null) throw new ArgumentNullException("tableName");
@@ -68,13 +75,13 @@ namespace SqlEditor.Databases.Db2
             return sql;
         }
 
-        public override string GenerateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        public override string GenerateCreateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (viewName == null) throw new ArgumentNullException("viewName");
 
             // Get full DDL
-            var ddl = GenerateViewFullDdl(databaseConnection, null, schema, viewName);
+            var ddl = GenerateCreateViewFullDdl(databaseConnection, null, schema, viewName);
 
             // Find start of create table
             var lines = ddl.Split(new[] { "\n" }, StringSplitOptions.None).ToList();
@@ -104,7 +111,7 @@ namespace SqlEditor.Databases.Db2
             return sql;
         }
 
-        public override string GenerateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        public override string GenerateCreateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
             if (viewName == null) throw new ArgumentNullException("viewName");
@@ -121,6 +128,83 @@ namespace SqlEditor.Databases.Db2
             var sql = ddl.Replace("\r", string.Empty);
             return sql;
         }
+
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database,
+            [NotNull] string schema, string indexName)
+        {
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (schema == null) throw new ArgumentNullException("schema");
+            if (indexName == null) throw new ArgumentNullException("indexName");
+
+            // Find table name for this index
+            string tableSchema = null, tableName = null;
+            using (var connection = databaseConnection.CreateNewConnection())
+            {
+                connection.OpenIfRequired();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText =
+                        "select TABSCHEMA, TABNAME from syscat.INDEXES where UPPER(INDSCHEMA) = @1 and UPPER(INDNAME) = @2 fetch first row only";
+                    var param = command.CreateParameter();
+                    param.ParameterName = "@1";
+                    param.Value = schema.Trim().ToUpper();
+                    command.Parameters.Add(param);
+                    param = command.CreateParameter();
+                    param.ParameterName = "@2";
+                    param.Value = indexName.Trim().ToUpper();
+                    command.Parameters.Add(param);
+                    using (var dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            tableSchema = dr.GetString(0).Trim().ToUpper();
+                            tableName = dr.GetString(1).Trim().ToUpper();
+                        }
+                        else
+                        {
+                            throw new Exception("Index " + schema + "." + indexName + " does not exist in the database");
+                        }
+                    }
+                }
+            }
+
+            // Get full DDL
+            var tableDdl = GenerateCreateTableFullDdl(databaseConnection, null, tableSchema, tableName);
+
+            // Find start of create index
+            var indexDdl = new StringBuilder();
+            var startCapture = false;
+            var regex = new Regex("CREATE\\s+INDEX\\s+(\")?(?<schema>\\w+)(\")?\\.(\")?(?<index>\\w+)(\")?",
+                RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var lines = tableDdl.Split(new[] { "\n" }, StringSplitOptions.None).ToList();
+            foreach (var line in lines)
+            {
+                if (!startCapture)
+                {
+                    var match = regex.Match(line);
+                    if (match.Success
+                        &&
+                        string.Equals(match.Groups["schema"].Value, schema, StringComparison.InvariantCultureIgnoreCase)
+                        &&
+                        string.Equals(match.Groups["index"].Value, indexName,
+                            StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        startCapture = true;
+                        indexDdl.AppendLine(line);
+                    }
+                }
+                else if (line.Trim() == string.Empty)
+                {
+                    break;
+                }
+                else
+                {
+                    indexDdl.AppendLine(line);
+                }
+            }
+            return indexDdl.ToString();
+        }
+
 
         private string RunDb2Look(string database, string user, string password, string arguments)
         {
@@ -160,7 +244,37 @@ namespace SqlEditor.Databases.Db2
             {
                 throw new Exception(commandOutput.StandardError + Environment.NewLine + commandOutput.StandardError);
             }
-            return commandOutput.StandardOutput;
+
+            // Clean up standard output
+            
+            var output = commandOutput.StandardOutput;
+            //output = _leadingSpaceRegex.Replace(output, "\"");
+            //output = _trailingSpaceRegex.Replace(output, "\"");
+            //while (output.IndexOf("\" ", StringComparison.InvariantCultureIgnoreCase) >= 0)
+            //{
+            //    output = output.Replace("\" ", "\"");
+            //}
+            //while (output.IndexOf(" \"", StringComparison.InvariantCultureIgnoreCase) >= 0)
+            //{
+            //    output = output.Replace(" \"", "\"");
+            //}
+            //output = CleanText(output, _leadingSpaceRegex);
+            output = CleanText(output, _trailingSpaceRegex);
+            return output;
+        }
+
+        private string CleanText(string output, Regex regex)
+        {
+            var match = regex.Match(output);
+            while (match.Success)
+            {
+                var part1 = output.Substring(0, match.Index);
+                var part2 = match.Groups["text"].Value;
+                var part3 = output.Substring(match.Index + match.Length);
+                output = part1 + "\"" + part2 + "\"." + part3;
+                match = regex.Match(output);
+            }
+            return output;
         }
     }
 }

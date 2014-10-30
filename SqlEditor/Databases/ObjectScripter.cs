@@ -271,5 +271,18 @@ namespace SqlEditor.Databases
             }
             view.Columns.AddRange(columns);
         }
+
+        public static string GenerateIndexDropStatement(Index index, DatabaseConnection databaseConnection)
+        {
+            if (index == null) throw new ArgumentNullException("index");
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+
+            _log.DebugFormat("Generating DROP statement for index {0} ...", index.FullyQualifiedName);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("DROP INDEX " + index.FullyQualifiedName);
+            _log.DebugFormat("Generating complete.");
+            return sb.ToString();
+        }
     }
 }

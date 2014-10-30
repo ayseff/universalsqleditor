@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using SqlEditor.Database;
 
 namespace SqlEditor.Databases
 {

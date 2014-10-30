@@ -67,8 +67,6 @@ namespace SqlEditor
         
         private readonly ToolBase _refreshButtonTool;
         private readonly ToolBase _sortButtonTool;
-        private readonly ToolBase _collapseAllButtonTool;
-        private readonly ToolBase _expandAllButtonTool;
 
         // Connection closed buttons
         private readonly ToolBase _connectionConnectButtonTool;
@@ -80,12 +78,6 @@ namespace SqlEditor
         // Connection open buttons
         private readonly ToolBase _connectionNewSqlWorksheetButtonTool;
         private readonly ToolBase _connectionDisconnectButtonTool;
-
-        // Stored procedure buttons
-        private readonly ToolBase _storedProcedureEditButtonTool;
-        private readonly ToolBase _storedProcedureScriptAsCreateButtonTool;
-        private readonly ToolBase _storedProcedureScriptAsDropButtonTool;
-        private readonly PopupMenuTool _storedProcedureScriptPopupMenu;
 
         // Function buttons
         private readonly ToolBase _functionEditButtonTool;
@@ -108,6 +100,7 @@ namespace SqlEditor
         // Command lists
         private readonly List<ToolBase> _tableCommands = new List<ToolBase>();
         private readonly List<ToolBase> _viewCommands = new List<ToolBase>();
+        private readonly List<ToolBase> _indexCommands = new List<ToolBase>();
         private readonly List<ToolBase> _storedProcedureCommands = new List<ToolBase>();
         private readonly List<ToolBase> _functionCommands = new List<ToolBase>();
         private readonly List<ToolBase> _connectionClosedCommands = new List<ToolBase>();
@@ -201,8 +194,8 @@ namespace SqlEditor
             _addFolderButtonTool = _utm.Tools["New Folder"];
             _editFolderButtonTool = _utm.Tools["Edit Folder"];
             _deleteFolderButtonTool = _utm.Tools["Delete Folder"];
-            _collapseAllButtonTool = _utm.Tools["Collapse All"];
-            _expandAllButtonTool = _utm.Tools["Expand All"];
+            var collapseAllButtonTool = _utm.Tools["Collapse All"];
+            var expandAllButtonTool = _utm.Tools["Expand All"];
             _showConnectionsPaneStateButtonTool = (StateButtonTool)_utm.Tools["Windows - Connections"];
             _showSqlHistoryStateButtonTool = (StateButtonTool)_utm.Tools["Windows - SQL History"];
             _showLogStateButtonTool = (StateButtonTool)_utm.Tools["Windows - Log"];
@@ -238,8 +231,8 @@ namespace SqlEditor
             _connectionOpenCommands.Add(null);
             _connectionOpenCommands.Add(_copyButtonTool);
             _connectionOpenCommands.Add(null);
-            _connectionOpenCommands.Add(_collapseAllButtonTool);
-            _connectionOpenCommands.Add(_expandAllButtonTool);
+            _connectionOpenCommands.Add(collapseAllButtonTool);
+            _connectionOpenCommands.Add(expandAllButtonTool);
             _connectionOpenCommands.Add(null);
             _connectionOpenCommands.Add(_connectionPropertiesButtonTool);
 
@@ -268,8 +261,8 @@ namespace SqlEditor
             _tableCommands.Add(null);
             _tableCommands.Add(_copyButtonTool);
             _tableCommands.Add(null);
-            _tableCommands.Add(_collapseAllButtonTool);
-            _tableCommands.Add(_expandAllButtonTool);
+            _tableCommands.Add(collapseAllButtonTool);
+            _tableCommands.Add(expandAllButtonTool);
 
             // Setup view commands
             var viewScriptAsDropButtonTool = _utm.Tools["Views - Script as - Drop"];
@@ -287,24 +280,39 @@ namespace SqlEditor
             _viewCommands.Add(null);
             _viewCommands.Add(_copyButtonTool);
             _viewCommands.Add(null);
-            _viewCommands.Add(_collapseAllButtonTool);
-            _viewCommands.Add(_expandAllButtonTool);
+            _viewCommands.Add(collapseAllButtonTool);
+            _viewCommands.Add(expandAllButtonTool);
+
+            // Setup index commands
+            var indexScriptAsDropButtonTool = _utm.Tools["Index - Script as - Drop"];
+            var indexScriptAsCreateButtonTool = _utm.Tools["Index - Script as - Create"];
+            var indexScriptPopupMenu = (PopupMenuTool)_utm.Tools["Script Index As - Context Menu"];
+            indexScriptPopupMenu.Tools.Clear();
+            index = indexScriptPopupMenu.Tools.Add(indexScriptAsCreateButtonTool);
+            indexScriptPopupMenu.Tools[index].InstanceProps.IsFirstInGroup = true;
+            indexScriptPopupMenu.Tools.Add(indexScriptAsDropButtonTool);
+            _indexCommands.Add(indexScriptPopupMenu);
+            _indexCommands.Add(null);
+            _indexCommands.Add(_copyButtonTool);
+            _indexCommands.Add(null);
+            _indexCommands.Add(collapseAllButtonTool);
+            _indexCommands.Add(expandAllButtonTool);
 
             // Setup stored procedures commands
-            _storedProcedureEditButtonTool = _utm.Tools["Stored Procedures - Edit"];
-            _storedProcedureScriptAsCreateButtonTool = _utm.Tools["Stored Procedures - Script As - Create"];
-            _storedProcedureScriptAsDropButtonTool = _utm.Tools["Stored Procedures - Script As - Drop"];
-            _storedProcedureScriptPopupMenu = (PopupMenuTool)_utm.Tools["Stored Procedures - Script As"];
-            _storedProcedureScriptPopupMenu.Tools.Clear();
-            _storedProcedureScriptPopupMenu.Tools.Add(_storedProcedureScriptAsDropButtonTool);
-            _storedProcedureScriptPopupMenu.Tools.Add(_storedProcedureScriptAsCreateButtonTool);
-            _storedProcedureCommands.Add(_storedProcedureEditButtonTool);
-            _storedProcedureCommands.Add(_storedProcedureScriptPopupMenu);
+            var storedProcedureEditButtonTool = _utm.Tools["Stored Procedures - Edit"];
+            var storedProcedureScriptAsCreateButtonTool = _utm.Tools["Stored Procedures - Script As - Create"];
+            var storedProcedureScriptAsDropButtonTool = _utm.Tools["Stored Procedures - Script As - Drop"];
+            var storedProcedureScriptPopupMenu = (PopupMenuTool)_utm.Tools["Stored Procedures - Script As"];
+            storedProcedureScriptPopupMenu.Tools.Clear();
+            storedProcedureScriptPopupMenu.Tools.Add(storedProcedureScriptAsDropButtonTool);
+            storedProcedureScriptPopupMenu.Tools.Add(storedProcedureScriptAsCreateButtonTool);
+            _storedProcedureCommands.Add(storedProcedureEditButtonTool);
+            _storedProcedureCommands.Add(storedProcedureScriptPopupMenu);
             _storedProcedureCommands.Add(null);
             _storedProcedureCommands.Add(_copyButtonTool);
             _storedProcedureCommands.Add(null);
-            _storedProcedureCommands.Add(_collapseAllButtonTool);
-            _storedProcedureCommands.Add(_expandAllButtonTool);
+            _storedProcedureCommands.Add(collapseAllButtonTool);
+            _storedProcedureCommands.Add(expandAllButtonTool);
 
             // Setup function commands
             _functionEditButtonTool = _utm.Tools["Functions - Edit"];
@@ -319,8 +327,8 @@ namespace SqlEditor
             _functionCommands.Add(null);
             _functionCommands.Add(_copyButtonTool);
             _functionCommands.Add(null);
-            _functionCommands.Add(_collapseAllButtonTool);
-            _functionCommands.Add(_expandAllButtonTool);
+            _functionCommands.Add(collapseAllButtonTool);
+            _functionCommands.Add(expandAllButtonTool);
 
             // Set image list for nodes
             DatabaseExplorerImageList.Instance.ImageList = _iml16;
@@ -1100,6 +1108,14 @@ namespace SqlEditor
                         Connections_ScriptViewAsDrop();
                         break;
 
+                    case "Index - Script as - Create": 
+                        Connections_ScriptIndexDdl();
+                        break;
+
+                    case "Index - Script as - Drop":
+                        Connections_ScriptIndexAsDrop();
+                        break;
+
                     case "Stored Procedures - Edit":
                     case "Stored Procedures - Script As - Create":
                         Connections_StoredProcedureEdit();
@@ -1137,7 +1153,53 @@ namespace SqlEditor
             }
         }
 
-        private void Connections_ScriptViewAsDrop()
+        private async void Connections_ScriptIndexAsDrop()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as IndexTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("No index selected for drop");
+            }
+            
+            DatabaseObject obj = selectedNode.IndexObject;
+            var databaseConnection = selectedNode.DatabaseConnection;
+            var sql =
+                await
+                    databaseConnection.DatabaseServer.GetDdlGenerator()
+                        .GenerateDropIndexDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+            var worksheet = NewWorksheet(databaseConnection);
+            worksheet.AppendText(sql, true);
+        }
+
+        private async void Connections_ScriptIndexDdl()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as IndexTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("Index not selected.");
+            }
+
+            DatabaseObject obj = selectedNode.IndexObject;
+            var databaseConnection = selectedNode.DatabaseConnection;
+            var sql =
+                await
+                    databaseConnection.DatabaseServer.GetDdlGenerator()
+                        .GenerateCreateIndexDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+            var worksheet = NewWorksheet(databaseConnection);
+            worksheet.AppendText(sql, true);
+        }
+
+        private async void Connections_ScriptViewAsDrop()
         {
             if (_utConnections.SelectedNodes.Count == 0)
             {
@@ -1150,10 +1212,13 @@ namespace SqlEditor
                 throw new Exception("No table selected for drop");
             }
 
+            DatabaseObject obj = selectedNode.View;
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await
+                    databaseConnection.DatabaseServer.GetDdlGenerator()
+                        .GenerateDropViewDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = ObjectScripter.GenerateViewDropStatement(selectedNode.View, databaseConnection);
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
         private async void Connections_ScriptViewAsSelect()
@@ -1175,7 +1240,7 @@ namespace SqlEditor
             worksheet.AppendText(sql, true);
         }
 
-        private void Connections_ScriptViewFullDdl()
+        private async void Connections_ScriptViewFullDdl()
         {
             if (_utConnections.SelectedNodes.Count == 0)
             {
@@ -1188,26 +1253,15 @@ namespace SqlEditor
                 throw new Exception("View not selected.");
             }
 
-            var table = selectedNode.View;
+            DatabaseObject obj = selectedNode.View;
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                .GenerateCreateViewFullDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
             var worksheet = NewWorksheet(databaseConnection);
-            string database = null;
-            if (table.Parent != null &&
-                table.Parent.Parent != null)
-            {
-                database = table.Parent.Parent.Name;
-            }
-            string schema = null;
-            if (table.Parent != null)
-            {
-                schema = table.Parent.Name;
-            }
-            var sql = databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateViewFullDdl(databaseConnection, database, schema, table.Name);
             worksheet.AppendText(sql, true);
         }
 
-        private void Connections_ScriptViewDdl()
+        private async void Connections_ScriptViewDdl()
         {
             if (_utConnections.SelectedNodes.Count == 0)
             {
@@ -1220,26 +1274,15 @@ namespace SqlEditor
                 throw new Exception("View not selected.");
             }
 
-            var table = selectedNode.View;
+            DatabaseObject obj = selectedNode.View;
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                .GenerateCreateViewDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
             var worksheet = NewWorksheet(databaseConnection);
-            string database = null;
-            if (table.Parent != null &&
-                table.Parent.Parent != null)
-            {
-                database = table.Parent.Parent.Name;
-            }
-            string schema = null;
-            if (table.Parent != null)
-            {
-                schema = table.Parent.Name;
-            }
-            var sql = databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateViewDdl(databaseConnection, database, schema, table.Name);
             worksheet.AppendText(sql, true);
         }
 
-        private void Connections_ScriptTableFullDdl()
+        private async void Connections_ScriptTableFullDdl()
         {
             if (_utConnections.SelectedNodes.Count == 0)
             {
@@ -1252,17 +1295,15 @@ namespace SqlEditor
                 throw new Exception("Table not selected.");
             }
 
-            var table = selectedNode.Table;
+            DatabaseObject obj = selectedNode.Table;
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                .GenerateCreateTableFullDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
             var worksheet = NewWorksheet(databaseConnection);
-            var parent = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
-            var sql = databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateTableFullDdl(databaseConnection, parent, table.Parent.Name, table.Name);
-            //sql = sql.Replace("\r", string.Empty);
             worksheet.AppendText(sql, true);
         }
 
-        private void Connections_ScriptTableDdl()
+        private async void Connections_ScriptTableDdl()
         {
             if (_utConnections.SelectedNodes.Count == 0)
             {
@@ -1275,22 +1316,11 @@ namespace SqlEditor
                 throw new Exception("Table not selected.");
             }
 
-            var table = selectedNode.Table;
+            DatabaseObject obj = selectedNode.Table;
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                .GenerateCreateTableDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
             var worksheet = NewWorksheet(databaseConnection);
-            string database = null;
-            if (table.Parent != null &&
-                table.Parent.Parent != null)
-            {
-                database = table.Parent.Parent.Name;
-            }
-            string schema = null;
-            if (table.Parent != null)
-            {
-                schema = table.Parent.Name;
-            }
-            var sql = databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateTableDdl(databaseConnection, database, schema, table.Name);
             worksheet.AppendText(sql, true);
         }
 
@@ -1307,10 +1337,9 @@ namespace SqlEditor
                 throw new Exception("Function not selected.");
             }
 
-
             var databaseConnection = selectedNode.DatabaseConnection;
-            var worksheet = NewWorksheet(databaseConnection);
             var sql = ObjectScripter.GenerateFunctionDropStatement(selectedNode.Function, databaseConnection);
+            var worksheet = NewWorksheet(databaseConnection);
             worksheet.AppendText(sql, true);
         }
 
@@ -1327,12 +1356,11 @@ namespace SqlEditor
                 throw new Exception("Function not selected.");
             }
 
-
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = selectedNode.Function.Definition;
             var worksheet = NewWorksheet(databaseConnection);
             worksheet.Title = selectedNode.Function.Name;
-            var insertSql = selectedNode.Function.Definition;
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
         private void Connections_StoredProcedureEdit()
@@ -1348,12 +1376,11 @@ namespace SqlEditor
                 throw new Exception("Stored procedure not selected.");
             }
 
-
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = selectedNode.StoredProcedure.Definition;
             var worksheet = NewWorksheet(databaseConnection);
             worksheet.Title = selectedNode.StoredProcedure.Name;
-            var insertSql = selectedNode.StoredProcedure.Definition;
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
         private void Connections_StoredProcedureDrop()
@@ -1371,9 +1398,9 @@ namespace SqlEditor
 
 
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = ObjectScripter.GenerateStoredProcedureDropStatement(selectedNode.StoredProcedure, databaseConnection);
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = ObjectScripter.GenerateStoredProcedureDropStatement(selectedNode.StoredProcedure, databaseConnection);
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
         private async void Connections_ScriptTableAsDelete()
@@ -1390,12 +1417,12 @@ namespace SqlEditor
             }
 
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await ObjectScripter.GenerateTableDeleteStatement(selectedNode.Table, databaseConnection);
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = await ObjectScripter.GenerateTableDeleteStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
-        private void Connections_ScriptTableAsDrop()
+        private async void Connections_ScriptTableAsDrop()
         {
             if (_utConnections.SelectedNodes.Count == 0)
             {
@@ -1408,10 +1435,12 @@ namespace SqlEditor
                 throw new Exception("No table selected for drop");
             }
 
+            DatabaseObject obj = selectedNode.Table;
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                .GenerateDropTableDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = ObjectScripter.GenerateTableDropStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
         private async void Connections_ScriptTableAsSelect()
@@ -1428,9 +1457,9 @@ namespace SqlEditor
             }
 
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await ObjectScripter.GenerateTableSelectStatement(selectedNode.Table, databaseConnection);
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = await ObjectScripter.GenerateTableSelectStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
         private async void Connections_ScriptTableAsInsert()
@@ -1447,9 +1476,9 @@ namespace SqlEditor
             }
 
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await ObjectScripter.GenerateTableInsertStatement(selectedNode.Table, databaseConnection);
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = await ObjectScripter.GenerateTableInsertStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
         private async void Connections_ScriptTableAsUpdate()
@@ -1466,9 +1495,9 @@ namespace SqlEditor
             }
 
             var databaseConnection = selectedNode.DatabaseConnection;
+            var sql = await ObjectScripter.GenerateTableUpdateStatement(selectedNode.Table, databaseConnection);
             var worksheet = NewWorksheet(databaseConnection);
-            var insertSql = await ObjectScripter.GenerateTableUpdateStatement(selectedNode.Table, databaseConnection);
-            worksheet.AppendText(insertSql, true);
+            worksheet.AppendText(sql, true);
         }
 
         private void Connections_Clone()
@@ -1807,6 +1836,10 @@ namespace SqlEditor
                     else if (isViewNodeSelected)
                     {
                         AddTools(_viewCommands, _connectionsPopupMenu);
+                    }
+                    else if (isNodeSelected && selectedNode is IndexTreeNode)
+                    {
+                        AddTools(_indexCommands, _connectionsPopupMenu);
                     }
                     else if (isNodeSelected && selectedNode is StoredProcedureTreeNode)
                     {

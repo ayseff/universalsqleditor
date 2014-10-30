@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Text.RegularExpressions;
+using JetBrains.Annotations;
+using Oracle.ManagedDataAccess.Client;
 using SqlEditor.QueryResults;
 using Utilities.Text;
 
@@ -104,6 +106,24 @@ namespace SqlEditor.SqlHelpers
                 }
             }
             return tmpTable;
+        }
+
+        public static void BuildSqlCommand([NotNull] this IDbCommand command, [NotNull] string sql, string parameterSymbol, params object[] parameters)
+        {
+            if (command == null) throw new ArgumentNullException("command");
+            if (sql == null) throw new ArgumentNullException("sql");
+
+            command.CommandText = sql; 
+            if (parameters != null && parameters.Length > 0)
+            {
+                for (var i = 0; i < parameters.Length; i++)
+                {
+                    var param = command.CreateParameter();
+                    param.ParameterName = parameterSymbol + (i + 1);
+                    param.Value = parameters[i];
+                    command.Parameters.Add(param);
+                }
+            }
         }
     }
 }
