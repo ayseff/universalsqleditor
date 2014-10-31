@@ -66,14 +66,14 @@ namespace SqlEditor.Databases.Oracle
             return GenerateCreateViewDdl(databaseConnection, database, schema, viewName);
         }
 
-        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName)
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string indexSchema, string indexName, object indexId)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
-            if (schema == null) throw new ArgumentNullException("schema");
+            if (indexSchema == null) throw new ArgumentNullException("indexSchema");
             if (indexName == null) throw new ArgumentNullException("indexName");
 
             // Get full DDL
-            var ddl = RunDbmsMetadata(databaseConnection, "INDEX", schema, indexName);
+            var ddl = RunDbmsMetadata(databaseConnection, "INDEX", indexSchema, indexName);
             ddl += Environment.NewLine + databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault() + Environment.NewLine;
             return ddl;
         }

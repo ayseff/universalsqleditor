@@ -129,11 +129,10 @@ namespace SqlEditor.Databases.Db2
             return sql;
         }
 
-        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database,
-            [NotNull] string schema, string indexName)
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, [NotNull] string indexSchema, string indexName, object indexId)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
-            if (schema == null) throw new ArgumentNullException("schema");
+            if (indexSchema == null) throw new ArgumentNullException("indexSchema");
             if (indexName == null) throw new ArgumentNullException("indexName");
 
             // Find table name for this index
@@ -147,7 +146,7 @@ namespace SqlEditor.Databases.Db2
                         "select TABSCHEMA, TABNAME from syscat.INDEXES where UPPER(INDSCHEMA) = @1 and UPPER(INDNAME) = @2 fetch first row only";
                     var param = command.CreateParameter();
                     param.ParameterName = "@1";
-                    param.Value = schema.Trim().ToUpper();
+                    param.Value = indexSchema.Trim().ToUpper();
                     command.Parameters.Add(param);
                     param = command.CreateParameter();
                     param.ParameterName = "@2";
@@ -162,7 +161,7 @@ namespace SqlEditor.Databases.Db2
                         }
                         else
                         {
-                            throw new Exception("Index " + schema + "." + indexName + " does not exist in the database");
+                            throw new Exception("Index " + indexSchema + "." + indexName + " does not exist in the database");
                         }
                     }
                 }
@@ -184,7 +183,7 @@ namespace SqlEditor.Databases.Db2
                     var match = regex.Match(line);
                     if (match.Success
                         &&
-                        string.Equals(match.Groups["schema"].Value, schema, StringComparison.InvariantCultureIgnoreCase)
+                        string.Equals(match.Groups["schema"].Value, indexSchema, StringComparison.InvariantCultureIgnoreCase)
                         &&
                         string.Equals(match.Groups["index"].Value, indexName,
                             StringComparison.InvariantCultureIgnoreCase))

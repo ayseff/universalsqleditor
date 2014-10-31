@@ -1194,7 +1194,7 @@ namespace SqlEditor
             var sql =
                 await
                     databaseConnection.DatabaseServer.GetDdlGenerator()
-                        .GenerateCreateIndexDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+                        .GenerateCreateIndexDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name, selectedNode.IndexObject.Id);
             var worksheet = NewWorksheet(databaseConnection);
             worksheet.AppendText(sql, true);
         }

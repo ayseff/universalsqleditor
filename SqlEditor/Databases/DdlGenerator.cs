@@ -66,11 +66,11 @@ namespace SqlEditor.Databases
 
         }
 
-        public abstract string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName);
+        public abstract string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string indexSchema, string indexName, object indexId);
         public Task<string> GenerateCreateIndexDdlAsync(DatabaseConnection databaseConnection, string database, string schema,
-            string tableName)
+            string tableName, object indexId)
         {
-            return Task.Run(() => GenerateCreateIndexDdl(databaseConnection, database, schema, tableName));
+            return Task.Run(() => GenerateCreateIndexDdl(databaseConnection, database, schema, tableName, indexId));
 
         }
 

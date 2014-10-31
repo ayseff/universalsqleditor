@@ -30,10 +30,10 @@ namespace SqlEditor.Databases.MySql
             return GenerateCreateViewDdl(databaseConnection, database, schema, viewName);
         }
 
-        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName)
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string indexSchema, string indexName, object indexId)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
-            if (schema == null) throw new ArgumentNullException("schema");
+            if (indexSchema == null) throw new ArgumentNullException("indexSchema");
             if (indexName == null) throw new ArgumentNullException("indexName");
 
             // Find the table index belongs
@@ -46,7 +46,7 @@ namespace SqlEditor.Databases.MySql
                 connection.OpenIfRequired();
                 using (var command = connection.CreateCommand())
                 {
-                    command.BuildSqlCommand("select s.TABLE_SCHEMA, s.TABLE_NAME, s.INDEX_TYPE, s.NON_UNIQUE, s.COLUMN_NAME from information_schema.STATISTICS s where UPPER(s.INDEX_NAME) = @1 and UPPER(s.INDEX_SCHEMA) = @2", "@", indexName.Trim().ToUpper(), schema.Trim().ToUpper());
+                    command.BuildSqlCommand("select s.TABLE_SCHEMA, s.TABLE_NAME, s.INDEX_TYPE, s.NON_UNIQUE, s.COLUMN_NAME from information_schema.STATISTICS s where UPPER(s.INDEX_NAME) = @1 and UPPER(s.INDEX_SCHEMA) = @2", "@", indexName.Trim().ToUpper(), indexSchema.Trim().ToUpper());
                     using (var dr = command.ExecuteReader())
                     {
                         while (dr.Read())
@@ -64,7 +64,7 @@ namespace SqlEditor.Databases.MySql
 
                         if (tableName == null)
                         {
-                            throw new Exception("Index " + schema + "." + indexName +
+                            throw new Exception("Index " + indexSchema + "." + indexName +
                                                 " does not exist in the database");
                         }
                     }
@@ -80,7 +80,7 @@ namespace SqlEditor.Databases.MySql
                 indexTypeValue = indexType.Trim().ToUpper() + " ";
             }
 
-            var sql = string.Format("CREATE {0}INDEX {1}.{2} ON {3}.{4} ({5})", indexTypeValue, schema, indexName, tableSchema, tableName, string.Join(", ", columns));
+            var sql = string.Format("CREATE {0}INDEX {1}.{2} ON {3}.{4} ({5})", indexTypeValue, indexSchema, indexName, tableSchema, tableName, string.Join(", ", columns));
             return sql;
         }
 

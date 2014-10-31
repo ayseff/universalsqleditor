@@ -292,9 +292,10 @@ namespace SqlEditor.Databases.MsAccess
                 for (var i = 0; i < catalog.Tables.Count; i++)
                 {
                     var table = catalog.Tables[i];
+                    var tableObj = new Table(table.Name, MsAccess2003DatabaseServer.DefaultSchema);
                     for (var j = 0; j < table.Indexes.Count; j++)
                     {
-                        indexes.Add(new Index(table.Indexes[j].Name, schema));
+                        indexes.Add(new Index(table.Indexes[j].Name, schema) { Table = tableObj});
                     }
                 }
                 return indexes;
@@ -325,14 +326,15 @@ namespace SqlEditor.Databases.MsAccess
                 for (var i = 0; i < catalog.Tables.Count; i++)
                 {
                     var table = catalog.Tables[i];
-                    if (!string.Equals(table.Name, tableName))
+                    var tableObj = new Table(table.Name, MsAccess2003DatabaseServer.DefaultSchema);
+                    if (!string.Equals(table.Name, tableName, StringComparison.InvariantCultureIgnoreCase))
                     {
                         continue;
                     }
 
                     for (var j = 0; j < table.Indexes.Count; j++)
                     {
-                        var index = new Index(table.Indexes[j].Name, schema);
+                        var index = new Index(table.Indexes[j].Name, schema) { Table = tableObj };
                         index.IsUnique = table.Indexes[j].Unique;
                         indexes.Add(index);
                     }
@@ -352,7 +354,7 @@ namespace SqlEditor.Databases.MsAccess
             return indexes;
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, string indexName, object indexId = null, string databaseInstanceName = null)
         {
             var columns = new List<Column>();
             var cnn = new ADODB.Connection();
@@ -365,9 +367,14 @@ namespace SqlEditor.Databases.MsAccess
                 for (var i = 0; i < catalog.Tables.Count; i++)
                 {
                     var table = catalog.Tables[i];
+                    if (!string.Equals(table.Name, tableName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        continue;
+                    }
+
                     for (var j = 0; j < table.Indexes.Count; j++)
                     {
-                        if (!string.Equals(table.Indexes[j].Name, indexName))
+                        if (!string.Equals(table.Indexes[j].Name, indexName, StringComparison.InvariantCultureIgnoreCase))
                         {
                             continue;
                         }
@@ -394,8 +401,7 @@ namespace SqlEditor.Databases.MsAccess
             return columns;
         }
 
-        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
-            string databaseInstanceName = null)
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, string indexName, object indexId = null, string databaseInstanceName = null)
         {
             return new List<Column>();
         }

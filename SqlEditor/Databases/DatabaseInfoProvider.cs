@@ -266,7 +266,10 @@ namespace SqlEditor.Databases
             if (sql == null) throw new ArgumentNullException("sql");
 
             _log.DebugFormat("Getting indexes for schema {0} ...", schemaName);
-            Schema schema = null;
+            DatabaseInstance databaseInstance = null;
+            Schema tableSchema = null;
+            Schema indexSchema = null;
+            Table table = null;
             var indices = new List<Index>();
             BeforeRunQuery(connection, schemaName);
             using (var command = connection.CreateCommand())
@@ -276,18 +279,51 @@ namespace SqlEditor.Databases
                 {
                     while (dr.Read())
                     {
-                        var schemaNameQuery = dr.GetString(0).Trim().ToUpper();
-                        if (schema == null || schema.Name != schemaNameQuery)
+                        var dbInstanceNameQuery = dr.IsDBNull(0) ? null : dr.GetString(0).Trim().ToUpper();
+                        if (dbInstanceNameQuery == null)
                         {
-                            schema = new Schema(schemaNameQuery);
+                            databaseInstance = null;
                         }
-                        var index = new Index(dr.GetString(1).Trim().ToUpper(), schema);
-                        var isUnqiueString = dr.IsDBNull(2) ? "0" : dr[2].ToString().Trim().ToUpper();
+                        else if (databaseInstance == null || databaseInstance.Name != dbInstanceNameQuery)
+                        {
+                            databaseInstance = new DatabaseInstance(dbInstanceNameQuery);
+                        }
+
+                        var tableSchemaNameQuery = dr.IsDBNull(1) ? null : dr.GetString(1).Trim().ToUpper();
+                        if (tableSchemaNameQuery == null)
+                        {
+                            tableSchema = null;
+                        }
+                        else if (tableSchema == null || tableSchema.Name != tableSchemaNameQuery || tableSchema.Parent != databaseInstance)
+                        {
+                            tableSchema = new Schema(tableSchemaNameQuery) { Parent = databaseInstance};
+                        }
+
+                        var tableName = dr.GetString(2).Trim().ToUpper();
+                        if (table == null || table.Name != tableName || table.Parent != tableSchema)
+                        {
+                            table = new Table(tableName, tableSchema);
+                        }
+
+                        var indexSchemaNameQuery = dr.IsDBNull(3) ? null : dr.GetString(3).Trim().ToUpper();
+                        if (indexSchemaNameQuery == null)
+                        {
+                            indexSchema = null;
+                        }
+                        else if (indexSchema == null || indexSchema.Name != indexSchemaNameQuery || indexSchema.Parent != databaseInstance)
+                        {
+                            indexSchema = new Schema(indexSchemaNameQuery) { Parent = databaseInstance };
+                        }
+
+                        var indexName = dr.GetString(4).Trim().ToUpper();
+                        var isUnqiueString = dr.IsDBNull(5) ? "0" : dr[5].ToString().Trim().ToUpper();
+                        var index = new Index(indexName, indexSchema);
+                        index.Table = table;
                         index.IsUnique = isUnqiueString == "1" || isUnqiueString == "Y" || isUnqiueString == "YES" ||
                                          isUnqiueString == "U" || isUnqiueString == "P";
-                        if (dr.FieldCount == 4)
+                        if (dr.FieldCount == 7)
                         {
-                            index.Id = dr[3];
+                            index.Id = dr[6];
                         }
                         indices.Add(index);
                     }
@@ -300,9 +336,9 @@ namespace SqlEditor.Databases
 
         public abstract IList<Index> GetIndexesForTable(IDbConnection connection, string schemaName, string tableName, string databaseInstanceName = null);
 
-        public abstract IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null, string databaseInstanceName = null);
+        public abstract IList<Column> GetIndexColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, string indexName, object indexId = null, string databaseInstanceName = null);
 
-        public abstract IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null, string databaseInstanceName = null);
+        public abstract IList<Column> GetIndexIncludedColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, string indexName, object indexId = null, string databaseInstanceName = null);
         protected virtual IList<Column> GetIndexColumnsBase([NotNull] IDbConnection connection,
                                                             [NotNull] string schemaName, [NotNull] string indexName,
                                                             [NotNull] string sql,

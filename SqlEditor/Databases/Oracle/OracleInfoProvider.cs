@@ -156,7 +156,7 @@ namespace SqlEditor.Databases.Oracle
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             return GetIndexesBase(connection, schemaName,
-                                  "SELECT OWNER, INDEX_NAME, CASE WHEN uniqueness = 'UNIQUE' THEN 1 ELSE 0 END AS is_unique FROM ALL_INDEXES WHERE UPPER(owner) = @1 ORDER BY INDEX_NAME",
+                                  "SELECT NULL, TABLE_OWNER, TABLE_NAME, OWNER, INDEX_NAME, CASE WHEN uniqueness = 'UNIQUE' THEN 1 ELSE 0 END AS is_unique FROM ALL_INDEXES WHERE UPPER(owner) = @1 ORDER BY INDEX_NAME",
                                   schemaName.Trim().ToUpper());
         }
 
@@ -166,22 +166,21 @@ namespace SqlEditor.Databases.Oracle
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             if (tableName == null) throw new ArgumentNullException("tableName");
             return GetIndexesBase(connection, schemaName,
-                                  "SELECT OWNER, INDEX_NAME, CASE WHEN uniqueness = 'UNIQUE' THEN 1 ELSE 0 END AS is_unique FROM ALL_INDEXES WHERE UPPER(owner) = @1 AND UPPER(TABLE_NAME) = @2 ORDER BY INDEX_NAME",
+                                  "SELECT NULL, TABLE_OWNER, TABLE_NAME, OWNER, INDEX_NAME, CASE WHEN uniqueness = 'UNIQUE' THEN 1 ELSE 0 END AS is_unique FROM ALL_INDEXES WHERE UPPER(owner) = @1 AND UPPER(TABLE_NAME) = @2 ORDER BY INDEX_NAME",
                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, [NotNull] string schemaName, [NotNull] string indexName, object indexId = null, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns([NotNull] IDbConnection connection, string tableSchemaName, string tableName, [NotNull] string indexSchemaName, [NotNull] string indexName, object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
-            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (indexSchemaName == null) throw new ArgumentNullException("indexSchemaName");
             if (indexName == null) throw new ArgumentNullException("indexName");
-            return GetIndexColumnsBase(connection, schemaName, indexName,
+            return GetIndexColumnsBase(connection, indexSchemaName, indexName,
                                        "SELECT atc.column_name, atc.data_type, atc.data_length, atc.data_precision, atc.data_scale, atc.nullable, atc.column_id FROM all_tab_columns atc INNER JOIN all_ind_columns aic ON aic.table_owner = atc.owner AND aic.table_name = atc.table_name AND aic.column_name = atc.column_name WHERE UPPER(atc.owner) = @1 AND UPPER(aic.index_name) = @2 ORDER BY aic.column_position",
-                                       schemaName.Trim().ToUpper(), indexName.Trim().ToUpper());
+                                       indexSchemaName.Trim().ToUpper(), indexName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
-            string databaseInstanceName = null)
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, string indexName, object indexId = null, string databaseInstanceName = null)
         {
             return new List<Column>();
         }

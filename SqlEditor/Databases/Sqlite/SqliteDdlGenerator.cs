@@ -30,7 +30,7 @@ namespace SqlEditor.Databases.Sqlite
                 var indexes = infoProvider.GetIndexesForTable(connection, string.Empty, tableName);
                 foreach (var index in indexes)
                 {
-                    var columns = infoProvider.GetIndexColumns(connection, string.Empty, index.Name);
+                    var columns = infoProvider.GetIndexColumns(connection, schema, tableName, string.Empty, index.Name);
                     stringBuilder.AppendFormat("CREATE {0}INDEX {1} ON {2}({3})",
                         index.IsUnique ? "UNIQUE " : string.Empty, index.Name, tableName,
                         string.Join(", ", columns.Select(x => x.Name).ToList()));
@@ -52,16 +52,16 @@ namespace SqlEditor.Databases.Sqlite
             return GenerateCreateViewDdl(databaseConnection, database, schema, viewName);
         }
 
-        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName)
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string indexSchema, string indexName, object indexId)
         {
-            throw new NotImplementedException();
+            return RunSqlLiteMasterQuery(databaseConnection, indexName, "index");
         }
 
-        private static string RunSqlLiteMasterQuery(DatabaseConnection databaseConnection, string tableName,
+        private static string RunSqlLiteMasterQuery(DatabaseConnection databaseConnection, string objectName,
             [NotNull] string objectType)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
-            if (tableName == null) throw new ArgumentNullException("tableName");
+            if (objectName == null) throw new ArgumentNullException("objectName");
             if (objectType == null) throw new ArgumentNullException("objectType");
 
             using (var connection = databaseConnection.CreateNewConnection())
@@ -72,16 +72,15 @@ namespace SqlEditor.Databases.Sqlite
                         string.Format("SELECT sql FROM sqlite_master WHERE lower(type) = '{0}' AND upper(name) = upper(@1)", objectType.ToLower());
                     var param = command.CreateParameter();
                     param.ParameterName = "@1";
-                    param.Value = tableName;
+                    param.Value = objectName;
                     command.Parameters.Add(param);
                     using (var dr = command.ExecuteReader())
                     {
                         if (dr.Read())
                         {
-                            return dr.GetString(0) + Environment.NewLine +
-                                   databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault();
+                            return (dr.IsDBNull(0) ? string.Empty : dr.GetString(0)) + databaseConnection.DatabaseServer.SqlTerminators.FirstOrDefault();
                         }
-                        throw new Exception("SQLite sqlite_master " + objectType + " does not have an entry for " + tableName);
+                        throw new Exception("SQLite sqlite_master " + objectType + " does not have an entry for " + objectName);
                     }
                 }
             }

@@ -55,7 +55,7 @@ namespace SqlEditor.Databases.SqlCe
             throw new NotSupportedException("This database does not support views");
         }
 
-        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName)
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string indexSchema, string indexName, object indexId)
         {
             var repo = new DB4Repository(databaseConnection.ConnectionString);
 

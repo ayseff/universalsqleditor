@@ -109,9 +109,61 @@ namespace SqlEditor.Databases.SqlServer
             return GenerateViewDdlInternal(databaseConnection, database, schema, viewName, options);
         }
 
-        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string schema, string indexName)
+        public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, string indexSchema, string indexName, object indexId)
         {
-            throw new NotImplementedException();
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (database == null) throw new ArgumentNullException("database");
+            if (indexSchema == null) throw new ArgumentNullException("indexSchema");
+            if (indexName == null) throw new ArgumentNullException("indexName");
+
+            var options = new ScriptingOptions();
+            options.ClusteredIndexes = true;
+            options.DriAll = true;
+            options.FullTextIndexes = true;
+            options.IncludeDatabaseContext = true;
+            options.IncludeHeaders = true;
+            options.Indexes = true;
+            options.SchemaQualify = true;
+            options.Triggers = true;
+            options.XmlIndexes = true;
+            options.ScriptBatchTerminator = true;
+            options.BatchSize = 1;
+
+            var cb = new SqlConnectionStringBuilder(databaseConnection.ConnectionString)
+            {
+                MultipleActiveResultSets = false
+            };
+
+            // Connect to the local, default instance of SQL Server. 
+            using (var dbConnection = new SqlConnection(cb.ConnectionString))
+            {
+                dbConnection.Open();
+                var connection = new ServerConnection(dbConnection);
+                var srv = new Server(connection);
+
+                // Reference the database
+                if (srv.Databases.Cast<Microsoft.SqlServer.Management.Smo.Database>().All(x => !string.Equals(x.Name, database, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    throw new Exception("Database '" + database + "' does not exist");
+                }
+                var db = srv.Databases[database];
+
+                // Define a Scripter object and set the required scripting options. 
+                var scrp = new Scripter(srv) { Options = options };
+                var tables = db.Tables.Cast<Microsoft.SqlServer.Management.Smo.Table>().ToList();
+                var index = tables.SelectMany(x => x.Indexes.Cast<Microsoft.SqlServer.Management.Smo.Index>())
+                    .FirstOrDefault(x => x.ID == (int) indexId);
+                if (index == null)
+                {
+                    throw new Exception("Could not find index " + indexSchema + "." + indexName);
+                }
+                else if (index.IsSystemObject)
+                {
+                    throw new Exception("Index " + indexSchema + "." + indexName + " is a system object");
+                }
+
+                return ScriptObject(databaseConnection, scrp, index.Urn);
+            }
         }
 
         private static string GenerateTableDdlInternal([NotNull] DatabaseConnection databaseConnection, [NotNull] string database, string schema, string tableName,

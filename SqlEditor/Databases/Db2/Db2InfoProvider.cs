@@ -7,6 +7,7 @@ using SqlEditor.Annotations;
 using SqlEditor.Database;
 using SqlEditor.Intellisense;
 using log4net;
+using SqlEditor.SqlHelpers;
 
 namespace SqlEditor.Databases.Db2
 {
@@ -112,7 +113,7 @@ namespace SqlEditor.Databases.Db2
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             return GetIndexesBase(connection, schemaName,
-                                  "SELECT indschema, INDNAME, UNIQUERULE FROM syscat.indexes WHERE TRIM(UPPER(indschema)) = @1 ORDER BY indname WITH ur",
+                                  "SELECT NULL, TABSCHEMA, TABNAME, indschema, INDNAME, UNIQUERULE FROM syscat.indexes WHERE TRIM(UPPER(indschema)) = @1 ORDER BY indname WITH ur",
                                   schemaName.Trim().ToUpper());
         }
 
@@ -122,31 +123,23 @@ namespace SqlEditor.Databases.Db2
             if (schemaName == null) throw new ArgumentNullException("schemaName");
             if (tableName == null) throw new ArgumentNullException("tableName");
             return GetIndexesBase(connection, schemaName,
-                                  "SELECT indschema, indname, UNIQUERULE FROM syscat.indexes WHERE TRIM(UPPER(tabschema)) = @1 AND TRIM(UPPER(tabname)) = @2 ORDER BY indname WITH ur",
+                                  "SELECT NULL, TABSCHEMA, TABNAME, indschema, indname, UNIQUERULE FROM syscat.indexes WHERE TRIM(UPPER(tabschema)) = @1 AND TRIM(UPPER(tabname)) = @2 ORDER BY indname WITH ur",
                                   schemaName.Trim().ToUpper(), tableName.Trim().ToUpper());
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, string indexName, object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
-            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (indexSchemaName == null) throw new ArgumentNullException("indexSchemaName");
             if (indexName == null) throw new ArgumentNullException("indexName");
             
-            _log.DebugFormat("Getting columns for schema {0} and index {1} ...", schemaName, indexName);
-            List<string> columnNames = null;
-            string tableName = null, tableSchemaName = null, uniqueRule = null;
+            _log.DebugFormat("Getting columns for schema {0} and index {1} ...", indexSchemaName, indexName);
+            var columnNames = new List<string>();
             using (var command = connection.CreateCommand())
             {
-                command.CommandText =
-                    "SELECT colnames, tabname, tabschema, uniquerule, unique_colcount, colcount FROM syscat.indexes WHERE TRIM(UPPER(indname)) = @1 AND TRIM(UPPER(indschema)) = @2 FETCH FIRST ROW ONLY WITH ur";
-                var param = command.CreateParameter();
-                param.ParameterName = "@1";
-                param.Value = indexName.Trim().ToUpper();
-                command.Parameters.Add(param);
-                param = command.CreateParameter();
-                param.ParameterName = "@2";
-                param.Value = schemaName.Trim().ToUpper();
-                command.Parameters.Add(param);
+                command.BuildSqlCommand(
+                    "SELECT colnames, uniquerule, unique_colcount, colcount FROM syscat.indexes WHERE TRIM(UPPER(indname)) = @1 AND TRIM(UPPER(indschema)) = @2 AND TRIM(UPPER(tabname)) = @3 AND TRIM(UPPER(tabschema)) = @4 FETCH FIRST ROW ONLY WITH ur",
+                    "@", indexName.Trim().ToUpper(), indexSchemaName.Trim().ToUpper(), tableName.Trim().ToUpper(), tableSchemaName.Trim().ToUpper());
                 using (var dr = command.ExecuteReader())
                 {
                     if (dr.Read())
@@ -154,11 +147,9 @@ namespace SqlEditor.Databases.Db2
                         columnNames = dr.GetString(0).Trim().ToUpper().Split(new[] { '+' },
                                                                                       StringSplitOptions.
                                                                                           RemoveEmptyEntries).ToList();
-                        tableName = dr.GetString(1);
-                        tableSchemaName = dr.GetString(2);
-                        uniqueRule = dr.GetString(3);
-                        int uniqueColumnCount = dr.GetInt16(4);
-                        int columnCount = dr.GetInt16(5);
+                        var uniqueRule = dr.GetString(1);
+                        int uniqueColumnCount = dr.GetInt16(2);
+                        int columnCount = dr.GetInt16(3);
                         if (uniqueRule.Trim().ToUpper() == "U" && columnCount > uniqueColumnCount)
                         {
                             
@@ -168,7 +159,6 @@ namespace SqlEditor.Databases.Db2
                 }
             }
 
-            if (tableName == null || tableSchemaName == null) return new List<Column>();
             var parameters = new List<string> { tableName.Trim().ToUpper(), tableSchemaName.Trim().ToUpper() };
             var sql = "SELECT c.colname, c.typename, c.length, c.length as precision, c.scale, c.nulls, c.colno FROM syscat.columns c INNER JOIN syscat.tables t on (c.tabschema = t.tabschema AND c.tabname = t.tabname) WHERE TRIM(UPPER(c.tabname)) = @1 AND TRIM(UPPER(c.tabschema)) = @2 AND TRIM(UPPER(c.colname)) IN (";
             var separator = string.Empty;
@@ -183,28 +173,22 @@ namespace SqlEditor.Databases.Db2
             return GetTableColumnsBase(connection, tableSchemaName, tableName, sql, parameters.Cast<object>().ToArray());
         }
 
-        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
-            string databaseInstanceName = null)
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, string indexName, object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
-            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (indexSchemaName == null) throw new ArgumentNullException("indexSchemaName");
             if (indexName == null) throw new ArgumentNullException("indexName");
 
-            _log.DebugFormat("Getting columns for schema {0} and index {1} ...", schemaName, indexName);
-            List<string> columnNames = null;
-            string tableName = null, tableSchemaName = null;
+            _log.DebugFormat("Getting columns for schema {0} and index {1} ...", indexSchemaName, indexName);
+            var columnNames = new List<string>();
             using (var command = connection.CreateCommand())
             {
-                command.CommandText =
-                    "SELECT colnames, tabname, tabschema, uniquerule, unique_colcount, colcount FROM syscat.indexes WHERE TRIM(UPPER(indname)) = @1 AND TRIM(UPPER(indschema)) = @2 FETCH FIRST ROW ONLY WITH ur";
-                var param = command.CreateParameter();
-                param.ParameterName = "@1";
-                param.Value = indexName.Trim().ToUpper();
-                command.Parameters.Add(param);
-                param = command.CreateParameter();
-                param.ParameterName = "@2";
-                param.Value = schemaName.Trim().ToUpper();
-                command.Parameters.Add(param);
+                command.BuildSqlCommand(
+                    "SELECT colnames, uniquerule, unique_colcount, colcount FROM syscat.indexes WHERE TRIM(UPPER(indname)) = @1 AND TRIM(UPPER(indschema)) = @2 AND TRIM(UPPER(tabname)) = @3 AND TRIM(UPPER(tabschema)) = @4 FETCH FIRST ROW ONLY WITH ur",
+                    "@",
+                    indexName.Trim().ToUpper(),
+                    indexSchemaName.Trim().ToUpper(),
+                    tableName.Trim().ToUpper(), tableSchemaName.Trim().ToUpper());
                 using (var dr = command.ExecuteReader())
                 {
                     if (dr.Read())
@@ -212,11 +196,9 @@ namespace SqlEditor.Databases.Db2
                         columnNames = dr.GetString(0).Trim().ToUpper().Split(new[] { '+' },
                                                                                       StringSplitOptions.
                                                                                           RemoveEmptyEntries).ToList();
-                        tableName = dr.GetString(1);
-                        tableSchemaName = dr.GetString(2);
-                        var uniqueRule = dr.GetString(3);
-                        int uniqueColumnCount = dr.GetInt16(4);
-                        int columnCount = dr.GetInt16(5);
+                        var uniqueRule = dr.GetString(1);
+                        int uniqueColumnCount = dr.GetInt16(2);
+                        int columnCount = dr.GetInt16(3);
                         if (uniqueRule.Trim().ToUpper() == "U" && columnCount > uniqueColumnCount)
                         {
                             columnNames = columnNames.Skip(uniqueColumnCount).ToList();
@@ -229,7 +211,6 @@ namespace SqlEditor.Databases.Db2
                 }
             }
 
-            if (tableName == null || tableSchemaName == null) return new List<Column>();
             var parameters = new List<string> { tableName.Trim().ToUpper(), tableSchemaName.Trim().ToUpper() };
             var sql = "SELECT c.colname, c.typename, c.length, c.length as precision, c.scale, c.nulls, c.colno FROM syscat.columns c INNER JOIN syscat.tables t on (c.tabschema = t.tabschema AND c.tabname = t.tabname) WHERE TRIM(UPPER(c.tabname)) = @1 AND TRIM(UPPER(c.tabschema)) = @2 AND TRIM(UPPER(c.colname)) IN (";
             var separator = string.Empty;

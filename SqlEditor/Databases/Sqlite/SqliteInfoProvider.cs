@@ -156,7 +156,7 @@ namespace SqlEditor.Databases.Sqlite
                 {
                     while (dr.Read())
                     {
-                        var index = new Index(dr.GetString(0).Trim().ToUpper(), schema);
+                        var index = new Index(dr.GetString(0).Trim().ToUpper(), schema) { Table = new Table(dr.GetString(1), new Schema(DEFAULT_SCHEMA))};
                         map.Add(index, dr.GetString(1));
                         indices.Add(index);
                     }
@@ -181,6 +181,7 @@ namespace SqlEditor.Databases.Sqlite
 
             _log.DebugFormat("Getting indexes for schema {0} and table {1} ...", schemaName, tableName);
             var schema = new Schema(schemaName);
+            var table = new Table(tableName, schema);
             var indices = new List<Index>();
             using (var command = connection.CreateCommand())
             {
@@ -189,8 +190,9 @@ namespace SqlEditor.Databases.Sqlite
                 {
                     while (dr.Read())
                     {
-                        var index = new Index(dr.GetString(1), schema);
+                        var index = new Index(dr.GetString(1), schema) { Table = new Table(tableName, schema)};
                         index.IsUnique = dr[2].ToString() == "1";
+                        index.Table = table;
                         indices.Add(index);
                     }
                 }
@@ -199,14 +201,14 @@ namespace SqlEditor.Databases.Sqlite
             return indices;
         }
 
-        public override IList<Column> GetIndexColumns(IDbConnection connection, string schemaName, [NotNull] string indexName, object indexId = null, string databaseInstanceName = null)
+        public override IList<Column> GetIndexColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, [NotNull] string indexName, object indexId = null, string databaseInstanceName = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (indexName == null) throw new ArgumentNullException("indexName");
-            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (indexSchemaName == null) throw new ArgumentNullException("indexSchemaName");
 
-            _log.DebugFormat("Getting indexed columns for schema {0} and index {1} ...", schemaName, indexName);
-            var schema = new Schema(schemaName);
+            _log.DebugFormat("Getting indexed columns for schema {0} and index {1} ...", indexSchemaName, indexName);
+            var schema = new Schema(indexSchemaName);
             var index = new Index(indexName, schema);
             var columns = new List<Column>();
             using (var command = connection.CreateCommand())
@@ -225,8 +227,7 @@ namespace SqlEditor.Databases.Sqlite
             return columns;
         }
 
-        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string schemaName, string indexName, object indexId = null,
-            string databaseInstanceName = null)
+        public override IList<Column> GetIndexIncludedColumns(IDbConnection connection, string tableSchemaName, string tableName, string indexSchemaName, string indexName, object indexId = null, string databaseInstanceName = null)
         {
             return new List<Column>();
         }
