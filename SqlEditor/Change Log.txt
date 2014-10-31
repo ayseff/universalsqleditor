@@ -1,8 +1,12 @@
 ﻿Version: 0.3.4.0
   New Features:
-  - Added the ability to show execution plans
+  - Added the ability to show execution/explain plans
+  - Added the ability to script DDL for indexes
+  - All scripting operations are now asynchronous
   Bug Fixes:
   - Fixed an issue where MySQL index columns were not accurate in the database explorer
+  - Fixed an issue with showing indexes when the table and index reside in different schemas (DB2 only)
+  - Fixed an issue with DROP INDEX scripting for MySQL
 Version: 0.3.3.0
   New Features:
   - Added a feature that allows you to double-click a column or a table and have it automatically paste into SQL worksheet

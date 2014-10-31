@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
 using SqlEditor.Annotations;
@@ -155,6 +156,10 @@ namespace SqlEditor.Databases.Db2
                             
                             columnNames = columnNames.Take(uniqueColumnCount).ToList();
                         }
+                    }
+                    else
+                    {
+                        throw new Exception("Index " + indexSchemaName + "." + indexName + " does not exist");
                     }
                 }
             }

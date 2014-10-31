@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using IBM.Data.DB2;
 using JetBrains.Annotations;
 using SqlEditor.DatabaseExplorer;
@@ -14,10 +15,7 @@ namespace SqlEditor.Databases.Db2
 {
     public class Db2DdlGenerator : DdlGenerator
     {
-        //private readonly Regex _leadingSpaceRegex = new Regex("\"\\s+(?<text>[^\\s]+)\\s*\"", RegexOptions.Compiled);
         private readonly Regex _trailingSpaceRegex = new Regex("\"\\s*(?<text>[^\\s]+)\\s+\"\\.", RegexOptions.Compiled);
-        //private readonly Regex _leadingSpaceRegex = new Regex("\\s+\"", RegexOptions.Compiled);
-        //private readonly Regex _trailingSpaceRegex = new Regex("\"\\s+", RegexOptions.Compiled);
 
         public override string GenerateCreateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
             [NotNull] string tableName)
@@ -40,7 +38,7 @@ namespace SqlEditor.Databases.Db2
             }
 
             // Find end of create table
-            var validLines = new List<string>(); // lines.TakeWhile(line => !(line.Trim().ToCharArray().Distinct().Count() == 1 && line.Trim().ToCharArray().Distinct().FirstOrDefault() != '-')).ToList();
+            var validLines = new List<string>();
             foreach (var line in lines)
             {
                 var chars = line.Trim().ToCharArray().Distinct().ToList();
@@ -136,7 +134,7 @@ namespace SqlEditor.Databases.Db2
             if (indexName == null) throw new ArgumentNullException("indexName");
 
             // Find table name for this index
-            string tableSchema = null, tableName = null;
+            string tableSchema, tableName;
             using (var connection = databaseConnection.CreateNewConnection())
             {
                 connection.OpenIfRequired();
@@ -211,11 +209,11 @@ namespace SqlEditor.Databases.Db2
             var db2Home = ConfigurationManager.AppSettings["DB2Home"];
             if (string.IsNullOrEmpty(db2Home))
             {
-                throw new Exception("DB2Home setting not set in the configuration. Please set the value for it in app.config file");
+                throw new Exception("DB2Home setting not set in the configuration. Please set the value for it in " + Application.ProductName + ".exe.config file");
             }
             else if (!Directory.Exists(db2Home))
             {
-                throw new Exception("DB2Home directory '" + db2Home + "' does not exist. Please set the correct value for it in app.config file");
+                throw new Exception("DB2Home directory '" + db2Home + "' does not exist. Please set the value for it in " + Application.ProductName + ".exe.config file");
             }
             var db2Look = Path.Combine(db2Home, "db2look.exe");
             if (!File.Exists(db2Look))
@@ -241,28 +239,16 @@ namespace SqlEditor.Databases.Db2
             var commandOutput = executor.RunBackgroundProcess(scriptFile, null);
             if (commandOutput.ExitCode != 0)
             {
-                throw new Exception(commandOutput.StandardError + Environment.NewLine + commandOutput.StandardError);
+                throw new Exception("db2look.exe returned unsuccessful return code of " + commandOutput.ExitCode + ". " + commandOutput.StandardError + Environment.NewLine + commandOutput.StandardError);
             }
 
             // Clean up standard output
-            
             var output = commandOutput.StandardOutput;
-            //output = _leadingSpaceRegex.Replace(output, "\"");
-            //output = _trailingSpaceRegex.Replace(output, "\"");
-            //while (output.IndexOf("\" ", StringComparison.InvariantCultureIgnoreCase) >= 0)
-            //{
-            //    output = output.Replace("\" ", "\"");
-            //}
-            //while (output.IndexOf(" \"", StringComparison.InvariantCultureIgnoreCase) >= 0)
-            //{
-            //    output = output.Replace(" \"", "\"");
-            //}
-            //output = CleanText(output, _leadingSpaceRegex);
             output = CleanText(output, _trailingSpaceRegex);
             return output;
         }
 
-        private string CleanText(string output, Regex regex)
+        private static string CleanText(string output, Regex regex)
         {
             var match = regex.Match(output);
             while (match.Success)
