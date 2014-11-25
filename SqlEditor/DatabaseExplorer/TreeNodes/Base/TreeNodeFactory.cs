@@ -18,6 +18,7 @@ using SqlEditor.Databases.Db2;
 using SqlEditor.Databases.MsAccess;
 using SqlEditor.Databases.MySql;
 using SqlEditor.Databases.Oracle;
+using SqlEditor.Databases.PostgreSql;
 using SqlEditor.Databases.SqlCe;
 using SqlEditor.Databases.Sqlite;
 using SqlEditor.Databases.SqlServer;
@@ -41,6 +42,10 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             else if (databaseConnection.DatabaseServer is MySqlDatabaseServer)
             {
                 return new MySqlConnectionTreeNode(databaseConnection);
+            }
+            else if (databaseConnection.DatabaseServer is PostgreSqlDatabaseServer)
+            {
+                return new PostgreSqlConnectionTreeNode(databaseConnection);
             }
             else if (databaseConnection.DatabaseServer is SqlServerDatabaseServer)
             {

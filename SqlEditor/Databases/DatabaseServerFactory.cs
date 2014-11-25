@@ -5,6 +5,7 @@ using SqlEditor.Databases.Db2;
 using SqlEditor.Databases.MsAccess;
 using SqlEditor.Databases.MySql;
 using SqlEditor.Databases.Oracle;
+using SqlEditor.Databases.PostgreSql;
 using SqlEditor.Databases.SqlCe;
 using SqlEditor.Databases.SqlServer;
 using SqlEditor.Databases.Sqlite;
@@ -41,6 +42,7 @@ namespace SqlEditor.Databases
                                                                            new OracleDatabaseServer(),
                                                                            new Db2DatabaseServer(),
                                                                            new MySqlDatabaseServer(),
+                                                                           new PostgreSqlDatabaseServer(), 
                                                                            new MsAccess2003DatabaseServer(),
                                                                            new MsAccess2007DatabaseServer(),
                                                                            new SqliteDatabaseServer(),
@@ -58,21 +60,29 @@ namespace SqlEditor.Databases
             {
                 return new OracleDatabaseServer();
             }
-            else if (serverType == "DB2")
+            else if (string.Equals(serverType, "DB2", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new Db2DatabaseServer();
             }
-            else if (serverType == "SQL SERVER" || serverType == "SQLSERVER")
+            else if (string.Equals(serverType, "SQL SERVER", StringComparison.InvariantCultureIgnoreCase) 
+                || string .Equals(serverType, "SQLSERVER", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new SqlServerDatabaseServer();
             }
-            else if (serverType == "SQL SERVER COMPACT" || serverType == "SQL CE" || serverType == "SQLCE")
+            else if (string.Equals(serverType, "SQL SERVER COMPACT", StringComparison.InvariantCultureIgnoreCase) 
+                || string.Equals(serverType, "SQL CE", StringComparison.InvariantCultureIgnoreCase) 
+                || string.Equals(serverType, "SQLCE", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new SqlCeDatabaseServer();
             }
-            else if (serverType == "MYSQL" || serverType == "MY SQL")
+            else if (string.Equals(serverType, "MYSQL", StringComparison.InvariantCultureIgnoreCase) ||
+                     string.Equals(serverType, "MY SQL", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new MySqlDatabaseServer();
+            }
+            else if (string.Equals(serverType, "PostgreSQL", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new PostgreSqlDatabaseServer();
             }
             else if (serverType == "MICROSOFT ACCESS 2003" || serverType == "MS ACCESS 2003" ||
                      serverType == "MSACCESS2003" || serverType == "ACCESS32003")
@@ -84,7 +94,7 @@ namespace SqlEditor.Databases
             {
                 return new MsAccess2007DatabaseServer();
             }
-            else if (serverType == "SQLITE")
+            else if (string.Equals(serverType, "SQLITE", StringComparison.InvariantCultureIgnoreCase))
             {
                 return new SqliteDatabaseServer();
             }
@@ -124,6 +134,10 @@ namespace SqlEditor.Databases
             {
                 return "mysql.png";
             }
+            else if (server is PostgreSqlDatabaseServer)
+            {
+                return "postgresql.png";
+            }
             else if (server is MsAccess2003DatabaseServer)
             {
                 return "access.png";
@@ -160,6 +174,10 @@ namespace SqlEditor.Databases
             {
                 return "mysql.png";
             }
+            else if (server is PostgreSqlDatabaseServer)
+            {
+                return "postgresql.png";
+            }
             else if (server is MsAccess2003DatabaseServer)
             {
                 return "access.png";
@@ -194,6 +212,10 @@ namespace SqlEditor.Databases
             else if (server is MySqlDatabaseServer)
             {
                 return "database_yellow.png";
+            }
+            else if (server is PostgreSqlDatabaseServer)
+            {
+                return "user.png";
             }
             else if (server is MsAccess2003DatabaseServer)
             {

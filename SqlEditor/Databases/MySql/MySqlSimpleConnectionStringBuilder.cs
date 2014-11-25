@@ -10,7 +10,7 @@ namespace SqlEditor.Databases.MySql
         private readonly MySqlConnectionStringBuilder _connectionStringBuilder;
 
         [DisplayName("Data Source")]
-        [Description("SQL Server host name or IP address")]
+        [Description("Database server host name or IP address")]
         public string Server 
         {
             get { return _connectionStringBuilder.Server; }

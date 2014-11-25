@@ -2,7 +2,6 @@
 using System.Data;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
-using Oracle.ManagedDataAccess.Client;
 using SqlEditor.QueryResults;
 using Utilities.Text;
 

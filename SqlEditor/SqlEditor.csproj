@@ -31,6 +31,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <NuGetPackageImportStamp>4fc6935f</NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -177,9 +179,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAPICodePack-Shell.1.1\lib\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Npgsql.2.2.2\lib\net45\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MySql.Data.6.9.3\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.2.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Npgsql.2.2.2\lib\net45\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -238,12 +248,15 @@
     <Compile Include="DatabaseExplorer\TreeNodes\MsAccess\MsAccessConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlSchemaTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\MySql\PostgreSqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\PublicSynonymsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SchemasTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlCe\SqliteConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Sqlite\SqliteConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\PostgreSqlDatabaseInstanceTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\PostgreSqlSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerDatabaseInstanceTreeNode.cs" />
@@ -284,6 +297,12 @@
     <Compile Include="Databases\Oracle\OracleExplainPlanGenerator.cs" />
     <Compile Include="Databases\Oracle\OracleDdlGenerator.cs" />
     <Compile Include="Databases\Oracle\OracleSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\PostgreSql\PostgreSqlDatabaseServer.cs" />
+    <Compile Include="Databases\PostgreSql\PostgreSqlDdlGenerator.cs" />
+    <Compile Include="Databases\PostgreSql\PostgreSqlExplainPlanData.cs" />
+    <Compile Include="Databases\PostgreSql\PostgreSqlExplainPlanGenerator.cs" />
+    <Compile Include="Databases\PostgreSql\PostgreSqlInfoProvider.cs" />
+    <Compile Include="Databases\PostgreSql\PostgreSqlSimpleConnectionStringBuilder.cs" />
     <Compile Include="Databases\SqlCe\ShowPlanXML.cs" />
     <Compile Include="Databases\SqlCe\SqlCeDdlGenerator.cs" />
     <Compile Include="Databases\SqlCe\SqlCeSimpleConnectionStringBuilder.cs" />
@@ -734,7 +753,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.94.0\build\net45\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
