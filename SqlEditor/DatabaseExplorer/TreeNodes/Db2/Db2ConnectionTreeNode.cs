@@ -7,12 +7,12 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Db2
 {
     public sealed class Db2ConnectionTreeNode : ConnectionTreeNode
     {
-        private readonly List<Schema> Schemas = new List<Schema>();
+        private readonly List<Schema> _schemas = new List<Schema>();
 
         public Db2ConnectionTreeNode(DatabaseConnection connection)
             : base(connection)
         {
-            Schemas = new List<Schema>();
+            _schemas = new List<Schema>();
         }
 
         protected override IList<TreeNodeBase> GetNodes()

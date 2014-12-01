@@ -20,4 +20,7 @@
   <Mode file       = "MSACCESSSQL.xshd"
         name       = "MSACCESSSQL"
         extensions = ".sql"/>
+  <Mode file       = "POSTGRESQLSQL.xshd"
+        name       = "POSTGRESQLSQL"
+        extensions = ".sql"/>
 </SyntaxModes>

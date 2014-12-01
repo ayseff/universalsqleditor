@@ -248,15 +248,15 @@
     <Compile Include="DatabaseExplorer\TreeNodes\MsAccess\MsAccessConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlSchemaTreeNode.cs" />
-    <Compile Include="DatabaseExplorer\TreeNodes\MySql\PostgreSqlConnectionTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\PostgreSql\PostgreSqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\PublicSynonymsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SchemasTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlCe\SqliteConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Sqlite\SqliteConnectionTreeNode.cs" />
-    <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\PostgreSqlDatabaseInstanceTreeNode.cs" />
-    <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\PostgreSqlSchemaTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\PostgreSql\PostgreSqlDatabaseInstanceTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\PostgreSql\PostgreSqlSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlServer\SqlServerDatabaseInstanceTreeNode.cs" />
@@ -622,6 +622,9 @@
     <EmbeddedResource Include="Resources\VS2010.isl" />
     <EmbeddedResource Include="Resources\Windows7.isl" />
     <Content Include="Resources\MSACCESSSQL.xshd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\POSTGRESQLSQL.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Windows8DarkGrayBlue.isl" />

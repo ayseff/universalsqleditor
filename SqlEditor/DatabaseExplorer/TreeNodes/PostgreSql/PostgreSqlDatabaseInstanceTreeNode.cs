@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SqlEditor.Databases;
 
-namespace SqlEditor.DatabaseExplorer.TreeNodes.SqlServer
+namespace SqlEditor.DatabaseExplorer.TreeNodes.PostgreSql
 {
     public class PostgreSqlDatabaseInstanceTreeNode : DatabaseInstanceTreeNode
     {

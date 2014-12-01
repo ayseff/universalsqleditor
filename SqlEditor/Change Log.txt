@@ -1,4 +1,8 @@
-﻿Version: 0.3.4.0
+﻿Version: 0.3.5.0
+  New Features:
+  - Added support for PosgreSQL
+  Bug Fixes:  
+Version: 0.3.4.0
   New Features:
   - Added the ability to show execution/explain plans
   - Added the ability to script DDL for indexes

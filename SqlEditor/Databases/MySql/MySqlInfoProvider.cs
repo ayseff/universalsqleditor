@@ -302,8 +302,6 @@ namespace SqlEditor.Databases.MySql
             if (currentSchemaName == null) throw new ArgumentNullException("currentSchemaName");
             const string tablesSql =
                 "SELECT c.table_schema, c.table_name, c.column_name FROM information_schema.columns c ORDER BY c.table_schema, c.table_name, c.column_name";
-            //const string viewsSql =
-            //    "SELECT c.table_schema, c.table_name, c.column_name FROM information_schema.columns c INNER JOIN information_schema.views t ON t.table_schema = c.table_schema AND t.table_name = c.table_name ORDER BY c.table_schema, c.table_name, c.column_name";
             return GetIntellisenseDataHelper(connection, currentSchemaName, tablesSql, null, null);
         }
     }

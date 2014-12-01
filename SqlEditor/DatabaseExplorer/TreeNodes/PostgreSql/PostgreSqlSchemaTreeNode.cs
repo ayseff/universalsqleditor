@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using SqlEditor.Databases;
 
-namespace SqlEditor.DatabaseExplorer.TreeNodes.SqlServer
+namespace SqlEditor.DatabaseExplorer.TreeNodes.PostgreSql
 {
     public class PostgreSqlSchemaTreeNode : SchemaTreeNode
     {
@@ -20,8 +20,6 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.SqlServer
             nodes.Add(indexesNode);
             var constraintsNode = new ConstraintsTreeNode(Schema, DatabaseConnection);
             nodes.Add(constraintsNode);
-            var storedProcedures = new StoredProceduresTreeNode(Schema, DatabaseConnection);
-            nodes.Add(storedProcedures);
             var functions = new FunctionsTreeNode(Schema, DatabaseConnection);
             nodes.Add(functions);
             var sequencesNode = new SequencesTreeNode(Schema, DatabaseConnection);

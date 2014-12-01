@@ -10,6 +10,7 @@ using SqlEditor.DatabaseExplorer.TreeNodes.Db2;
 using SqlEditor.DatabaseExplorer.TreeNodes.MsAccess;
 using SqlEditor.DatabaseExplorer.TreeNodes.MySql;
 using SqlEditor.DatabaseExplorer.TreeNodes.Oracle;
+using SqlEditor.DatabaseExplorer.TreeNodes.PostgreSql;
 using SqlEditor.DatabaseExplorer.TreeNodes.SqlCe;
 using SqlEditor.DatabaseExplorer.TreeNodes.Sqlite;
 using SqlEditor.DatabaseExplorer.TreeNodes.SqlServer;
@@ -107,7 +108,11 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             {
                 return schemas.Select(schema => new Db2SchemaTreeNode(schema, databaseConnection)).Cast<TreeNodeBase>().ToList();
             }
-                // TODO: Add other servers here
+            else if (databaseConnection.DatabaseServer is PostgreSqlDatabaseServer)
+            {
+                return schemas.Select(schema => new PostgreSqlSchemaTreeNode(schema, databaseConnection)).Cast<TreeNodeBase>().ToList();
+            }
+            // TODO: Add other servers here
             else
             {
                 throw new Exception("Unrecognized database server " + databaseConnection.GetType());
