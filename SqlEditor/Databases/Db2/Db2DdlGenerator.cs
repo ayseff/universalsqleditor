@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using IBM.Data.DB2;
 using JetBrains.Annotations;
+using log4net;
 using SqlEditor.DatabaseExplorer;
 using Utilities.Process;
 
@@ -15,6 +17,7 @@ namespace SqlEditor.Databases.Db2
 {
     public class Db2DdlGenerator : DdlGenerator
     {
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly Regex _trailingSpaceRegex = new Regex("\"\\s*(?<text>[^\\s]+)\\s+\"\\.", RegexOptions.Compiled);
 
         public override string GenerateCreateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
@@ -227,25 +230,40 @@ namespace SqlEditor.Databases.Db2
 
             // Build script
             var scriptFile = Path.GetTempFileName();
-            scriptFile = Path.Combine(Path.GetDirectoryName(scriptFile) ?? string.Empty,
-                Path.GetFileNameWithoutExtension(scriptFile) + ".bat");
-            var scriptContents = "@echo off" + Environment.NewLine;
-            scriptContents += @"@set PATH=%~d0%~p0..\db2tss\bin;%PATH%" + Environment.NewLine;
-            scriptContents += @"@cd " + db2Home + @"\..\bnd" + Environment.NewLine;
-            scriptContents += @"@db2clpsetcp" + Environment.NewLine;
-            scriptContents += "\"" + db2Look + "\" " + db2LookArguments;
-            File.WriteAllText(scriptFile, scriptContents);
-            var executor = new BackgroundProcessExecutor();
-            var commandOutput = executor.RunBackgroundProcess(scriptFile, null);
-            if (commandOutput.ExitCode != 0)
+            try
             {
-                throw new Exception("db2look.exe returned unsuccessful return code of " + commandOutput.ExitCode + ". " + commandOutput.StandardError + Environment.NewLine + commandOutput.StandardError);
-            }
+                scriptFile = Path.Combine(Path.GetDirectoryName(scriptFile) ?? string.Empty,
+                    Path.GetFileNameWithoutExtension(scriptFile) + ".bat");
+                var scriptContents = "@echo off" + Environment.NewLine;
+                scriptContents += @"@set PATH=%~d0%~p0..\db2tss\bin;%PATH%" + Environment.NewLine;
+                scriptContents += @"@cd " + db2Home + @"\..\bnd" + Environment.NewLine;
+                scriptContents += @"@db2clpsetcp" + Environment.NewLine;
+                scriptContents += "\"" + db2Look + "\" " + db2LookArguments;
+                File.WriteAllText(scriptFile, scriptContents);
+                var executor = new BackgroundProcessExecutor();
+                var commandOutput = executor.RunBackgroundProcess(scriptFile, null);
+                if (commandOutput.ExitCode != 0)
+                {
+                    throw new Exception("db2look.exe returned unsuccessful return code of " + commandOutput.ExitCode + ". " + commandOutput.StandardError + Environment.NewLine + commandOutput.StandardError);
+                }
 
-            // Clean up standard output
-            var output = commandOutput.StandardOutput;
-            output = CleanText(output, _trailingSpaceRegex);
-            return output;
+                // Clean up standard output
+                var output = commandOutput.StandardOutput;
+                output = CleanText(output, _trailingSpaceRegex);
+                return output;
+            }
+            finally 
+            {
+                try
+                {
+                    File.Delete(scriptFile);
+                }
+                catch (Exception ex)
+                {
+                    _log.ErrorFormat("Error deleting file {0}. {1}", scriptFile, ex.Message);
+                    _log.Error(ex.Message, ex);
+                }
+            }
         }
 
         private static string CleanText(string output, Regex regex)

@@ -1,131 +1,169 @@
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using IBM.Data.DB2;
 using JetBrains.Annotations;
+using log4net;
 using SqlEditor.DatabaseExplorer;
-using SqlEditor.SqlHelpers;
 using Utilities.Process;
+using Utilities.Text;
 
 namespace SqlEditor.Databases.PostgreSql
 {
     public class PostgreSqlDdlGenerator : DdlGenerator
     {
+        private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly Regex _trailingSpaceRegex = new Regex("\"\\s*(?<text>[^\\s]+)\\s+\"\\.", RegexOptions.Compiled);
 
-        public override string GenerateCreateTableDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema,
+        public override string GenerateCreateTableDdl([NotNull] DatabaseConnection databaseConnection, string database,
+            [NotNull] string schema,
             [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (schema == null) throw new ArgumentNullException("schema");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
-            // Get full DDL
-            var ddl = GenerateCreateTableFullDdl(databaseConnection, null, schema, tableName);
+            var sql = GetPgDumpOutput(databaseConnection);
 
-            // Find start of create table
-            var lines = ddl.Split(new[] { "\n" }, StringSplitOptions.None).ToList();
-            while (lines.Count > 0)
-            {
-                if (lines[0].Trim().StartsWith("CREATE TABLE", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    break;
-                }
-                lines.RemoveAt(0);
-            }
+            // Find create table
+            var tableDdl = ExtractCreateTableStatement(schema, tableName, sql);
 
-            // Find end of create table
-            var validLines = new List<string>();
-            foreach (var line in lines)
-            {
-                var chars = line.Trim().ToCharArray().Distinct().ToList();
-                if (chars.Count == 1 && chars[0] == '-')
-                {
-                    break;
-                }
-                validLines.Add(line);
-            }
+            // Find any alter tables
+            tableDdl += ExtractAlterTableStatements(schema, tableName, sql);
 
-
-            var sql = string.Join("\n", validLines);
-            sql = sql.Replace("\r", string.Empty);
-            return sql;
+            return tableDdl;
         }
 
-        public override string GenerateCreateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database, string schema, [NotNull] string tableName)
+        public override string GenerateCreateTableFullDdl([NotNull] DatabaseConnection databaseConnection, string database,
+            [NotNull] string schema, [NotNull] string tableName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (schema == null) throw new ArgumentNullException("schema");
             if (tableName == null) throw new ArgumentNullException("tableName");
 
-            var connectionStringBuilder = (DB2ConnectionStringBuilder)
+            var sql = GetPgDumpOutput(databaseConnection);
+
+            // Find create table
+            var tableDdl = ExtractCreateTableStatement(schema, tableName, sql);
+
+            // Find any alter tables
+            tableDdl += ExtractAlterTableStatements(schema, tableName, sql);
+
+            // Find any indexes
+            tableDdl += ExtractCreateIndexStatementsForTable(schema, tableName, sql);
+
+            return tableDdl;
+        }
+
+        private string GetPgDumpOutput(DatabaseConnection databaseConnection)
+        {
+            var connectionStringBuilder = (Npgsql.NpgsqlConnectionStringBuilder)
                 databaseConnection.DatabaseServer.GetConnectionStringBuilder(databaseConnection.ConnectionString);
-            var arguments = string.Format("-t {0} ", tableName);
-            if (!string.IsNullOrEmpty(schema))
-            {
-                arguments += string.Format("-z {0} ", schema);
-            }
-            var ddl = RunPgDump(connectionStringBuilder.Database, connectionStringBuilder.UserID,
-                connectionStringBuilder.Password, arguments);
+            var ddl = RunPgDump(connectionStringBuilder.Host, connectionStringBuilder.Database, connectionStringBuilder.UserName,
+                (string) connectionStringBuilder["PASSWORD"], connectionStringBuilder.Port);
             var sql = ddl.Replace("\r", string.Empty);
+            if (sql.Length == 0)
+            {
+                throw new Exception("pg_dump.exe did not return any output");
+            }
             return sql;
         }
 
-        public override string GenerateCreateViewDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        private static string ExtractCreateIndexStatementsForTable(string schema, string tableName, string sql)
         {
-            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
-            if (viewName == null) throw new ArgumentNullException("viewName");
-
-            // Get full DDL
-            var ddl = GenerateCreateViewFullDdl(databaseConnection, null, schema, viewName);
-
-            // Find start of create table
-            var lines = ddl.Split(new[] { "\n" }, StringSplitOptions.None).ToList();
-            while (lines.Count > 0)
+            //CREATE [ UNIQUE ] INDEX [ CONCURRENTLY ] [ name ] ON table [ USING method ]
+            var createIndexregex =
+                new Regex(string.Format(@"^\s*CREATE\s+(UNIQUE\s+)?INDEX\s+(CONCURRENTLY\s+)?\w+?\s+ON\s+({0}\.)?{1}\b\s*.*?;\s*$", schema, tableName),
+                    RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline);
+            var ddl = string.Empty;
+            var startIndex = 0;
+            var match = createIndexregex.Match(sql, startIndex);
+            while (match.Success)
             {
-                if (lines[0].Trim().StartsWith("CREATE VIEW", StringComparison.InvariantCultureIgnoreCase))
+                ddl += match.Value.Trim() + Environment.NewLine + Environment.NewLine;
+                startIndex = match.Index + match.Length + 1;
+                if (startIndex < sql.Length)
+                {
+                    match = createIndexregex.Match(sql, startIndex);
+                }
+                else
                 {
                     break;
                 }
-                lines.RemoveAt(0);
             }
-
-            // Find end of create table
-            var validLines = new List<string>();
-            foreach (var line in lines)
-            {
-                if (line.Trim() == string.Empty)
-                {
-                    break;
-                }
-                validLines.Add(line);
-            }
-
-
-            var sql = string.Join("\n", validLines);
-            sql = sql.Replace("\r", string.Empty);
-            return sql;
+            return ddl;
         }
 
-        public override string GenerateCreateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName)
+        private static string ExtractAlterTableStatements(string schema, string tableName, string sql)
+        {
+            var ddl = string.Empty;
+            var alterTableRegex =
+                new Regex(string.Format(@"^\s*ALTER\s+TABLE\s+(ONLY\s+)?({0}\.)?{1}\s+.*?;\s*$", schema, tableName),
+                    RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline);
+            var startIndex = 0;
+            var match = alterTableRegex.Match(sql, startIndex);
+            while (match.Success)
+            {
+                ddl += match.Value.Trim() + Environment.NewLine + Environment.NewLine;
+                startIndex = match.Index + match.Length + 1;
+                if (startIndex < sql.Length)
+                {
+                    match = alterTableRegex.Match(sql, startIndex);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return ddl;
+        }
+
+        private static string ExtractCreateTableStatement(string schema, string tableName, string sql)
+        {
+            var createTableRegex = new Regex(
+                string.Format(@"^\s*CREATE\s+((GLOBAL|LOCAL)\s+)?((TEMPORARY|TEMP)\s+)?((UNLOGGED)?\s+)?TABLE\s+((IF NOT EXISTS)\s+)?({0}\.)?{1}\b\s*\(.*?;\s*$", schema, tableName),
+                RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline);
+            var match = createTableRegex.Match(sql);
+            if (match.Success)
+            {
+                return match.Value.Trim() + Environment.NewLine + Environment.NewLine;
+            }
+            else
+            {
+                _log.ErrorFormat("Could not find CREATE TABLE statement in SQL dump: {0}", sql);
+                throw new Exception("Could not find CREATE TABLE statement from the pg_dump output");
+            }
+        }
+
+        public override string GenerateCreateViewDdl(DatabaseConnection databaseConnection, string database,
+            [NotNull] string schema, string viewName)
+        {
+            var sql = GetPgDumpOutput(databaseConnection);
+            var createTableRegex = new Regex(
+                string.Format(@"^\s*CREATE\s+(OR\s+REPLACE\s+)?((TEMPORARY|TEMP)\s+)?VIEW\s+({0}\.)?{1}\b.*?;\s*$", schema, viewName),
+                RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline);
+            var match = createTableRegex.Match(sql);
+            if (match.Success)
+            {
+                return match.Value.Trim() + Environment.NewLine + Environment.NewLine;
+            }
+            else
+            {
+                _log.ErrorFormat("Could not find CREATE VIEW statement in SQL dump: {0}", sql);
+                throw new Exception("Could not find CREATE VIEW statement from the pg_dump output");
+            }
+        }
+
+        public override string GenerateCreateViewFullDdl(DatabaseConnection databaseConnection, string database,
+            [NotNull] string schema, string viewName)
         {
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+            if (schema == null) throw new ArgumentNullException("schema");
             if (viewName == null) throw new ArgumentNullException("viewName");
 
-            var connectionStringBuilder = (DB2ConnectionStringBuilder)
-                databaseConnection.DatabaseServer.GetConnectionStringBuilder(databaseConnection.ConnectionString);
-            var arguments = string.Format("-v {0} ", viewName);
-            if (!string.IsNullOrEmpty(schema))
-            {
-                arguments += string.Format("-z {0} ", schema);
-            }
-            var ddl = RunPgDump(connectionStringBuilder.Database, connectionStringBuilder.UserID,
-                connectionStringBuilder.Password, arguments);
-            var sql = ddl.Replace("\r", string.Empty);
-            return sql;
+            return GenerateCreateViewDdl(databaseConnection, database, schema, viewName);
         }
 
         public override string GenerateCreateIndexDdl(DatabaseConnection databaseConnection, string database, [NotNull] string indexSchema, string indexName, object indexId)
@@ -134,119 +172,86 @@ namespace SqlEditor.Databases.PostgreSql
             if (indexSchema == null) throw new ArgumentNullException("indexSchema");
             if (indexName == null) throw new ArgumentNullException("indexName");
 
-            // Find table name for this index
-            string tableSchema, tableName;
-            using (var connection = databaseConnection.CreateNewConnection())
+            var sql = GetPgDumpOutput(databaseConnection);
+            var  createIndexRegex =
+                new Regex(string.Format(@"^\s*CREATE\s+(UNIQUE\s+)?INDEX\s+(CONCURRENTLY\s+)?({0}\.)?{1}\s+ON\s+.*?;\s*$", indexSchema, indexName),
+                    RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.Singleline);
+            var match = createIndexRegex.Match(sql);
+            if (match.Success)
             {
-                connection.OpenIfRequired();
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText =
-                        "select TABSCHEMA, TABNAME from syscat.INDEXES where UPPER(INDSCHEMA) = @1 and UPPER(INDNAME) = @2 fetch first row only";
-                    var param = command.CreateParameter();
-                    param.ParameterName = "@1";
-                    param.Value = indexSchema.Trim().ToUpper();
-                    command.Parameters.Add(param);
-                    param = command.CreateParameter();
-                    param.ParameterName = "@2";
-                    param.Value = indexName.Trim().ToUpper();
-                    command.Parameters.Add(param);
-                    using (var dr = command.ExecuteReader())
-                    {
-                        if (dr.Read())
-                        {
-                            tableSchema = dr.GetString(0).Trim().ToUpper();
-                            tableName = dr.GetString(1).Trim().ToUpper();
-                        }
-                        else
-                        {
-                            throw new Exception("Index " + indexSchema + "." + indexName + " does not exist in the database");
-                        }
-                    }
-                }
+                return match.Value.Trim() + Environment.NewLine + Environment.NewLine;
             }
-
-            // Get full DDL
-            var tableDdl = GenerateCreateTableFullDdl(databaseConnection, null, tableSchema, tableName);
-
-            // Find start of create index
-            var indexDdl = new StringBuilder();
-            var startCapture = false;
-            var regex = new Regex("CREATE\\s+INDEX\\s+(\")?(?<schema>\\w+)(\")?\\.(\")?(?<index>\\w+)(\")?",
-                RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var lines = tableDdl.Split(new[] { "\n" }, StringSplitOptions.None).ToList();
-            foreach (var line in lines)
+            else
             {
-                if (!startCapture)
-                {
-                    var match = regex.Match(line);
-                    if (match.Success
-                        &&
-                        string.Equals(match.Groups["schema"].Value, indexSchema, StringComparison.InvariantCultureIgnoreCase)
-                        &&
-                        string.Equals(match.Groups["index"].Value, indexName,
-                            StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        startCapture = true;
-                        indexDdl.AppendLine(line);
-                    }
-                }
-                else if (line.Trim() == string.Empty)
-                {
-                    break;
-                }
-                else
-                {
-                    indexDdl.AppendLine(line);
-                }
+                _log.ErrorFormat("Could not find CREATE INDEX statement in SQL dump: {0}", sql);
+                throw new Exception("Could not find CREATE INDEX statement from the pg_dump output");
             }
-            return indexDdl.ToString();
         }
 
 
-        private string RunPgDump(string database, string user, string password, string arguments)
+        private string RunPgDump([NotNull] string host, [NotNull] string database, [NotNull] string user,
+            [NotNull] string password, int port)
         {
-            // Get DB2Look path
-            var db2Home = ConfigurationManager.AppSettings["DB2Home"];
-            if (string.IsNullOrEmpty(db2Home))
+            if (host.IsNullEmptyOrWhitespace()) throw new ArgumentNullException("host");
+            if (database.IsNullEmptyOrWhitespace()) throw new ArgumentNullException("database");
+            if (user.IsNullEmptyOrWhitespace()) throw new ArgumentNullException("user");
+            if (password.IsNullEmptyOrWhitespace()) throw new ArgumentNullException("password");
+            // Get pg_dump path
+            var postgreSqlHome = ConfigurationManager.AppSettings["PostgreSQLHome"];
+            if (string.IsNullOrEmpty(postgreSqlHome))
             {
-                throw new Exception("DB2Home setting not set in the configuration. Please set the value for it in " + Application.ProductName + ".exe.config file");
+                throw new Exception("PostgreSQLHome setting not set in the configuration. Please set the value for it in " + Application.ProductName + ".exe.config file");
             }
-            else if (!Directory.Exists(db2Home))
+            else if (!Directory.Exists(postgreSqlHome))
             {
-                throw new Exception("DB2Home directory '" + db2Home + "' does not exist. Please set the value for it in " + Application.ProductName + ".exe.config file");
+                throw new Exception("PostgreSQLHome directory '" + postgreSqlHome + "' does not exist. Please set the value for it in " + Application.ProductName + ".exe.config file");
             }
-            var db2Look = Path.Combine(db2Home, "db2look.exe");
-            if (!File.Exists(db2Look))
+            var pgDump = Path.Combine(postgreSqlHome, "pg_dump.exe");
+            if (!File.Exists(pgDump))
             {
-                throw new Exception("db2look executable '" + db2Look + "' does not exist. Please make sure you have a DB2 client properly installed");
+                throw new Exception("pg_dump.exe executable '" + pgDump + "' does not exist. Please make sure you have it properly installed");
             }
 
-            var db2LookArguments =
+            // pg_dump.exe --username=mmedic --schema-only --host=localhost Test
+            var pgDumpArguments =
                 string.Format(
-                    "-d {0} -i {1} -w {2} -a -e -x ", database, user, password) + arguments;
+                    "--host={0} --port={1} --username={2} --schema-only --no-password {3} ", host, port, user, database);
 
             // Build script
-            var scriptFile = Path.GetTempFileName();
-            scriptFile = Path.Combine(Path.GetDirectoryName(scriptFile) ?? string.Empty,
-                Path.GetFileNameWithoutExtension(scriptFile) + ".bat");
-            var scriptContents = "@echo off" + Environment.NewLine;
-            scriptContents += @"@set PATH=%~d0%~p0..\db2tss\bin;%PATH%" + Environment.NewLine;
-            scriptContents += @"@cd " + db2Home + @"\..\bnd" + Environment.NewLine;
-            scriptContents += @"@db2clpsetcp" + Environment.NewLine;
-            scriptContents += "\"" + db2Look + "\" " + db2LookArguments;
-            File.WriteAllText(scriptFile, scriptContents);
-            var executor = new BackgroundProcessExecutor();
-            var commandOutput = executor.RunBackgroundProcess(scriptFile, null);
-            if (commandOutput.ExitCode != 0)
+            var tempFile = Path.GetTempFileName();
+            var scriptFile = Path.Combine(Path.GetDirectoryName(tempFile) ?? string.Empty,
+                    Path.GetFileNameWithoutExtension(tempFile) + ".bat");
+            try
             {
-                throw new Exception("db2look.exe returned unsuccessful return code of " + commandOutput.ExitCode + ". " + commandOutput.StandardError + Environment.NewLine + commandOutput.StandardError);
-            }
+                File.Move(tempFile, scriptFile);
+                var scriptContents = "@echo off" + Environment.NewLine;
+                scriptContents += @"@set PGPASSWORD=" + password + Environment.NewLine;
+                scriptContents += "\"" + pgDump + "\" " + pgDumpArguments;
+                File.WriteAllText(scriptFile, scriptContents);
+                var executor = new BackgroundProcessExecutor();
+                var commandOutput = executor.RunBackgroundProcess(scriptFile, null);
+                if (commandOutput.ExitCode != 0)
+                {
+                    throw new Exception("pg_dump.exe returned unsuccessful return code of " + commandOutput.ExitCode + ". " + commandOutput.StandardError + Environment.NewLine + commandOutput.StandardError);
+                }
 
-            // Clean up standard output
-            var output = commandOutput.StandardOutput;
-            output = CleanText(output, _trailingSpaceRegex);
-            return output;
+                // Clean up standard output
+                var output = commandOutput.StandardOutput;
+                output = CleanText(output, _trailingSpaceRegex);
+                return output;
+            }
+            finally
+            {
+                try
+                {
+                    File.Delete(scriptFile);
+                }
+                catch (Exception ex)
+                {
+                    _log.ErrorFormat("Error deleting file {0}. {1}", scriptFile, ex.Message);
+                    _log.Error(ex.Message, ex);
+                }
+            }
         }
 
         private static string CleanText(string output, Regex regex)
@@ -260,6 +265,7 @@ namespace SqlEditor.Databases.PostgreSql
                 output = part1 + "\"" + part2 + "\"." + part3;
                 match = regex.Match(output);
             }
+            output = output.Replace("\"", string.Empty);
             return output;
         }
     }

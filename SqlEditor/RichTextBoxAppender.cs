@@ -198,7 +198,7 @@ namespace SqlEditor
         /// </remarks>
         protected override void Append(LoggingEvent LoggingEvent)
         {
-            if (_richtextBox != null)
+            if (_richtextBox != null && !_richtextBox.IsDisposed)
             {
                 if (_richtextBox.InvokeRequired)
                 {
@@ -228,6 +228,8 @@ namespace SqlEditor
         /// <param name="loggingEvent">The event to log</param>
         private void UpdateControl(LoggingEvent loggingEvent)
         {
+            if (_richtextBox.IsDisposed) return;
+
             // There may be performance issues if the buffer gets too long
             // So periodically clear the buffer
             if (_richtextBox.TextLength > _maxTextLength)

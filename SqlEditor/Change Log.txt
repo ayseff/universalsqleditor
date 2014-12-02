@@ -2,6 +2,8 @@
   New Features:
   - Added support for PosgreSQL
   Bug Fixes:  
+  - Fixed an issue where clicking on Script View as -> Create was trying to generate TABLE DDL instead of VIEW DDL
+  - Fixed an issue if DDL generation would fail, the application may crash
 Version: 0.3.4.0
   New Features:
   - Added the ability to show execution/explain plans

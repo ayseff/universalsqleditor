@@ -348,6 +348,7 @@ namespace SqlEditor
             _treeDrawFilter.QueryStateAllowedForNode += ConnectionsDrawFilterQueryStateAllowedForNode;
             ((EditorButton) _uteConnectionsSearch.ButtonsRight["Clear"]).Click += (sender, args) => _uteConnectionsSearch.Clear();
             _uteConnectionsSearch.TextChanged += Connections_SearchTextChanged;
+            TaskScheduler.UnobservedTaskException += ObserveUnobservedTaskExceptions;
 
             ToggleVisibleToolRibbonTab(false, "Logging Tools");
             _rtbLog.GotFocus += (sender, args) => ToggleVisibleToolRibbonTab(true, "Logging Tools");
@@ -360,6 +361,24 @@ namespace SqlEditor
             ToggleVisibleToolRibbonTab(false, "SQL History Tools");
             _ugGrid.GotFocus += (sender, args) => ToggleVisibleToolRibbonTab(true, "SQL History Tools");
             _ugGrid.LostFocus += (sender, args) => ToggleVisibleToolRibbonTab(false, "SQL History Tools");
+        }
+
+        private static void ObserveUnobservedTaskExceptions(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            e.SetObserved();
+            _log.Error("Unobserved exception caught.");
+            var ex = e.Exception.Flatten();
+            foreach (var exception in ex.InnerExceptions)
+            {
+                _log.Error(exception.Message, exception);
+            }
+
+            var firstException = ex.InnerExceptions.FirstOrDefault();
+            if (firstException != null)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error occurred in the application.", ex.Message, ex.StackTrace);
+            }
+
         }
 
         private void ToggleVisibleToolRibbonTab(bool isVisible, string tabKey)
@@ -1165,15 +1184,22 @@ namespace SqlEditor
             {
                 throw new Exception("No index selected for drop");
             }
-            
-            DatabaseObject obj = selectedNode.IndexObject;
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql =
-                await
-                    databaseConnection.DatabaseServer.GetDdlGenerator()
-                        .GenerateDropIndexDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+
+            try
+            {
+                DatabaseObject obj = selectedNode.IndexObject;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql =
+                    await
+                        databaseConnection.DatabaseServer.GetDdlGenerator()
+                            .GenerateDropIndexDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptIndexDdl()
@@ -1189,14 +1215,21 @@ namespace SqlEditor
                 throw new Exception("Index not selected.");
             }
 
-            DatabaseObject obj = selectedNode.IndexObject;
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql =
-                await
-                    databaseConnection.DatabaseServer.GetDdlGenerator()
-                        .GenerateCreateIndexDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name, selectedNode.IndexObject.Id);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                DatabaseObject obj = selectedNode.IndexObject;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql =
+                    await
+                        databaseConnection.DatabaseServer.GetDdlGenerator()
+                            .GenerateCreateIndexDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name, selectedNode.IndexObject.Id);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptViewAsDrop()
@@ -1212,13 +1245,20 @@ namespace SqlEditor
                 throw new Exception("No table selected for drop");
             }
 
-            DatabaseObject obj = selectedNode.View;
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await
+            try
+            {
+                DatabaseObject obj = selectedNode.View;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await
                     databaseConnection.DatabaseServer.GetDdlGenerator()
                         .GenerateDropViewDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptViewAsSelect()
@@ -1234,10 +1274,17 @@ namespace SqlEditor
                 throw new Exception("No view selected for select");
             }
 
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var worksheet = NewWorksheet(databaseConnection);
-            var sql = await ObjectScripter.GenerateViewSelectStatement(selectedNode.View, databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var worksheet = NewWorksheet(databaseConnection);
+                var sql = await ObjectScripter.GenerateViewSelectStatement(selectedNode.View, databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptViewFullDdl()
@@ -1253,12 +1300,19 @@ namespace SqlEditor
                 throw new Exception("View not selected.");
             }
 
-            DatabaseObject obj = selectedNode.View;
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateCreateViewFullDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                DatabaseObject obj = selectedNode.View;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                    .GenerateCreateViewFullDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptViewDdl()
@@ -1274,12 +1328,19 @@ namespace SqlEditor
                 throw new Exception("View not selected.");
             }
 
-            DatabaseObject obj = selectedNode.View;
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateCreateViewDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                DatabaseObject obj = selectedNode.View;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                    .GenerateCreateViewDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptTableFullDdl()
@@ -1295,12 +1356,19 @@ namespace SqlEditor
                 throw new Exception("Table not selected.");
             }
 
-            DatabaseObject obj = selectedNode.Table;
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateCreateTableFullDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                DatabaseObject obj = selectedNode.Table;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                    .GenerateCreateTableFullDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptTableDdl()
@@ -1316,12 +1384,19 @@ namespace SqlEditor
                 throw new Exception("Table not selected.");
             }
 
-            DatabaseObject obj = selectedNode.Table;
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateCreateTableDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                DatabaseObject obj = selectedNode.Table;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                    .GenerateCreateTableDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private void Connections_FunctionDrop()
@@ -1337,10 +1412,17 @@ namespace SqlEditor
                 throw new Exception("Function not selected.");
             }
 
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = ObjectScripter.GenerateFunctionDropStatement(selectedNode.Function, databaseConnection);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = ObjectScripter.GenerateFunctionDropStatement(selectedNode.Function, databaseConnection);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private void Connections_FunctionEdit()

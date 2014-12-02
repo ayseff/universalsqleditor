@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using log4net;
 using log4net.Config;
+using Utilities.Forms.Dialogs;
 
 namespace SqlEditor
 {
@@ -26,8 +28,12 @@ namespace SqlEditor
             catch (Exception ex)
             {
                 _log.Error("UNHANDLED exception occurred.");
-                _log.Error(ex.Message, ex);
-                Utilities.Logging.Log4NetHelper.FlushAllAppenders();
+                var exc = ex;
+                while (exc != null)
+                {
+                    _log.Error(ex.Message, ex);
+                    exc = exc.InnerException;
+                }
                 throw;
             }
         }

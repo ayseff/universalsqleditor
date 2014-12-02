@@ -41,14 +41,15 @@ namespace SqlEditor.Databases
         public Task<string> GenerateCreateViewDdlAsync(DatabaseConnection databaseConnection, string database, string schema,
             string tableName)
         {
-            return Task.Run(() => GenerateCreateTableDdl(databaseConnection, database, schema, tableName));
+            return Task.Run(() => GenerateCreateViewDdl(databaseConnection, database, schema, tableName));
+            //return Task.Run(() => GenerateCreateTableDdl(databaseConnection, database, schema, tableName));
 
         }
         public abstract string GenerateCreateViewFullDdl(DatabaseConnection databaseConnection, string database, string schema, string viewName);
         public Task<string> GenerateCreateViewFullDdlAsync(DatabaseConnection databaseConnection, string database, string schema,
             string tableName)
         {
-            return Task.Run(() => GenerateCreateTableFullDdl(databaseConnection, database, schema, tableName));
+            return Task.Run(() => GenerateCreateViewFullDdl(databaseConnection, database, schema, tableName));
 
         }
 
