@@ -22,16 +22,25 @@ namespace SqlEditor.Databases
             if (view == null) throw new ArgumentNullException("view");
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
-            _log.DebugFormat("Generating SELECT statement for view {0} ...", view.FullyQualifiedName);
-            await LoadViewColumns(view, databaseConnection);
+            try
+            {
+                _log.DebugFormat("Generating SELECT statement for view {0} ...", view.FullyQualifiedName);
+                await LoadViewColumns(view, databaseConnection);
 
-            var sb = new StringBuilder();
-            sb.AppendLine("SELECT");
-            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", view.Columns.Select(x => x.Name)));
-            sb.AppendLine("FROM");
-            sb.AppendLine("\t" + view.FullyQualifiedName);
-            _log.DebugFormat("Generating complete.");
-            return sb.ToString();
+                var sb = new StringBuilder();
+                sb.AppendLine("SELECT");
+                sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", view.Columns.Select(x => x.Name)));
+                sb.AppendLine("FROM");
+                sb.AppendLine("\t" + view.FullyQualifiedName);
+                _log.DebugFormat("Generating complete.");
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error getting a list of columns.");
+                _log.Error(ex.Message, ex);
+                throw;
+            }
         }
 
         public static async Task<string> GenerateTableSelectStatement([JetBrains.Annotations.NotNull] Table table,
@@ -40,35 +49,26 @@ namespace SqlEditor.Databases
             if (table == null) throw new ArgumentNullException("table");
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
-            _log.DebugFormat("Generating SELECT statement for view {0} ...", table.FullyQualifiedName);
-            await LoadTableColumns(table, databaseConnection);
+            try
+            {
+                _log.DebugFormat("Generating SELECT statement for view {0} ...", table.FullyQualifiedName);
+                await LoadTableColumns(table, databaseConnection);
 
-            var sb = new StringBuilder();
-            sb.AppendLine("SELECT");
-            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", table.Columns.Select(x => x.Name)));
-            sb.AppendLine("FROM");
-            sb.AppendLine("\t" + table.FullyQualifiedName);
-            _log.DebugFormat("Generating complete.");
-            return sb.ToString();
+                var sb = new StringBuilder();
+                sb.AppendLine("SELECT");
+                sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", table.Columns.Select(x => x.Name)));
+                sb.AppendLine("FROM");
+                sb.AppendLine("\t" + table.FullyQualifiedName);
+                _log.DebugFormat("Generating complete.");
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error getting a list of columns.");
+                _log.Error(ex.Message, ex);
+                throw;
+            }
         }
-
-        //public static async Task<string> GenerateSelectStatement([JetBrains.Annotations.NotNull] DatabaseObjectWithColumns objectWithColumns,
-        //    [JetBrains.Annotations.NotNull] DatabaseConnection databaseConnection)
-        //{
-        //    if (objectWithColumns == null) throw new ArgumentNullException("objectWithColumns");
-        //    if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
-
-        //    _log.DebugFormat("Generating SELECT statement for view {0} ...", objectWithColumns.FullyQualifiedName);
-        //    await LoadTableColumns(objectWithColumns, databaseConnection);
-
-        //    var sb = new StringBuilder();
-        //    sb.AppendLine("SELECT");
-        //    sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", objectWithColumns.Columns.Select(x => x.Name)));
-        //    sb.AppendLine("FROM");
-        //    sb.AppendLine("\t" + objectWithColumns.FullyQualifiedName);
-        //    _log.DebugFormat("Generating complete.");
-        //    return sb.ToString();
-        //}
 
         public static async Task<string> GenerateTableInsertStatement([NotNull] Table table,
                                                      [NotNull] DatabaseConnection databaseConnection)
@@ -77,7 +77,16 @@ namespace SqlEditor.Databases
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
             _log.DebugFormat("Generating INSERT statement for table {0} ...", table.FullyQualifiedName);
-            await LoadTableColumns(table, databaseConnection);
+            try
+            {
+                await LoadTableColumns(table, databaseConnection);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error getting a list of columns.");
+                _log.Error(ex.Message, ex);
+                throw;
+            }
 
             var sb = new StringBuilder();
             sb.AppendLine("INSERT INTO " + table.FullyQualifiedName + " (");
@@ -113,7 +122,16 @@ namespace SqlEditor.Databases
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
             _log.DebugFormat("Generating UPDATE statement for table {0} ...", table.FullyQualifiedName);
-            await LoadTableColumns(table, databaseConnection);
+            try
+            {
+                await LoadTableColumns(table, databaseConnection);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error getting a list of columns.");
+                _log.Error(ex.Message, ex);
+                throw;
+            }
 
             var sb = new StringBuilder();
             sb.AppendLine("UPDATE " + table.FullyQualifiedName);
@@ -131,7 +149,16 @@ namespace SqlEditor.Databases
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
             _log.DebugFormat("Generating DELETE statement for table {0} ...", table.FullyQualifiedName);
-            await LoadTableColumns(table, databaseConnection);
+            try
+            {
+                await LoadTableColumns(table, databaseConnection);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error getting a list of columns.");
+                _log.Error(ex.Message, ex);
+                throw;
+            }
 
             var sb = new StringBuilder();
             sb.AppendLine("DELETE FROM " + table.FullyQualifiedName);
@@ -231,18 +258,27 @@ namespace SqlEditor.Databases
             _log.DebugFormat("Fetching columns for table {0} ...", table.FullyQualifiedName);
             var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
             IList<Column> columns, primaryKeyColumns;
-            using (var connection = await databaseConnection.CreateNewConnectionAsync())
+            try
             {
-                await connection.OpenIfRequiredAsync();
-                var databaseInstanceName = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
-                columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
-                primaryKeyColumns =
-                    await infoProvider.GetTablePrimaryKeyColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
-                primaryKeyColumns =
-                    columns.Where(
-                        x => primaryKeyColumns.Any(y => String.Equals(y.Name.Trim(), x.Name.Trim(), StringComparison.CurrentCultureIgnoreCase)))
-                           .ToList();
-                _log.DebugFormat("Fetching complete.");
+                using (var connection = await databaseConnection.CreateNewConnectionAsync())
+                {
+                    await connection.OpenIfRequiredAsync();
+                    var databaseInstanceName = table.Parent.Parent == null ? null : table.Parent.Parent.Name;
+                    columns = await infoProvider.GetTableColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
+                    primaryKeyColumns =
+                        await infoProvider.GetTablePrimaryKeyColumnsAsync(connection, table.Parent.Name, table.Name, databaseInstanceName);
+                    primaryKeyColumns =
+                        columns.Where(
+                            x => primaryKeyColumns.Any(y => String.Equals(y.Name.Trim(), x.Name.Trim(), StringComparison.CurrentCultureIgnoreCase)))
+                            .ToList();
+                    _log.DebugFormat("Fetching complete.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.ErrorFormat("Error getting a list of columns for table {0}.", table.FullyQualifiedName);
+                _log.Error(ex.Message, ex);
+                throw;
             }
             table.Columns.AddRange(columns);
             table.PrimaryKeyColumns.AddRange(primaryKeyColumns);
@@ -261,28 +297,24 @@ namespace SqlEditor.Databases
 
             _log.DebugFormat("Fetching columns for table {0} ...", view.FullyQualifiedName);
             var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
-            IList<Column> columns, primaryKeyColumns;
-            using (var connection = await databaseConnection.CreateNewConnectionAsync())
+            IList<Column> columns;
+            try
             {
-                await connection.OpenIfRequiredAsync();
-                var databaseInstanceName = view.Parent.Parent == null ? null : view.Parent.Parent.Name;
-                columns = await infoProvider.GetViewColumnsAsync(connection, view.Parent.Name, view.Name, databaseInstanceName);
-                _log.DebugFormat("Fetching complete.");
+                using (var connection = await databaseConnection.CreateNewConnectionAsync())
+                {
+                    await connection.OpenIfRequiredAsync();
+                    var databaseInstanceName = view.Parent.Parent == null ? null : view.Parent.Parent.Name;
+                    columns = await infoProvider.GetViewColumnsAsync(connection, view.Parent.Name, view.Name, databaseInstanceName);
+                    _log.DebugFormat("Fetching complete.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.ErrorFormat("Error getting a list of columns for view {0}.", view.FullyQualifiedName);
+                _log.Error(ex.Message, ex);
+                throw;
             }
             view.Columns.AddRange(columns);
-        }
-
-        public static string GenerateIndexDropStatement(Index index, DatabaseConnection databaseConnection)
-        {
-            if (index == null) throw new ArgumentNullException("index");
-            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
-
-            _log.DebugFormat("Generating DROP statement for index {0} ...", index.FullyQualifiedName);
-
-            var sb = new StringBuilder();
-            sb.AppendLine("DROP INDEX " + index.FullyQualifiedName);
-            _log.DebugFormat("Generating complete.");
-            return sb.ToString();
         }
     }
 }

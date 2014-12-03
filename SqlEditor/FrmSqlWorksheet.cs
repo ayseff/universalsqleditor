@@ -189,43 +189,52 @@ namespace SqlEditor
                 return;
             }
 
-            if (e.Data.GetDataPresent(typeof (SelectedNodesCollection)))
+            try
             {
-                var connectionNode = ((SelectedNodesCollection) e.Data.GetData(typeof (SelectedNodesCollection)))[0];
-
-                var tableTreeNode = connectionNode as TableTreeNode;
-                if (tableTreeNode != null)
+                if (e.Data.GetDataPresent(typeof (SelectedNodesCollection)))
                 {
-                    var table = tableTreeNode.Table;
-                    var text = await ObjectScripter.GenerateTableSelectStatement(table, DatabaseConnection);
-                    AppendText(text);
-                    return;
-                }
+                    var connectionNode = ((SelectedNodesCollection) e.Data.GetData(typeof (SelectedNodesCollection)))[0];
 
-                var viewTreeNode = connectionNode as ViewTreeNode;
-                if (viewTreeNode != null)
-                {
-                    var view = viewTreeNode.View;
-                    var text = await ObjectScripter.GenerateViewSelectStatement(view, DatabaseConnection);
-                    AppendText(text);
-                    return;
-                }
+                    var tableTreeNode = connectionNode as TableTreeNode;
+                    if (tableTreeNode != null)
+                    {
+                        var table = tableTreeNode.Table;
+                        var text = await ObjectScripter.GenerateTableSelectStatement(table, DatabaseConnection);
+                        AppendText(text);
+                        return;
+                    }
 
-                var columnTreeNode = connectionNode as ColumnTreeNode;
-                if (columnTreeNode != null)
-                {
-                    var column = columnTreeNode.Column;
-                    var text = column.Name;
-                    AppendText(text);
-                    return;
-                }
+                    var viewTreeNode = connectionNode as ViewTreeNode;
+                    if (viewTreeNode != null)
+                    {
+                        var view = viewTreeNode.View;
+                        var text = await ObjectScripter.GenerateViewSelectStatement(view, DatabaseConnection);
+                        AppendText(text);
+                        return;
+                    }
 
-                var treeNodeBase = connectionNode as TreeNodeBase;
-                if (treeNodeBase != null)
-                {
-                    var text = treeNodeBase.Text;
-                    AppendText(text);
+                    var columnTreeNode = connectionNode as ColumnTreeNode;
+                    if (columnTreeNode != null)
+                    {
+                        var column = columnTreeNode.Column;
+                        var text = column.Name;
+                        AppendText(text);
+                        return;
+                    }
+
+                    var treeNodeBase = connectionNode as TreeNodeBase;
+                    if (treeNodeBase != null)
+                    {
+                        var text = treeNodeBase.Text;
+                        AppendText(text);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error doing drag and drop.");
+                _log.Error(ex.Message, ex);
+                Dialog.ShowErrorDialog(Application.ProductName, "Error doing drag and drop.", ex.Message, ex.StackTrace);
             }
         }
 

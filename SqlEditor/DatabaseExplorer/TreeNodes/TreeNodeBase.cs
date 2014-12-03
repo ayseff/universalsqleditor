@@ -63,11 +63,20 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 
         public async Task<IList<TreeNodeBase>> GetNodesAsync()
         {
-            _log.DebugFormat("Getting tree nodes for {0} using background thread ...", Text);
-            IsLoading = true;
-            var nodes = await Task.Run(() => GetNodes());
-            _log.DebugFormat("Getting tree nodes for {0} finished.", Text);
-            return nodes;
+            try
+            {
+                _log.DebugFormat("Getting tree nodes for {0} using background thread ...", Text);
+                IsLoading = true;
+                var nodes = await Task.Run(() => GetNodes());
+                _log.DebugFormat("Getting tree nodes for {0} finished.", Text);
+                return nodes;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error expanding tree node.");
+                _log.Error(ex.Message, ex);
+                throw;
+            }
         }
 
         public async void LoadAsync()

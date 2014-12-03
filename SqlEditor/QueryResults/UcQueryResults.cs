@@ -373,12 +373,21 @@ namespace SqlEditor.QueryResults
 
         private async Task<IDbConnection> GetConnectionAsync()
         {
-            await CloseCurrentConnectionAsync();
+            try
+            {
+                await CloseCurrentConnectionAsync();
 
-            _log.DebugFormat("Creating new connection for {0} ...", _databaseConnection.Name);
-            _connection = await _databaseConnection.CreateNewConnectionAsync();
-            _log.Debug("Connection created.");
-            return _connection;
+                _log.DebugFormat("Creating new connection for {0} ...", _databaseConnection.Name);
+                _connection = await _databaseConnection.CreateNewConnectionAsync();
+                _log.Debug("Connection created.");
+                return _connection;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error obtaining a connection.");
+                _log.Error(ex.Message, ex);
+                throw;
+            }
         }
 
         //private IDbConnection GetConnection()

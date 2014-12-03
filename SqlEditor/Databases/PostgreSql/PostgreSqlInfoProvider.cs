@@ -206,19 +206,21 @@ namespace SqlEditor.Databases.PostgreSql
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (schemaName == null) throw new ArgumentNullException("schemaName");
+
             var functions = GetFunctionsBase(connection, schemaName,
                                   "SELECT r.specific_name, r.routine_name, '' as routine_definition FROM information_schema.routines r WHERE UPPER(r.routine_schema) = @1 AND r.routine_type = 'FUNCTION' ORDER BY r.routine_name",
                                   schemaName.ToUpper());
             using (var command = connection.CreateCommand())
             {
-                foreach (var storedProcedure in functions)
+                foreach (var function in functions)
                 {
-                    BuildSqlCommand(command, "SELECT pg_get_functiondef(p.oid) FROM pg_proc p JOIN pg_namespace ns ON p.pronamespace = ns.oid WHERE UPPER(ns.nspname) = @1 and UPPER(p.proname) = @2", new object[] { schemaName.Trim().ToUpper(), storedProcedure.Name.Trim().ToUpper() });
+                    command.Parameters.Clear();
+                    BuildSqlCommand(command, "SELECT pg_get_functiondef(p.oid) FROM pg_proc p JOIN pg_namespace ns ON p.pronamespace = ns.oid WHERE UPPER(ns.nspname) = @1 and UPPER(p.proname) = @2", new object[] { schemaName.Trim().ToUpper(), function.Name.Trim().ToUpper() });
                     using (var dr = command.ExecuteReader())
                     {
                         if (dr.Read())
                         {
-                            storedProcedure.Definition = dr.IsDBNull(0) ? null : dr.GetString(0);
+                            function.Definition = dr.IsDBNull(0) ? null : dr.GetString(0);
                         }
                     }
 

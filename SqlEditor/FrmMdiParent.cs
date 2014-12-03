@@ -1498,10 +1498,17 @@ namespace SqlEditor
                 throw new Exception("No table selected for delete");
             }
 
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await ObjectScripter.GenerateTableDeleteStatement(selectedNode.Table, databaseConnection);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await ObjectScripter.GenerateTableDeleteStatement(selectedNode.Table, databaseConnection);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptTableAsDrop()
@@ -1517,12 +1524,19 @@ namespace SqlEditor
                 throw new Exception("No table selected for drop");
             }
 
-            DatabaseObject obj = selectedNode.Table;
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
-                .GenerateDropTableDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                DatabaseObject obj = selectedNode.Table;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                    .GenerateDropTableDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptTableAsSelect()
@@ -1538,10 +1552,17 @@ namespace SqlEditor
                 throw new Exception("No table selected for select");
             }
 
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await ObjectScripter.GenerateTableSelectStatement(selectedNode.Table, databaseConnection);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await ObjectScripter.GenerateTableSelectStatement(selectedNode.Table, databaseConnection);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptTableAsInsert()
@@ -1557,10 +1578,17 @@ namespace SqlEditor
                 throw new Exception("No table selected for insert");
             }
 
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await ObjectScripter.GenerateTableInsertStatement(selectedNode.Table, databaseConnection);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await ObjectScripter.GenerateTableInsertStatement(selectedNode.Table, databaseConnection);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptTableAsUpdate()
@@ -1576,10 +1604,17 @@ namespace SqlEditor
                 throw new Exception("No table selected for update");
             }
 
-            var databaseConnection = selectedNode.DatabaseConnection;
-            var sql = await ObjectScripter.GenerateTableUpdateStatement(selectedNode.Table, databaseConnection);
-            var worksheet = NewWorksheet(databaseConnection);
-            worksheet.AppendText(sql, true);
+            try
+            {
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await ObjectScripter.GenerateTableUpdateStatement(selectedNode.Table, databaseConnection);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private void Connections_Clone()
