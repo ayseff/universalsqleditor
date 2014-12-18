@@ -188,6 +188,12 @@ namespace SqlEditor.Databases.PostgreSql
             }
         }
 
+        public override string GenerateCreatePackageDdl(DatabaseConnection databaseConnection, string database, string schema,
+            string packageName)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private string RunPgDump([NotNull] string host, [NotNull] string database, [NotNull] string user,
             [NotNull] string password, int port)

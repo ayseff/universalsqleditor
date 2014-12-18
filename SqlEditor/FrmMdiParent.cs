@@ -85,6 +85,12 @@ namespace SqlEditor
         private readonly ToolBase _functionScriptAsDropButtonTool;
         private readonly PopupMenuTool _functionScriptPopupMenu;
 
+        // Package buttons
+        private readonly ToolBase _packageEditButtonTool;
+        private readonly ToolBase _packageScriptAsCreateButtonTool;
+        private readonly ToolBase _packageScriptAsDropButtonTool;
+        private readonly PopupMenuTool _packageScriptPopupMenu;
+
         // Table buttons
         private readonly ToolBase _tableDetailsButtonTool;
 
@@ -103,6 +109,7 @@ namespace SqlEditor
         private readonly List<ToolBase> _indexCommands = new List<ToolBase>();
         private readonly List<ToolBase> _storedProcedureCommands = new List<ToolBase>();
         private readonly List<ToolBase> _functionCommands = new List<ToolBase>();
+        private readonly List<ToolBase> _packageCommands = new List<ToolBase>();
         private readonly List<ToolBase> _connectionClosedCommands = new List<ToolBase>();
         private readonly List<ToolBase> _connectionOpenCommands = new List<ToolBase>();
 
@@ -329,6 +336,22 @@ namespace SqlEditor
             _functionCommands.Add(null);
             _functionCommands.Add(collapseAllButtonTool);
             _functionCommands.Add(expandAllButtonTool);
+
+            // Setup package commands
+            _packageEditButtonTool = _utm.Tools["Packages - Edit"];
+            _packageScriptAsCreateButtonTool = _utm.Tools["Packages - Script As - Create"];
+            _packageScriptAsDropButtonTool = _utm.Tools["Packages - Script As - Drop"];
+            _packageScriptPopupMenu = (PopupMenuTool)_utm.Tools["Packages - Script As"];
+            _packageScriptPopupMenu.Tools.Clear();
+            _packageScriptPopupMenu.Tools.Add(_packageScriptAsDropButtonTool);
+            _packageScriptPopupMenu.Tools.Add(_packageScriptAsCreateButtonTool);
+            _packageCommands.Add(_packageEditButtonTool);
+            _packageCommands.Add(_packageScriptPopupMenu);
+            _packageCommands.Add(null);
+            _packageCommands.Add(_copyButtonTool);
+            _packageCommands.Add(null);
+            _packageCommands.Add(collapseAllButtonTool);
+            _packageCommands.Add(expandAllButtonTool);
 
             // Set image list for nodes
             DatabaseExplorerImageList.Instance.ImageList = _iml16;
@@ -1153,6 +1176,15 @@ namespace SqlEditor
                         Connections_FunctionDrop();
                         break;
 
+                    case "Packages - Edit":
+                    case "Packages - Script As - Create":
+                        Connections_PackageEdit();
+                        break;
+
+                    case "Packages - Script As - Drop":
+                        Connections_PackageDrop();
+                        break;
+
                     case "Check for Updates":
                         CheckForUpdatesAsync();
                         break;
@@ -1483,6 +1515,60 @@ namespace SqlEditor
             var sql = ObjectScripter.GenerateStoredProcedureDropStatement(selectedNode.StoredProcedure, databaseConnection);
             var worksheet = NewWorksheet(databaseConnection);
             worksheet.AppendText(sql, true);
+        }
+
+        private void Connections_PackageDrop()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as PackageTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("Package not selected.");
+            }
+
+            try
+            {
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = ObjectScripter.GeneratePackageDropStatement(selectedNode.Package, databaseConnection);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
+        }
+
+        private async void Connections_PackageEdit()
+        {
+            if (_utConnections.SelectedNodes.Count == 0)
+            {
+                throw new Exception("No node selected");
+            }
+
+            var selectedNode = _utConnections.SelectedNodes[0] as PackageTreeNode;
+            if (selectedNode == null)
+            {
+                throw new Exception("Package not selected.");
+            }
+
+            try
+            {
+                var obj = selectedNode.Package;
+                var databaseConnection = selectedNode.DatabaseConnection;
+                var sql = await databaseConnection.DatabaseServer.GetDdlGenerator()
+                    .GenerateCreatePackageDdlAsync(databaseConnection, obj.GetDatabaseName(), obj.GetSchemaName(), obj.Name);
+                var worksheet = NewWorksheet(databaseConnection);
+                worksheet.AppendText(sql, true);
+            }
+            catch (Exception ex)
+            {
+                Dialog.ShowErrorDialog(Application.ProductName, "Error generating DDL statements.", ex.Message, ex.StackTrace);
+            }
         }
 
         private async void Connections_ScriptTableAsDelete()
@@ -1965,6 +2051,10 @@ namespace SqlEditor
                     else if (isNodeSelected && selectedNode is FunctionTreeNode)
                     {
                         AddTools(_functionCommands, _connectionsPopupMenu);
+                    }
+                    else if (isNodeSelected && selectedNode is PackageTreeNode)
+                    {
+                        AddTools(_packageCommands, _connectionsPopupMenu);
                     }
                     else if (isNodeSelected && selectedNode is ConnectionTreeNode)
                     {

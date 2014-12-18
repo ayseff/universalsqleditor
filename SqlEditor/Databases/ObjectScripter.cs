@@ -220,6 +220,19 @@ namespace SqlEditor.Databases
             return sb.ToString();
         }
 
+        public static string GeneratePackageDropStatement(Package package, DatabaseConnection databaseConnection)
+        {
+            if (package == null) throw new ArgumentNullException("package");
+            if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
+
+            _log.DebugFormat("Generating DROP statement for package {0} ...", package.FullyQualifiedName);
+
+            var sb = new StringBuilder();
+            sb.AppendLine("DROP PACKAGE " + package.FullyQualifiedName);
+            _log.DebugFormat("Generating complete.");
+            return sb.ToString();
+        }
+
         private static void AppendColumns(DatabaseConnection databaseConnection, StringBuilder sb, IEnumerable<Column> columns, string columnSeparator, string firstColumnSeparator)
         {
             var separator = firstColumnSeparator;

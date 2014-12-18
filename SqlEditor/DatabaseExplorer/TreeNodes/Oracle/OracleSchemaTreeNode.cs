@@ -24,6 +24,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Oracle
             nodes.Add(storedProcedures);
             var functions = new FunctionsTreeNode(Schema, DatabaseConnection);
             nodes.Add(functions);
+            var packages = new OraclePackagesTreeNode(Schema, DatabaseConnection);
+            nodes.Add(packages);
             var sequencesNode = new SequencesTreeNode(Schema, DatabaseConnection);
             nodes.Add(sequencesNode);
             var synonymsNode = new SynonymsTreeNode(Schema, DatabaseConnection);

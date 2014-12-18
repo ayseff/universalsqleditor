@@ -121,6 +121,12 @@ namespace SqlEditor.Databases.MySql
 
         }
 
+        public override string GenerateCreatePackageDdl(DatabaseConnection databaseConnection, string database, string schema,
+            string packageName)
+        {
+            throw new NotImplementedException();
+        }
+
         private static string RunShowCreateStatement(DatabaseConnection databaseConnection, string schema, string tableName,
             [NotNull] string objectType)
         {

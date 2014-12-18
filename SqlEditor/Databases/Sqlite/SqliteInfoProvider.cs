@@ -294,6 +294,16 @@ namespace SqlEditor.Databases.Sqlite
             throw new NotImplementedException();
         }
 
+        public override IList<Package> GetPackages(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<PackageProcedure> GetPackageProcedures(IDbConnection connection, string schemaName, string packageName, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName)
         {
             if (connection == null) throw new ArgumentNullException("connection");

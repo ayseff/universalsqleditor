@@ -89,6 +89,13 @@ namespace SqlEditor.Databases
 
         }
 
+        public abstract string GenerateCreatePackageDdl(DatabaseConnection databaseConnection, string database, string schema, string packageName);
+        public Task<string> GenerateCreatePackageDdlAsync(DatabaseConnection databaseConnection, string database, string schema, string packageName)
+        {
+            return Task.Run(() => GenerateCreatePackageDdl(databaseConnection, database, schema, packageName));
+
+        }
+
         public static string GetFullyQualifiedName(string database, string schemaName, string objectName)
         {
             var name = string.Empty;

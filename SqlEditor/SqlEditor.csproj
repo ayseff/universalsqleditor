@@ -248,6 +248,12 @@
     <Compile Include="DatabaseExplorer\TreeNodes\MsAccess\MsAccessConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlSchemaTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OraclePackageProcedureTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OraclePackageTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OraclePackagesTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\PackagesTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\PackageTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\PackageProcedureTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\PostgreSql\PostgreSqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleSchemaTreeNode.cs" />
@@ -279,6 +285,7 @@
     <Compile Include="DatabaseExplorer\TreeNodes\SynonymsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SequenceTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SequencesTreeNode.cs" />
+    <Compile Include="Databases\PackageProcedure.cs" />
     <Compile Include="Databases\ColumnParameter.cs" />
     <Compile Include="Databases\Constraint.cs" />
     <Compile Include="Databases\DatabaseInstance.cs" />
@@ -316,6 +323,7 @@
     <Compile Include="Databases\SqlServer\SqlServerExplainPlanGenerator.cs" />
     <Compile Include="Databases\SqlServer\SqlServerDdlGenerator.cs" />
     <Compile Include="Databases\SqlServer\SqlServerSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\Package.cs" />
     <Compile Include="Databases\StoredProcedure.cs" />
     <Compile Include="Databases\Synonym.cs" />
     <Compile Include="Databases\ObjectScripter.cs" />

@@ -57,6 +57,12 @@ namespace SqlEditor.Databases.Sqlite
             return RunSqlLiteMasterQuery(databaseConnection, indexName, "index");
         }
 
+        public override string GenerateCreatePackageDdl(DatabaseConnection databaseConnection, string database, string schema,
+            string packageName)
+        {
+            throw new NotImplementedException();
+        }
+
         private static string RunSqlLiteMasterQuery(DatabaseConnection databaseConnection, string objectName,
             [NotNull] string objectType)
         {

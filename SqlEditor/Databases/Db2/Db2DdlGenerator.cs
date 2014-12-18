@@ -205,6 +205,12 @@ namespace SqlEditor.Databases.Db2
             return indexDdl.ToString();
         }
 
+        public override string GenerateCreatePackageDdl(DatabaseConnection databaseConnection, string database, string schema,
+            string packageName)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private string RunDb2Look(string database, string user, string password, string arguments)
         {

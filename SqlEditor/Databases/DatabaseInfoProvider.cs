@@ -611,10 +611,11 @@ namespace SqlEditor.Databases
 
         public abstract IList<ColumnParameter> GetFunctionReturnValue(IDbConnection connection, Function function);
 
+        public abstract IList<Package> GetPackages(IDbConnection connection, string schemaName, string databaseInstanceName = null);
+
+        public abstract IList<PackageProcedure> GetPackageProcedures(IDbConnection connection, string schemaName, string packageName, string databaseInstanceName = null);
 
         public abstract IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName);
-
-        
 
         protected IList<Column> GetTableColumnsDefault<T>(IDbConnection connection,
                                                           DatabaseObjectWithColumns databaseObjectWithColumns)

@@ -78,6 +78,12 @@ namespace SqlEditor.Databases.Oracle
             return ddl;
         }
 
+        public override string GenerateCreatePackageDdl(DatabaseConnection databaseConnection, string database, string schema,
+            string packageName)
+        {
+            return RunDbmsMetadataInternal(databaseConnection, "GET_DDL", "PACKAGE", schema.Trim().ToUpper(), packageName.Trim().ToUpper());
+        }
+
         private static string RunDbmsMetadata([NotNull] DatabaseConnection databaseConnection, [NotNull] string objectType, [NotNull] string schema,
             [NotNull] string objectName)
         {

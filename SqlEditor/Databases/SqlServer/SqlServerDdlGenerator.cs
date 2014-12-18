@@ -166,6 +166,12 @@ namespace SqlEditor.Databases.SqlServer
             }
         }
 
+        public override string GenerateCreatePackageDdl(DatabaseConnection databaseConnection, string database, string schema,
+            string packageName)
+        {
+            throw new NotImplementedException();
+        }
+
         private static string GenerateTableDdlInternal([NotNull] DatabaseConnection databaseConnection, [NotNull] string database, string schema, string tableName,
             [NotNull] ScriptingOptions options)
         {

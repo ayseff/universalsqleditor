@@ -295,6 +295,16 @@ namespace SqlEditor.Databases.MySql
             }
         }
 
+        public override IList<Package> GetPackages(IDbConnection connection, string schemaName, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override IList<PackageProcedure> GetPackageProcedures(IDbConnection connection, string schemaName, string packageName, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IntelisenseData GetIntelisenseData([NotNull] IDbConnection connection,
                                                            [NotNull] string currentSchemaName)
         {

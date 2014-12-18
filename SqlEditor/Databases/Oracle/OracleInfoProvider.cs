@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using ICSharpCode.TextEditor.Actions;
@@ -301,6 +302,61 @@ namespace SqlEditor.Databases.Oracle
             return GetStoredProcedureParametersBase(connection, function, sql,
                                                     function.Parent.Name.ToUpper(),
                                                     function.Name.ToUpper(), int.Parse(function.ObjectId));
+        }
+
+        public override IList<Package> GetPackages(IDbConnection connection,
+            [JetBrains.Annotations.NotNull] string schemaName, string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            const string sql = "SELECT object_id, object_name FROM all_objects WHERE UPPER(object_type) = 'PACKAGE' AND UPPER(OWNER) = :1 ORDER BY object_name";
+            _log.DebugFormat("Getting packages for schema {0} ...", schemaName);
+            var packages = new List<Package>();
+            var schema = new Schema(schemaName);
+            using (var command = connection.CreateCommand())
+            {
+                BuildSqlCommand(command, sql, new object[] { schemaName.Trim().ToUpper()});
+                using (var dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var packageName = dr.GetString(1);
+                        var packageId = long.Parse(dr.GetDecimal(0).ToString(CultureInfo.InvariantCulture));
+                        var package = new Package(packageName, schema) {Id = packageId};
+                        packages.Add(package);
+                    }
+                }
+            }
+            _log.DebugFormat("Retrieved {0} package(s).", packages.Count.ToString("#,0"));
+            return packages;
+        }
+
+        public override IList<PackageProcedure> GetPackageProcedures(IDbConnection connection, string schemaName, string packageName, string databaseInstanceName = null)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (schemaName == null) throw new ArgumentNullException("schemaName");
+            if (packageName == null) throw new ArgumentNullException("packageName");
+
+            const string sql = "SELECT procedure_name FROM all_procedures WHERE UPPER(owner) = :1 AND object_name = :2 AND procedure_name IS NOT NULL ORDER BY procedure_name";
+            _log.DebugFormat("Getting package procedures for schema {0} and package {1} ...", schemaName, packageName);
+            var packageProcedures = new List<PackageProcedure>();
+            var schema = new Schema(schemaName);
+            var package = new Package(packageName, schema);
+            using (var command = connection.CreateCommand())
+            {
+                BuildSqlCommand(command, sql, new object[] { schemaName.Trim().ToUpper(), packageName.Trim().ToUpper() });
+                using (var dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var packageProcedureName = dr.GetString(0);
+                        var packageProcedure = new PackageProcedure(packageProcedureName, package);
+                        packageProcedures.Add(packageProcedure);
+                    }
+                }
+            }
+            _log.DebugFormat("Retrieved {0} package procedure(s).", packageProcedures.Count.ToString("#,0"));
+            return packageProcedures;
         }
 
         public override IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName)

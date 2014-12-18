@@ -86,5 +86,11 @@ namespace SqlEditor.Databases.SqlCe
             generator.GenerateIndexScript(tableName, indexName);
             return generator.GeneratedScript;
         }
+
+        public override string GenerateCreatePackageDdl(DatabaseConnection databaseConnection, string database, string schema,
+            string packageName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
