@@ -1,4 +1,8 @@
-﻿Version: 0.3.5.1
+﻿Version: 0.3.5.2
+  New Features:
+  - Added support to execute multiple queries simultaneously and show results in multiple tabs
+  Bug Fixes:  
+Version: 0.3.5.1
   New Features:
   - Added support for Oracle packages
   Bug Fixes:    

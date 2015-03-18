@@ -573,7 +573,7 @@ namespace SqlEditor
                 switch (e.Tool.Key)
                 {
                     case "Run":
-                        RunSingleQuery();
+                        RunGridQuery();
                         break;
 
                     case "Run Script":
@@ -744,16 +744,21 @@ namespace SqlEditor
             OnRunScript(new RunScriptEventArgs(sqlStatements, DatabaseConnection));
         }
 
-        private void RunSingleQuery()
+        private void RunGridQuery()
         {
             var sql = _sqlEditor.GetQueryText(DatabaseConnection.DatabaseServer.SqlTerminators);
             if (sql.IsNullEmptyOrWhitespace())
             {
                 throw new Exception("No query selected to run");
             }
-            var control = FindUsableResultsTab(sql);
-            control.RunQueryAsync(sql, DatabaseConnection.MaxResults);
-            OnRunQuery(new RunQueryEventArgs(sql, DatabaseConnection.Name, DatabaseConnection.MaxResults));
+            var sqlSplitter = new SqlHelpers.SqlTextExtractor(DatabaseConnection.DatabaseServer.SqlTerminators, DatabaseConnection.DatabaseServer);
+            var sqlStatements = sqlSplitter.SplitSqlStatements(sql);
+            foreach (var sqlStatement in sqlStatements)
+            {
+                var control = FindUsableResultsTab();
+                control.RunQueryAsync(sqlStatement, DatabaseConnection.MaxResults);
+                OnRunScript(new RunScriptEventArgs(sqlStatements, DatabaseConnection));
+            }
         }
 
         private void ShowExplainPlan()
