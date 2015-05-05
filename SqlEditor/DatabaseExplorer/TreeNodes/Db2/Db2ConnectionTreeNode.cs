@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using SqlEditor.Databases;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes.Db2
@@ -18,7 +16,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Db2
         protected override IList<TreeNodeBase> GetNodes()
         {
             var nodes = new List<TreeNodeBase>();
-            var schemasTreeNode = new SchemasTreeNode(DatabaseConnection);
+            var schemasTreeNode = new SchemasTreeNode(DatabaseConnection, DatabaseInstance);
             nodes.Add(schemasTreeNode);
 
             return nodes;

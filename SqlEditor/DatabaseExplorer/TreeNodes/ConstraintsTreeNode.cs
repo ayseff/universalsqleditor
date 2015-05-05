@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public ConstraintsTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
-            : base("Constraints", databaseConnection)
+        public ConstraintsTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base("Constraints", databaseConnection, databaseInstance)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
@@ -33,7 +33,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             }
             _log.DebugFormat("Loaded {0} constraint(s).", constraints.Count);
 
-            var nodes = constraints.Select(x => new ConstraintTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+            var nodes = constraints.Select(x => new ConstraintTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             _log.Debug("Loading tree finished.");
             return nodes;
         }

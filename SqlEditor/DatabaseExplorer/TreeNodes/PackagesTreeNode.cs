@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public PackagesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, string nodeDisplayText = "Packages")
-            : base(nodeDisplayText, databaseConnection)
+        public PackagesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance, string nodeDisplayText = "Packages")
+            : base(nodeDisplayText, databaseConnection, databaseInstance)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
@@ -32,7 +32,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             }
             _log.DebugFormat("Loaded {0} package(s).", packages.Count);
 
-            var nodes = packages.Select(package => new PackageTreeNode(package, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+            var nodes = packages.Select(package => new PackageTreeNode(package, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             _log.Debug("Loading tree finished.");
             return nodes;
         }

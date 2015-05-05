@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public List<DatabaseObject> Schemas { get; private set; }
 
-        public SchemasTreeNode(DatabaseConnection databaseConnection)
-            : base(databaseConnection, "Schemas", "folder-horizontal-user.png", "folder-horizontal-open-user.png")
+        public SchemasTreeNode(DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance, "Schemas", "folder-horizontal-user.png", "folder-horizontal-open-user.png")
         {
             Schemas = new List<DatabaseObject>();
         }
@@ -43,7 +43,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 throw new Exception("Error opening connection and loading schemas.", ex);
             }
 
-            return TreeNodeFactory.GetSchemaNodes(DatabaseConnection);
+            return TreeNodeFactory.GetSchemaNodes(DatabaseConnection, DatabaseInstance);
         }
     }
 }

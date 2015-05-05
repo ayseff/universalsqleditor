@@ -1,9 +1,11 @@
-﻿namespace SqlEditor.DatabaseExplorer.TreeNodes
+﻿using SqlEditor.Databases;
+
+namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public abstract class FolderContainerTreeNode : TreeNodeBase
     {
-        protected FolderContainerTreeNode(DatabaseConnection databaseConnection, string displayText = "", string imageName = "folder-horizontal.png", string expandedImageName = "folder-horizontal-open.png")
-            : base(displayText, databaseConnection)
+        protected FolderContainerTreeNode(DatabaseConnection databaseConnection, DatabaseInstance databaseInstance, string displayText = "", string imageName = "folder-horizontal.png", string expandedImageName = "folder-horizontal-open.png")
+            : base(displayText, databaseConnection, databaseInstance)
         {
             //LeftImages.Add(DatabaseExplorerImageList.Instance.ImageList.Images[imageName]);
             this.Override.NodeAppearance.Image = DatabaseExplorerImageList.Instance.ImageList.Images[imageName];
@@ -14,8 +16,8 @@
             }
         }
 
-        protected FolderContainerTreeNode(string displayText, DatabaseConnection databaseConnection)
-            : this(databaseConnection)
+        protected FolderContainerTreeNode(string displayText, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : this(databaseConnection, databaseInstance)
         {
             Text = displayText;
         }

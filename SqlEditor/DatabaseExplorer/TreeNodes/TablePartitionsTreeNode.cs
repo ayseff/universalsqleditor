@@ -11,8 +11,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Table Table { get; set; }
 
-        public TablePartitionsTreeNode([NotNull] Table table, DatabaseConnection connection)
-            : base("Partitions", connection)
+        public TablePartitionsTreeNode([NotNull] Table table, DatabaseConnection connection, DatabaseInstance databaseInstance)
+            : base("Partitions", connection, databaseInstance)
         {
             if (table == null) throw new ArgumentNullException("table");
             
@@ -41,7 +41,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 _log.DebugFormat("Loaded {0} partition(s).", partitions.Count);
 
                 var partitionNodes =
-                    partitions.Select(x => new PartitionTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                    partitions.Select(x => new PartitionTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
                 return partitionNodes;
             }
             catch (Exception ex)

@@ -8,7 +8,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         public DatabaseInstance DatabaseInstance { get; protected set; }
 
         public DatabaseInstanceTreeNode(DatabaseInstance databaseInstance, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+            : base(databaseConnection, databaseInstance)
         {
             if (databaseInstance == null) throw new ArgumentNullException("databaseInstance");
             DatabaseInstance = databaseInstance;

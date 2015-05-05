@@ -28,11 +28,11 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.MsAccess
 
                         var nodes = new List<TreeNodeBase>();
                         var dummySchema = new Schema();
-                        var tablesNode = new TablesTreeNode(dummySchema, DatabaseConnection);
+                        var tablesNode = new TablesTreeNode(dummySchema, DatabaseConnection, DatabaseInstance);
                         nodes.Add(tablesNode);
-                        var viewsNode = new ViewsTreeNode(dummySchema, DatabaseConnection);
+                        var viewsNode = new ViewsTreeNode(dummySchema, DatabaseConnection, DatabaseInstance);
                         nodes.Add(viewsNode);
-                        var indexesNode = new IndexesTreeNode(dummySchema, DatabaseConnection);
+                        var indexesNode = new IndexesTreeNode(dummySchema, DatabaseConnection, DatabaseInstance);
                         nodes.Add(indexesNode);
                         return nodes;
                     }

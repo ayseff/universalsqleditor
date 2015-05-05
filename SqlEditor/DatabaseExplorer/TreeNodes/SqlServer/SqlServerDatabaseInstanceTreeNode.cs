@@ -35,7 +35,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.SqlServer
 
                         _log.Debug("Creating nodes ...");
                         var schemNodes =
-                            schemas.Select(schema => new SqlServerSchemaTreeNode(schema, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                            schemas.Select(schema => new SqlServerSchemaTreeNode(schema, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
                         _log.Debug("Loading nodes finished.");
                         return schemNodes;
                     }

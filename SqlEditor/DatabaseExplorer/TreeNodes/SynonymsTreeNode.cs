@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SqlEditor.Databases;
-using Utilities.Collections;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
@@ -10,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public SynonymsTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
-            : base("Synonyms", databaseConnection)
+        public SynonymsTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base("Synonyms", databaseConnection, databaseInstance)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
@@ -36,7 +35,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             //Schema.Synonyms.AddRange(synonyms);
             _log.DebugFormat("Loaded {0} synonym(s).", synonyms.Count);
 
-            var nodes = synonyms.Select(x => new SynonymTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+            var nodes = synonyms.Select(x => new SynonymTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             _log.Debug("Loading tree finished.");
             return nodes;
         }

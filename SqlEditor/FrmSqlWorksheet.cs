@@ -61,6 +61,8 @@ namespace SqlEditor
         #region Properties
         public DatabaseConnection DatabaseConnection { get; set; }
 
+        public DatabaseInstance DatabaseInstance { get; set; }
+
         public string Title
         {
             get { return _title; }
@@ -130,10 +132,10 @@ namespace SqlEditor
 
         private void UpdateTitle()
         {
-            Text = DatabaseConnection.Name + " [" + _title + (_isModified ? "*" : string.Empty) + "]";
+            Text = DatabaseConnection.Name +(DatabaseInstance == null ? string.Empty : "/" + DatabaseInstance.Name) + " [" + _title + (_isModified ? "*" : string.Empty) + "]";
         }
 
-        public FrmSqlWorksheet([NotNull] DatabaseConnection connection, [NotNull] string title)
+        public FrmSqlWorksheet([NotNull] DatabaseConnection connection, [NotNull] string title, DatabaseInstance databaseInstance = null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             if (title == null) throw new ArgumentNullException("title");
@@ -149,6 +151,7 @@ namespace SqlEditor
 
             DatabaseConnection = connection;
             DatabaseConnection.PropertyChanged += (sender, args) => RefreshUserInterface();
+            DatabaseInstance = databaseInstance;
             
             var maxResultsTextBoxTool = ((TextBoxTool) _utm.Tools["Max Results"]);
             maxResultsTextBoxTool.Text = connection.MaxResults.ToString(CultureInfo.InvariantCulture);

@@ -6,7 +6,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     public sealed class FolderTreeNode : FolderContainerTreeNode
     {
         public FolderTreeNode(string name)
-            : base(name, null)
+            : base(name, null, null)
         {
             Nodes.Clear();
             IsLoaded = true;

@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Table Table { get; set; }
 
-        public TableTreeNode(Table table, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public TableTreeNode(Table table, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (table == null) throw new ArgumentNullException("table");
 
@@ -21,15 +21,15 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             var nodes = new List<TreeNodeBase>();
-            var tableColumnsNode = new TableColumnsTreeNode(Table, DatabaseConnection);
+            var tableColumnsNode = new TableColumnsTreeNode(Table, DatabaseConnection, DatabaseInstance);
             nodes.Add(tableColumnsNode);
-            var tablePrimaryKeyColumnsNode = new TablePrimaryKeyColumnsTreeNode(Table, DatabaseConnection);
+            var tablePrimaryKeyColumnsNode = new TablePrimaryKeyColumnsTreeNode(Table, DatabaseConnection, DatabaseInstance);
             nodes.Add(tablePrimaryKeyColumnsNode);
-            var indexesNode = new TableIndexesTreeNode(Table, DatabaseConnection);
+            var indexesNode = new TableIndexesTreeNode(Table, DatabaseConnection, DatabaseInstance);
             nodes.Add(indexesNode);
-            var constraintsNode = new TableConstraintsTreeNode(Table, DatabaseConnection);
+            var constraintsNode = new TableConstraintsTreeNode(Table, DatabaseConnection, DatabaseInstance);
             nodes.Add(constraintsNode);
-            var partitionsNode = new TablePartitionsTreeNode(Table, DatabaseConnection);
+            var partitionsNode = new TablePartitionsTreeNode(Table, DatabaseConnection, DatabaseInstance);
             nodes.Add(partitionsNode);
             return nodes;
         }

@@ -233,7 +233,6 @@
     <Compile Include="ActiveWorksheetChangedEventArgs.cs" />
     <Compile Include="CloseAction.cs" />
     <Compile Include="DatabaseExplorer\Extensions.cs" />
-    <Compile Include="DatabaseExplorer\TreeNodes\Base\DatabaseTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Base\TreeNodeFactory.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\ConstraintsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\ConstraintTreeNode.cs" />
@@ -289,7 +288,7 @@
     <Compile Include="Databases\PackageProcedure.cs" />
     <Compile Include="Databases\ColumnParameter.cs" />
     <Compile Include="Databases\Constraint.cs" />
-    <Compile Include="Databases\DatabaseInstance.cs" />
+    <Compile Include="Databases\PostgreSqlDatabaseInstance.cs" />
     <Compile Include="Databases\Db2\Db2DdlGenerator.cs" />
     <Compile Include="Databases\Db2\Db2ExplainPlanGenerator.cs" />
     <Compile Include="Databases\Db2\Db2SimpleConnectionStringBuilder.cs" />
@@ -305,6 +304,7 @@
     <Compile Include="Databases\Oracle\OracleExplainPlanGenerator.cs" />
     <Compile Include="Databases\Oracle\OracleDdlGenerator.cs" />
     <Compile Include="Databases\Oracle\OracleSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\PostgreSql\DatabaseInstance.cs" />
     <Compile Include="Databases\PostgreSql\PostgreSqlDatabaseServer.cs" />
     <Compile Include="Databases\PostgreSql\PostgreSqlDdlGenerator.cs" />
     <Compile Include="Databases\PostgreSql\PostgreSqlExplainPlanData.cs" />

@@ -6,7 +6,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Oracle
 {
     public sealed class OraclePackagesTreeNode : PackagesTreeNode
     {
-        public OraclePackagesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, string nodeDisplayText = "Packages") : base(schema, databaseConnection, nodeDisplayText)
+        public OraclePackagesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance, string nodeDisplayText = "Packages")
+            : base(schema, databaseConnection, databaseInstance, nodeDisplayText)
         {
         }
 
@@ -26,7 +27,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Oracle
             }
             _log.DebugFormat("Loaded {0} package(s).", packages.Count);
 
-            var nodes = packages.Select(package => new OraclePackageTreeNode(package, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+            var nodes = packages.Select(package => new OraclePackageTreeNode(package, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             _log.Debug("Loading tree finished.");
             return nodes;
         }

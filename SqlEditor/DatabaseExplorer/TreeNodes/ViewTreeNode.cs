@@ -14,8 +14,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public View View { get; set; }
 
-        public ViewTreeNode(View table, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public ViewTreeNode(View table, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             View = table;
             Text = table.DisplayName;
@@ -25,7 +25,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             var nodes = new List<TreeNodeBase>();
-            var tableColumnsNode = new ViewColumnsTreeNode(View, DatabaseConnection);
+            var tableColumnsNode = new ViewColumnsTreeNode(View, DatabaseConnection, DatabaseInstance);
             nodes.Add(tableColumnsNode);
 
             return nodes;

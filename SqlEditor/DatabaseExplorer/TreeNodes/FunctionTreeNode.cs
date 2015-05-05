@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Function Function { get; set; }
 
-        public FunctionTreeNode(Function function, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public FunctionTreeNode(Function function, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (function == null) throw new ArgumentNullException("function");
 
@@ -23,9 +23,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             var nodes = new List<TreeNodeBase>();
-            var functionParametersTreeNode = new FunctionParametersTreeNode(Function, DatabaseConnection);
+            var functionParametersTreeNode = new FunctionParametersTreeNode(Function, DatabaseConnection, DatabaseInstance);
             nodes.Add(functionParametersTreeNode);
-            var functionReturnTreeNode = new FunctionReturnValuesTreeNode(Function, DatabaseConnection);
+            var functionReturnTreeNode = new FunctionReturnValuesTreeNode(Function, DatabaseConnection, DatabaseInstance);
             nodes.Add(functionReturnTreeNode);
             return nodes;
         }

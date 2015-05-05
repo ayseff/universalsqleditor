@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Infragistics.Win.UltraWinTree;
 using SqlEditor.Annotations;
 using log4net;
+using SqlEditor.Databases;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
@@ -20,6 +21,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 
         #region Properties
         public DatabaseConnection DatabaseConnection { get; set; }
+
+        public DatabaseInstance DatabaseInstance { get; set; }
 
         public bool IsLoaded
         {
@@ -42,19 +45,25 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 OnPropertyChanged("IsLoading");
             }
         }
+
+        public virtual bool OpensWorksheet
+        {
+            get { return false; }
+        }
         #endregion
 
 
         #region Constructors
-        protected TreeNodeBase(DatabaseConnection databaseConnection)
+        protected TreeNodeBase(DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
             : base(Guid.NewGuid().ToString())
         {
             Nodes.Add(new DummyTreeNode());
             DatabaseConnection = databaseConnection;
+            DatabaseInstance = databaseInstance;
         }
 
-        protected TreeNodeBase(string text, DatabaseConnection databaseConnection)
-            : this(databaseConnection)
+        protected TreeNodeBase(string text, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : this(databaseConnection, databaseInstance)
         {
             Text = text;
         }

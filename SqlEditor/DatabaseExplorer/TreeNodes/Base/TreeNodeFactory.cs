@@ -70,7 +70,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             }
         }
 
-        public static IList<TreeNodeBase> GetSchemaNodes(DatabaseConnection databaseConnection)
+        public static IList<TreeNodeBase> GetSchemaNodes(DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
                         var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
                         var schemas = infoProvider.GetSchemas(connection);
                         _log.DebugFormat("Loaded {0} schema(s).", schemas.Count);
-                        var schemaNodes = GetSchemaNodesForServer(schemas, databaseConnection);
+                        var schemaNodes = GetSchemaNodesForServer(schemas, databaseConnection, databaseInstance);
                         return schemaNodes;
                     }
                 }
@@ -98,19 +98,18 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             }
         }
 
-        private static IList<TreeNodeBase> GetSchemaNodesForServer([NotNull] IEnumerable<Schema> schemas,
-            [NotNull] DatabaseConnection databaseConnection)
+        private static IList<TreeNodeBase> GetSchemaNodesForServer([NotNull] IEnumerable<Schema> schemas, [NotNull] DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
         {
             if (schemas == null) throw new ArgumentNullException("schemas");
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
 
             if (databaseConnection.DatabaseServer is Db2DatabaseServer)
             {
-                return schemas.Select(schema => new Db2SchemaTreeNode(schema, databaseConnection)).Cast<TreeNodeBase>().ToList();
+                return schemas.Select(schema => new Db2SchemaTreeNode(schema, databaseConnection, databaseInstance)).Cast<TreeNodeBase>().ToList();
             }
             else if (databaseConnection.DatabaseServer is PostgreSqlDatabaseServer)
             {
-                return schemas.Select(schema => new PostgreSqlSchemaTreeNode(schema, databaseConnection)).Cast<TreeNodeBase>().ToList();
+                return schemas.Select(schema => new PostgreSqlSchemaTreeNode(schema, databaseConnection, databaseInstance)).Cast<TreeNodeBase>().ToList();
             }
             // TODO: Add other servers here
             else

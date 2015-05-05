@@ -15,8 +15,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public IndexesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
-            : base("Indexes", databaseConnection)
+        public IndexesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base("Indexes", databaseConnection, databaseInstance)
         {
             Schema = schema;
         }
@@ -41,7 +41,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             _log.DebugFormat("Loaded {0} index(es).", indexes.Count);
 
             var indexNodes =
-                indexes.Select(view => new IndexTreeNode(view, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                indexes.Select(view => new IndexTreeNode(view, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             return indexNodes;
         }
     }

@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public class ViewColumnsTreeNode : ColumnsTreeNode
     {
-        public ViewColumnsTreeNode([NotNull] View index, DatabaseConnection connection) 
-            : base(index, connection)
+        public ViewColumnsTreeNode([NotNull] View index, DatabaseConnection connection, DatabaseInstance databaseInstance) 
+            : base(index, connection, databaseInstance)
         {}
 
         protected override void Clear()

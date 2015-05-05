@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Partition Partition { get; set; }
 
-        public PartitionTreeNode(Partition partition, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public PartitionTreeNode(Partition partition, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (partition == null) throw new ArgumentNullException("partition");
 

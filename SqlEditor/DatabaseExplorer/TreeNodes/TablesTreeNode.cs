@@ -10,8 +10,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public TablesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
-            : base("Tables", databaseConnection)
+        public TablesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base("Tables", databaseConnection, databaseInstance)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
@@ -35,7 +35,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             //Schema.Tables.AddRange(tables);
             _log.DebugFormat("Loaded {0} table(s).", tables.Count);
 
-            var nodes = tables.Select(table => new TableTreeNode(table, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+            var nodes = tables.Select(table => new TableTreeNode(table, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             _log.Debug("Loading tree finished.");
             return nodes;
         }

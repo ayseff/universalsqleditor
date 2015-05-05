@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public StoredProcedure StoredProcedure { get; set; }
 
-        public StoredProcedureTreeNode(StoredProcedure storedProcedure, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public StoredProcedureTreeNode(StoredProcedure storedProcedure, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (storedProcedure == null) throw new ArgumentNullException("storedProcedure");
 
@@ -23,7 +23,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             var nodes = new List<TreeNodeBase>();
-            var storedProcedureParametersTreeNode = new StoredProcedureParametersTreeNode(StoredProcedure, DatabaseConnection);
+            var storedProcedureParametersTreeNode = new StoredProcedureParametersTreeNode(StoredProcedure, DatabaseConnection, DatabaseInstance);
             nodes.Add(storedProcedureParametersTreeNode);
             return nodes;
         }

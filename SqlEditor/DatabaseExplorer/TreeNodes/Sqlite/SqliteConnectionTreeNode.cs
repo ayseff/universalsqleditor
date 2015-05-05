@@ -28,15 +28,15 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Sqlite
 
                         var nodes = new List<TreeNodeBase>();
                         var dummySchema = new Schema { Name = string.Empty };
-                        var tablesNode = new TablesTreeNode(dummySchema, DatabaseConnection);
+                        var tablesNode = new TablesTreeNode(dummySchema, DatabaseConnection, DatabaseInstance);
                         nodes.Add(tablesNode);
-                        var viewsNode = new ViewsTreeNode(dummySchema, DatabaseConnection);
+                        var viewsNode = new ViewsTreeNode(dummySchema, DatabaseConnection, DatabaseInstance);
                         nodes.Add(viewsNode);
-                        var constraintsNode = new ConstraintsTreeNode(dummySchema, DatabaseConnection);
+                        var constraintsNode = new ConstraintsTreeNode(dummySchema, DatabaseConnection, DatabaseInstance);
                         nodes.Add(constraintsNode);
-                        var indexesNode = new IndexesTreeNode(dummySchema, DatabaseConnection);
+                        var indexesNode = new IndexesTreeNode(dummySchema, DatabaseConnection, DatabaseInstance);
                         nodes.Add(indexesNode);
-                        var triggerssNode = new TriggersTreeNode(dummySchema, DatabaseConnection);
+                        var triggerssNode = new TriggersTreeNode(dummySchema, DatabaseConnection, DatabaseInstance);
                         nodes.Add(triggerssNode);
                         return nodes;
                     }

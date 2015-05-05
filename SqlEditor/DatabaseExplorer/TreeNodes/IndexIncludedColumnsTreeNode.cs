@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public class IndexIncludedColumnsTreeNode : ColumnsTreeNode
     {
-        public IndexIncludedColumnsTreeNode([NotNull] Index index, DatabaseConnection connection)
-            : base(index, connection, "Included Columns")
+        public IndexIncludedColumnsTreeNode([NotNull] Index index, DatabaseConnection connection, DatabaseInstance databaseInstance)
+            : base(index, connection, databaseInstance, "Included Columns")
         {
         }
 

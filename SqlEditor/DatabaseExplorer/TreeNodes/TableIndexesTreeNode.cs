@@ -12,8 +12,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Table Table { get; set; }
 
-        public TableIndexesTreeNode([NotNull] Table table, DatabaseConnection connection)
-            : base("Indexes", connection)
+        public TableIndexesTreeNode([NotNull] Table table, DatabaseConnection connection, DatabaseInstance databaseInstance)
+            : base("Indexes", connection, databaseInstance)
         {
             if (table == null) throw new ArgumentNullException("table");
             
@@ -42,7 +42,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 _log.DebugFormat("Loaded {0} index(es).", indexes.Count);
 
                 var indexNodes =
-                    indexes.Select(x => new IndexTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                    indexes.Select(x => new IndexTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
                 return indexNodes;
             }
             catch (Exception ex)

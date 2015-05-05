@@ -704,7 +704,7 @@ namespace SqlEditor
             }
         }
 
-        private FrmSqlWorksheet NewWorksheet(DatabaseConnection connection)
+        private FrmSqlWorksheet NewWorksheet(DatabaseConnection connection, DatabaseInstance databaseInstance = null)
         {
             _log.DebugFormat("Opening new worksheet for connection {0} ...", connection.Name);
             FrmSqlWorksheet worksheet;
@@ -713,7 +713,7 @@ namespace SqlEditor
                 var title = "Untitled";
                 var count = MdiChildren.OfType<FrmSqlWorksheet>().Count(x => x.DatabaseConnection == connection) + 1;
                 title += count.ToString(CultureInfo.InvariantCulture);
-                worksheet = new FrmSqlWorksheet(connection, title) { MdiParent = this };
+                worksheet = new FrmSqlWorksheet(connection, title, databaseInstance) { MdiParent = this };
                 worksheet.RunQuery += WorksheetRunQuery;
                 worksheet.RunScript += WorksheetRunScript;
                 worksheet.Show();
@@ -2435,8 +2435,10 @@ namespace SqlEditor
                 _log.Debug("Loading data ...");
                 using (new WaitActionStatus("Loading data ..."))
                 {
-                    var connectionNode = expandedNode as ConnectionTreeNode;
-                    var openWorksheet = connectionNode != null && !connectionNode.DatabaseConnection.IsConnected;
+                    //var connectionNode = expandedNode as ConnectionTreeNode;
+                    var openWorksheet = !expandedNode.DatabaseConnection.IsConnected &&
+                                        expandedNode.OpensWorksheet;
+                        //connectionNode != null && !connectionNode.DatabaseConnection.IsConnected;
                     expandedNode.SubObjectPropChanged += change => RefreshUserInterface();
                     var nodes = await expandedNode.GetNodesAsync();
                     expandedNode.Nodes.Clear();
@@ -2448,8 +2450,9 @@ namespace SqlEditor
                     if (openWorksheet)
                     {
                         _log.Debug("Opening new worksheet ...");
-                        connectionNode.DatabaseConnection.Connect();
-                        NewWorksheet(connectionNode.DatabaseConnection);
+                        expandedNode.DatabaseConnection.Connect();
+                        var dbInstance = expandedNode is DatabaseInstanceTreeNode ? ((DatabaseInstanceTreeNode) expandedNode).DatabaseInstance : null;
+                        NewWorksheet(expandedNode.DatabaseConnection, dbInstance);
                     }
                 }
                 _log.Debug("Data loaded successfully.");

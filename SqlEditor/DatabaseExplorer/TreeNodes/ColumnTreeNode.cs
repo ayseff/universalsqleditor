@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Column Column { get; set; }
 
-        public ColumnTreeNode(Column column, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public ColumnTreeNode(Column column, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (column == null) throw new ArgumentNullException("column");
 

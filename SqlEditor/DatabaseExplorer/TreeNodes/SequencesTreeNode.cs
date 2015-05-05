@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public SequencesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
-            : base("Sequences", databaseConnection)
+        public SequencesTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base("Sequences", databaseConnection, databaseInstance)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
@@ -35,7 +35,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             //Schema.Sequences.AddRange(sequences);
             _log.DebugFormat("Loaded {0} sequence(s).", sequences.Count);
 
-            var nodes = sequences.Select(x => new SequenceTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+            var nodes = sequences.Select(x => new SequenceTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             _log.Debug("Loading tree finished.");
             return nodes;
         }

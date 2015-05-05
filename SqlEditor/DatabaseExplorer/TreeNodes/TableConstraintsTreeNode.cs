@@ -11,8 +11,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Table Table { get; set; }
 
-        public TableConstraintsTreeNode([NotNull] Table table, DatabaseConnection connection)
-            : base("Constraints", connection)
+        public TableConstraintsTreeNode([NotNull] Table table, DatabaseConnection connection, DatabaseInstance databaseInstance)
+            : base("Constraints", connection, databaseInstance)
         {
             if (table == null) throw new ArgumentNullException("table");
 
@@ -41,7 +41,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 _log.DebugFormat("Loaded {0} constraint(s).", constraints.Count);
 
                 var constraintNodes =
-                    constraints.Select(x => new ConstraintTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                    constraints.Select(x => new ConstraintTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
                 return constraintNodes;
             }
             catch (Exception ex)

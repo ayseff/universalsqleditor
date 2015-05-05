@@ -7,8 +7,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public class FunctionReturnValuesTreeNode : ColumnsTreeNode
     {
-        public FunctionReturnValuesTreeNode(Function function, DatabaseConnection databaseConnection)
-            : base(function, databaseConnection, "Return")
+        public FunctionReturnValuesTreeNode(Function function, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(function, databaseConnection, databaseInstance, "Return")
         {
         }
 

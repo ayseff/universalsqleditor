@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public class IndexColumnsTreeNode : ColumnsTreeNode
     {
-        public IndexColumnsTreeNode([NotNull] Index index, DatabaseConnection connection)
-            : base(index, connection)
+        public IndexColumnsTreeNode([NotNull] Index index, DatabaseConnection connection, DatabaseInstance databaseInstance)
+            : base(index, connection, databaseInstance)
         {
         }
 

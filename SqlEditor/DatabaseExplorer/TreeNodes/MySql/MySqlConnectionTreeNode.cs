@@ -37,7 +37,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.MySql
 
                         _log.Debug("Creating nodes ...");
                         var schemNodes =
-                            Schemas.Select(databaseInstance => new MySqlSchemaTreeNode(databaseInstance, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                            Schemas.Select(databaseInstance => new MySqlSchemaTreeNode(null, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
                         _log.Debug("Loading nodes finished.");
                         return schemNodes;
                     }

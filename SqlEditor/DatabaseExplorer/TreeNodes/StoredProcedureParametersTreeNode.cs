@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public class StoredProcedureParametersTreeNode : ColumnsTreeNode
     {
-        public StoredProcedureParametersTreeNode(StoredProcedure storedProcedure, DatabaseConnection databaseConnection)
-            : base(storedProcedure, databaseConnection, "Parameters")
+        public StoredProcedureParametersTreeNode(StoredProcedure storedProcedure, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(storedProcedure, databaseConnection, databaseInstance, "Parameters")
         {
         }
 

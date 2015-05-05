@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Sequence Sequence { get; set; }
 
-        public SequenceTreeNode(Sequence sequence, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public SequenceTreeNode(Sequence sequence, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (sequence == null) throw new ArgumentNullException("sequence");
 

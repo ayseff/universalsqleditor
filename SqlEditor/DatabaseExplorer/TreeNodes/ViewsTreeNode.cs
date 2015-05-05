@@ -16,8 +16,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public ViewsTreeNode([NotNull] DatabaseObject schema, DatabaseConnection databaseConnection)
-            : base("Views", databaseConnection)
+        public ViewsTreeNode([NotNull] DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base("Views", databaseConnection, databaseInstance)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
@@ -46,7 +46,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             _log.Debug("Loading nodes ...");
             Nodes.Clear();
             var viewNodes =
-                views.Select(view => new ViewTreeNode(view, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                views.Select(view => new ViewTreeNode(view, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             return viewNodes;
         }
     }

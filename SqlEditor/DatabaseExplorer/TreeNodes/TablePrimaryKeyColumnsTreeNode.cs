@@ -7,8 +7,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public class TablePrimaryKeyColumnsTreeNode : ColumnsTreeNode
     {
-        public TablePrimaryKeyColumnsTreeNode(Table table, DatabaseConnection databaseConnection)
-            : base(table, databaseConnection, "Primary Key Columns")
+        public TablePrimaryKeyColumnsTreeNode(Table table, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(table, databaseConnection, databaseInstance, "Primary Key Columns")
         {
         }
 

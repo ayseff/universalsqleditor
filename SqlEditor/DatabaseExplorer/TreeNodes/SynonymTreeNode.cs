@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Synonym Synonym { get; set; }
 
-        public SynonymTreeNode(Synonym synonym, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public SynonymTreeNode(Synonym synonym, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (synonym == null) throw new ArgumentNullException("synonym");
 
@@ -20,7 +20,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 
         protected override IList<TreeNodeBase> GetNodes()
         {
-            var targetObjectNode = new GenericTreeNode(DatabaseConnection, Synonym.TargetObjectName);
+            var targetObjectNode = new GenericTreeNode(DatabaseConnection, DatabaseInstance, Synonym.TargetObjectName);
             return new List<TreeNodeBase> { targetObjectNode };
         }
     }

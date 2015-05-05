@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Trigger Trigger { get; set; }
 
-        public TriggerTreeNode(Trigger trigger, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public TriggerTreeNode(Trigger trigger, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (trigger == null) throw new ArgumentNullException("trigger");
 

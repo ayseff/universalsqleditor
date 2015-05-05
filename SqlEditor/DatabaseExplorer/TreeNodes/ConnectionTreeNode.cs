@@ -6,8 +6,13 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public abstract class ConnectionTreeNode : TreeNodeBase
     {
+        public override bool OpensWorksheet
+        {
+            get { return true; }
+        }
+
         protected ConnectionTreeNode(DatabaseConnection connection)
-            : base(connection.Name, connection)
+            : base(connection.Name, connection, null)
         {
             if (connection == null) throw new ArgumentNullException("connection");
             

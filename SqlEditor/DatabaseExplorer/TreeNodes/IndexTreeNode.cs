@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Index IndexObject { get; set; }
 
-        public IndexTreeNode(Index index, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public IndexTreeNode(Index index, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (index == null) throw new ArgumentNullException("index");
 
@@ -25,9 +25,9 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
         protected override IList<TreeNodeBase> GetNodes()
         {
             var nodes = new List<TreeNodeBase>();
-            var columnsTreeNode = new IndexColumnsTreeNode(IndexObject, DatabaseConnection);
+            var columnsTreeNode = new IndexColumnsTreeNode(IndexObject, DatabaseConnection, DatabaseInstance);
             nodes.Add(columnsTreeNode);
-            var includedColumnsTreeNode = new IndexIncludedColumnsTreeNode(IndexObject, DatabaseConnection);
+            var includedColumnsTreeNode = new IndexIncludedColumnsTreeNode(IndexObject, DatabaseConnection, DatabaseInstance);
             nodes.Add(includedColumnsTreeNode);
 
             return nodes;

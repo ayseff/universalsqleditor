@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Constraint Constraint { get; set; }
 
-        public ConstraintTreeNode(Constraint constraint, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public ConstraintTreeNode(Constraint constraint, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (constraint == null) throw new ArgumentNullException("constraint");
 

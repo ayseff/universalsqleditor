@@ -7,8 +7,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public class TableColumnsTreeNode : ColumnsTreeNode
     {
-        public TableColumnsTreeNode(Table table, DatabaseConnection databaseConnection) 
-            : base(table, databaseConnection)
+        public TableColumnsTreeNode(Table table, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance) 
+            : base(table, databaseConnection, databaseInstance)
         {
         }
 

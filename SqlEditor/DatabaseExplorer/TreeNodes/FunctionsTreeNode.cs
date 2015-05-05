@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public FunctionsTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, string nodeDisplayText = "Functions")
-            : base(nodeDisplayText, databaseConnection)
+        public FunctionsTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance, string nodeDisplayText = "Functions")
+            : base(nodeDisplayText, databaseConnection, databaseInstance)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
@@ -35,7 +35,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             //Schema.StoredProcedures.AddRange(storedProcedures);
             _log.DebugFormat("Loaded {0} function(s).", functions.Count);
 
-            var nodes = functions.Select(function => new FunctionTreeNode(function, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+            var nodes = functions.Select(function => new FunctionTreeNode(function, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             _log.Debug("Loading tree finished.");
             return nodes;
         }

@@ -10,8 +10,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObject Schema { get; private set; }
 
-        public TriggersTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection)
-            : base("Triggers", databaseConnection)
+        public TriggersTreeNode(DatabaseObject schema, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base("Triggers", databaseConnection, databaseInstance)
         {
             if (schema == null) throw new ArgumentNullException("schema");
             Schema = schema;
@@ -36,7 +36,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             //Schema.Triggers.AddRange(triggers);
             _log.DebugFormat("Loaded {0} trigger(s).", triggers.Count);
 
-            var nodes = triggers.Select(x => new TriggerTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+            var nodes = triggers.Select(x => new TriggerTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
             _log.Debug("Loading tree finished.");
             return nodes;
         }

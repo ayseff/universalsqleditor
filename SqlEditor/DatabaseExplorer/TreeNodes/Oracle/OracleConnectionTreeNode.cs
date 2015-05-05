@@ -37,7 +37,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Oracle
 
                         _log.Debug("Creating nodes ...");
                         var schemNodes =
-                            Schemas.Select(schema => new OracleSchemaTreeNode(schema, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                            Schemas.Select(schema => new OracleSchemaTreeNode(schema, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
                         _log.Debug("Loading nodes finished.");
                         return schemNodes;
                     }

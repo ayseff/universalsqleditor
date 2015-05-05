@@ -13,8 +13,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public DatabaseObjectWithColumns DatabaseObject { get; set; }
 
-        protected ColumnsTreeNode([NotNull] DatabaseObjectWithColumns databaseObject, DatabaseConnection connection, string nodeDisplayText = "Columns")
-            : base(nodeDisplayText, connection)
+        protected ColumnsTreeNode([NotNull] DatabaseObjectWithColumns databaseObject, DatabaseConnection connection, DatabaseInstance databaseInstance, string nodeDisplayText = "Columns")
+            : base(nodeDisplayText, connection, databaseInstance)
         {
             if (databaseObject == null) throw new ArgumentNullException("databaseObject");
             if (connection == null) throw new ArgumentNullException("connection");
@@ -39,7 +39,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 _log.DebugFormat("Loaded {0} column(s).", columns.Count);
 
                 var columnNodes =
-                    columns.Select(x => new ColumnTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                    columns.Select(x => new ColumnTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
                 return columnNodes;
             }
             catch (Exception ex)

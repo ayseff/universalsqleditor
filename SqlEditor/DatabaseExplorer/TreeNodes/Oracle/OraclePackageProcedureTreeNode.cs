@@ -8,8 +8,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Oracle
     {
         public PackageProcedure PackageProcedure { get; set; }
 
-        public OraclePackageProcedureTreeNode(PackageProcedure packageProcedure, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public OraclePackageProcedureTreeNode(PackageProcedure packageProcedure, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (packageProcedure == null) throw new ArgumentNullException("packageProcedure");
 

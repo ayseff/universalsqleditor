@@ -7,7 +7,7 @@ using SqlEditor.Databases;
 namespace SqlEditor.DatabaseExplorer
 {
     [Serializable]
-    public class DatabaseConnection : INotifyPropertyChanged
+    public class DatabaseConnection : INotifyPropertyChanged, ICloneable
     {
         #region Fields
 
@@ -173,6 +173,19 @@ namespace SqlEditor.DatabaseExplorer
         public override string ToString()
         {
             return Name + (DatabaseServer != null ? (": " + DatabaseServer.Name) : string.Empty);
+        }
+
+        public object Clone()
+        {
+            var connection = new DatabaseConnection();
+            connection.AutoCommit = this.AutoCommit;
+            connection.ConnectionString = ConnectionString;
+            connection.DatabaseServer = this.DatabaseServer;
+            connection.Folder = this.Folder;
+            connection.IsConnected = this.IsConnected;
+            connection.MaxResults = this.MaxResults;
+            connection.Name = this.Name;
+            return connection;
         }
     }
 }

@@ -9,8 +9,8 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
     {
         public Package Package { get; set; }
 
-        public PackageTreeNode(Package package, DatabaseConnection databaseConnection)
-            : base(databaseConnection)
+        public PackageTreeNode(Package package, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+            : base(databaseConnection, databaseInstance)
         {
             if (package == null) throw new ArgumentNullException("package");
 
@@ -36,7 +36,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 Package.Procedures.AddRange(packageProcedures);
                 _log.DebugFormat("Loaded {0} package procedure(s).", packageProcedures.Count);
 
-                var nodes = Package.Procedures.Select(x => new PackageProcedureTreeNode(x, DatabaseConnection)).Cast<TreeNodeBase>().ToList();
+                var nodes = Package.Procedures.Select(x => new PackageProcedureTreeNode(x, DatabaseConnection, DatabaseInstance)).Cast<TreeNodeBase>().ToList();
                 var treeNodeBases = nodes;
                 return treeNodeBases;
             }
