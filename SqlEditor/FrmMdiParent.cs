@@ -396,12 +396,11 @@ namespace SqlEditor
                 _log.Error(exception.Message, exception);
             }
 
-            var firstException = ex.InnerExceptions.FirstOrDefault();
-            if (firstException != null)
-            {
-                Dialog.ShowErrorDialog(Application.ProductName, "Error occurred in the application.", ex.Message, ex.StackTrace);
-            }
-
+//            var firstException = ex.InnerExceptions.FirstOrDefault();
+//            if (firstException != null)
+//            {
+//                Dialog.ShowErrorDialog(Application.ProductName, "Error occurred in the application.", ex.Message, ex.StackTrace);
+//            }
         }
 
         private void ToggleVisibleToolRibbonTab(bool isVisible, string tabKey)

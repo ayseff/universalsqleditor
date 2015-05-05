@@ -233,6 +233,7 @@
     <Compile Include="ActiveWorksheetChangedEventArgs.cs" />
     <Compile Include="CloseAction.cs" />
     <Compile Include="DatabaseExplorer\Extensions.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\Base\DatabaseTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Base\TreeNodeFactory.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\ConstraintsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\ConstraintTreeNode.cs" />
