@@ -30,7 +30,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             {
                 connection.OpenIfRequired();
                 var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();
-                var databaseInstanceName = Schema.Parent == null ? null : Schema.Parent.Name;
+                var databaseInstanceName = DatabaseInstance == null ? null : DatabaseInstance.Name;
                 indexes = infoProvider.GetIndexes(connection, Schema.Name, databaseInstanceName);
                 foreach (var idx in indexes)
                 {

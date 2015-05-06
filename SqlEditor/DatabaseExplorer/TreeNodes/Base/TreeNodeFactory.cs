@@ -111,6 +111,14 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             {
                 return schemas.Select(schema => new PostgreSqlSchemaTreeNode(schema, databaseConnection, databaseInstance)).Cast<TreeNodeBase>().ToList();
             }
+            else if (databaseConnection.DatabaseServer is MySqlDatabaseServer)
+            {
+                return schemas.Select(schema => new MySqlSchemaTreeNode(schema, databaseConnection, databaseInstance)).Cast<TreeNodeBase>().ToList();
+            }
+            else if (databaseConnection.DatabaseServer is SqlServerDatabaseServer)
+            {
+                return schemas.Select(schema => new SqlServerSchemaTreeNode(schema, databaseConnection, databaseInstance)).Cast<TreeNodeBase>().ToList();
+            }
             // TODO: Add other servers here
             else
             {

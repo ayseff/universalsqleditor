@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.Data;
+﻿using System.Data;
 using System.Data.Common;
-using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Oracle.ManagedDataAccess.Client;

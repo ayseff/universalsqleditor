@@ -248,6 +248,7 @@
     <Compile Include="DatabaseExplorer\TreeNodes\MsAccess\MsAccessConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlSchemaTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\MySql\MySqlDatabaseInstanceTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OraclePackageProcedureTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OraclePackageTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OraclePackagesTreeNode.cs" />
@@ -417,7 +418,6 @@
     <Compile Include="Databases\DatabaseServerFactory.cs" />
     <Compile Include="Databases\Table.cs" />
     <Compile Include="Databases\View.cs" />
-    <Compile Include="DdlGenerator.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="FrmAbout.cs">
       <SubType>Form</SubType>

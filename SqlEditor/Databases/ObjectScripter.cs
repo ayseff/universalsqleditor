@@ -29,9 +29,9 @@ namespace SqlEditor.Databases
 
                 var sb = new StringBuilder();
                 sb.AppendLine("SELECT");
-                sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", view.Columns.Select(x => x.Name)));
+                sb.AppendLine("    " + string.Join("," + Environment.NewLine + "    ", view.Columns.Select(x => x.Name)));
                 sb.AppendLine("FROM");
-                sb.AppendLine("\t" + view.FullyQualifiedName);
+                sb.AppendLine("    " + view.FullyQualifiedName);
                 _log.DebugFormat("Generating complete.");
                 return sb.ToString();
             }
@@ -56,9 +56,9 @@ namespace SqlEditor.Databases
 
                 var sb = new StringBuilder();
                 sb.AppendLine("SELECT");
-                sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", table.Columns.Select(x => x.Name)));
+                sb.AppendLine("    " + string.Join("," + Environment.NewLine + "    ", table.Columns.Select(x => x.Name)));
                 sb.AppendLine("FROM");
-                sb.AppendLine("\t" + table.FullyQualifiedName);
+                sb.AppendLine("    " + table.FullyQualifiedName);
                 _log.DebugFormat("Generating complete.");
                 return sb.ToString();
             }
@@ -90,7 +90,7 @@ namespace SqlEditor.Databases
 
             var sb = new StringBuilder();
             sb.AppendLine("INSERT INTO " + table.FullyQualifiedName + " (");
-            sb.AppendLine("\t" + string.Join("," + Environment.NewLine + "\t", table.Columns.Select(x => x.Name)) + ")");
+            sb.AppendLine("    " + string.Join("," + Environment.NewLine + "    ", table.Columns.Select(x => x.Name)) + ")");
             sb.AppendLine("VALUES (");
             var separator = string.Empty;
             foreach (var column in table.Columns)
@@ -98,16 +98,16 @@ namespace SqlEditor.Databases
                 sb.Append(separator);
                 if (databaseConnection.DatabaseServer.NumericDataTypes.Contains(column.DataType.ToUpper()))
                 {
-                    sb.Append("\t0");
+                    sb.Append("    0");
                 }
                 else if (databaseConnection.DatabaseServer.DateTimeDataTypes.Contains(column.DataType.ToUpper()))
                 {
                     var date = DateTime.Now;
-                    sb.AppendFormat("\t{0}{1}{0}", "'", date.ToString("yyyy-MM-dd"));
+                    sb.AppendFormat("    {0}{1}{0}", "'", date.ToString("yyyy-MM-dd"));
                 }
                 else
                 {
-                    sb.Append("\t''");
+                    sb.Append("    ''");
                 }
                 separator = "," + Environment.NewLine;
             }
@@ -138,7 +138,7 @@ namespace SqlEditor.Databases
             sb.AppendLine("SET");
             AppendColumns(databaseConnection, sb, table.Columns.Where(x => table.PrimaryKeyColumns.All(y => y != x)), ",", " ");
             sb.AppendLine(Environment.NewLine + "WHERE");
-            AppendColumns(databaseConnection, sb, table.PrimaryKeyColumns, "AND ", "\t");
+            AppendColumns(databaseConnection, sb, table.PrimaryKeyColumns, "AND ", "    ");
             _log.DebugFormat("Generating complete.");
             return sb.ToString();
         }
@@ -163,7 +163,7 @@ namespace SqlEditor.Databases
             var sb = new StringBuilder();
             sb.AppendLine("DELETE FROM " + table.FullyQualifiedName);
             sb.AppendLine("WHERE");
-            AppendColumns(databaseConnection, sb, table.PrimaryKeyColumns, "AND ", "\t");
+            AppendColumns(databaseConnection, sb, table.PrimaryKeyColumns, "AND ", "    ");
             _log.DebugFormat("Generating complete.");
             return sb.ToString();
         }
@@ -238,7 +238,7 @@ namespace SqlEditor.Databases
             var separator = firstColumnSeparator;
             foreach (var column in columns)
             {
-                sb.Append("\t" + separator);
+                sb.Append("    " + separator);
                 sb.Append(column.Name + " = ");
                 if (databaseConnection.DatabaseServer.NumericDataTypes.Contains(column.DataType.ToUpper()))
                 {
@@ -253,7 +253,7 @@ namespace SqlEditor.Databases
                 {
                     sb.Append("''");
                 }
-                separator = Environment.NewLine + "\t" + columnSeparator;
+                separator = Environment.NewLine + "    " + columnSeparator;
             }
         }
 

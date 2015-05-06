@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 using SqlEditor.Databases;
 
 namespace SqlEditor.DatabaseExplorer.TreeNodes
 {
     public abstract class DatabaseInstanceTreeNode : TreeNodeBase
     {
-        public DatabaseInstance DatabaseInstance { get; protected set; }
+        public override bool OpensWorksheet
+        {
+            get { return true; }
+        }
 
         public DatabaseInstanceTreeNode(DatabaseInstance databaseInstance, DatabaseConnection databaseConnection)
             : base(databaseConnection, databaseInstance)
@@ -14,6 +18,14 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
             DatabaseInstance = databaseInstance;
             Text = databaseInstance.DisplayName;
             Override.NodeAppearance.Image = DatabaseExplorerImageList.Instance.ImageList.Images["database_yellow.png"];
+        }
+
+        protected override IList<TreeNodeBase> GetNodes()
+        {
+            var nodes = new List<TreeNodeBase>();
+            var schemasTreeNode = new SchemasTreeNode(DatabaseConnection, DatabaseInstance);
+            nodes.Add(schemasTreeNode);
+            return nodes;
         }
     }
 }

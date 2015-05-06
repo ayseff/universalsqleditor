@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using log4net;
 using SqlEditor.Annotations;
 using SqlEditor.Database;
@@ -17,7 +16,8 @@ namespace SqlEditor.Databases.MySql
 
         public override IList<DatabaseInstance> GetDatabaseInstances(IDbConnection connection)
         {
-            throw new NotSupportedException();
+            if (connection == null) throw new ArgumentNullException("connection");
+            return GetDatabaseInstancesBase(connection, "SHOW DATABASES");
         }
 
         public override IList<Schema> GetSchemas(IDbConnection connection, string databaseInstance = null)
