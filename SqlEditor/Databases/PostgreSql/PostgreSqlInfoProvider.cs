@@ -276,6 +276,11 @@ namespace SqlEditor.Databases.PostgreSql
             throw new NotImplementedException();
         }
 
+        public override IList<Login> GetLogins(IDbConnection connection, string databaseInstanceName = null)
+        {
+            return GetLoginsBase(connection, "SELECT usename FROM pg_catalog.pg_user u ORDER BY usename", null);
+        }
+
         public override IntelisenseData GetIntelisenseData([NotNull] IDbConnection connection,
                                                            [NotNull] string currentSchemaName)
         {

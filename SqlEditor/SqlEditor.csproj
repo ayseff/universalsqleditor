@@ -259,7 +259,9 @@
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Oracle\OracleSchemaTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\PublicSynonymsTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\LoginsTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SchemasTreeNode.cs" />
+    <Compile Include="DatabaseExplorer\TreeNodes\LoginTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\SqlCe\SqliteConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\Sqlite\SqliteConnectionTreeNode.cs" />
     <Compile Include="DatabaseExplorer\TreeNodes\PostgreSql\PostgreSqlDatabaseInstanceTreeNode.cs" />
@@ -312,6 +314,7 @@
     <Compile Include="Databases\PostgreSql\PostgreSqlExplainPlanGenerator.cs" />
     <Compile Include="Databases\PostgreSql\PostgreSqlInfoProvider.cs" />
     <Compile Include="Databases\PostgreSql\PostgreSqlSimpleConnectionStringBuilder.cs" />
+    <Compile Include="Databases\Login.cs" />
     <Compile Include="Databases\SqlCe\ShowPlanXML.cs" />
     <Compile Include="Databases\SqlCe\SqlCeDdlGenerator.cs" />
     <Compile Include="Databases\SqlCe\SqlCeSimpleConnectionStringBuilder.cs" />

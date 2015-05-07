@@ -305,6 +305,11 @@ namespace SqlEditor.Databases.MySql
             throw new NotImplementedException();
         }
 
+        public override IList<Login> GetLogins(IDbConnection connection, string databaseInstanceName = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public override IntelisenseData GetIntelisenseData([NotNull] IDbConnection connection,
                                                            [NotNull] string currentSchemaName)
         {

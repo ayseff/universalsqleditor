@@ -615,6 +615,30 @@ namespace SqlEditor.Databases
 
         public abstract IList<PackageProcedure> GetPackageProcedures(IDbConnection connection, string schemaName, string packageName, string databaseInstanceName = null);
 
+
+        public abstract IList<Login> GetLogins(IDbConnection connection, string databaseInstanceName = null);
+        protected virtual IList<Login> GetLoginsBase(IDbConnection connection, [NotNull] string sql, params object[] parameters)
+        {
+            if (connection == null) throw new ArgumentNullException("connection");
+            if (sql == null) throw new ArgumentNullException("sql");
+
+            _log.Debug("Getting logins ...");
+            var logins = new List<Login>();
+            using (var command = connection.CreateCommand())
+            {
+                BuildSqlCommand(command, sql, parameters);
+                using (var dr = command.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        logins.Add(new Login(dr.GetString(0)));
+                    }
+                }
+            }
+            _log.DebugFormat("Retrieved {0} login(s).", logins.Count);
+            return logins;
+        }
+
         public abstract IntelisenseData GetIntelisenseData(IDbConnection connection, string currentSchemaName);
 
         protected IList<Column> GetTableColumnsDefault<T>(IDbConnection connection,

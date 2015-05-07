@@ -70,35 +70,36 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             }
         }
 
-        public static IList<TreeNodeBase> GetSchemaNodes(DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
-        {
-            try
-            {
-                var actionName = string.Format("Getting schemas for {0} ...", databaseConnection.Name);
-                _log.Debug(actionName);
-                using (new WaitActionStatus(actionName))
-                {
-                    _log.DebugFormat("Creating connection for {0} ...", databaseConnection.Name);
-                    using (var connection = databaseConnection.CreateNewConnection())
-                    {
-                        connection.OpenIfRequired();
-                        var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
-                        var schemas = infoProvider.GetSchemas(connection);
-                        _log.DebugFormat("Loaded {0} schema(s).", schemas.Count);
-                        var schemaNodes = GetSchemaNodesForServer(schemas, databaseConnection, databaseInstance);
-                        return schemaNodes;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _log.ErrorFormat("Error opening connection and loading schemas.");
-                _log.Error(ex.Message);
-                throw new Exception("Error opening connection and loading schemas.", ex);
-            }
-        }
+//        public static IList<TreeNodeBase> GetSchemaNodes(IList<Schema> schemas, DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+//        {
+//            return GetSchemaNodes((IEnumerable<Schema>) schemas, databaseConnection, databaseInstance);
+////            try
+////            {
+////                var actionName = string.Format("Getting schemas for {0} ...", databaseConnection.Name);
+////                _log.Debug(actionName);
+////                using (new WaitActionStatus(actionName))
+////                {
+////                    _log.DebugFormat("Creating connection for {0} ...", databaseConnection.Name);
+////                    using (var connection = databaseConnection.CreateNewConnection())
+////                    {
+////                        connection.OpenIfRequired();
+//////                        var infoProvider = databaseConnection.DatabaseServer.GetInfoProvider();
+//////                        var schemas = infoProvider.GetSchemas(connection);
+//////                        _log.DebugFormat("Loaded {0} schema(s).", schemas.Count);
+////                        var schemaNodes = GetSchemaNodesForServer(schemas, databaseConnection, databaseInstance);
+////                        return schemaNodes;
+////                    }
+////                }
+////            }
+////            catch (Exception ex)
+////            {
+////                _log.ErrorFormat("Error opening connection and loading schemas.");
+////                _log.Error(ex.Message);
+////                throw new Exception("Error opening connection and loading schemas.", ex);
+////            }
+//        }
 
-        private static IList<TreeNodeBase> GetSchemaNodesForServer([NotNull] IEnumerable<Schema> schemas, [NotNull] DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+        public static IList<TreeNodeBase> GetSchemaNodes([NotNull] IEnumerable<Schema> schemas, [NotNull] DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
         {
             if (schemas == null) throw new ArgumentNullException("schemas");
             if (databaseConnection == null) throw new ArgumentNullException("databaseConnection");
@@ -124,6 +125,11 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Base
             {
                 throw new Exception("Unrecognized database server " + databaseConnection.GetType());
             }
+        }
+
+        public static IList<TreeNodeBase> GetLoginNodes([NotNull] IEnumerable<Login> logins, [NotNull] DatabaseConnection databaseConnection, DatabaseInstance databaseInstance)
+        {
+            return logins.Select(login => new LoginTreeNode(login, databaseConnection, databaseInstance)).Cast<TreeNodeBase>().ToList();
         }
     }
 }

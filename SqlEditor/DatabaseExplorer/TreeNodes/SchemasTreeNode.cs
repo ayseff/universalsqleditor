@@ -33,6 +33,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                         var schemas = infoProvider.GetSchemas(connection);
                         _log.DebugFormat("Loaded {0} schema(s).", schemas.Count);
                         Schemas.AddRange(schemas);
+                        return TreeNodeFactory.GetSchemaNodes(schemas, DatabaseConnection, DatabaseInstance);
                     }
                 }
             }
@@ -42,8 +43,6 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes
                 _log.Error(ex.Message);
                 throw new Exception("Error opening connection and loading schemas.", ex);
             }
-
-            return TreeNodeFactory.GetSchemaNodes(DatabaseConnection, DatabaseInstance);
         }
     }
 }
