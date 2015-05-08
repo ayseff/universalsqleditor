@@ -101,6 +101,7 @@ namespace SqlEditor.QueryResults
                 if (value.Equals(_isPinned)) return;
                 _isPinned = value;
                 OnPropertyChanged("IsPinned");
+                _flagTool.Checked = IsPinned;
             }
         }
 
@@ -864,6 +865,7 @@ namespace SqlEditor.QueryResults
         public void FreeResources()
         {
             CloseConnection(_connection, _transaction, _command);
+            IsPinned = false;
         }
 
         private void UgGrid_InitializeLayout(object sender, InitializeLayoutEventArgs e)

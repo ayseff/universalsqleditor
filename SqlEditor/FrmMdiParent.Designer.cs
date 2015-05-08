@@ -492,7 +492,8 @@
             this._iml16.Images.SetKeyName(92, "minus-white.png");
             this._iml16.Images.SetKeyName(93, "tables-relation.png");
             this._iml16.Images.SetKeyName(94, "package.png");
-            this._iml16.Images.SetKeyName(95, "users-blue.png");
+            this._iml16.Images.SetKeyName(95, "users-small.png");
+            this._iml16.Images.SetKeyName(96, "users-blue.png");
             // 
             // _uteConnectionsSearch
             // 

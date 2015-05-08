@@ -112,6 +112,8 @@ namespace SqlEditor
         private readonly List<ToolBase> _packageCommands = new List<ToolBase>();
         private readonly List<ToolBase> _connectionClosedCommands = new List<ToolBase>();
         private readonly List<ToolBase> _connectionOpenCommands = new List<ToolBase>();
+        private readonly List<ToolBase> _databaseInstanceConnectionOpenCommands = new List<ToolBase>();
+        private readonly List<ToolBase> _databaseInstanceConnectionClosedCommands = new List<ToolBase>();
 
         private readonly UltraTreeDropHightLightDrawFilter _treeDrawFilter = new UltraTreeDropHightLightDrawFilter();
         private readonly SqlHistoryList _sqlHistoryList = new SqlHistoryList();
@@ -243,9 +245,21 @@ namespace SqlEditor
             _connectionOpenCommands.Add(null);
             _connectionOpenCommands.Add(_connectionPropertiesButtonTool);
 
+            // Setup database instance commands when connection is open
+            _databaseInstanceConnectionOpenCommands.Add(_connectionNewSqlWorksheetButtonTool);
+            _databaseInstanceConnectionOpenCommands.Add(_connectionDisconnectButtonTool);
+            _databaseInstanceConnectionOpenCommands.Add(null);
+            _databaseInstanceConnectionOpenCommands.Add(_copyButtonTool);
+
+            // Setup database instance commands when connection is open
+            _databaseInstanceConnectionClosedCommands.Add(_connectionConnectButtonTool);
+            _databaseInstanceConnectionClosedCommands.Add(null);
+            _databaseInstanceConnectionClosedCommands.Add(_copyButtonTool);
+            _databaseInstanceConnectionClosedCommands.Add(null);
+            _databaseInstanceConnectionClosedCommands.Add(_refreshButtonTool);
+
             // Setup table commands
             _tableDetailsButtonTool = _utm.Tools["Tables - Details"];
-            
             var tableScriptAsDropButtonTool = _utm.Tools["Tables - Script as - Drop"];
             var tableScriptAsCreateButtonTool = _utm.Tools["Tables - Script as - Create"];
             var tableScriptAsCreateFullButtonTool = _utm.Tools["Tables - Script as - Create (Full)"];
@@ -1979,11 +1993,17 @@ namespace SqlEditor
         {
             try
             {
-                var selectedNode = _utConnections.SelectedNodes.Count > 0 ? _utConnections.SelectedNodes[0] : null;
+                var selectedNode = _utConnections.SelectedNodes.Count > 0 ? _utConnections.SelectedNodes[0] as TreeNodeBase : null;
+                if (selectedNode == null)
+                {
+                    return;
+                }
+
                 var isNodeSelected = _utConnections.SelectedNodes.Count > 0;
                 var isRootNodeSelected = isNodeSelected &&
                                           selectedNode == ConnectionsTreeNode.Instance;
                 var isConnectionNodeSelected = isNodeSelected && selectedNode is ConnectionTreeNode;
+                var isDatabaseInstanceNodeSelected = isNodeSelected && selectedNode is DatabaseInstanceTreeNode;
                 var isFolderContainerNodeSelected = isNodeSelected && (selectedNode as FolderContainerTreeNode) != null;
                 var isFolderNodeSelected = isFolderContainerNodeSelected && selectedNode is FolderTreeNode;
                 var isTableNodeSelected = isNodeSelected && selectedNode is TableTreeNode;
@@ -1997,21 +2017,18 @@ namespace SqlEditor
 
                 _newConnectionButtonTool.SharedProps.Enabled = isRootNodeSelected || isFolderNodeSelected;
                 _connectionEditButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
-                                                                !(((ConnectionTreeNode) selectedNode).DatabaseConnection.
+                                                                !(selectedNode.DatabaseConnection.
                                                                                                       IsConnected);
                 _connectionPropertiesButtonTool.SharedProps.Enabled = isConnectionNodeSelected;
                 _connectionDeleteButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
-                                                                  !(((ConnectionTreeNode) selectedNode).DatabaseConnection.
+                                                                  !(selectedNode.DatabaseConnection.
                                                                                                         IsConnected);
-                _connectionNewSqlWorksheetButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
-                                                              ((ConnectionTreeNode) selectedNode).DatabaseConnection.
-                                                                                                  IsConnected;
-                _connectionDisconnectButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
-                                                            ((ConnectionTreeNode) selectedNode).DatabaseConnection.
-                                                                                                IsConnected;
-                _connectionConnectButtonTool.SharedProps.Enabled = isConnectionNodeSelected &&
-                                                         !(((ConnectionTreeNode) selectedNode).DatabaseConnection.
-                                                                                               IsConnected);
+                _connectionNewSqlWorksheetButtonTool.SharedProps.Enabled = selectedNode.OpensWorksheet &&
+                                                              selectedNode.DatabaseConnection.IsConnected;
+                _connectionDisconnectButtonTool.SharedProps.Enabled = (isConnectionNodeSelected || isDatabaseInstanceNodeSelected) &&
+                                                            selectedNode.DatabaseConnection.IsConnected;
+                _connectionConnectButtonTool.SharedProps.Enabled = (isConnectionNodeSelected || isDatabaseInstanceNodeSelected) &&
+                                                         !(selectedNode.DatabaseConnection.IsConnected);
 
                 _refreshButtonTool.SharedProps.Enabled = isNodeSelected && !isColumnNodeSelected && !isSequenceNodeSelected;
                 _exportConnectionButtonTool.SharedProps.Enabled = isRootNodeSelected;
@@ -2054,6 +2071,18 @@ namespace SqlEditor
                     else if (isNodeSelected && selectedNode is PackageTreeNode)
                     {
                         AddTools(_packageCommands, _connectionsPopupMenu);
+                    }
+                    else if (isNodeSelected && selectedNode is DatabaseInstanceTreeNode)
+                    {
+                        var dbConnection = ((DatabaseInstanceTreeNode)selectedNode).DatabaseConnection;
+                        if (dbConnection.IsConnected)
+                        {
+                            AddTools(_databaseInstanceConnectionOpenCommands, _connectionsPopupMenu);
+                        }
+                        else
+                        {
+                            AddTools(_databaseInstanceConnectionClosedCommands, _connectionsPopupMenu);
+                        }
                     }
                     else if (isNodeSelected && selectedNode is ConnectionTreeNode)
                     {
@@ -2342,10 +2371,11 @@ namespace SqlEditor
         {
             if (_utConnections.SelectedNodes.Count > 0)
             {
-                var connectionNode = _utConnections.SelectedNodes[0] as ConnectionTreeNode;
-                if (connectionNode != null)
+                var treeNode = _utConnections.SelectedNodes[0];
+                var isConnectable = treeNode is ConnectionTreeNode || treeNode is DatabaseInstanceTreeNode;
+                if (isConnectable)
                 {
-                    connectionNode.Expanded = true;
+                    treeNode.Expanded = true;
                 }
             }
         }
@@ -2447,11 +2477,15 @@ namespace SqlEditor
                     {
                         expandedNode.CollapseAll();
                     }
+                    if (!expandedNode.DatabaseConnection.IsConnected)
+                    {
+                        _log.Debug("Connecting ...");
+                        expandedNode.DatabaseConnection.Connect();
+                    }
                     if (openWorksheet)
                     {
                         _log.Debug("Opening new worksheet ...");
-                        expandedNode.DatabaseConnection.Connect();
-                        var dbInstance = expandedNode is DatabaseInstanceTreeNode ? ((DatabaseInstanceTreeNode) expandedNode).DatabaseInstance : null;
+                        var dbInstance = expandedNode is DatabaseInstanceTreeNode ? expandedNode.DatabaseInstance : null;
                         NewWorksheet(expandedNode.DatabaseConnection, dbInstance);
                     }
                 }
@@ -2825,12 +2859,11 @@ namespace SqlEditor
         {
             if (_utConnections.SelectedNodes.Count > 0)
             {
-                var selectedNode = _utConnections.SelectedNodes[0];
-                var node = selectedNode as ConnectionTreeNode;
-                if (node != null)
+                var treeNode = _utConnections.SelectedNodes[0] as TreeNodeBase;
+                if (treeNode != null && treeNode.OpensWorksheet)
                 {
                     _log.Debug("Opening new SQL worksheet ...");
-                    NewWorksheet(node.DatabaseConnection);
+                    NewWorksheet(treeNode.DatabaseConnection, treeNode.DatabaseInstance);
                 }
             }
         }

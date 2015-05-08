@@ -48,6 +48,7 @@ namespace SqlEditor.ExplainPlan
                 if (value.Equals(_isPinned)) return;
                 _isPinned = value;
                 OnPropertyChanged("IsPinned");
+                _flagTool.Checked = IsPinned;
             }
         }
 
@@ -431,6 +432,11 @@ namespace SqlEditor.ExplainPlan
         private void UtExplain_KeyDown(object sender, KeyEventArgs e)
         {
             UtExplain_KeyUp(sender, e);
+        }
+
+        public void FreeResources()
+        {
+            IsPinned = false;
         }
     }
 }

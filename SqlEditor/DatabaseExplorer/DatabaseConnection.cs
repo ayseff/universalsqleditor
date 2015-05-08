@@ -135,6 +135,11 @@ namespace SqlEditor.DatabaseExplorer
 
         public void Connect()
         {
+            using (var connection = CreateNewConnection())
+            {
+                connection.Open();
+                connection.Close();
+            }
             IsConnected = true;
         }
 

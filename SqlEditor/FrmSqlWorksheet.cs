@@ -528,6 +528,7 @@ namespace SqlEditor
             try
             {
                 FreeTabResources(e.Tab);
+
             }
             catch (Exception ex)
             {
@@ -553,6 +554,18 @@ namespace SqlEditor
                 }
             }
             foreach (var resultsControl in tab.TabPage.Controls.OfType<UcScriptResults>())
+            {
+                try
+                {
+                    resultsControl.FreeResources();
+                }
+                catch (Exception ex)
+                {
+                    _log.ErrorFormat("Error releasing resources from {0}.", resultsControl.Name);
+                    _log.Error(ex.Message, ex);
+                }
+            }
+            foreach (var resultsControl in tab.TabPage.Controls.OfType<UcExplainPlan>())
             {
                 try
                 {

@@ -79,6 +79,7 @@ namespace SqlEditor.ScriptResults
                 if (value.Equals(_isPinned)) return;
                 _isPinned = value;
                 OnPropertyChanged("IsPinned");
+                _flagTool.Checked = IsPinned;
             }
         }
 
@@ -786,6 +787,7 @@ namespace SqlEditor.ScriptResults
         public void FreeResources()
         {
             CloseConnection(_connection, _transaction, _command);
+            IsPinned = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
