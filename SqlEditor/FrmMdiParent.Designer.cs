@@ -54,13 +54,6 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool73 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool12 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Delete");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool72 = new Infragistics.Win.UltraWinToolbars.ButtonTool("SQL History - Export to Excel");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool106 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Create");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool116 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Tables - Script as - Insert");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool117 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Views - Script as - Create (Full)");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool114 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Views - Script as - Create (Full)");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool115 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Views - Script as - Select");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool113 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Views - Script as - Create");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool112 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Views - Script as - Create (Full)");
             Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab2 = new Infragistics.Win.UltraWinToolbars.RibbonTab("Log - Logging");
             Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup2 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Level");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool29 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Debug", "");
@@ -71,17 +64,6 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool66 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Copy");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool20 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - ClearLog");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool21 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Save");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool97 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool96 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool92 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool95 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool90 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Create");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool91 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool89 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool86 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool82 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Drop");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool88 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Functions - Script As - Drop");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool84 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Stored Procedures - Script As - Create");
             Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab3 = new Infragistics.Win.UltraWinToolbars.RibbonTab("Database Explorer");
             Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup4 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Connections");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool26 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New SQL Worksheet");
@@ -368,7 +350,7 @@
             this._tlpConnections.RowCount = 2;
             this._tlpConnections.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this._tlpConnections.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this._tlpConnections.Size = new System.Drawing.Size(290, 646);
+            this._tlpConnections.Size = new System.Drawing.Size(290, 621);
             this._tlpConnections.TabIndex = 39;
             // 
             // _utConnections
@@ -380,7 +362,7 @@
             this._utConnections.ImageList = this._iml16;
             this._utConnections.Location = new System.Drawing.Point(3, 28);
             this._utConnections.Name = "_utConnections";
-            this._utConnections.Size = new System.Drawing.Size(284, 615);
+            this._utConnections.Size = new System.Drawing.Size(284, 590);
             this._utConnections.TabIndex = 37;
             this._utConnections.AfterExpand += new Infragistics.Win.UltraWinTree.AfterNodeChangedEventHandler(this.Connections_AfterExpand);
             this._utConnections.AfterLabelEdit += new Infragistics.Win.UltraWinTree.AfterNodeChangedEventHandler(this.Connections_AfterLabelEdit);
@@ -603,9 +585,9 @@
             this._FrmMdiParent_Toolbars_Dock_Area_Left.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Left;
             this._FrmMdiParent_Toolbars_Dock_Area_Left.ForeColor = System.Drawing.SystemColors.ControlText;
             this._FrmMdiParent_Toolbars_Dock_Area_Left.InitialResizeAreaExtent = 4;
-            this._FrmMdiParent_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 146);
+            this._FrmMdiParent_Toolbars_Dock_Area_Left.Location = new System.Drawing.Point(0, 171);
             this._FrmMdiParent_Toolbars_Dock_Area_Left.Name = "_FrmMdiParent_Toolbars_Dock_Area_Left";
-            this._FrmMdiParent_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(4, 666);
+            this._FrmMdiParent_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(4, 641);
             this._FrmMdiParent_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
             // 
             // _utm
@@ -643,14 +625,7 @@
             buttonTool7,
             buttonTool73,
             buttonTool12,
-            buttonTool72,
-            buttonTool106,
-            buttonTool116,
-            buttonTool117,
-            buttonTool114,
-            buttonTool115,
-            buttonTool113,
-            buttonTool112});
+            buttonTool72});
             ribbonTab1.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
             ribbonGroup1});
             ribbonTab2.Caption = "Logging";
@@ -665,18 +640,7 @@
             ribbonGroup3.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             buttonTool66,
             buttonTool20,
-            buttonTool21,
-            buttonTool97,
-            buttonTool96,
-            buttonTool92,
-            buttonTool95,
-            buttonTool90,
-            buttonTool91,
-            buttonTool89,
-            buttonTool86,
-            buttonTool82,
-            buttonTool88,
-            buttonTool84});
+            buttonTool21});
             ribbonTab2.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
             ribbonGroup2,
             ribbonGroup3});
@@ -1268,9 +1232,9 @@
             this._FrmMdiParent_Toolbars_Dock_Area_Right.DockedPosition = Infragistics.Win.UltraWinToolbars.DockedPosition.Right;
             this._FrmMdiParent_Toolbars_Dock_Area_Right.ForeColor = System.Drawing.SystemColors.ControlText;
             this._FrmMdiParent_Toolbars_Dock_Area_Right.InitialResizeAreaExtent = 4;
-            this._FrmMdiParent_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(1331, 146);
+            this._FrmMdiParent_Toolbars_Dock_Area_Right.Location = new System.Drawing.Point(1331, 171);
             this._FrmMdiParent_Toolbars_Dock_Area_Right.Name = "_FrmMdiParent_Toolbars_Dock_Area_Right";
-            this._FrmMdiParent_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(4, 666);
+            this._FrmMdiParent_Toolbars_Dock_Area_Right.Size = new System.Drawing.Size(4, 641);
             this._FrmMdiParent_Toolbars_Dock_Area_Right.ToolbarsManager = this._utm;
             // 
             // _FrmMdiParent_Toolbars_Dock_Area_Top
@@ -1281,7 +1245,7 @@
             this._FrmMdiParent_Toolbars_Dock_Area_Top.ForeColor = System.Drawing.SystemColors.ControlText;
             this._FrmMdiParent_Toolbars_Dock_Area_Top.Location = new System.Drawing.Point(0, 0);
             this._FrmMdiParent_Toolbars_Dock_Area_Top.Name = "_FrmMdiParent_Toolbars_Dock_Area_Top";
-            this._FrmMdiParent_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(1335, 146);
+            this._FrmMdiParent_Toolbars_Dock_Area_Top.Size = new System.Drawing.Size(1335, 171);
             this._FrmMdiParent_Toolbars_Dock_Area_Top.ToolbarsManager = this._utm;
             // 
             // _FrmMdiParent_Toolbars_Dock_Area_Bottom
@@ -1317,7 +1281,7 @@
             dockableControlPane1.Text = "Database Explorer";
             dockAreaPane1.Panes.AddRange(new Infragistics.Win.UltraWinDock.DockablePaneBase[] {
             dockableControlPane1});
-            dockAreaPane1.Size = new System.Drawing.Size(290, 666);
+            dockAreaPane1.Size = new System.Drawing.Size(290, 641);
             dockAreaPane2.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
             dockAreaPane2.DockedBefore = new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11");
             dockAreaPane2.FloatingLocation = new System.Drawing.Point(126, 483);
@@ -1359,27 +1323,27 @@
             // 
             this._FrmMdiParentUnpinnedTabAreaLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this._FrmMdiParentUnpinnedTabAreaLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._FrmMdiParentUnpinnedTabAreaLeft.Location = new System.Drawing.Point(4, 146);
+            this._FrmMdiParentUnpinnedTabAreaLeft.Location = new System.Drawing.Point(4, 171);
             this._FrmMdiParentUnpinnedTabAreaLeft.Name = "_FrmMdiParentUnpinnedTabAreaLeft";
             this._FrmMdiParentUnpinnedTabAreaLeft.Owner = this._udm;
-            this._FrmMdiParentUnpinnedTabAreaLeft.Size = new System.Drawing.Size(0, 666);
+            this._FrmMdiParentUnpinnedTabAreaLeft.Size = new System.Drawing.Size(0, 641);
             this._FrmMdiParentUnpinnedTabAreaLeft.TabIndex = 23;
             // 
             // _FrmMdiParentUnpinnedTabAreaRight
             // 
             this._FrmMdiParentUnpinnedTabAreaRight.Dock = System.Windows.Forms.DockStyle.Right;
             this._FrmMdiParentUnpinnedTabAreaRight.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._FrmMdiParentUnpinnedTabAreaRight.Location = new System.Drawing.Point(1331, 146);
+            this._FrmMdiParentUnpinnedTabAreaRight.Location = new System.Drawing.Point(1331, 171);
             this._FrmMdiParentUnpinnedTabAreaRight.Name = "_FrmMdiParentUnpinnedTabAreaRight";
             this._FrmMdiParentUnpinnedTabAreaRight.Owner = this._udm;
-            this._FrmMdiParentUnpinnedTabAreaRight.Size = new System.Drawing.Size(0, 666);
+            this._FrmMdiParentUnpinnedTabAreaRight.Size = new System.Drawing.Size(0, 641);
             this._FrmMdiParentUnpinnedTabAreaRight.TabIndex = 24;
             // 
             // _FrmMdiParentUnpinnedTabAreaTop
             // 
             this._FrmMdiParentUnpinnedTabAreaTop.Dock = System.Windows.Forms.DockStyle.Top;
             this._FrmMdiParentUnpinnedTabAreaTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._FrmMdiParentUnpinnedTabAreaTop.Location = new System.Drawing.Point(4, 146);
+            this._FrmMdiParentUnpinnedTabAreaTop.Location = new System.Drawing.Point(4, 171);
             this._FrmMdiParentUnpinnedTabAreaTop.Name = "_FrmMdiParentUnpinnedTabAreaTop";
             this._FrmMdiParentUnpinnedTabAreaTop.Owner = this._udm;
             this._FrmMdiParentUnpinnedTabAreaTop.Size = new System.Drawing.Size(1327, 0);
@@ -1420,10 +1384,10 @@
             this.windowDockingArea1.Controls.Add(this.dockableWindow1);
             this.windowDockingArea1.Dock = System.Windows.Forms.DockStyle.Left;
             this.windowDockingArea1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.windowDockingArea1.Location = new System.Drawing.Point(4, 146);
+            this.windowDockingArea1.Location = new System.Drawing.Point(4, 171);
             this.windowDockingArea1.Name = "windowDockingArea1";
             this.windowDockingArea1.Owner = this._udm;
-            this.windowDockingArea1.Size = new System.Drawing.Size(295, 666);
+            this.windowDockingArea1.Size = new System.Drawing.Size(295, 641);
             this.windowDockingArea1.TabIndex = 38;
             // 
             // dockableWindow1
@@ -1432,7 +1396,7 @@
             this.dockableWindow1.Location = new System.Drawing.Point(0, 0);
             this.dockableWindow1.Name = "dockableWindow1";
             this.dockableWindow1.Owner = this._udm;
-            this.dockableWindow1.Size = new System.Drawing.Size(290, 666);
+            this.dockableWindow1.Size = new System.Drawing.Size(290, 641);
             this.dockableWindow1.TabIndex = 51;
             // 
             // dockableWindow2
