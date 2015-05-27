@@ -27,7 +27,7 @@ namespace SqlEditor.DatabaseExplorer.TreeNodes.Oracle
                     using (var connection = DatabaseConnection.CreateNewConnection())
                     {
                         connection.OpenIfRequired();
-                        DatabaseConnection.Connect();
+                        DatabaseConnection.Connect(false);
                         _log.Debug("Connection is successful.");
                         _log.Debug("Loading schemas ...");
                         var infoProvider = DatabaseConnection.DatabaseServer.GetInfoProvider();

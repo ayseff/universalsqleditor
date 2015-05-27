@@ -133,12 +133,15 @@ namespace SqlEditor.DatabaseExplorer
             IsConnected = false;
         }
 
-        public void Connect()
+        public void Connect(bool openConnection = true)
         {
-            using (var connection = CreateNewConnection())
+            if (openConnection)
             {
-                connection.Open();
-                connection.Close();
+                using (var connection = CreateNewConnection())
+                {
+                    connection.OpenIfRequired();
+                    connection.Close();
+                }
             }
             IsConnected = true;
         }
