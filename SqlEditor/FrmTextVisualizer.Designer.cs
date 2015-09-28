@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTextVisualizer));
             Infragistics.Win.UltraWinToolbars.UltraToolbar ultraToolbar1 = new Infragistics.Win.UltraWinToolbars.UltraToolbar("MainToolbar");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool5 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Save");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool6 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Copy");
@@ -57,15 +56,16 @@
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool15 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Redo");
             Infragistics.Win.Appearance appearance11 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTextVisualizer));
             this.FrmShowSql_Fill_Panel = new System.Windows.Forms.Panel();
             this._editor = new ICSharpCode.TextEditor.TextEditorControl();
             this._FrmShowSql_Toolbars_Dock_Area_Left = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
+            this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
             this._img32 = new System.Windows.Forms.ImageList(this.components);
             this._img16 = new System.Windows.Forms.ImageList(this.components);
             this._FrmShowSql_Toolbars_Dock_Area_Right = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._FrmShowSql_Toolbars_Dock_Area_Top = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._FrmShowSql_Toolbars_Dock_Area_Bottom = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
-            this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
             this.FrmShowSql_Fill_Panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._utm)).BeginInit();
             this.SuspendLayout();
@@ -103,6 +103,75 @@
             this._FrmShowSql_Toolbars_Dock_Area_Left.Name = "_FrmShowSql_Toolbars_Dock_Area_Left";
             this._FrmShowSql_Toolbars_Dock_Area_Left.Size = new System.Drawing.Size(4, 286);
             this._FrmShowSql_Toolbars_Dock_Area_Left.ToolbarsManager = this._utm;
+            // 
+            // _utm
+            // 
+            this._utm.DesignerFlags = 1;
+            this._utm.DockWithinContainer = this;
+            this._utm.DockWithinContainerBaseType = typeof(System.Windows.Forms.Form);
+            this._utm.FormDisplayStyle = Infragistics.Win.UltraWinToolbars.FormDisplayStyle.RoundedSizable;
+            this._utm.ImageListLarge = this._img32;
+            this._utm.ImageListSmall = this._img16;
+            this._utm.ShowFullMenusDelay = 500;
+            ultraToolbar1.DockedColumn = 0;
+            ultraToolbar1.DockedRow = 0;
+            buttonTool16.InstanceProps.IsFirstInGroup = true;
+            buttonTool7.InstanceProps.IsFirstInGroup = true;
+            ultraToolbar1.NonInheritedTools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool5,
+            buttonTool6,
+            buttonTool16,
+            buttonTool17,
+            buttonTool7,
+            buttonTool8});
+            ultraToolbar1.Text = "MainToolbar";
+            this._utm.Toolbars.AddRange(new Infragistics.Win.UltraWinToolbars.UltraToolbar[] {
+            ultraToolbar1});
+            appearance1.Image = 11;
+            buttonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance1;
+            appearance2.Image = 12;
+            buttonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance2;
+            buttonTool1.SharedPropsInternal.Caption = "Save";
+            buttonTool1.SharedPropsInternal.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
+            appearance3.Image = 0;
+            buttonTool2.SharedPropsInternal.AppearancesLarge.Appearance = appearance3;
+            appearance4.Image = 0;
+            buttonTool2.SharedPropsInternal.AppearancesSmall.Appearance = appearance4;
+            buttonTool2.SharedPropsInternal.Caption = "Copy";
+            appearance5.Image = 17;
+            buttonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance5;
+            appearance6.Image = 16;
+            buttonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance6;
+            buttonTool3.SharedPropsInternal.Caption = "Find";
+            buttonTool3.SharedPropsInternal.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
+            appearance7.Image = 16;
+            buttonTool4.SharedPropsInternal.AppearancesLarge.Appearance = appearance7;
+            appearance8.Image = 17;
+            buttonTool4.SharedPropsInternal.AppearancesSmall.Appearance = appearance8;
+            buttonTool4.SharedPropsInternal.Caption = "Replace";
+            buttonTool4.SharedPropsInternal.Shortcut = System.Windows.Forms.Shortcut.CtrlH;
+            popupMenuTool1.SharedPropsInternal.Caption = "PopupMenu";
+            popupMenuTool1.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool10});
+            appearance9.Image = 14;
+            buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance9;
+            appearance10.Image = 14;
+            buttonTool14.SharedPropsInternal.AppearancesSmall.Appearance = appearance10;
+            buttonTool14.SharedPropsInternal.Caption = "Undo";
+            appearance11.Image = 15;
+            buttonTool15.SharedPropsInternal.AppearancesLarge.Appearance = appearance11;
+            appearance12.Image = 15;
+            buttonTool15.SharedPropsInternal.AppearancesSmall.Appearance = appearance12;
+            buttonTool15.SharedPropsInternal.Caption = "Redo";
+            this._utm.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
+            buttonTool1,
+            buttonTool2,
+            buttonTool3,
+            buttonTool4,
+            popupMenuTool1,
+            buttonTool14,
+            buttonTool15});
+            this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.Utm_ToolClick);
             // 
             // _img32
             // 
@@ -191,75 +260,6 @@
             this._FrmShowSql_Toolbars_Dock_Area_Bottom.Name = "_FrmShowSql_Toolbars_Dock_Area_Bottom";
             this._FrmShowSql_Toolbars_Dock_Area_Bottom.Size = new System.Drawing.Size(624, 4);
             this._FrmShowSql_Toolbars_Dock_Area_Bottom.ToolbarsManager = this._utm;
-            // 
-            // _utm
-            // 
-            this._utm.DesignerFlags = 1;
-            this._utm.DockWithinContainer = this;
-            this._utm.DockWithinContainerBaseType = typeof(System.Windows.Forms.Form);
-            this._utm.FormDisplayStyle = Infragistics.Win.UltraWinToolbars.FormDisplayStyle.RoundedSizable;
-            this._utm.ImageListLarge = this._img32;
-            this._utm.ImageListSmall = this._img16;
-            this._utm.ShowFullMenusDelay = 500;
-            ultraToolbar1.DockedColumn = 0;
-            ultraToolbar1.DockedRow = 0;
-            buttonTool16.InstanceProps.IsFirstInGroup = true;
-            buttonTool7.InstanceProps.IsFirstInGroup = true;
-            ultraToolbar1.NonInheritedTools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool5,
-            buttonTool6,
-            buttonTool16,
-            buttonTool17,
-            buttonTool7,
-            buttonTool8});
-            ultraToolbar1.Text = "MainToolbar";
-            this._utm.Toolbars.AddRange(new Infragistics.Win.UltraWinToolbars.UltraToolbar[] {
-            ultraToolbar1});
-            appearance1.Image = 11;
-            buttonTool1.SharedPropsInternal.AppearancesLarge.Appearance = appearance1;
-            appearance2.Image = 12;
-            buttonTool1.SharedPropsInternal.AppearancesSmall.Appearance = appearance2;
-            buttonTool1.SharedPropsInternal.Caption = "Save";
-            buttonTool1.SharedPropsInternal.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
-            appearance3.Image = 0;
-            buttonTool2.SharedPropsInternal.AppearancesLarge.Appearance = appearance3;
-            appearance4.Image = 0;
-            buttonTool2.SharedPropsInternal.AppearancesSmall.Appearance = appearance4;
-            buttonTool2.SharedPropsInternal.Caption = "Copy";
-            appearance5.Image = 17;
-            buttonTool3.SharedPropsInternal.AppearancesLarge.Appearance = appearance5;
-            appearance6.Image = 16;
-            buttonTool3.SharedPropsInternal.AppearancesSmall.Appearance = appearance6;
-            buttonTool3.SharedPropsInternal.Caption = "Find";
-            buttonTool3.SharedPropsInternal.Shortcut = System.Windows.Forms.Shortcut.CtrlF;
-            appearance7.Image = 16;
-            buttonTool4.SharedPropsInternal.AppearancesLarge.Appearance = appearance7;
-            appearance8.Image = 17;
-            buttonTool4.SharedPropsInternal.AppearancesSmall.Appearance = appearance8;
-            buttonTool4.SharedPropsInternal.Caption = "Replace";
-            buttonTool4.SharedPropsInternal.Shortcut = System.Windows.Forms.Shortcut.CtrlH;
-            popupMenuTool1.SharedPropsInternal.Caption = "PopupMenu";
-            popupMenuTool1.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool10});
-            appearance9.Image = 14;
-            buttonTool14.SharedPropsInternal.AppearancesLarge.Appearance = appearance9;
-            appearance10.Image = 14;
-            buttonTool14.SharedPropsInternal.AppearancesSmall.Appearance = appearance10;
-            buttonTool14.SharedPropsInternal.Caption = "Undo";
-            appearance11.Image = 15;
-            buttonTool15.SharedPropsInternal.AppearancesLarge.Appearance = appearance11;
-            appearance12.Image = 15;
-            buttonTool15.SharedPropsInternal.AppearancesSmall.Appearance = appearance12;
-            buttonTool15.SharedPropsInternal.Caption = "Redo";
-            this._utm.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool1,
-            buttonTool2,
-            buttonTool3,
-            buttonTool4,
-            popupMenuTool1,
-            buttonTool14,
-            buttonTool15});
-            this._utm.ToolClick += new Infragistics.Win.UltraWinToolbars.ToolClickEventHandler(this.Utm_ToolClick);
             // 
             // FrmTextVisualizer
             // 

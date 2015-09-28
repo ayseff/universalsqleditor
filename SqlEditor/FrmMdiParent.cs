@@ -775,7 +775,8 @@ namespace SqlEditor
             try
             {
                 _getConnectionNodesTask.Wait(3000);
-                ConnectionsTreeNode.Instance.Load(_getConnectionNodesTask.Result.ToArray());
+                var treeNodeBases = _getConnectionNodesTask.Result.ToArray();
+                ConnectionsTreeNode.Instance.Load(treeNodeBases);
                 ConnectionsTreeNode.Instance.Expanded = true;
                 CloseSplashForm();
             }

@@ -61,8 +61,8 @@ namespace SqlEditor.Databases.PostgreSql
         {
             var connectionStringBuilder = (Npgsql.NpgsqlConnectionStringBuilder)
                 databaseConnection.DatabaseServer.GetConnectionStringBuilder(databaseConnection.ConnectionString);
-            var ddl = RunPgDump(connectionStringBuilder.Host, connectionStringBuilder.Database, connectionStringBuilder.UserName,
-                (string) connectionStringBuilder["PASSWORD"], connectionStringBuilder.Port);
+            var ddl = RunPgDump(connectionStringBuilder.Host, connectionStringBuilder.Database, connectionStringBuilder.Username,
+                connectionStringBuilder.Password, connectionStringBuilder.Port);
             var sql = ddl.Replace("\r", string.Empty);
             if (sql.Length == 0)
             {

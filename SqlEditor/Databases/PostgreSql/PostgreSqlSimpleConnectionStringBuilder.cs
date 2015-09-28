@@ -28,8 +28,8 @@ namespace SqlEditor.Databases.PostgreSql
         [Description("User ID used to connect to the database")]
         public string UserID
         {
-            get { return _connectionStringBuilder.UserName; }
-            set { _connectionStringBuilder.UserName = value; }
+            get { return _connectionStringBuilder.Username; }
+            set { _connectionStringBuilder.Username = value; }
         }
 
         [Description("Password used to connect to the database"), PasswordPropertyText(true)]

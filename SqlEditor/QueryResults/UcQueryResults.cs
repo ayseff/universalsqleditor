@@ -660,7 +660,7 @@ namespace SqlEditor.QueryResults
                         break;
 
                     case "Export to Text":
-                        await _ugGrid.ExportToDelimitedFileAsync("\t", ".txt");
+                        await _ugGrid.ExportToDelimitedFileAsync("\t");
                         break;
                     
                     case "Visualize Data":
@@ -953,13 +953,15 @@ namespace SqlEditor.QueryResults
                     textValue = xmlText;
                     textType = TextType.Xml;
                 }
-                catch
+                catch (Exception ex)
                 {
+                    _log.DebugFormat("Could not format text as XML");
+                    _log.Debug(ex.Message, ex);
                 }
             }
 
             // Create form
-            var form = new FrmTextVisualizer(textValue, textType) {StartPosition = FormStartPosition.CenterParent};
+            var form = new FrmTextVisualizer(textValue.Replace("\r", string.Empty), textType) {StartPosition = FormStartPosition.CenterParent};
 
             // Restore geometry
             try

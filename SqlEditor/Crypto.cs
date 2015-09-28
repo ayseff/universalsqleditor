@@ -83,6 +83,7 @@ namespace SqlEditor
         /// <param name="cipherText">The text to decrypt.</param>
         /// <param name="sharedSecret">A password used to generate a key for decryption.</param>
         public static string DecryptStringAES(string cipherText, string sharedSecret)
+        
         {
             if (string.IsNullOrEmpty(cipherText))
                 throw new ArgumentNullException("cipherText");
