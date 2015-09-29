@@ -12,7 +12,7 @@ Version: 0.3.5.3
 Version: 0.3.5.2
   New Features:
   - Added better support for database servers with multiple databases (i.e. SQL Server, MySQL, PostgreSQL)
-  - Updated drivers for MySQL, POstgreSQl and SQLite.
+  - Updated drivers for MySQL, POstgreSQL and SQLite.
   Bug Fixes: 
   - Fixed an issue when an application would throw an error when a query is canceled
   - Fixed an issue when scripting queries and objects for PostgreSQL. Now spaces are used instead of tabs to make statements run without an error.
