@@ -316,7 +316,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
             //                                                                     new CommonFileDialogFilter(
             //                                                                     "All files", "*.*")
             //                                                                     }, ".xlsx");
-            //if (dialogResult != CommonFileDialogResult.OK)
+            //if (dialogResult != CommonFileDialogResult.Ok)
             //{
             //    return Task.FromResult(0);
             //}
@@ -346,7 +346,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
                                                                                  new CommonFileDialogFilter(
                                                                                  "All files", "*.*")
                                                                                  }, ".xlsx");
-            if (dialogResult != CommonFileDialogResult.OK)
+            if (dialogResult != CommonFileDialogResult.Ok)
             {
                 return;
             }
@@ -427,7 +427,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
                                                                                  new CommonFileDialogFilter(
                                                                                  "All files", "*.*")
                                                                                  }, ".csv");
-            if (dialogResult != CommonFileDialogResult.OK)
+            if (dialogResult != CommonFileDialogResult.Ok)
             {
                 return;
             }
@@ -451,7 +451,7 @@ namespace Utilities.InfragisticsUtilities.UltraGridUtilities
                                                                              new[] {new CommonFileDialogFilter(
                                                                                  "All files", "*.*")
                                                                                  });
-            if (dialogResult != CommonFileDialogResult.OK)
+            if (dialogResult != CommonFileDialogResult.Ok)
             {
                 return;
             }
