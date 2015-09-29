@@ -61,9 +61,6 @@
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool31 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Warning", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool32 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Logging Tools - Error", "");
             Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup3 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Edit");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool66 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Copy");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool20 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - ClearLog");
-            Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool21 = new Infragistics.Win.UltraWinToolbars.ButtonTool("Logging Tools - Save");
             Infragistics.Win.UltraWinToolbars.RibbonTab ribbonTab3 = new Infragistics.Win.UltraWinToolbars.RibbonTab("Database Explorer");
             Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup4 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Connections");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool26 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New SQL Worksheet");
@@ -99,7 +96,6 @@
             Infragistics.Win.UltraWinToolbars.RibbonGroup ribbonGroup7 = new Infragistics.Win.UltraWinToolbars.RibbonGroup("Windows");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool21 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - Connections", "");
             Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool22 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - SQL History", "");
-            Infragistics.Win.UltraWinToolbars.StateButtonTool stateButtonTool24 = new Infragistics.Win.UltraWinToolbars.StateButtonTool("Windows - Log", "");
             Infragistics.Win.UltraWinToolbars.ButtonTool buttonTool28 = new Infragistics.Win.UltraWinToolbars.ButtonTool("New Connection");
             Infragistics.Win.Appearance appearance12 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance13 = new Infragistics.Win.Appearance();
@@ -290,7 +286,6 @@
             Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane2 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.Floating, new System.Guid("fabec71c-c2ec-4565-8902-ac97472c64c1"));
             Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane3 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.DockedBottom, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"));
             Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane2 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("fb2b8d6e-b392-45a4-828a-688935e5db2a"), new System.Guid("31b96ff4-b575-498e-bdde-c33abc7bab00"), -1, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"), 0);
-            Infragistics.Win.UltraWinDock.DockableControlPane dockableControlPane3 = new Infragistics.Win.UltraWinDock.DockableControlPane(new System.Guid("a782c7c9-b62f-465f-a9af-813a11f9e2f5"), new System.Guid("00000000-0000-0000-0000-000000000000"), -1, new System.Guid("e787cda5-33ed-4cb5-9a06-1e0653279d11"), -1);
             Infragistics.Win.UltraWinDock.DockAreaPane dockAreaPane4 = new Infragistics.Win.UltraWinDock.DockAreaPane(Infragistics.Win.UltraWinDock.DockedLocation.Floating, new System.Guid("31b96ff4-b575-498e-bdde-c33abc7bab00"));
             Infragistics.Win.Appearance appearance11 = new Infragistics.Win.Appearance();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMdiParent));
@@ -299,7 +294,6 @@
             this._iml16 = new System.Windows.Forms.ImageList(this.components);
             this._uteConnectionsSearch = new Infragistics.Win.UltraWinEditors.UltraTextEditor();
             this._ugGrid = new Infragistics.Win.UltraWinGrid.UltraGrid();
-            this._rtbLog = new System.Windows.Forms.RichTextBox();
             this._bsSqlHistory = new System.Windows.Forms.BindingSource(this.components);
             this._FrmMdiParent_Toolbars_Dock_Area_Left = new Infragistics.Win.UltraWinToolbars.UltraToolbarsDockArea();
             this._utm = new Infragistics.Win.UltraWinToolbars.UltraToolbarsManager(this.components);
@@ -318,7 +312,6 @@
             this.windowDockingArea1 = new Infragistics.Win.UltraWinDock.WindowDockingArea();
             this.dockableWindow3 = new Infragistics.Win.UltraWinDock.DockableWindow();
             this.dockableWindow1 = new Infragistics.Win.UltraWinDock.DockableWindow();
-            this.dockableWindow2 = new Infragistics.Win.UltraWinDock.DockableWindow();
             this.windowDockingArea3 = new Infragistics.Win.UltraWinDock.WindowDockingArea();
             this.windowDockingArea2 = new Infragistics.Win.UltraWinDock.WindowDockingArea();
             this.windowDockingArea5 = new Infragistics.Win.UltraWinDock.WindowDockingArea();
@@ -334,7 +327,6 @@
             this.windowDockingArea1.SuspendLayout();
             this.dockableWindow3.SuspendLayout();
             this.dockableWindow1.SuspendLayout();
-            this.dockableWindow2.SuspendLayout();
             this.windowDockingArea2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -564,19 +556,9 @@
             this._ugGrid.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this._ugGrid.Location = new System.Drawing.Point(0, 20);
             this._ugGrid.Name = "_ugGrid";
-            this._ugGrid.Size = new System.Drawing.Size(1032, 212);
+            this._ugGrid.Size = new System.Drawing.Size(1032, 238);
             this._ugGrid.TabIndex = 51;
             this._ugGrid.InitializeLayout += new Infragistics.Win.UltraWinGrid.InitializeLayoutEventHandler(this.UgSqlHistory_InitializeLayout);
-            // 
-            // _rtbLog
-            // 
-            this._utm.SetContextMenuUltra(this._rtbLog, "Logging Tools - Context Menu");
-            this._rtbLog.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._rtbLog.Location = new System.Drawing.Point(0, 20);
-            this._rtbLog.Name = "_rtbLog";
-            this._rtbLog.Size = new System.Drawing.Size(1032, 212);
-            this._rtbLog.TabIndex = 44;
-            this._rtbLog.Text = "";
             // 
             // _FrmMdiParent_Toolbars_Dock_Area_Left
             // 
@@ -637,10 +619,6 @@
             stateButtonTool31,
             stateButtonTool32});
             ribbonGroup3.Caption = "Edit";
-            ribbonGroup3.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
-            buttonTool66,
-            buttonTool20,
-            buttonTool21});
             ribbonTab2.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
             ribbonGroup2,
             ribbonGroup3});
@@ -689,8 +667,7 @@
             ribbonGroup7.Caption = "Windows";
             ribbonGroup7.Tools.AddRange(new Infragistics.Win.UltraWinToolbars.ToolBase[] {
             stateButtonTool21,
-            stateButtonTool22,
-            stateButtonTool24});
+            stateButtonTool22});
             ribbonTab4.Groups.AddRange(new Infragistics.Win.UltraWinToolbars.RibbonGroup[] {
             ribbonGroup6,
             ribbonGroup7});
@@ -1292,14 +1269,8 @@
             dockableControlPane2.OriginalControlBounds = new System.Drawing.Rectangle(25, 212, 780, 419);
             dockableControlPane2.Size = new System.Drawing.Size(100, 100);
             dockableControlPane2.Text = "SQL History";
-            dockableControlPane3.Control = this._rtbLog;
-            dockableControlPane3.Key = "Log";
-            dockableControlPane3.OriginalControlBounds = new System.Drawing.Rectangle(442, 357, 100, 96);
-            dockableControlPane3.Size = new System.Drawing.Size(100, 100);
-            dockableControlPane3.Text = "Log";
             dockAreaPane3.Panes.AddRange(new Infragistics.Win.UltraWinDock.DockablePaneBase[] {
-            dockableControlPane2,
-            dockableControlPane3});
+            dockableControlPane2});
             dockAreaPane3.Size = new System.Drawing.Size(1032, 258);
             dockAreaPane4.ChildPaneStyle = Infragistics.Win.UltraWinDock.ChildPaneStyle.TabGroup;
             dockAreaPane4.FloatingLocation = new System.Drawing.Point(301, 884);
@@ -1405,17 +1376,8 @@
             this.dockableWindow1.Location = new System.Drawing.Point(0, 5);
             this.dockableWindow1.Name = "dockableWindow1";
             this.dockableWindow1.Owner = this._udm;
-            this.dockableWindow1.Size = new System.Drawing.Size(1032, 234);
+            this.dockableWindow1.Size = new System.Drawing.Size(1032, 258);
             this.dockableWindow1.TabIndex = 52;
-            // 
-            // dockableWindow2
-            // 
-            this.dockableWindow2.Controls.Add(this._rtbLog);
-            this.dockableWindow2.Location = new System.Drawing.Point(-10000, 5);
-            this.dockableWindow2.Name = "dockableWindow2";
-            this.dockableWindow2.Owner = this._udm;
-            this.dockableWindow2.Size = new System.Drawing.Size(1032, 234);
-            this.dockableWindow2.TabIndex = 53;
             // 
             // windowDockingArea3
             // 
@@ -1429,7 +1391,6 @@
             // 
             // windowDockingArea2
             // 
-            this.windowDockingArea2.Controls.Add(this.dockableWindow2);
             this.windowDockingArea2.Controls.Add(this.dockableWindow1);
             this.windowDockingArea2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.windowDockingArea2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1486,7 +1447,6 @@
             this.windowDockingArea1.ResumeLayout(false);
             this.dockableWindow3.ResumeLayout(false);
             this.dockableWindow1.ResumeLayout(false);
-            this.dockableWindow2.ResumeLayout(false);
             this.windowDockingArea2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1512,11 +1472,9 @@
         private Infragistics.Win.UltraWinTree.UltraTree _utConnections;
         private Infragistics.Win.UltraWinEditors.UltraTextEditor _uteConnectionsSearch;
         private Infragistics.Win.UltraWinDock.WindowDockingArea windowDockingArea1;
-        private Infragistics.Win.UltraWinDock.DockableWindow dockableWindow2;
         private Infragistics.Win.UltraWinDock.WindowDockingArea windowDockingArea3;
         private System.Windows.Forms.ImageList _iml16;
         private System.Windows.Forms.ImageList _iml32;
-        private System.Windows.Forms.RichTextBox _rtbLog;
         private Infragistics.Win.UltraWinDock.WindowDockingArea windowDockingArea2;
         private Infragistics.Win.UltraWinDock.DockableWindow dockableWindow1;
         private Infragistics.Win.UltraWinGrid.UltraGrid _ugGrid;

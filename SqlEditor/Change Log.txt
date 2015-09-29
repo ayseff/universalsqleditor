@@ -1,8 +1,10 @@
 ﻿Version: 0.3.5.4
   New Features:  
   - Upgraded drivers for MySQl, PostgreSQL and SQLite.
+  - Using more NuGet packages instead of direct references
   Bug Fixes: 
   - Fixed an issue where data viewer would have a problem when viewing text where a lone \r is on a line by itself.
+  - Removed logging window as it was causing lockups when doing multi-threading
 Version: 0.3.5.3
   New Features:  
   Bug Fixes: 

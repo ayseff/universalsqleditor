@@ -388,8 +388,8 @@ namespace SqlEditor
             TaskScheduler.UnobservedTaskException += ObserveUnobservedTaskExceptions;
 
             ToggleVisibleToolRibbonTab(false, "Logging Tools");
-            _rtbLog.GotFocus += (sender, args) => ToggleVisibleToolRibbonTab(true, "Logging Tools");
-            _rtbLog.LostFocus += (sender, args) => ToggleVisibleToolRibbonTab(false, "Logging Tools");
+//            _rtbLog.GotFocus += (sender, args) => ToggleVisibleToolRibbonTab(true, "Logging Tools");
+//            _rtbLog.LostFocus += (sender, args) => ToggleVisibleToolRibbonTab(false, "Logging Tools");
 
             ToggleVisibleToolRibbonTab(false, "Database Explorer Tools");
             _utConnections.GotFocus += (sender, args) => ToggleVisibleToolRibbonTab(true, "Database Explorer Tools");
@@ -770,7 +770,7 @@ namespace SqlEditor
         
         private void FrmMdiParentShown(object sender, EventArgs e)
         {
-            RichTextBoxAppender.SetRichTextBox(_rtbLog, "RichTextBoxAppender");
+//            RichTextBoxAppender.SetRichTextBox(_rtbLog, "RichTextBoxAppender");
 
             try
             {
@@ -1077,11 +1077,11 @@ namespace SqlEditor
                         break;
 
                     case "Logging Tools - Copy":
-                        _rtbLog.Copy();
+//                        _rtbLog.Copy();
                         break;
 
                     case "Logging Tools - ClearLog":
-                        _rtbLog.Clear();
+//                        _rtbLog.Clear();
                         break;
 
                     case "Logging Tools - Save":
@@ -1783,40 +1783,40 @@ namespace SqlEditor
 
         private void Logging_Save()
         {
-            string file= null;
-            try
-            {
-                var dialogresult = Dialog.ShowSaveFileDialog(Application.ProductName, out file,
-                                                             new[]
-                                                                 {
-                                                                     new CommonFileDialogFilter("Log files", "*.log"),
-                                                                     new CommonFileDialogFilter("All files", "*.*")
-                                                                 });
-                if (dialogresult != CommonFileDialogResult.Ok) return;
-                _rtbLog.SaveFile(file, RichTextBoxStreamType.PlainText);
-            }
-            catch (Exception ex)
-            {
-                _log.ErrorFormat("Error saving log to file {0}.", (file ?? "NULL"));
-                _log.Error(ex.Message, ex);
-                throw;
-            }
+//            string file= null;
+//            try
+//            {
+//                var dialogresult = Dialog.ShowSaveFileDialog(Application.ProductName, out file,
+//                                                             new[]
+//                                                                 {
+//                                                                     new CommonFileDialogFilter("Log files", "*.log"),
+//                                                                     new CommonFileDialogFilter("All files", "*.*")
+//                                                                 });
+//                if (dialogresult != CommonFileDialogResult.Ok) return;
+//                _rtbLog.SaveFile(file, RichTextBoxStreamType.PlainText);
+//            }
+//            catch (Exception ex)
+//            {
+//                _log.ErrorFormat("Error saving log to file {0}.", (file ?? "NULL"));
+//                _log.Error(ex.Message, ex);
+//                throw;
+//            }
         }
 
         private void ShowHideLogWindow()
         {
-            var pane = GetDockablePane(_rtbLog);
-            if (_showLogStateButtonTool.Checked)
-            {
-                if (pane != null)
-                {
-                    pane.Show();
-                }
-            }
-            else if (pane != null)
-            {
-                pane.Close();
-            }
+//            var pane = GetDockablePane(_rtbLog);
+//            if (_showLogStateButtonTool.Checked)
+//            {
+//                if (pane != null)
+//                {
+//                    pane.Show();
+//                }
+//            }
+//            else if (pane != null)
+//            {
+//                pane.Close();
+//            }
         }
 
         private void RefreshUserInterface()
@@ -1835,8 +1835,8 @@ namespace SqlEditor
             
                 var connectionsPane = GetDockablePane(_tlpConnections);
                 _showConnectionsPaneStateButtonTool.Checked = connectionsPane != null && connectionsPane.IsVisible;
-                var logPane = GetDockablePane(_rtbLog);
-                _showLogStateButtonTool.Checked = logPane != null && logPane.IsVisible;
+//                var logPane = GetDockablePane(_rtbLog);
+//                _showLogStateButtonTool.Checked = logPane != null && logPane.IsVisible;
                 var sqlHistoryPane = GetDockablePane(_ugGrid);
                 _showSqlHistoryStateButtonTool.Checked = sqlHistoryPane != null && sqlHistoryPane.IsVisible;
             }
