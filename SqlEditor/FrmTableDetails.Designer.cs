@@ -80,7 +80,7 @@ namespace SqlEditor
             // ultraTabPageControl1
             // 
             this.ultraTabPageControl1.Controls.Add(this._ugColumns);
-            this.ultraTabPageControl1.Location = new System.Drawing.Point(1, 22);
+            this.ultraTabPageControl1.Location = new System.Drawing.Point(-10000, -10000);
             this.ultraTabPageControl1.Name = "ultraTabPageControl1";
             this.ultraTabPageControl1.Size = new System.Drawing.Size(602, 472);
             // 
@@ -93,6 +93,8 @@ namespace SqlEditor
             this._ugColumns.DisplayLayout.Override.AllowDelete = Infragistics.Win.DefaultableBoolean.False;
             this._ugColumns.DisplayLayout.Override.AllowRowFiltering = Infragistics.Win.DefaultableBoolean.True;
             this._ugColumns.DisplayLayout.Override.AllowUpdate = Infragistics.Win.DefaultableBoolean.False;
+            this._ugColumns.DisplayLayout.Override.FilterOperatorDefaultValue = Infragistics.Win.UltraWinGrid.FilterOperatorDefaultValue.Contains;
+            this._ugColumns.DisplayLayout.Override.FilterUIType = Infragistics.Win.UltraWinGrid.FilterUIType.FilterRow;
             this._ugColumns.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
             this._ugColumns.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
             this._ugColumns.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
@@ -119,6 +121,8 @@ namespace SqlEditor
             this._ugData.DisplayLayout.Override.AllowDelete = Infragistics.Win.DefaultableBoolean.False;
             this._ugData.DisplayLayout.Override.AllowRowFiltering = Infragistics.Win.DefaultableBoolean.True;
             this._ugData.DisplayLayout.Override.AllowUpdate = Infragistics.Win.DefaultableBoolean.False;
+            this._ugData.DisplayLayout.Override.FilterOperatorDefaultValue = Infragistics.Win.UltraWinGrid.FilterOperatorDefaultValue.Contains;
+            this._ugData.DisplayLayout.Override.FilterUIType = Infragistics.Win.UltraWinGrid.FilterUIType.FilterRow;
             this._ugData.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
             this._ugData.DisplayLayout.Override.RowSelectorHeaderStyle = Infragistics.Win.UltraWinGrid.RowSelectorHeaderStyle.ColumnChooserButton;
             this._ugData.DisplayLayout.Override.RowSelectorNumberStyle = Infragistics.Win.UltraWinGrid.RowSelectorNumberStyle.RowIndex;
@@ -147,6 +151,8 @@ namespace SqlEditor
             this._ugIndexes.DisplayLayout.Override.AllowDelete = Infragistics.Win.DefaultableBoolean.False;
             this._ugIndexes.DisplayLayout.Override.AllowRowFiltering = Infragistics.Win.DefaultableBoolean.True;
             this._ugIndexes.DisplayLayout.Override.AllowUpdate = Infragistics.Win.DefaultableBoolean.False;
+            this._ugIndexes.DisplayLayout.Override.FilterOperatorDefaultValue = Infragistics.Win.UltraWinGrid.FilterOperatorDefaultValue.Contains;
+            this._ugIndexes.DisplayLayout.Override.FilterUIType = Infragistics.Win.UltraWinGrid.FilterUIType.FilterRow;
             this._ugIndexes.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
             this._ugIndexes.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
             this._ugIndexes.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
@@ -160,7 +166,7 @@ namespace SqlEditor
             // ultraTabPageControl4
             // 
             this.ultraTabPageControl4.Controls.Add(this._ugPartitions);
-            this.ultraTabPageControl4.Location = new System.Drawing.Point(-10000, -10000);
+            this.ultraTabPageControl4.Location = new System.Drawing.Point(1, 22);
             this.ultraTabPageControl4.Name = "ultraTabPageControl4";
             this.ultraTabPageControl4.Size = new System.Drawing.Size(602, 472);
             // 
@@ -173,6 +179,8 @@ namespace SqlEditor
             this._ugPartitions.DisplayLayout.Override.AllowDelete = Infragistics.Win.DefaultableBoolean.False;
             this._ugPartitions.DisplayLayout.Override.AllowRowFiltering = Infragistics.Win.DefaultableBoolean.True;
             this._ugPartitions.DisplayLayout.Override.AllowUpdate = Infragistics.Win.DefaultableBoolean.False;
+            this._ugPartitions.DisplayLayout.Override.FilterOperatorDefaultValue = Infragistics.Win.UltraWinGrid.FilterOperatorDefaultValue.Contains;
+            this._ugPartitions.DisplayLayout.Override.FilterUIType = Infragistics.Win.UltraWinGrid.FilterUIType.FilterRow;
             this._ugPartitions.DisplayLayout.Override.HeaderClickAction = Infragistics.Win.UltraWinGrid.HeaderClickAction.SortMulti;
             this._ugPartitions.DisplayLayout.Override.RowSelectors = Infragistics.Win.DefaultableBoolean.False;
             this._ugPartitions.DisplayLayout.ViewStyleBand = Infragistics.Win.UltraWinGrid.ViewStyleBand.OutlookGroupBy;
