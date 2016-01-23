@@ -1,4 +1,7 @@
-﻿Version: 0.3.5.4
+﻿Version: 0.3.5.5
+  New Features:  
+  - Added filters to table details screens.  
+Version: 0.3.5.4
   New Features:  
   - Upgraded drivers for MySQL, PostgreSQL and SQLite.
   - Using more NuGet packages instead of direct references
